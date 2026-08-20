@@ -25,5 +25,7 @@ npm run build
 3. Under **Build and deployment**, choose **GitHub Actions**.
 4. The included workflow will build and deploy automatically after each push to `main`.
 
+GitHub Pages source is configured to use GitHub Actions.
+
 ## Images
 The starter project uses image assets extracted from the provided Benua Brutti Canva/PDF website reference. Replace files in `public/assets/` with original high-resolution images whenever available, keeping the same file names for instant replacement.
