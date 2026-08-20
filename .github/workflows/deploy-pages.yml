@@ -21,14 +21,41 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       - name: Prepare Brutti web images
         run: |
-          sudo apt-get update
-          sudo apt-get install -y libheif-examples imagemagick
-          heif-convert -q 90 "public/assets/brutti team.HEIC" "public/assets/brutti-team.jpg"
-          convert "public/assets/brutti-team.jpg" -auto-orient -resize '2200x2200>' -quality 88 "public/assets/brutti-team.jpg"
-          BG=$(convert "public/assets/logo brutti.jpg" -format "%[pixel:p{0,0}]" info:)
-          convert "public/assets/logo brutti.jpg" -alpha on -fuzz 12% -transparent "$BG" "public/assets/logo-brutti-transparent.png"
+          python -m pip install --upgrade pip
+          python -m pip install pillow pillow-heif
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image, ImageOps
+          from pillow_heif import register_heif_opener
+
+          register_heif_opener()
+
+          assets = Path('public/assets')
+
+          team = Image.open(assets / 'brutti team.HEIC')
+          team = ImageOps.exif_transpose(team).convert('RGB')
+          team.thumbnail((2200, 2200), Image.Resampling.LANCZOS)
+          team.save(assets / 'brutti-team.jpg', quality=88, optimize=True)
+
+          logo = Image.open(assets / 'logo brutti.jpg').convert('RGBA')
+          bg = logo.getpixel((0, 0))[:3]
+          pixels = logo.load()
+          threshold = 58
+          for y in range(logo.height):
+              for x in range(logo.width):
+                  r, g, b, a = pixels[x, y]
+                  distance = ((r-bg[0])**2 + (g-bg[1])**2 + (b-bg[2])**2) ** 0.5
+                  if distance < threshold:
+                      pixels[x, y] = (r, g, b, 0)
+          logo.save(assets / 'logo-brutti-transparent.png')
+          PY
 
       - name: Setup Node
         uses: actions/setup-node@v4
