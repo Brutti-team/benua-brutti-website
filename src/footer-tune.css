@@ -1,46 +1,122 @@
-/* Larger premium footer inspired by the scale/rhythm of modern SaaS sites */
+/* Bottom-of-site tuning: contact should fit comfortably in one viewport, footer compact but premium */
+
+/* CONTACT — tighter, balanced, easier to view in one screen */
+.contact.section-pad,
+.contact {
+  padding-top: 48px !important;
+  padding-bottom: 42px !important;
+}
+
+.contact__head {
+  align-items: end !important;
+  gap: 26px !important;
+}
+
+.contact__head h2 {
+  font-size: clamp(38px, 3.9vw, 52px) !important;
+  line-height: .98 !important;
+  max-width: 620px !important;
+}
+
+.contact__phone {
+  font-size: 11.5px !important;
+  padding-bottom: 8px !important;
+}
+
+.contact__grid {
+  margin-top: 28px !important;
+  gap: 12px !important;
+}
+
+.location-card {
+  min-height: 188px !important;
+  padding: 18px 20px !important;
+  border-radius: 14px !important;
+}
+
+.location-card > span {
+  font-size: 8px !important;
+  letter-spacing: .16em !important;
+}
+
+.location-card h3 {
+  margin: 13px 0 9px !important;
+  font-size: 22px !important;
+}
+
+.location-card p {
+  margin-bottom: 12px !important;
+  font-size: 11.5px !important;
+  line-height: 1.5 !important;
+}
+
+.location-card a {
+  font-size: 10px !important;
+}
+
+.showroom {
+  height: 215px !important;
+  margin-top: 12px !important;
+  border-radius: 14px !important;
+}
+
+.showroom img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center 48% !important;
+}
+
+.showroom__label {
+  left: 10px !important;
+  bottom: 10px !important;
+  padding: 6px 8px !important;
+  font-size: 8px !important;
+}
+
+/* FOOTER — no longer oversized, closer to a polished SaaS footer */
 .footer {
-  min-height: 300px !important;
-  padding: 72px 0 28px !important;
+  min-height: 0 !important;
+  padding: 42px 0 22px !important;
   background: #0b2a1e !important;
 }
 
 .footer__grid {
-  min-height: 170px !important;
+  min-height: 0 !important;
   display: grid !important;
-  grid-template-columns: 1.1fr .9fr !important;
+  grid-template-columns: 1fr auto !important;
   align-items: start !important;
-  gap: 72px !important;
+  gap: 56px !important;
 }
 
 .footer .brutti-logo-img {
-  width: 128px !important;
-  max-height: 44px !important;
-  margin-bottom: 22px !important;
+  width: 92px !important;
+  max-height: 32px !important;
+  margin-bottom: 14px !important;
 }
 
 .footer p {
-  max-width: 420px !important;
+  max-width: 360px !important;
   margin: 0 !important;
-  font-size: 20px !important;
-  line-height: 1.35 !important;
-  letter-spacing: -.025em !important;
-  color: rgba(255,255,255,.84) !important;
+  font-size: 15px !important;
+  line-height: 1.4 !important;
+  letter-spacing: -.018em !important;
+  color: rgba(255,255,255,.78) !important;
 }
 
 .footer__links {
   justify-self: end !important;
   display: grid !important;
   justify-items: end !important;
-  gap: 14px !important;
-  font-size: 13px !important;
-  line-height: 1.4 !important;
+  gap: 10px !important;
+  font-size: 11.5px !important;
+  line-height: 1.35 !important;
 }
 
 .footer__links a,
 .footer__links span,
 .footer__links button {
-  color: rgba(255,255,255,.76) !important;
+  color: rgba(255,255,255,.72) !important;
   transition: color .22s ease, transform .22s ease !important;
 }
 
@@ -51,63 +127,93 @@
 }
 
 .footer__bottom {
-  margin-top: 42px !important;
-  padding-top: 18px !important;
-  border-top: 1px solid rgba(255,255,255,.12) !important;
-  font-size: 10px !important;
-  letter-spacing: .06em !important;
-  color: rgba(255,255,255,.50) !important;
+  margin-top: 30px !important;
+  padding-top: 13px !important;
+  border-top: 1px solid rgba(255,255,255,.10) !important;
+  font-size: 8.5px !important;
+  letter-spacing: .05em !important;
+  color: rgba(255,255,255,.44) !important;
 }
 
 @media (max-width: 900px) {
+  .contact.section-pad,
+  .contact {
+    padding-top: 42px !important;
+    padding-bottom: 36px !important;
+  }
+
+  .contact__head {
+    gap: 18px !important;
+  }
+
+  .location-card {
+    min-height: 180px !important;
+  }
+
+  .showroom {
+    height: 200px !important;
+  }
+
   .footer {
-    min-height: 270px !important;
-    padding: 58px 0 24px !important;
+    padding: 38px 0 20px !important;
   }
 
   .footer__grid {
     grid-template-columns: 1fr 1fr !important;
-    gap: 40px !important;
-    min-height: 150px !important;
-  }
-
-  .footer .brutti-logo-img {
-    width: 112px !important;
-  }
-
-  .footer p {
-    font-size: 18px !important;
+    gap: 32px !important;
   }
 }
 
 @media (max-width: 620px) {
-  .footer {
+  .contact.section-pad,
+  .contact {
+    padding-top: 36px !important;
+    padding-bottom: 30px !important;
+  }
+
+  .contact__head h2 {
+    font-size: clamp(32px, 9.5vw, 42px) !important;
+  }
+
+  .contact__grid {
+    margin-top: 22px !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .location-card {
     min-height: 0 !important;
-    padding: 48px 0 22px !important;
+    padding: 17px !important;
+  }
+
+  .showroom {
+    height: 180px !important;
+  }
+
+  .footer {
+    padding: 34px 0 18px !important;
   }
 
   .footer__grid {
     grid-template-columns: 1fr !important;
-    gap: 34px !important;
-    min-height: 0 !important;
+    gap: 24px !important;
   }
 
   .footer__links {
     justify-self: start !important;
     justify-items: start !important;
-    gap: 11px !important;
+    gap: 9px !important;
   }
 
   .footer .brutti-logo-img {
-    width: 106px !important;
-    margin-bottom: 18px !important;
+    width: 88px !important;
+    margin-bottom: 12px !important;
   }
 
   .footer p {
-    font-size: 17px !important;
+    font-size: 14px !important;
   }
 
   .footer__bottom {
-    margin-top: 34px !important;
+    margin-top: 24px !important;
   }
 }
