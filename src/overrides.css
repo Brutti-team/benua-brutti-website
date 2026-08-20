@@ -6,7 +6,7 @@
   transform: translateX(-50%) !important;
   padding: 13px 18px !important;
   border-radius: 20px !important;
-  background: rgba(8, 18, 13, .42) !important;
+  background: rgba(8, 18, 13, .86) !important;
   border: 1px solid rgba(255, 255, 255, .14) !important;
   box-shadow: 0 18px 60px rgba(0, 0, 0, .16) !important;
   backdrop-filter: blur(18px) saturate(135%) !important;
@@ -16,7 +16,7 @@
 .nav--scrolled {
   top: 12px !important;
   color: #17251e !important;
-  background: rgba(249, 247, 241, .94) !important;
+  background: rgba(249, 247, 241, .96) !important;
   border-color: rgba(23, 37, 30, .10) !important;
   box-shadow: 0 14px 42px rgba(17, 34, 25, .12) !important;
 }
@@ -29,8 +29,8 @@
 }
 
 .brutti-logo-img {
-  width: 112px !important;
-  max-height: 38px !important;
+  width: 116px !important;
+  max-height: 40px !important;
   height: auto !important;
   opacity: 1 !important;
   background: transparent !important;
@@ -56,7 +56,7 @@
   border-radius: 999px !important;
   font-size: 13px !important;
   font-weight: 500 !important;
-  opacity: .9 !important;
+  opacity: .92 !important;
   transition: background .25s ease, opacity .25s ease, transform .25s ease !important;
 }
 
@@ -75,12 +75,16 @@
   opacity: 1 !important;
 }
 
-/* --- Full-screen Brutti team hero --- */
+/* --- Hero starts below the floating navbar --- */
 .hero {
-  min-height: 720px !important;
-  height: 100svh !important;
+  margin-top: 96px !important;
+  min-height: 650px !important;
+  height: calc(100svh - 96px) !important;
   max-height: none !important;
   background: #0c1912 !important;
+  border-top-left-radius: 28px !important;
+  border-top-right-radius: 28px !important;
+  overflow: hidden !important;
 }
 
 .hero__image-wrap {
@@ -104,12 +108,12 @@
 }
 
 .hero__content {
-  padding-bottom: 72px !important;
+  padding-bottom: 62px !important;
 }
 
 .hero__content h1 {
   max-width: 850px !important;
-  font-size: clamp(72px, 8.3vw, 128px) !important;
+  font-size: clamp(70px, 8vw, 122px) !important;
   line-height: .88 !important;
   text-wrap: balance !important;
 }
@@ -159,9 +163,10 @@
   box-shadow: 0 18px 52px rgba(24, 40, 31, .07) !important;
 }
 
-/* --- Our Story: force founder photo to be visible --- */
+/* --- Our Story: transparent founder cut-out --- */
 .story {
   background: #143f2e !important;
+  overflow: hidden !important;
 }
 
 .story__grid {
@@ -173,31 +178,57 @@
 .story__visual {
   min-height: 650px !important;
   display: flex !important;
-  align-items: center !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  position: relative !important;
+}
+
+.story__visual::before {
+  content: '' !important;
+  position: absolute !important;
+  width: 520px !important;
+  height: 520px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle, rgba(255,255,255,.10) 0%, rgba(255,255,255,.025) 52%, transparent 72%) !important;
+  left: 50% !important;
+  bottom: 20px !important;
+  transform: translateX(-50%) !important;
+  pointer-events: none !important;
 }
 
 .story__photo-wrap {
   width: 100% !important;
   min-height: 620px !important;
   margin: 0 !important;
-  overflow: hidden !important;
-  border-radius: 26px !important;
-  background: rgba(255, 255, 255, .05) !important;
-  clip-path: inset(0 0 0 0) !important;
+  overflow: visible !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  clip-path: none !important;
   opacity: 1 !important;
   visibility: visible !important;
-  box-shadow: 0 28px 70px rgba(0, 0, 0, .22) !important;
+  box-shadow: none !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
 
 .story__photo-wrap img {
   display: block !important;
-  width: 100% !important;
+  width: auto !important;
+  max-width: 92% !important;
   height: 650px !important;
-  max-width: none !important;
-  object-fit: cover !important;
-  object-position: center 35% !important;
+  object-fit: contain !important;
+  object-position: center bottom !important;
   opacity: 1 !important;
   visibility: visible !important;
+  filter: drop-shadow(0 26px 38px rgba(0, 0, 0, .28)) !important;
+}
+
+.story__vertical {
+  left: -6px !important;
+  z-index: 2 !important;
 }
 
 .story__content {
@@ -274,13 +305,16 @@
   }
 
   .brutti-logo-img {
-    width: 96px !important;
+    width: 98px !important;
     max-height: 34px !important;
   }
 
   .hero {
-    min-height: 680px !important;
-    height: 92svh !important;
+    margin-top: 82px !important;
+    min-height: 620px !important;
+    height: calc(92svh - 82px) !important;
+    border-top-left-radius: 20px !important;
+    border-top-right-radius: 20px !important;
   }
 
   .hero__image {
@@ -298,11 +332,11 @@
 
   .story__grid {
     grid-template-columns: 1fr !important;
-    gap: 46px !important;
+    gap: 42px !important;
   }
 
   .story__visual {
-    min-height: auto !important;
+    min-height: 520px !important;
   }
 
   .story__photo-wrap {
@@ -310,8 +344,8 @@
   }
 
   .story__photo-wrap img {
-    height: 540px !important;
-    object-position: center 32% !important;
+    height: 520px !important;
+    max-width: 96% !important;
   }
 
   .product-card:nth-child(even) {
@@ -321,8 +355,9 @@
 
 @media (max-width: 620px) {
   .hero {
-    height: 88svh !important;
-    min-height: 650px !important;
+    margin-top: 76px !important;
+    height: calc(88svh - 76px) !important;
+    min-height: 590px !important;
   }
 
   .hero__image {
@@ -330,19 +365,22 @@
   }
 
   .hero__content {
-    padding-bottom: 48px !important;
+    padding-bottom: 42px !important;
   }
 
-  .story__photo-wrap,
+  .story__visual,
+  .story__photo-wrap {
+    min-height: 440px !important;
+  }
+
   .story__photo-wrap img {
-    min-height: 0 !important;
-    height: 470px !important;
+    height: 450px !important;
+    max-width: 100% !important;
   }
 
   .gallery-card,
   .product-card__image,
   .showroom,
-  .story__photo-wrap,
   .location-card {
     border-radius: 18px !important;
   }
