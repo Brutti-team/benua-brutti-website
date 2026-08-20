@@ -1,0 +1,602 @@
+/* Final visual polish: keep Brutti design, improve scale, rhythm, clarity and motion */
+:root {
+  --brutti-shell: 1120px;
+  --brutti-green: #163c2d;
+  --brutti-green-deep: #0f271c;
+  --brutti-cream: #f7f4ee;
+  --brutti-paper: #fbfaf6;
+  --brutti-ink: #152018;
+  --brutti-muted: #687269;
+  --brutti-line: rgba(21, 62, 45, .10);
+  --brutti-shadow: 0 18px 50px rgba(20, 49, 35, .08);
+}
+
+html {
+  scroll-padding-top: 82px;
+}
+
+body {
+  font-size: 14.5px !important;
+  line-height: 1.6 !important;
+  background: var(--brutti-paper) !important;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+main {
+  overflow: hidden;
+}
+
+.page-shell {
+  width: min(var(--brutti-shell), calc(100% - 48px)) !important;
+}
+
+section {
+  scroll-margin-top: 80px;
+}
+
+button,
+a,
+.gallery-card,
+.product-card,
+.location-card,
+.showroom,
+.collab-card {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid rgba(78, 126, 100, .85);
+  outline-offset: 3px;
+}
+
+/* NAV — compact, glassy, refined */
+.nav {
+  top: 12px !important;
+  width: min(1136px, calc(100% - 28px)) !important;
+  min-height: 54px !important;
+  padding: 8px 14px !important;
+  border-radius: 16px !important;
+  background: rgba(10, 26, 18, .84) !important;
+  border: 1px solid rgba(255, 255, 255, .09) !important;
+  box-shadow: 0 10px 32px rgba(6, 20, 13, .14) !important;
+  backdrop-filter: blur(18px) saturate(130%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(130%) !important;
+}
+
+.nav--scrolled {
+  top: 9px !important;
+  background: rgba(250, 248, 242, .94) !important;
+  border-color: rgba(20, 61, 43, .08) !important;
+  box-shadow: 0 10px 28px rgba(20, 49, 35, .09) !important;
+}
+
+.brutti-logo-img {
+  width: 78px !important;
+  max-height: 26px !important;
+}
+
+.nav__links {
+  gap: 2px !important;
+}
+
+.nav__links button {
+  padding: 7px 11px !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  letter-spacing: .01em !important;
+  transition: background .22s ease, color .22s ease, transform .22s ease !important;
+}
+
+.nav__links button:hover {
+  transform: translateY(-1px);
+}
+
+/* HERO — same split concept, cleaner proportions */
+.hero {
+  margin-top: 78px !important;
+  height: 520px !important;
+  min-height: 520px !important;
+  max-height: 520px !important;
+  border-radius: 22px !important;
+  box-shadow: var(--brutti-shadow) !important;
+}
+
+.hero__image-wrap {
+  left: 55% !important;
+  background: #173b2c !important;
+}
+
+.hero__image {
+  padding: 14px !important;
+  border-radius: 24px !important;
+}
+
+.hero__content {
+  width: min(var(--brutti-shell), calc(100% - 48px)) !important;
+  padding-right: 48% !important;
+}
+
+.hero__content h1 {
+  max-width: 570px !important;
+  font-size: clamp(52px, 5.1vw, 72px) !important;
+  line-height: .94 !important;
+  letter-spacing: -.045em !important;
+}
+
+.hero__intro {
+  max-width: 420px !important;
+  margin: 17px 0 19px !important;
+  font-size: 14px !important;
+  line-height: 1.62 !important;
+  color: rgba(255,255,255,.76) !important;
+}
+
+.hero__explore {
+  gap: 9px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+.hero__explore svg {
+  transition: transform .25s ease !important;
+}
+
+.hero__explore:hover svg {
+  transform: translate(2px, 3px) !important;
+}
+
+.eyebrow,
+.collaborators-eyebrow {
+  font-size: 9px !important;
+  letter-spacing: .24em !important;
+  margin-bottom: 12px !important;
+}
+
+/* SECTION RHYTHM */
+.section-pad {
+  padding-top: 76px !important;
+  padding-bottom: 76px !important;
+}
+
+.section-pad--bottom {
+  padding-bottom: 76px !important;
+}
+
+h2,
+.collaborators-head h2 {
+  font-size: clamp(40px, 4.2vw, 56px) !important;
+  line-height: 1 !important;
+  letter-spacing: -.038em !important;
+}
+
+.impact__grid,
+.story__grid,
+.catalogue__heading,
+.collaborators-head {
+  gap: 44px !important;
+}
+
+.impact__copy p,
+.catalogue__intro,
+.story__content p,
+.collaborators-copy {
+  font-size: 14px !important;
+  line-height: 1.68 !important;
+}
+
+/* IMPACT */
+.impact__numbers {
+  margin-top: 52px !important;
+  gap: 32px !important;
+}
+
+.impact__line {
+  height: 104px !important;
+}
+
+.impact-stat strong {
+  font-size: clamp(62px, 7vw, 92px) !important;
+  letter-spacing: -.06em !important;
+}
+
+.impact-stat span {
+  margin-top: 12px !important;
+  font-size: 15px !important;
+}
+
+.impact-stat b {
+  font-size: 9.5px !important;
+  letter-spacing: .18em !important;
+}
+
+/* GALLERY */
+.gallery__lead,
+.catalogue__heading {
+  margin-bottom: 38px !important;
+}
+
+.gallery__layout,
+.gallery__stack {
+  gap: 16px !important;
+}
+
+.gallery-card,
+.product-card__image,
+.story__photo-wrap,
+.location-card,
+.showroom {
+  border-radius: 18px !important;
+  box-shadow: 0 12px 34px rgba(20, 49, 35, .055);
+}
+
+.gallery-card img,
+.product-card__image img,
+.showroom img {
+  transition: transform .7s cubic-bezier(.22,1,.36,1), filter .45s ease !important;
+}
+
+.gallery-card:hover img,
+.product-card:hover .product-card__image img,
+.showroom:hover img {
+  transform: scale(1.025) !important;
+}
+
+.gallery-card img {
+  height: 300px !important;
+}
+
+.gallery-card--large img {
+  height: 470px !important;
+}
+
+.gallery-card--wide img {
+  height: 215px !important;
+}
+
+.gallery-card figcaption {
+  left: 13px !important;
+  bottom: 13px !important;
+  padding: 7px 10px !important;
+  border-radius: 999px !important;
+  background: rgba(251, 250, 246, .90) !important;
+  font-size: 9.5px !important;
+  box-shadow: 0 6px 20px rgba(17, 43, 30, .08) !important;
+}
+
+/* STORY */
+.story {
+  background:
+    radial-gradient(circle at 10% 10%, rgba(255,255,255,.035), transparent 26%),
+    #143f2e !important;
+}
+
+.story__grid {
+  grid-template-columns: .94fr 1.06fr !important;
+}
+
+.story__visual,
+.story__photo-wrap {
+  min-height: 390px !important;
+  height: 390px !important;
+}
+
+.story__photo-wrap img {
+  object-position: center 32% !important;
+}
+
+.story__content {
+  max-width: 475px !important;
+}
+
+.story__content h2 {
+  margin-bottom: 17px !important;
+}
+
+.story__content blockquote {
+  margin-top: 22px !important;
+  padding-top: 18px !important;
+  font-size: clamp(17px, 1.65vw, 22px) !important;
+  line-height: 1.45 !important;
+}
+
+/* PROCESS */
+.process__steps {
+  margin-top: 40px !important;
+}
+
+.process-step {
+  min-height: 58px !important;
+  grid-template-columns: 44px 1fr auto !important;
+  transition: background .22s ease, padding .22s ease !important;
+}
+
+.process-step:hover {
+  background: rgba(22, 60, 45, .035) !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+
+.process-step strong {
+  font-size: clamp(22px, 2.7vw, 34px) !important;
+  transition: transform .24s ease !important;
+}
+
+.process-step:hover strong {
+  transform: translateX(5px);
+}
+
+/* CATALOGUE */
+.catalogue__grid {
+  gap: 30px 18px !important;
+}
+
+.product-card:nth-child(even) {
+  margin-top: 12px !important;
+}
+
+.product-card__image img {
+  height: 310px !important;
+}
+
+.product-card__hover {
+  width: 42px !important;
+  height: 42px !important;
+}
+
+.product-card__meta {
+  padding: 10px 3px 0 !important;
+}
+
+.product-card__meta h3 {
+  margin-top: 5px !important;
+  font-size: 17px !important;
+  letter-spacing: -.02em !important;
+}
+
+.product-card__meta span {
+  font-size: 8.5px !important;
+}
+
+/* COLLABORATORS — premium but light */
+.collaborators-section {
+  padding: 68px 0 72px !important;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(44, 91, 68, .07), transparent 30%),
+    #f6f3ed !important;
+}
+
+.collaborators-head {
+  margin-bottom: 34px !important;
+}
+
+.collaborators-marquee {
+  gap: 11px !important;
+}
+
+.collaborators-track {
+  gap: 11px !important;
+  animation-duration: 56s !important;
+}
+
+.collaborators-track--reverse {
+  animation-duration: 62s !important;
+}
+
+.collab-card {
+  flex-basis: 146px !important;
+  height: 78px !important;
+  padding: 14px 18px !important;
+  border-radius: 14px !important;
+  box-shadow: 0 8px 22px rgba(20, 52, 37, .045) !important;
+}
+
+.collab-card img {
+  max-width: 106px !important;
+  max-height: 43px !important;
+}
+
+/* CONTACT */
+.contact {
+  background:
+    radial-gradient(circle at 90% 0%, rgba(255,255,255,.035), transparent 28%),
+    #143f2e !important;
+}
+
+.contact__grid {
+  margin-top: 44px !important;
+  gap: 16px !important;
+}
+
+.location-card {
+  min-height: 236px !important;
+  padding: 22px !important;
+  transition: transform .28s ease, border-color .28s ease, background .28s ease !important;
+}
+
+.location-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255,255,255,.055) !important;
+  border-color: rgba(255,255,255,.20) !important;
+}
+
+.location-card h3 {
+  margin: 18px 0 12px !important;
+  font-size: 27px !important;
+}
+
+.location-card p {
+  font-size: 12px !important;
+  line-height: 1.62 !important;
+}
+
+.location-card a,
+.contact__phone {
+  font-size: 11px !important;
+}
+
+.showroom {
+  height: 315px !important;
+  margin-top: 16px !important;
+}
+
+/* FOOTER */
+.footer {
+  padding-top: 40px !important;
+  padding-bottom: 22px !important;
+}
+
+.footer__bottom {
+  margin-top: 30px !important;
+}
+
+/* Subtle entrance polish for items that do not use Framer reveal */
+@keyframes brutti-soft-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.nav,
+.hero,
+.collaborators-section {
+  animation: brutti-soft-enter .65s cubic-bezier(.22,1,.36,1) both;
+}
+
+@media (max-width: 900px) {
+  .page-shell {
+    width: min(100% - 28px, var(--brutti-shell)) !important;
+  }
+
+  .nav {
+    width: calc(100% - 16px) !important;
+    top: 8px !important;
+  }
+
+  .hero {
+    margin-top: 68px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+
+  .hero__content {
+    width: min(100% - 28px, var(--brutti-shell)) !important;
+    min-height: 330px !important;
+    padding: 44px 0 32px !important;
+  }
+
+  .hero__image-wrap {
+    height: 410px !important;
+  }
+
+  .section-pad {
+    padding-top: 58px !important;
+    padding-bottom: 58px !important;
+  }
+
+  .section-pad--bottom {
+    padding-bottom: 58px !important;
+  }
+
+  .impact__grid,
+  .story__grid,
+  .catalogue__heading,
+  .collaborators-head {
+    gap: 26px !important;
+  }
+
+  .story__visual,
+  .story__photo-wrap {
+    min-height: 340px !important;
+    height: 340px !important;
+  }
+
+  .product-card:nth-child(even) {
+    margin-top: 0 !important;
+  }
+
+  .collaborators-section {
+    padding: 56px 0 60px !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .page-shell {
+    width: calc(100% - 22px) !important;
+  }
+
+  .nav {
+    width: calc(100% - 12px) !important;
+    border-radius: 13px !important;
+  }
+
+  .hero {
+    margin-top: 64px !important;
+    border-radius: 16px !important;
+  }
+
+  .hero__content {
+    width: calc(100% - 22px) !important;
+    min-height: 300px !important;
+    padding: 38px 0 28px !important;
+  }
+
+  .hero__content h1 {
+    font-size: clamp(40px, 12vw, 54px) !important;
+  }
+
+  .hero__image-wrap {
+    height: 340px !important;
+  }
+
+  .section-pad {
+    padding-top: 50px !important;
+    padding-bottom: 50px !important;
+  }
+
+  .section-pad--bottom {
+    padding-bottom: 50px !important;
+  }
+
+  h2,
+  .collaborators-head h2 {
+    font-size: clamp(34px, 10vw, 46px) !important;
+  }
+
+  .gallery-card img,
+  .gallery-card--large img,
+  .gallery-card--wide img {
+    height: 280px !important;
+  }
+
+  .story__visual,
+  .story__photo-wrap {
+    min-height: 300px !important;
+    height: 300px !important;
+  }
+
+  .product-card__image img {
+    height: 275px !important;
+  }
+
+  .showroom {
+    height: 245px !important;
+  }
+
+  .collab-card {
+    flex-basis: 126px !important;
+    height: 68px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
