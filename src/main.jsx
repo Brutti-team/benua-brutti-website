@@ -11,7 +11,7 @@ function BruttiSite() {
     const applyRealAssets = () => {
       const hero = document.querySelector('.hero__image')
       if (hero) {
-        hero.src = asset('brutti-team-landscape.jpg')
+        hero.src = asset('brutti-team-hero.jpg')
         hero.alt = 'Benua Brutti team'
       }
 
@@ -27,7 +27,7 @@ function BruttiSite() {
         sharedShowroom.alt = 'Benua Brutti shared showroom'
       }
 
-      document.querySelectorAll('img[alt="Benua Brutti"]').forEach((logo) => {
+      document.querySelectorAll('.brand img, .footer img[alt="Benua Brutti"]').forEach((logo) => {
         logo.src = asset('logo-brutti-transparent.png')
         logo.classList.add('brutti-logo-img')
       })
