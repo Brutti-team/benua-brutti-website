@@ -38,8 +38,7 @@ jobs:
           register_heif_opener()
           assets = Path('public/assets')
 
-          # Hero: true 16:9 crop from the real team photo, centred on the faces.
-          # This fills the full screen without blurred side panels.
+          # Hero: 16:9 crop from the real team photo, centred on the group.
           team = Image.open(assets / 'brutti team.HEIC')
           team = ImageOps.exif_transpose(team).convert('RGB')
           hero = ImageOps.fit(
@@ -50,11 +49,39 @@ jobs:
           )
           hero.save(assets / 'brutti-team-hero.jpg', quality=91, optimize=True)
 
-          # Founder & co-founder: reliable browser-friendly image.
+          # Founder & co-founder: convert and remove the studio background.
           founders = Image.open(assets / 'founder & co founder.JPG')
-          founders = ImageOps.exif_transpose(founders).convert('RGB')
+          founders = ImageOps.exif_transpose(founders).convert('RGBA')
           founders.thumbnail((2000, 2000), Image.Resampling.LANCZOS)
-          founders.save(assets / 'founders.jpg', quality=91, optimize=True)
+
+          # Estimate the studio background from the four corners.
+          corners = [
+              founders.getpixel((0, 0))[:3],
+              founders.getpixel((founders.width - 1, 0))[:3],
+              founders.getpixel((0, founders.height - 1))[:3],
+              founders.getpixel((founders.width - 1, founders.height - 1))[:3],
+          ]
+          bg = tuple(sum(c[i] for c in corners) // len(corners) for i in range(3))
+          px = founders.load()
+          soft_start = 46
+          soft_end = 105
+
+          for y in range(founders.height):
+              for x in range(founders.width):
+                  r, g, b, a = px[x, y]
+                  distance = ((r-bg[0])**2 + (g-bg[1])**2 + (b-bg[2])**2) ** 0.5
+                  if distance <= soft_start:
+                      alpha = 0
+                  elif distance >= soft_end:
+                      alpha = a
+                  else:
+                      alpha = int(a * (distance - soft_start) / (soft_end - soft_start))
+                  px[x, y] = (r, g, b, alpha)
+
+          bbox = founders.getbbox()
+          if bbox:
+              founders = founders.crop(bbox)
+          founders.save(assets / 'founders-transparent.png')
 
           # Transparent Brutti logo.
           logo = Image.open(assets / 'logo brutti.jpg').convert('RGBA')
@@ -62,11 +89,11 @@ jobs:
           pixels = logo.load()
           threshold = 62
           for py in range(logo.height):
-              for px in range(logo.width):
-                  r, g, b, a = pixels[px, py]
+              for px_i in range(logo.width):
+                  r, g, b, a = pixels[px_i, py]
                   distance = ((r-bg_colour[0])**2 + (g-bg_colour[1])**2 + (b-bg_colour[2])**2) ** 0.5
                   if distance < threshold:
-                      pixels[px, py] = (r, g, b, 0)
+                      pixels[px_i, py] = (r, g, b, 0)
           logo.save(assets / 'logo-brutti-transparent.png')
           PY
 
