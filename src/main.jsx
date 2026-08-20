@@ -10,6 +10,7 @@ import './collaborators.css'
 import './polish.css'
 import './final-tune.css'
 import './modern-2026.css'
+import './footer-tune.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
