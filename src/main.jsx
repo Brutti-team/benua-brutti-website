@@ -12,7 +12,7 @@ function BruttiSite() {
     const applyRealAssets = () => {
       const hero = document.querySelector('.hero__image')
       if (hero) {
-        hero.src = asset('brutti-team-hero.jpg')
+        hero.src = asset('brutti-team-full.jpg')
         hero.alt = 'Benua Brutti team'
       }
 
