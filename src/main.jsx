@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './styles.css'
 import './overrides.css'
+import './hero-fix.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
