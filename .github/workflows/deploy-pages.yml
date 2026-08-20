@@ -29,37 +29,31 @@ jobs:
       - name: Prepare Brutti web images
         run: |
           python -m pip install --upgrade pip
-          python -m pip install pillow pillow-heif "rembg[cpu]"
+          python -m pip install pillow pillow-heif
           python - <<'PY'
           from pathlib import Path
           from PIL import Image, ImageOps
           from pillow_heif import register_heif_opener
-          from rembg import remove, new_session
 
           register_heif_opener()
           assets = Path('public/assets')
 
-          # Team hero: wide crop with the group kept central.
+          # Team hero: wide crop centred on the group.
           team = Image.open(assets / 'brutti team.HEIC')
           team = ImageOps.exif_transpose(team).convert('RGB')
           hero = ImageOps.fit(
               team,
-              (2400, 1350),
+              (2200, 1238),
               method=Image.Resampling.LANCZOS,
               centering=(0.5, 0.42),
           )
-          hero.save(assets / 'brutti-team-hero.jpg', quality=91, optimize=True)
+          hero.save(assets / 'brutti-team-hero.jpg', quality=90, optimize=True)
 
-          # Founder & co-founder: proper subject segmentation for a clean transparent cut-out.
+          # Founder & co-founder: keep the original photo natural and browser-friendly.
           founders = Image.open(assets / 'founder & co founder.JPG')
-          founders = ImageOps.exif_transpose(founders).convert('RGBA')
+          founders = ImageOps.exif_transpose(founders).convert('RGB')
           founders.thumbnail((1600, 1600), Image.Resampling.LANCZOS)
-          session = new_session('u2netp')
-          founders_cutout = remove(founders, session=session, alpha_matting=True, alpha_matting_foreground_threshold=240, alpha_matting_background_threshold=12, alpha_matting_erode_size=8)
-          bbox = founders_cutout.getbbox()
-          if bbox:
-              founders_cutout = founders_cutout.crop(bbox)
-          founders_cutout.save(assets / 'founders-transparent.png', optimize=True)
+          founders.save(assets / 'founders.jpg', quality=90, optimize=True)
 
           # Transparent Brutti logo.
           logo = Image.open(assets / 'logo brutti.jpg').convert('RGBA')
