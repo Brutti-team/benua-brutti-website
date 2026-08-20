@@ -32,38 +32,35 @@ jobs:
           python -m pip install pillow pillow-heif
           python - <<'PY'
           from pathlib import Path
-          from PIL import Image, ImageOps, ImageFilter, ImageEnhance
+          from PIL import Image, ImageOps
           from pillow_heif import register_heif_opener
 
           register_heif_opener()
           assets = Path('public/assets')
 
-          # Team hero: make a true landscape 16:9 image while keeping the full team visible.
+          # Hero: true 16:9 crop from the real team photo, centred on the faces.
+          # This fills the full screen without blurred side panels.
           team = Image.open(assets / 'brutti team.HEIC')
           team = ImageOps.exif_transpose(team).convert('RGB')
-          canvas_size = (2200, 1238)
+          hero = ImageOps.fit(
+              team,
+              (2400, 1350),
+              method=Image.Resampling.LANCZOS,
+              centering=(0.5, 0.43),
+          )
+          hero.save(assets / 'brutti-team-hero.jpg', quality=91, optimize=True)
 
-          bg = ImageOps.fit(team, canvas_size, method=Image.Resampling.LANCZOS)
-          bg = bg.filter(ImageFilter.GaussianBlur(34))
-          bg = ImageEnhance.Brightness(bg).enhance(0.68)
-
-          foreground = ImageOps.contain(team, (2050, 1160), method=Image.Resampling.LANCZOS)
-          x = (canvas_size[0] - foreground.width) // 2
-          y = (canvas_size[1] - foreground.height) // 2
-          bg.paste(foreground, (x, y))
-          bg.save(assets / 'brutti-team-landscape.jpg', quality=90, optimize=True)
-
-          # Founder & co-founder: convert to a clean web JPG with a simple filename.
+          # Founder & co-founder: reliable browser-friendly image.
           founders = Image.open(assets / 'founder & co founder.JPG')
           founders = ImageOps.exif_transpose(founders).convert('RGB')
-          founders.thumbnail((1800, 1800), Image.Resampling.LANCZOS)
-          founders.save(assets / 'founders.jpg', quality=90, optimize=True)
+          founders.thumbnail((2000, 2000), Image.Resampling.LANCZOS)
+          founders.save(assets / 'founders.jpg', quality=91, optimize=True)
 
           # Transparent Brutti logo.
           logo = Image.open(assets / 'logo brutti.jpg').convert('RGBA')
           bg_colour = logo.getpixel((0, 0))[:3]
           pixels = logo.load()
-          threshold = 58
+          threshold = 62
           for py in range(logo.height):
               for px in range(logo.width):
                   r, g, b, a = pixels[px, py]
