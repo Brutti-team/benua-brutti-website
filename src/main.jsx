@@ -11,6 +11,7 @@ import './polish.css'
 import './final-tune.css'
 import './modern-2026.css'
 import './footer-tune.css'
+import './hero-landscape.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
@@ -40,7 +41,7 @@ function BruttiSite() {
     const applyRealAssets = () => {
       const hero = document.querySelector('.hero__image')
       if (hero) {
-        hero.src = asset('brutti-team-full.jpg')
+        hero.src = asset('brutti-team-landscape.jpg')
         hero.alt = 'Benua Brutti team'
       }
 
