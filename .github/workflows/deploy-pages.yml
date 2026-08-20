@@ -38,16 +38,11 @@ jobs:
           register_heif_opener()
           assets = Path('public/assets')
 
-          # Team hero: wide crop biased upward so the top row faces stay visible.
+          # Team hero: preserve the complete original composition so every person is visible.
           team = Image.open(assets / 'brutti team.HEIC')
           team = ImageOps.exif_transpose(team).convert('RGB')
-          hero = ImageOps.fit(
-              team,
-              (2400, 1080),
-              method=Image.Resampling.LANCZOS,
-              centering=(0.5, 0.28),
-          )
-          hero.save(assets / 'brutti-team-hero.jpg', quality=90, optimize=True)
+          team.thumbnail((2200, 1600), Image.Resampling.LANCZOS)
+          team.save(assets / 'brutti-team-full.jpg', quality=91, optimize=True)
 
           # Founder & co-founder: keep the original photo natural and browser-friendly.
           founders = Image.open(assets / 'founder & co founder.JPG')
