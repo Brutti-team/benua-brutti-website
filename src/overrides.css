@@ -1,0 +1,31 @@
+.hero__image {
+  object-position: center 35% !important;
+}
+
+.hero__shade {
+  background: linear-gradient(90deg, rgba(9, 17, 13, .84) 0%, rgba(9, 17, 13, .48) 44%, rgba(9, 17, 13, .14) 100%) !important;
+}
+
+.brutti-logo-img {
+  background: transparent !important;
+  border-radius: 0 !important;
+  object-fit: contain !important;
+}
+
+.nav:not(.nav--scrolled) .brutti-logo-img {
+  filter: brightness(0) invert(1) drop-shadow(0 1px 7px rgba(0, 0, 0, .24));
+}
+
+.nav--scrolled .brutti-logo-img {
+  filter: none;
+}
+
+.footer .brutti-logo-img {
+  filter: brightness(0) invert(1);
+}
+
+@media (max-width: 900px) {
+  .hero__image {
+    object-position: center 28% !important;
+  }
+}
