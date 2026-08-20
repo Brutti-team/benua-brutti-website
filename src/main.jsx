@@ -9,6 +9,7 @@ import './hero-fix.css'
 import './collaborators.css'
 import './polish.css'
 import './final-tune.css'
+import './modern-2026.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
