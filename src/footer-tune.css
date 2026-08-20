@@ -1,0 +1,113 @@
+/* Larger premium footer inspired by the scale/rhythm of modern SaaS sites */
+.footer {
+  min-height: 300px !important;
+  padding: 72px 0 28px !important;
+  background: #0b2a1e !important;
+}
+
+.footer__grid {
+  min-height: 170px !important;
+  display: grid !important;
+  grid-template-columns: 1.1fr .9fr !important;
+  align-items: start !important;
+  gap: 72px !important;
+}
+
+.footer .brutti-logo-img {
+  width: 128px !important;
+  max-height: 44px !important;
+  margin-bottom: 22px !important;
+}
+
+.footer p {
+  max-width: 420px !important;
+  margin: 0 !important;
+  font-size: 20px !important;
+  line-height: 1.35 !important;
+  letter-spacing: -.025em !important;
+  color: rgba(255,255,255,.84) !important;
+}
+
+.footer__links {
+  justify-self: end !important;
+  display: grid !important;
+  justify-items: end !important;
+  gap: 14px !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+}
+
+.footer__links a,
+.footer__links span,
+.footer__links button {
+  color: rgba(255,255,255,.76) !important;
+  transition: color .22s ease, transform .22s ease !important;
+}
+
+.footer__links a:hover,
+.footer__links button:hover {
+  color: #fff !important;
+  transform: translateX(-2px) !important;
+}
+
+.footer__bottom {
+  margin-top: 42px !important;
+  padding-top: 18px !important;
+  border-top: 1px solid rgba(255,255,255,.12) !important;
+  font-size: 10px !important;
+  letter-spacing: .06em !important;
+  color: rgba(255,255,255,.50) !important;
+}
+
+@media (max-width: 900px) {
+  .footer {
+    min-height: 270px !important;
+    padding: 58px 0 24px !important;
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 40px !important;
+    min-height: 150px !important;
+  }
+
+  .footer .brutti-logo-img {
+    width: 112px !important;
+  }
+
+  .footer p {
+    font-size: 18px !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .footer {
+    min-height: 0 !important;
+    padding: 48px 0 22px !important;
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr !important;
+    gap: 34px !important;
+    min-height: 0 !important;
+  }
+
+  .footer__links {
+    justify-self: start !important;
+    justify-items: start !important;
+    gap: 11px !important;
+  }
+
+  .footer .brutti-logo-img {
+    width: 106px !important;
+    margin-bottom: 18px !important;
+  }
+
+  .footer p {
+    font-size: 17px !important;
+  }
+
+  .footer__bottom {
+    margin-top: 34px !important;
+  }
+}
