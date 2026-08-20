@@ -15,6 +15,12 @@ function BruttiSite() {
         hero.alt = 'Benua Brutti team'
       }
 
+      const sharedShowroom = document.querySelector('.showroom img')
+      if (sharedShowroom) {
+        sharedShowroom.src = asset('our shared showroom.png')
+        sharedShowroom.alt = 'Benua Brutti shared showroom'
+      }
+
       document.querySelectorAll('img[alt="Benua Brutti"]').forEach((logo) => {
         logo.src = asset('logo-brutti-transparent.png')
         logo.classList.add('brutti-logo-img')
