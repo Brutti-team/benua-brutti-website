@@ -1,14 +1,14 @@
-/* Final hero treatment: full landscape section while keeping the entire Brutti team visible */
+/* Full-photo hero: same visual style as the preferred version, with all team members preserved */
 .hero {
   position: relative !important;
   margin-top: 56px !important;
-  height: 540px !important;
-  min-height: 540px !important;
-  max-height: 540px !important;
+  height: clamp(590px, 45vw, 640px) !important;
+  min-height: 590px !important;
+  max-height: 640px !important;
   overflow: hidden !important;
   background: #102d21 !important;
-  border-radius: 0 0 20px 20px !important;
-  box-shadow: 0 18px 48px rgba(12, 40, 27, .08) !important;
+  border-radius: 0 0 18px 18px !important;
+  box-shadow: 0 16px 44px rgba(12, 40, 27, .08) !important;
 }
 
 .hero__image-wrap {
@@ -34,27 +34,28 @@
   transform: none !important;
 }
 
+/* The generated hero image already contains the dark text-safe gradient.
+   Keep only a very light overlay here so faces stay fully visible. */
 .hero__shade {
   display: block !important;
   position: absolute !important;
   inset: 0 !important;
-  background:
-    linear-gradient(90deg,
-      rgba(8, 25, 17, .91) 0%,
-      rgba(8, 25, 17, .78) 27%,
-      rgba(8, 25, 17, .46) 45%,
-      rgba(8, 25, 17, .10) 67%,
-      rgba(8, 25, 17, .02) 100%),
-    linear-gradient(0deg, rgba(7, 22, 15, .16), transparent 38%) !important;
+  background: linear-gradient(
+    90deg,
+    rgba(5, 22, 15, .20) 0%,
+    rgba(5, 22, 15, .08) 34%,
+    transparent 58%
+  ) !important;
+  pointer-events: none !important;
 }
 
 .hero__content {
   position: relative !important;
   z-index: 3 !important;
-  width: min(1080px, calc(100% - 40px)) !important;
+  width: min(1080px, calc(100% - 44px)) !important;
   height: 100% !important;
   margin: 0 auto !important;
-  padding: 0 50% 0 0 !important;
+  padding: 0 53% 0 0 !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
@@ -62,21 +63,43 @@
 }
 
 .hero__content h1 {
-  max-width: 520px !important;
-  font-size: clamp(44px, 4.45vw, 62px) !important;
-  line-height: .94 !important;
+  max-width: 540px !important;
+  font-size: clamp(48px, 5vw, 72px) !important;
+  line-height: .92 !important;
+  letter-spacing: -.05em !important;
 }
 
 .hero__intro {
-  max-width: 390px !important;
-  margin: 14px 0 18px !important;
+  max-width: 430px !important;
+  margin: 18px 0 22px !important;
+  font-size: 13.5px !important;
+  line-height: 1.6 !important;
+}
+
+.hero__explore {
+  font-size: 12px !important;
 }
 
 @media (min-width: 1500px) {
   .hero {
-    height: 570px !important;
-    min-height: 570px !important;
-    max-height: 570px !important;
+    height: 660px !important;
+    min-height: 660px !important;
+    max-height: 660px !important;
+  }
+
+  .hero__content {
+    width: min(1180px, calc(100% - 56px)) !important;
+    padding-right: 55% !important;
+  }
+}
+
+@media (max-width: 1050px) {
+  .hero__content {
+    padding-right: 48% !important;
+  }
+
+  .hero__content h1 {
+    font-size: clamp(44px, 5.7vw, 64px) !important;
   }
 }
 
@@ -88,6 +111,8 @@
     max-height: none !important;
     display: flex !important;
     flex-direction: column !important;
+    border-radius: 0 0 16px 16px !important;
+    background: #123829 !important;
   }
 
   .hero__content {
@@ -104,13 +129,13 @@
     order: 2 !important;
     inset: auto !important;
     width: 100% !important;
-    height: 360px !important;
+    height: 410px !important;
     background: #15392a !important;
   }
 
   .hero__image {
-    object-fit: contain !important;
-    object-position: center center !important;
+    object-fit: cover !important;
+    object-position: 72% center !important;
   }
 
   .hero__shade {
@@ -121,7 +146,7 @@
 @media (max-width: 620px) {
   .hero {
     margin-top: 52px !important;
-    border-radius: 0 0 14px 14px !important;
+    border-radius: 0 0 13px 13px !important;
   }
 
   .hero__content {
@@ -135,6 +160,10 @@
   }
 
   .hero__image-wrap {
-    height: 300px !important;
+    height: 330px !important;
+  }
+
+  .hero__image {
+    object-position: 76% center !important;
   }
 }
