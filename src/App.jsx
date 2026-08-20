@@ -5,10 +5,10 @@ import Counter from './components/Counter.jsx'
 import Reveal from './components/Reveal.jsx'
 
 const catalogue = [
-  { image: './assets/bed.jpg', title: 'Custom Bed Frame', category: 'Bedroom' },
-  { image: './assets/wood-display.jpg', title: 'Circular Wood Feature', category: 'Decor' },
-  { image: './assets/console.jpg', title: 'Utility Console', category: 'Living' },
-  { image: './assets/coasters.jpg', title: 'Small Wood Pieces', category: 'Accessories' },
+  { image: 'https://loveincorporated.blob.core.windows.net/contentimages/gallery/af4f8a7b-3c10-48cc-b226-6c9ae4e39d97-fullpalletbed_pallet_beds_adelaide_insta_pallethacks.jpg', title: 'Custom Bed Frame', category: 'Bedroom' },
+  { image: 'https://casolia.com/img/image6_pallet-bed-ideas_rustic-retreat.jpg', title: 'Circular Wood Feature', category: 'Decor' },
+  { image: 'https://th-test-11.slatic.net/p/ac0eb78bd95e24eed538a0993c2aab05.jpg', title: 'Utility Console', category: 'Living' },
+  { image: 'https://www.businessdailyafrica.com/resource/image/2118656/landscape_ratio3x2/1200/800/35cdd36ac8f701ae1f7a87cd88e7a6e8/di/bdinteriorpalletbed.jpg', title: 'Small Wood Pieces', category: 'Accessories' },
 ]
 
 function scrollToId(id) {
@@ -75,8 +75,8 @@ function App() {
         <div className="hero__image-wrap">
           <motion.img
             style={{ y: heroY, scale: heroScale, opacity: heroOpacity }}
-            src="./assets/hero-orange.jpg"
-            alt="Benua Brutti furniture styled against an orange wall"
+            src="https://assets.flyfm.audio/2022/11/Untitled-design-19-1.png"
+            alt="Benua Brutti team in their woodworking workshop"
             className="hero__image"
           />
           <div className="hero__shade" />
@@ -161,7 +161,7 @@ function App() {
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             >
-              <img src="./assets/bed.jpg" alt="Custom upcycled wood bed frame" />
+              <img src="https://loveincorporated.blob.core.windows.net/contentimages/gallery/af4f8a7b-3c10-48cc-b226-6c9ae4e39d97-fullpalletbed_pallet_beds_adelaide_insta_pallethacks.jpg" alt="Custom upcycled wood bed frame" />
               <figcaption>Custom build · Bedroom</figcaption>
             </motion.figure>
 
@@ -173,7 +173,7 @@ function App() {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.9, delay: 0.12 }}
               >
-                <img src="./assets/wood-display.jpg" alt="Upcycled pallet wood decorative piece" />
+                <img src="https://casolia.com/img/image6_pallet-bed-ideas_rustic-retreat.jpg" alt="Upcycled pallet wood decorative piece" />
                 <figcaption>Objects · Decor</figcaption>
               </motion.figure>
               <motion.figure
@@ -183,7 +183,7 @@ function App() {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.9, delay: 0.2 }}
               >
-                <img src="./assets/console.jpg" alt="Console made by Benua Brutti" />
+                <img src="https://th-test-11.slatic.net/p/ac0eb78bd95e24eed538a0993c2aab05.jpg" alt="Console made by Benua Brutti" />
                 <figcaption>Furniture · Living</figcaption>
               </motion.figure>
             </div>
@@ -201,7 +201,7 @@ function App() {
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
             >
-              <img src="./assets/founders.jpg" alt="Benua Brutti founders Lukman and Faznur" />
+              <img src="https://assets.flyfm.audio/2022/11/Untitled-design-19-1.png" alt="Benua Brutti founders Lukman and Faznur" />
             </motion.div>
             <span className="story__vertical">OUR STORY</span>
           </div>
@@ -324,8 +324,8 @@ function App() {
 
         <div className="page-shell showroom">
           <motion.img
-            src="./assets/showroom.jpg"
-            alt="The Art Attic shared showroom"
+            src="https://uchify.com/wp-content/uploads/2024/09/boo-furniture-johor-5.jpg"
+            alt="Furniture showroom reference"
             initial={{ scale: 1.07, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: true, amount: 0.25 }}
