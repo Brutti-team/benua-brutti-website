@@ -1,11 +1,35 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
+import { createPortal } from 'react-dom'
 import App from './App.jsx'
+import Collaborators from './components/Collaborators.jsx'
 import './styles.css'
 import './overrides.css'
 import './hero-fix.css'
+import './collaborators.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
+
+function CollaboratorsPortal() {
+  const [target, setTarget] = useState(null)
+
+  useEffect(() => {
+    const contact = document.getElementById('contact')
+    if (!contact?.parentNode) return undefined
+
+    const mount = document.createElement('div')
+    mount.id = 'strategic-collaborators'
+    contact.parentNode.insertBefore(mount, contact)
+    setTarget(mount)
+
+    return () => {
+      setTarget(null)
+      mount.remove()
+    }
+  }, [])
+
+  return target ? createPortal(<Collaborators />, target) : null
+}
 
 function BruttiSite() {
   useEffect(() => {
@@ -41,7 +65,12 @@ function BruttiSite() {
     return () => observer.disconnect()
   }, [])
 
-  return <App />
+  return (
+    <>
+      <App />
+      <CollaboratorsPortal />
+    </>
+  )
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
