@@ -1,0 +1,15 @@
+.hero__image {
+  object-position: 50% 28% !important;
+}
+
+@media (max-width: 900px) {
+  .hero__image {
+    object-position: 50% 30% !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .hero__image {
+    object-position: 50% 32% !important;
+  }
+}
