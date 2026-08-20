@@ -4,11 +4,13 @@ import { ArrowDown, ArrowUpRight, MapPin, Menu, Phone, X } from 'lucide-react'
 import Counter from './components/Counter.jsx'
 import Reveal from './components/Reveal.jsx'
 
+const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
+
 const catalogue = [
-  { image: 'https://loveincorporated.blob.core.windows.net/contentimages/gallery/af4f8a7b-3c10-48cc-b226-6c9ae4e39d97-fullpalletbed_pallet_beds_adelaide_insta_pallethacks.jpg', title: 'Custom Bed Frame', category: 'Bedroom' },
-  { image: 'https://casolia.com/img/image6_pallet-bed-ideas_rustic-retreat.jpg', title: 'Circular Wood Feature', category: 'Decor' },
-  { image: 'https://th-test-11.slatic.net/p/ac0eb78bd95e24eed538a0993c2aab05.jpg', title: 'Utility Console', category: 'Living' },
-  { image: 'https://www.businessdailyafrica.com/resource/image/2118656/landscape_ratio3x2/1200/800/35cdd36ac8f701ae1f7a87cd88e7a6e8/di/bdinteriorpalletbed.jpg', title: 'Small Wood Pieces', category: 'Accessories' },
+  { image: asset('racks.png'), title: 'Racks & Shelves', category: 'Furniture' },
+  { image: asset('karya anak bangsa.png'), title: 'Karya Anak Bangsa', category: 'Custom Work' },
+  { image: asset('kilang kinarut.png'), title: 'Kinarut Workshop', category: 'Our Journey' },
+  { image: asset('kilang kkip.png'), title: 'KKIP Workshop', category: 'Our Journey' },
 ]
 
 function scrollToId(id) {
@@ -36,8 +38,11 @@ function App() {
     <main>
       <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
         <button className="brand" onClick={() => scrollToId('home')} aria-label="Benua Brutti home">
-          <span className="brand__script">Brutti</span>
-          <span className="brand__sub">BENUA BRUTTI</span>
+          <img
+            src={asset('logo brutti.jpg')}
+            alt="Benua Brutti"
+            style={{ width: 92, height: 'auto', display: 'block', borderRadius: 4 }}
+          />
         </button>
 
         <nav className="nav__links" aria-label="Primary navigation">
@@ -75,8 +80,8 @@ function App() {
         <div className="hero__image-wrap">
           <motion.img
             style={{ y: heroY, scale: heroScale, opacity: heroOpacity }}
-            src="https://assets.flyfm.audio/2022/11/Untitled-design-19-1.png"
-            alt="Benua Brutti team in their woodworking workshop"
+            src={asset('belakang rumah.png')}
+            alt="The early Benua Brutti journey"
             className="hero__image"
           />
           <div className="hero__shade" />
@@ -104,7 +109,7 @@ function App() {
             transition={{ delay: 0.45, duration: 0.8 }}
             className="hero__intro"
           >
-            We rescue pallet wood and turn it into functional, beautiful pieces made to live longer.
+            We rescue pallet wood and turn it into functional, beautiful pieces — built in Sabah and made to live longer.
           </motion.p>
           <motion.button
             initial={{ opacity: 0 }}
@@ -126,7 +131,7 @@ function App() {
           </Reveal>
           <Reveal delay={0.15} className="impact__copy">
             <p>
-              By upcycling pallet wood, we create functional and beautiful furniture pieces while helping protect trees.
+              By upcycling pallet wood, Benua Brutti creates useful furniture while extending the life of materials that might otherwise go to waste.
             </p>
           </Reveal>
         </div>
@@ -149,8 +154,8 @@ function App() {
       <section className="gallery section-pad--bottom">
         <div className="page-shell">
           <Reveal className="gallery__lead">
-            <p className="eyebrow">Made from what already exists</p>
-            <h2>Designed to be used.<br /><em>Built to be noticed.</em></h2>
+            <p className="eyebrow">Made by Brutti</p>
+            <h2>Built with purpose.<br /><em>Made to be used.</em></h2>
           </Reveal>
 
           <div className="gallery__layout">
@@ -161,8 +166,8 @@ function App() {
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             >
-              <img src="https://loveincorporated.blob.core.windows.net/contentimages/gallery/af4f8a7b-3c10-48cc-b226-6c9ae4e39d97-fullpalletbed_pallet_beds_adelaide_insta_pallethacks.jpg" alt="Custom upcycled wood bed frame" />
-              <figcaption>Custom build · Bedroom</figcaption>
+              <img src={asset('racks.png')} alt="Benua Brutti racks and shelving" />
+              <figcaption>Furniture · Racks & shelves</figcaption>
             </motion.figure>
 
             <div className="gallery__stack">
@@ -173,8 +178,8 @@ function App() {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.9, delay: 0.12 }}
               >
-                <img src="https://casolia.com/img/image6_pallet-bed-ideas_rustic-retreat.jpg" alt="Upcycled pallet wood decorative piece" />
-                <figcaption>Objects · Decor</figcaption>
+                <img src={asset('karya anak bangsa.png')} alt="Benua Brutti custom work" />
+                <figcaption>Custom work · Sabah</figcaption>
               </motion.figure>
               <motion.figure
                 className="gallery-card gallery-card--wide"
@@ -183,8 +188,8 @@ function App() {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.9, delay: 0.2 }}
               >
-                <img src="https://th-test-11.slatic.net/p/ac0eb78bd95e24eed538a0993c2aab05.jpg" alt="Console made by Benua Brutti" />
-                <figcaption>Furniture · Living</figcaption>
+                <img src={asset('kilang jalan ramayah.png')} alt="Benua Brutti workshop journey" />
+                <figcaption>Our journey · Workshop</figcaption>
               </motion.figure>
             </div>
           </div>
@@ -201,7 +206,7 @@ function App() {
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
             >
-              <img src="https://assets.flyfm.audio/2022/11/Untitled-design-19-1.png" alt="Benua Brutti founders Lukman and Faznur" />
+              <img src={asset('founder & co founder.JPG')} alt="Benua Brutti founders Lukman and Faznur" />
             </motion.div>
             <span className="story__vertical">OUR STORY</span>
           </div>
@@ -218,7 +223,7 @@ function App() {
             </Reveal>
             <Reveal delay={0.14}>
               <p>
-                Instead of stopping, they combined woodworking and metalworking skills to create a new revenue path for their crew — turning a hobby into a business.
+                Instead of stopping, they combined woodworking and metalworking skills to create a new revenue path for their crew — turning a hobby into a growing furniture business.
               </p>
             </Reveal>
             <Reveal delay={0.2}>
@@ -259,11 +264,11 @@ function App() {
         <div className="page-shell">
           <div className="catalogue__heading">
             <Reveal>
-              <p className="eyebrow">Catalogue</p>
-              <h2>Selected<br /><em>pieces.</em></h2>
+              <p className="eyebrow">Selected Brutti</p>
+              <h2>Work, spaces<br /><em>& our journey.</em></h2>
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="catalogue__intro">A glimpse of furniture and objects made from rescued materials.</p>
+              <p className="catalogue__intro">A first look using the real Benua Brutti images currently uploaded to the website repository.</p>
             </Reveal>
           </div>
 
@@ -324,8 +329,8 @@ function App() {
 
         <div className="page-shell showroom">
           <motion.img
-            src="https://uchify.com/wp-content/uploads/2024/09/boo-furniture-johor-5.jpg"
-            alt="Furniture showroom reference"
+            src={asset('showroom.png')}
+            alt="Benua Brutti shared showroom"
             initial={{ scale: 1.07, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: true, amount: 0.25 }}
@@ -338,7 +343,11 @@ function App() {
       <footer className="footer">
         <div className="page-shell footer__grid">
           <div>
-            <span className="brand__script brand__script--footer">Brutti</span>
+            <img
+              src={asset('logo brutti.jpg')}
+              alt="Benua Brutti"
+              style={{ width: 110, height: 'auto', marginBottom: 12, borderRadius: 4 }}
+            />
             <p>Furniture with a second life.</p>
           </div>
           <div className="footer__links">
