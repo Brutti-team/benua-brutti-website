@@ -32,17 +32,67 @@ jobs:
           python -m pip install pillow pillow-heif
           python - <<'PY'
           from pathlib import Path
-          from PIL import Image, ImageOps
+          from PIL import Image, ImageOps, ImageFilter, ImageEnhance, ImageDraw
           from pillow_heif import register_heif_opener
 
           register_heif_opener()
           assets = Path('public/assets')
 
-          # Keep the complete Brutti team photo intact for the split hero layout.
+          # Brutti team: create a true landscape hero while keeping every person visible.
           team = Image.open(assets / 'brutti team.HEIC')
           team = ImageOps.exif_transpose(team).convert('RGB')
-          team.thumbnail((1800, 1800), Image.Resampling.LANCZOS)
-          team.save(assets / 'brutti-team-full.jpg', quality=92, optimize=True)
+
+          canvas_w, canvas_h = 2400, 1200
+
+          # Extended background fills the whole landscape naturally.
+          bg = ImageOps.fit(
+              team,
+              (canvas_w, canvas_h),
+              method=Image.Resampling.LANCZOS,
+              centering=(0.5, 0.46),
+          )
+          bg = bg.filter(ImageFilter.GaussianBlur(28))
+          bg = ImageEnhance.Color(bg).enhance(0.82)
+          bg = ImageEnhance.Brightness(bg).enhance(0.58).convert('RGBA')
+
+          # Crisp foreground keeps the complete original team composition intact.
+          foreground = team.copy()
+          max_w, max_h = 1060, 1140
+          scale = min(max_w / foreground.width, max_h / foreground.height)
+          fg_w = max(1, int(foreground.width * scale))
+          fg_h = max(1, int(foreground.height * scale))
+          foreground = foreground.resize((fg_w, fg_h), Image.Resampling.LANCZOS).convert('RGBA')
+
+          # Soft feather around the foreground removes the 'portrait pasted on top' look.
+          mask = Image.new('L', (fg_w, fg_h), 255)
+          edge = max(28, int(min(fg_w, fg_h) * 0.045))
+          feather = Image.new('L', (fg_w, fg_h), 0)
+          draw = ImageDraw.Draw(feather)
+          draw.rounded_rectangle((edge, edge, fg_w-edge, fg_h-edge), radius=edge*2, fill=255)
+          feather = feather.filter(ImageFilter.GaussianBlur(edge))
+          mask = Image.composite(mask, Image.new('L', (fg_w, fg_h), 0), feather)
+          foreground.putalpha(mask)
+
+          # Position team on the right; leave a clean area on the left for the hero copy.
+          x = canvas_w - fg_w - 72
+          y = (canvas_h - fg_h) // 2
+          bg.alpha_composite(foreground, (x, y))
+
+          # Gentle dark wash on the left improves text readability without hiding the image.
+          overlay = Image.new('RGBA', (canvas_w, canvas_h), (0, 0, 0, 0))
+          op = overlay.load()
+          for px in range(canvas_w):
+              strength = max(0.0, 1.0 - px / (canvas_w * 0.64))
+              alpha = int(118 * (strength ** 1.5))
+              for py in range(canvas_h):
+                  op[px, py] = (6, 25, 17, alpha)
+          bg = Image.alpha_composite(bg, overlay)
+          bg.convert('RGB').save(assets / 'brutti-team-landscape.jpg', quality=92, optimize=True)
+
+          # Keep a browser-friendly full team version for fallbacks/mobile use.
+          full_team = team.copy()
+          full_team.thumbnail((1800, 1800), Image.Resampling.LANCZOS)
+          full_team.save(assets / 'brutti-team-full.jpg', quality=92, optimize=True)
 
           # Founder & co-founder: keep the original photo natural and browser-friendly.
           founders = Image.open(assets / 'founder & co founder.JPG')
