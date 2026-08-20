@@ -20,20 +20,35 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Prepare Brutti web images
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libheif-examples imagemagick
+          heif-convert -q 90 "public/assets/brutti team.HEIC" "public/assets/brutti-team.jpg"
+          convert "public/assets/brutti-team.jpg" -auto-orient -resize '2200x2200>' -quality 88 "public/assets/brutti-team.jpg"
+          BG=$(convert "public/assets/logo brutti.jpg" -format "%[pixel:p{0,0}]" info:)
+          convert "public/assets/logo brutti.jpg" -alpha on -fuzz 12% -transparent "$BG" "public/assets/logo-brutti-transparent.png"
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
+
       - name: Install dependencies
         run: npm install
+
       - name: Build
         run: npm run build
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
+
   deploy:
     environment:
       name: github-pages
