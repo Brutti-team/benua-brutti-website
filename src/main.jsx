@@ -17,7 +17,7 @@ function BruttiSite() {
 
       const storyPhoto = document.querySelector('.story__photo-wrap img')
       if (storyPhoto) {
-        storyPhoto.src = asset('founders-transparent.png')
+        storyPhoto.src = asset('founders.jpg')
         storyPhoto.alt = 'Benua Brutti founder and co-founder'
       }
 
