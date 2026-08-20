@@ -1,75 +1,349 @@
-.hero {
-  min-height: 650px !important;
-  height: min(88svh, 860px) !important;
+/* --- Premium navigation --- */
+.nav {
+  top: 16px !important;
+  left: 50% !important;
+  width: min(1320px, calc(100% - 36px)) !important;
+  transform: translateX(-50%) !important;
+  padding: 13px 18px !important;
+  border-radius: 20px !important;
+  background: rgba(8, 18, 13, .42) !important;
+  border: 1px solid rgba(255, 255, 255, .14) !important;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, .16) !important;
+  backdrop-filter: blur(18px) saturate(135%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(135%) !important;
 }
 
-.hero__image-wrap {
-  inset: 0 !important;
-  background: #173529 !important;
+.nav--scrolled {
+  top: 12px !important;
+  color: #17251e !important;
+  background: rgba(249, 247, 241, .94) !important;
+  border-color: rgba(23, 37, 30, .10) !important;
+  box-shadow: 0 14px 42px rgba(17, 34, 25, .12) !important;
 }
 
-.hero__image {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  object-position: center center !important;
-  background: #173529 !important;
-}
-
-.hero__shade {
-  background: linear-gradient(90deg, rgba(9, 17, 13, .78) 0%, rgba(9, 17, 13, .40) 42%, rgba(9, 17, 13, .08) 100%) !important;
-}
-
-.story__photo-wrap {
-  min-height: 560px !important;
-  background: rgba(255, 255, 255, .06) !important;
-}
-
-.story__photo-wrap img {
-  display: block !important;
-  width: 100% !important;
-  height: 680px !important;
-  object-fit: cover !important;
-  object-position: center 35% !important;
-  opacity: 1 !important;
-  visibility: visible !important;
+.brand {
+  min-width: 118px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
 }
 
 .brutti-logo-img {
+  width: 112px !important;
+  max-height: 38px !important;
+  height: auto !important;
+  opacity: 1 !important;
   background: transparent !important;
   border-radius: 0 !important;
   object-fit: contain !important;
 }
 
 .nav:not(.nav--scrolled) .brutti-logo-img {
-  filter: brightness(0) invert(1) drop-shadow(0 1px 7px rgba(0, 0, 0, .24));
+  filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0, 0, 0, .30)) !important;
 }
 
 .nav--scrolled .brutti-logo-img {
-  filter: none;
+  filter: brightness(0) saturate(100%) !important;
 }
 
+.nav__links {
+  gap: 8px !important;
+  align-items: center !important;
+}
+
+.nav__links button {
+  padding: 9px 15px !important;
+  border-radius: 999px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  opacity: .9 !important;
+  transition: background .25s ease, opacity .25s ease, transform .25s ease !important;
+}
+
+.nav__links button::after {
+  display: none !important;
+}
+
+.nav:not(.nav--scrolled) .nav__links button:hover {
+  background: rgba(255, 255, 255, .10) !important;
+  opacity: 1 !important;
+  transform: translateY(-1px) !important;
+}
+
+.nav--scrolled .nav__links button:hover {
+  background: rgba(24, 61, 45, .08) !important;
+  opacity: 1 !important;
+}
+
+/* --- Full-screen Brutti team hero --- */
+.hero {
+  min-height: 720px !important;
+  height: 100svh !important;
+  max-height: none !important;
+  background: #0c1912 !important;
+}
+
+.hero__image-wrap {
+  inset: 0 !important;
+  background: #0c1912 !important;
+}
+
+.hero__image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center 43% !important;
+  background: #0c1912 !important;
+  transform-origin: center center !important;
+}
+
+.hero__shade {
+  background:
+    linear-gradient(90deg, rgba(6, 13, 9, .77) 0%, rgba(6, 13, 9, .46) 37%, rgba(6, 13, 9, .12) 68%, rgba(6, 13, 9, .05) 100%),
+    linear-gradient(0deg, rgba(4, 10, 7, .36) 0%, transparent 42%) !important;
+}
+
+.hero__content {
+  padding-bottom: 72px !important;
+}
+
+.hero__content h1 {
+  max-width: 850px !important;
+  font-size: clamp(72px, 8.3vw, 128px) !important;
+  line-height: .88 !important;
+  text-wrap: balance !important;
+}
+
+.hero__intro {
+  max-width: 520px !important;
+  font-size: 16px !important;
+  line-height: 1.65 !important;
+}
+
+.hero__explore {
+  padding: 12px 0 !important;
+  font-weight: 500 !important;
+}
+
+/* --- Cleaner section rhythm --- */
+.section-pad {
+  padding-top: 120px !important;
+  padding-bottom: 120px !important;
+}
+
+.section-pad--bottom {
+  padding-bottom: 120px !important;
+}
+
+.impact__numbers {
+  margin-top: 90px !important;
+}
+
+.gallery__lead,
+.catalogue__heading {
+  margin-bottom: 58px !important;
+}
+
+.gallery-card,
+.product-card__image,
+.showroom {
+  border-radius: 24px !important;
+  overflow: hidden !important;
+}
+
+.gallery-card {
+  box-shadow: 0 20px 60px rgba(24, 40, 31, .08) !important;
+}
+
+.product-card__image {
+  box-shadow: 0 18px 52px rgba(24, 40, 31, .07) !important;
+}
+
+/* --- Our Story: force founder photo to be visible --- */
+.story {
+  background: #143f2e !important;
+}
+
+.story__grid {
+  grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr) !important;
+  gap: 72px !important;
+  align-items: center !important;
+}
+
+.story__visual {
+  min-height: 650px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.story__photo-wrap {
+  width: 100% !important;
+  min-height: 620px !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  border-radius: 26px !important;
+  background: rgba(255, 255, 255, .05) !important;
+  clip-path: inset(0 0 0 0) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, .22) !important;
+}
+
+.story__photo-wrap img {
+  display: block !important;
+  width: 100% !important;
+  height: 650px !important;
+  max-width: none !important;
+  object-fit: cover !important;
+  object-position: center 35% !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.story__content {
+  max-width: 610px !important;
+}
+
+.story__content h2 {
+  font-size: clamp(58px, 6vw, 96px) !important;
+}
+
+.story__content p {
+  font-size: 17px !important;
+  line-height: 1.75 !important;
+}
+
+.story__content blockquote {
+  font-size: clamp(24px, 2.2vw, 34px) !important;
+  line-height: 1.45 !important;
+}
+
+/* --- Process / catalogue polish --- */
+.process-step {
+  min-height: 96px !important;
+}
+
+.process-step strong {
+  letter-spacing: -.04em !important;
+}
+
+.catalogue__grid {
+  gap: 64px 24px !important;
+}
+
+.product-card:nth-child(even) {
+  margin-top: 56px !important;
+}
+
+.product-card__meta {
+  padding: 18px 4px 0 !important;
+}
+
+/* --- Contact cards / showroom --- */
+.location-card {
+  border-radius: 22px !important;
+  background: rgba(255, 255, 255, .035) !important;
+  border-color: rgba(255, 255, 255, .16) !important;
+  transition: transform .28s ease, background .28s ease, border-color .28s ease !important;
+}
+
+.location-card:hover {
+  transform: translateY(-4px) !important;
+  background: rgba(255, 255, 255, .055) !important;
+  border-color: rgba(255, 255, 255, .28) !important;
+}
+
+.showroom {
+  box-shadow: 0 28px 80px rgba(0, 0, 0, .20) !important;
+}
+
+/* --- Footer logo visibility --- */
 .footer .brutti-logo-img {
-  filter: brightness(0) invert(1);
+  width: 132px !important;
+  max-height: 46px !important;
+  filter: brightness(0) invert(1) !important;
+  opacity: 1 !important;
 }
 
 @media (max-width: 900px) {
+  .nav {
+    top: 10px !important;
+    width: calc(100% - 20px) !important;
+    padding: 11px 14px !important;
+    border-radius: 16px !important;
+  }
+
+  .brutti-logo-img {
+    width: 96px !important;
+    max-height: 34px !important;
+  }
+
   .hero {
-    min-height: 610px !important;
-    height: 78svh !important;
+    min-height: 680px !important;
+    height: 92svh !important;
   }
 
   .hero__image {
-    object-fit: cover !important;
-    object-position: center center !important;
+    object-position: center 42% !important;
+  }
+
+  .hero__content h1 {
+    font-size: clamp(58px, 16vw, 92px) !important;
+  }
+
+  .section-pad {
+    padding-top: 90px !important;
+    padding-bottom: 90px !important;
+  }
+
+  .story__grid {
+    grid-template-columns: 1fr !important;
+    gap: 46px !important;
+  }
+
+  .story__visual {
+    min-height: auto !important;
   }
 
   .story__photo-wrap {
-    min-height: 460px !important;
+    min-height: 500px !important;
   }
 
   .story__photo-wrap img {
     height: 540px !important;
     object-position: center 32% !important;
+  }
+
+  .product-card:nth-child(even) {
+    margin-top: 0 !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .hero {
+    height: 88svh !important;
+    min-height: 650px !important;
+  }
+
+  .hero__image {
+    object-position: 52% 42% !important;
+  }
+
+  .hero__content {
+    padding-bottom: 48px !important;
+  }
+
+  .story__photo-wrap,
+  .story__photo-wrap img {
+    min-height: 0 !important;
+    height: 470px !important;
+  }
+
+  .gallery-card,
+  .product-card__image,
+  .showroom,
+  .story__photo-wrap,
+  .location-card {
+    border-radius: 18px !important;
   }
 }
