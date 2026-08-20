@@ -32,39 +32,17 @@ jobs:
           python -m pip install pillow pillow-heif
           python - <<'PY'
           from pathlib import Path
-          from PIL import Image, ImageOps, ImageEnhance
+          from PIL import Image, ImageOps
           from pillow_heif import register_heif_opener
 
           register_heif_opener()
           assets = Path('public/assets')
 
-          # Team hero: build a true landscape image while keeping every team member visible.
+          # Keep the complete Brutti team photo intact for the split hero layout.
           team = Image.open(assets / 'brutti team.HEIC')
           team = ImageOps.exif_transpose(team).convert('RGB')
-
-          canvas_size = (2400, 1080)
-
-          # Fill the full landscape canvas with a very dark version of the same photo.
-          # This avoids empty side bars while the foreground keeps the complete team photo intact.
-          background = ImageOps.fit(
-              team,
-              canvas_size,
-              method=Image.Resampling.LANCZOS,
-              centering=(0.5, 0.38),
-          )
-          background = ImageEnhance.Brightness(background).enhance(0.30)
-          background = ImageEnhance.Contrast(background).enhance(0.92)
-
-          # Keep the complete original composition in the foreground — no heads or people cropped.
-          foreground = ImageOps.contain(
-              team,
-              (2240, 1020),
-              method=Image.Resampling.LANCZOS,
-          )
-          x = (canvas_size[0] - foreground.width) // 2
-          y = (canvas_size[1] - foreground.height) // 2
-          background.paste(foreground, (x, y))
-          background.save(assets / 'brutti-team-landscape.jpg', quality=92, optimize=True)
+          team.thumbnail((1800, 1800), Image.Resampling.LANCZOS)
+          team.save(assets / 'brutti-team-full.jpg', quality=92, optimize=True)
 
           # Founder & co-founder: keep the original photo natural and browser-friendly.
           founders = Image.open(assets / 'founder & co founder.JPG')
