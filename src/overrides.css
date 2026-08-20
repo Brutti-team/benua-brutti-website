@@ -1,9 +1,23 @@
+.hero__image-wrap {
+  inset: 0 !important;
+  background: #173529 !important;
+}
+
 .hero__image {
-  object-position: center 35% !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  background: #173529 !important;
 }
 
 .hero__shade {
-  background: linear-gradient(90deg, rgba(9, 17, 13, .84) 0%, rgba(9, 17, 13, .48) 44%, rgba(9, 17, 13, .14) 100%) !important;
+  background: linear-gradient(90deg, rgba(9, 17, 13, .82) 0%, rgba(9, 17, 13, .42) 42%, rgba(9, 17, 13, .10) 100%) !important;
+}
+
+.story__photo-wrap img {
+  object-fit: cover !important;
+  object-position: center center !important;
 }
 
 .brutti-logo-img {
@@ -26,6 +40,11 @@
 
 @media (max-width: 900px) {
   .hero__image {
-    object-position: center 28% !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
+
+  .story__photo-wrap img {
+    object-position: center center !important;
   }
 }
