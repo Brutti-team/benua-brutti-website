@@ -38,14 +38,14 @@ jobs:
           register_heif_opener()
           assets = Path('public/assets')
 
-          # Team hero: wide crop centred on the group.
+          # Team hero: wide crop biased upward so the top row faces stay visible.
           team = Image.open(assets / 'brutti team.HEIC')
           team = ImageOps.exif_transpose(team).convert('RGB')
           hero = ImageOps.fit(
               team,
-              (2200, 1238),
+              (2400, 1080),
               method=Image.Resampling.LANCZOS,
-              centering=(0.5, 0.42),
+              centering=(0.5, 0.28),
           )
           hero.save(assets / 'brutti-team-hero.jpg', quality=90, optimize=True)
 
