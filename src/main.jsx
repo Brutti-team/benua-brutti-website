@@ -7,6 +7,7 @@ import './styles.css'
 import './overrides.css'
 import './hero-fix.css'
 import './collaborators.css'
+import './polish.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
