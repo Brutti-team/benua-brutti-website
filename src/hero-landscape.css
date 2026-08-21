@@ -1,14 +1,69 @@
-/* Full-photo hero: same visual style as the preferred version, with all team members preserved */
+/* Landing hero — full landscape photo with floating glass navigation */
+
+/* Floating navbar over the hero */
+.nav {
+  position: fixed !important;
+  top: 18px !important;
+  left: 16px !important;
+  right: 16px !important;
+  width: auto !important;
+  max-width: none !important;
+  min-height: 66px !important;
+  padding: 10px 28px !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  border-radius: 22px !important;
+  background: rgba(10, 31, 22, .62) !important;
+  box-shadow: 0 14px 42px rgba(5, 20, 14, .18) !important;
+  backdrop-filter: blur(18px) saturate(130%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(130%) !important;
+  color: #fff !important;
+  z-index: 50 !important;
+}
+
+.nav__links {
+  gap: 16px !important;
+}
+
+.nav__links button {
+  color: #fff !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  text-transform: capitalize !important;
+  padding: 8px 10px !important;
+}
+
+.nav__links button:hover {
+  background: rgba(255,255,255,.08) !important;
+}
+
+.nav.nav--scrolled {
+  top: 10px !important;
+  color: #18352a !important;
+  background: rgba(251,250,246,.94) !important;
+  border-color: rgba(22,60,45,.08) !important;
+  box-shadow: 0 10px 30px rgba(17,42,29,.10) !important;
+}
+
+.nav.nav--scrolled .nav__links button {
+  color: #18352a !important;
+}
+
+.nav.nav--scrolled .nav__links button:hover {
+  background: rgba(22,60,45,.06) !important;
+}
+
+/* Full-viewport landscape hero */
 .hero {
   position: relative !important;
-  margin-top: 56px !important;
-  height: clamp(590px, 45vw, 640px) !important;
-  min-height: 590px !important;
-  max-height: 640px !important;
+  margin-top: 0 !important;
+  width: 100% !important;
+  height: 100svh !important;
+  min-height: 620px !important;
+  max-height: 860px !important;
   overflow: hidden !important;
   background: #102d21 !important;
-  border-radius: 0 0 18px 18px !important;
-  box-shadow: 0 16px 44px rgba(12, 40, 27, .08) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
 }
 
 .hero__image-wrap {
@@ -16,12 +71,13 @@
   inset: 0 !important;
   width: 100% !important;
   height: 100% !important;
-  background: #102d21 !important;
   overflow: hidden !important;
-  border-radius: inherit !important;
+  background: #102d21 !important;
+  border-radius: 0 !important;
 }
 
 .hero__image {
+  display: block !important;
   width: 100% !important;
   height: 100% !important;
   max-width: none !important;
@@ -34,94 +90,130 @@
   transform: none !important;
 }
 
-/* The generated hero image already contains the dark text-safe gradient.
-   Keep only a very light overlay here so faces stay fully visible. */
+/* Darken only enough for readable text; keep people visible */
 .hero__shade {
   display: block !important;
   position: absolute !important;
   inset: 0 !important;
-  background: linear-gradient(
-    90deg,
-    rgba(5, 22, 15, .20) 0%,
-    rgba(5, 22, 15, .08) 34%,
-    transparent 58%
-  ) !important;
+  background:
+    linear-gradient(90deg, rgba(5,17,12,.62) 0%, rgba(5,17,12,.44) 24%, rgba(5,17,12,.16) 48%, rgba(5,17,12,.04) 72%),
+    linear-gradient(0deg, rgba(4,14,10,.30) 0%, rgba(4,14,10,0) 45%) !important;
   pointer-events: none !important;
 }
 
 .hero__content {
   position: relative !important;
   z-index: 3 !important;
-  width: min(1080px, calc(100% - 44px)) !important;
+  width: calc(100% - 96px) !important;
+  max-width: none !important;
   height: 100% !important;
   margin: 0 auto !important;
-  padding: 0 53% 0 0 !important;
+  padding: 0 46% clamp(42px, 7vh, 72px) 0 !important;
   display: flex !important;
   flex-direction: column !important;
-  justify-content: center !important;
+  justify-content: flex-end !important;
   align-items: flex-start !important;
 }
 
+.hero .eyebrow {
+  margin-bottom: 20px !important;
+  color: rgba(255,255,255,.86) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: .23em !important;
+}
+
 .hero__content h1 {
-  max-width: 540px !important;
-  font-size: clamp(48px, 5vw, 72px) !important;
-  line-height: .92 !important;
-  letter-spacing: -.05em !important;
+  max-width: 760px !important;
+  margin: 0 !important;
+  color: #fff !important;
+  font-size: clamp(62px, 7.5vw, 106px) !important;
+  line-height: .91 !important;
+  letter-spacing: -.055em !important;
+  font-weight: 400 !important;
+}
+
+.hero__content h1 em {
+  color: #fff !important;
+  font-weight: 400 !important;
 }
 
 .hero__intro {
-  max-width: 430px !important;
-  margin: 18px 0 22px !important;
-  font-size: 13.5px !important;
-  line-height: 1.6 !important;
+  max-width: 580px !important;
+  margin: 26px 0 30px !important;
+  color: rgba(255,255,255,.90) !important;
+  font-size: clamp(15px, 1.28vw, 18px) !important;
+  line-height: 1.55 !important;
 }
 
 .hero__explore {
-  font-size: 12px !important;
+  color: #fff !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  border-bottom: 1px solid rgba(255,255,255,.48) !important;
+  padding-bottom: 5px !important;
+}
+
+.hero__explore svg {
+  color: #fff !important;
 }
 
 @media (min-width: 1500px) {
-  .hero {
-    height: 660px !important;
-    min-height: 660px !important;
-    max-height: 660px !important;
-  }
-
   .hero__content {
-    width: min(1180px, calc(100% - 56px)) !important;
-    padding-right: 55% !important;
+    width: calc(100% - 128px) !important;
+    padding-right: 50% !important;
+    padding-bottom: 76px !important;
   }
 }
 
 @media (max-width: 1050px) {
   .hero__content {
-    padding-right: 48% !important;
+    width: calc(100% - 56px) !important;
+    padding-right: 38% !important;
   }
 
   .hero__content h1 {
-    font-size: clamp(44px, 5.7vw, 64px) !important;
+    font-size: clamp(56px, 8vw, 82px) !important;
   }
 }
 
+/* Tablet/mobile: keep copy readable and avoid excessively cropping the team photo */
 @media (max-width: 900px) {
+  .nav {
+    top: 10px !important;
+    left: 10px !important;
+    right: 10px !important;
+    min-height: 58px !important;
+    padding: 8px 14px !important;
+    border-radius: 18px !important;
+  }
+
   .hero {
-    margin-top: 54px !important;
     height: auto !important;
     min-height: 0 !important;
     max-height: none !important;
     display: flex !important;
     flex-direction: column !important;
-    border-radius: 0 0 16px 16px !important;
     background: #123829 !important;
   }
 
   .hero__content {
     order: 1 !important;
-    width: min(100% - 28px, 1080px) !important;
-    min-height: 330px !important;
+    width: min(100% - 32px, 760px) !important;
+    min-height: 430px !important;
     height: auto !important;
-    padding: 40px 0 32px !important;
+    padding: 120px 0 42px !important;
     margin: 0 auto !important;
+    justify-content: flex-end !important;
+  }
+
+  .hero__content h1 {
+    font-size: clamp(48px, 9.5vw, 72px) !important;
+  }
+
+  .hero__intro {
+    max-width: 530px !important;
+    font-size: 15px !important;
   }
 
   .hero__image-wrap {
@@ -129,13 +221,13 @@
     order: 2 !important;
     inset: auto !important;
     width: 100% !important;
-    height: 410px !important;
-    background: #15392a !important;
+    height: min(62vw, 500px) !important;
+    min-height: 360px !important;
   }
 
   .hero__image {
     object-fit: cover !important;
-    object-position: 72% center !important;
+    object-position: center center !important;
   }
 
   .hero__shade {
@@ -144,26 +236,28 @@
 }
 
 @media (max-width: 620px) {
-  .hero {
-    margin-top: 52px !important;
-    border-radius: 0 0 13px 13px !important;
+  .hero__content {
+    width: calc(100% - 24px) !important;
+    min-height: 390px !important;
+    padding: 104px 0 32px !important;
   }
 
-  .hero__content {
-    width: calc(100% - 20px) !important;
-    min-height: 300px !important;
-    padding: 34px 0 26px !important;
+  .hero .eyebrow {
+    margin-bottom: 14px !important;
+    font-size: 8.5px !important;
   }
 
   .hero__content h1 {
-    font-size: clamp(38px, 11vw, 50px) !important;
+    font-size: clamp(42px, 12vw, 58px) !important;
+  }
+
+  .hero__intro {
+    margin: 20px 0 24px !important;
+    font-size: 14px !important;
   }
 
   .hero__image-wrap {
-    height: 330px !important;
-  }
-
-  .hero__image {
-    object-position: 76% center !important;
+    height: 360px !important;
+    min-height: 360px !important;
   }
 }
