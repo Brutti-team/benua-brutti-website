@@ -1,0 +1,231 @@
+/* Homepage hero + navigation refresh — clean, modern, readable */
+
+/* A tighter floating navigation that feels like part of the brand. */
+.nav {
+  top: 18px !important;
+  left: 50% !important;
+  right: auto !important;
+  width: min(1480px, calc(100% - 40px)) !important;
+  min-height: 68px !important;
+  padding: 9px 12px 9px 14px !important;
+  transform: translateX(-50%) !important;
+  border: 1px solid rgba(255,255,255,.13) !important;
+  border-radius: 16px !important;
+  background: rgba(8, 31, 22, .84) !important;
+  box-shadow: 0 14px 38px rgba(2, 18, 11, .20) !important;
+  backdrop-filter: blur(18px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(120%) !important;
+}
+
+.nav.nav--scrolled {
+  top: 10px !important;
+  color: #fff !important;
+  background: rgba(8, 31, 22, .94) !important;
+  border-color: rgba(255,255,255,.10) !important;
+  box-shadow: 0 12px 34px rgba(2, 18, 11, .18) !important;
+}
+
+/* Make the real Brutti mark visible, with a clear wordmark next to it. */
+.brand {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 11px !important;
+  min-width: 190px !important;
+  padding: 0 !important;
+}
+
+.brand img,
+.brand .brutti-logo-img {
+  width: 68px !important;
+  height: 42px !important;
+  padding: 5px 8px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  border-radius: 9px !important;
+  background: #f5f1e8 !important;
+  box-shadow: inset 0 0 0 1px rgba(24,61,45,.08) !important;
+}
+
+.brand::after {
+  content: 'BENUA BRUTTI';
+  display: block;
+  color: #fff;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .16em;
+  white-space: nowrap;
+}
+
+.nav__links {
+  gap: 3px !important;
+  align-items: center !important;
+}
+
+.nav__links button,
+.nav.nav--scrolled .nav__links button {
+  color: rgba(255,255,255,.90) !important;
+  padding: 10px 14px !important;
+  border-radius: 10px !important;
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  letter-spacing: .11em !important;
+  text-transform: uppercase !important;
+  opacity: 1 !important;
+  transition: background .22s ease, color .22s ease !important;
+}
+
+.nav__links button::after {
+  display: none !important;
+}
+
+.nav__links button:hover,
+.nav.nav--scrolled .nav__links button:hover {
+  color: #fff !important;
+  background: rgba(255,255,255,.10) !important;
+}
+
+/* Cleaner hero composition. */
+.hero__image {
+  object-position: 53% center !important;
+}
+
+.hero__shade {
+  background:
+    linear-gradient(90deg, rgba(4,20,13,.76) 0%, rgba(4,20,13,.57) 27%, rgba(4,20,13,.23) 50%, rgba(4,20,13,.04) 72%),
+    linear-gradient(0deg, rgba(4,14,10,.28) 0%, rgba(4,14,10,0) 48%) !important;
+}
+
+.hero__content {
+  width: min(1480px, calc(100% - 80px)) !important;
+  padding: 0 50% clamp(48px, 7vh, 70px) 0 !important;
+}
+
+.hero .eyebrow {
+  margin-bottom: 18px !important;
+  color: rgba(255,255,255,.76) !important;
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: .20em !important;
+}
+
+.hero__content h1 {
+  max-width: 720px !important;
+  color: #fff !important;
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+  font-size: clamp(58px, 6.1vw, 88px) !important;
+  font-weight: 500 !important;
+  line-height: .96 !important;
+  letter-spacing: -.048em !important;
+  text-wrap: balance;
+}
+
+.hero__content h1 em {
+  color: rgba(255,255,255,.92) !important;
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+  font-style: normal !important;
+  font-weight: 300 !important;
+  letter-spacing: -.055em !important;
+}
+
+.hero__intro {
+  max-width: 540px !important;
+  margin: 24px 0 28px !important;
+  color: rgba(255,255,255,.82) !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 1.58 !important;
+}
+
+.hero__explore {
+  gap: 10px !important;
+  color: #fff !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: .04em !important;
+  border-bottom-color: rgba(255,255,255,.42) !important;
+}
+
+@media (max-width: 1050px) {
+  .hero__content {
+    width: calc(100% - 56px) !important;
+    padding-right: 40% !important;
+  }
+
+  .hero__content h1 {
+    font-size: clamp(54px, 7.5vw, 78px) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .nav,
+  .nav.nav--scrolled {
+    top: 10px !important;
+    width: calc(100% - 20px) !important;
+    min-height: 60px !important;
+    padding: 7px 9px !important;
+    border-radius: 14px !important;
+  }
+
+  .brand {
+    min-width: 0 !important;
+    gap: 8px !important;
+  }
+
+  .brand img,
+  .brand .brutti-logo-img {
+    width: 57px !important;
+    height: 38px !important;
+    padding: 4px 7px !important;
+  }
+
+  .brand::after {
+    font-size: 9px;
+    letter-spacing: .13em;
+  }
+
+  .nav__menu {
+    display: grid !important;
+    place-items: center !important;
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 10px !important;
+    color: #fff !important;
+    background: rgba(255,255,255,.08) !important;
+  }
+
+  .hero__content {
+    width: min(100% - 36px, 760px) !important;
+    padding: 116px 0 42px !important;
+  }
+
+  .hero__content h1 {
+    font-size: clamp(48px, 10.5vw, 70px) !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .brand::after {
+    display: none;
+  }
+
+  .hero__content {
+    width: calc(100% - 28px) !important;
+    padding: 106px 0 34px !important;
+  }
+
+  .hero__content h1 {
+    font-size: clamp(43px, 13vw, 58px) !important;
+    line-height: .98 !important;
+  }
+
+  .hero__intro {
+    font-size: 14px !important;
+    line-height: 1.55 !important;
+  }
+}
