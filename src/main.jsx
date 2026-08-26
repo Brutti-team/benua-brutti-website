@@ -14,6 +14,7 @@ import './footer-tune.css'
 import './hero-landscape.css'
 import './hero-ui-refresh.css'
 import './impact-saas.css'
+import './impact-visual-cards.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
