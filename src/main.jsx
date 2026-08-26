@@ -39,6 +39,12 @@ function CollaboratorsPortal() {
 function BruttiSite() {
   useEffect(() => {
     const applyRealAssets = () => {
+      const heroPhoto = document.querySelector('.hero__image')
+      if (heroPhoto) {
+        heroPhoto.src = asset('brutti-team-landscape.jpg')
+        heroPhoto.alt = 'Benua Brutti team'
+      }
+
       const storyPhoto = document.querySelector('.story__photo-wrap img')
       if (storyPhoto) {
         storyPhoto.src = asset('founders.jpg')
