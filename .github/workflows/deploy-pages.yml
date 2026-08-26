@@ -38,65 +38,77 @@ jobs:
           register_heif_opener()
           assets = Path('public/assets')
 
-          # Brutti team hero: full-width landscape composition, natural and sharp.
+          # Landscape hero built from the real Brutti team photo.
+          # The full team remains sharp on the right, while the left becomes a
+          # dark photographic extension for readable hero copy.
           team = Image.open(assets / 'brutti team.jpg')
           team = ImageOps.exif_transpose(team).convert('RGB')
 
           canvas_w, canvas_h = 2800, 1200
 
+          # Full-width photographic backdrop, intentionally softened so the
+          # repeated photo does not compete visually with the sharp team image.
           bg = ImageOps.fit(
               team,
               (canvas_w, canvas_h),
               method=Image.Resampling.LANCZOS,
-              centering=(0.50, 0.44),
+              centering=(0.50, 0.42),
           )
-          bg = bg.filter(ImageFilter.GaussianBlur(2))
-          bg = ImageEnhance.Color(bg).enhance(0.82)
-          bg = ImageEnhance.Contrast(bg).enhance(0.94)
-          bg = ImageEnhance.Brightness(bg).enhance(0.62).convert('RGBA')
+          bg = bg.filter(ImageFilter.GaussianBlur(24))
+          bg = ImageEnhance.Color(bg).enhance(0.62)
+          bg = ImageEnhance.Contrast(bg).enhance(0.88)
+          bg = ImageEnhance.Brightness(bg).enhance(0.42).convert('RGBA')
 
-          foreground = team.copy()
-          target_h = 1140
+          # Keep every team member in-frame. Leave a safe band at the top so
+          # the floating navigation never covers anyone's head.
+          foreground = ImageEnhance.Contrast(team).enhance(1.02)
+          foreground = ImageEnhance.Color(foreground).enhance(1.02)
+          target_h = 1040
           scale = target_h / foreground.height
           fg_w = max(1, int(foreground.width * scale))
           fg_h = max(1, int(foreground.height * scale))
           foreground = foreground.resize((fg_w, fg_h), Image.Resampling.LANCZOS).convert('RGBA')
 
-          fade_width = min(130, max(70, fg_w // 9))
+          # Feather the left edge broadly so the sharp portrait melts naturally
+          # into the landscape instead of appearing as a pasted rectangle.
+          fade_width = min(320, max(180, fg_w // 3))
           alpha = Image.new('L', (fg_w, fg_h), 255)
           alpha_px = alpha.load()
           for px in range(fade_width):
-              value = int(255 * (px / max(1, fade_width - 1)))
+              t = px / max(1, fade_width - 1)
+              value = int(255 * (t * t * (3 - 2 * t)))
               for py in range(fg_h):
                   alpha_px[px, py] = value
           foreground.putalpha(alpha)
 
-          x = canvas_w - fg_w - 55
-          y = (canvas_h - fg_h) // 2
+          x = canvas_w - fg_w - 72
+          y = 120
           bg.alpha_composite(foreground, (x, y))
 
+          # Deep Brutti green text-safe field on the left, fading before the team.
           gradient = Image.new('L', (canvas_w, 1), 0)
           grad_px = gradient.load()
-          fade_end = int(canvas_w * 0.58)
+          fade_end = int(canvas_w * 0.61)
           for px in range(canvas_w):
               if px <= fade_end:
                   t = px / max(1, fade_end)
-                  grad_px[px, 0] = int(205 * ((1 - t) ** 1.22))
+                  grad_px[px, 0] = int(225 * ((1 - t) ** 1.35))
               else:
                   grad_px[px, 0] = 0
           gradient = gradient.resize((canvas_w, canvas_h))
-          overlay = Image.new('RGBA', (canvas_w, canvas_h), (7, 38, 27, 0))
+          overlay = Image.new('RGBA', (canvas_w, canvas_h), (5, 35, 24, 0))
           overlay.putalpha(gradient)
           bg = Image.alpha_composite(bg, overlay)
 
+          # Small top and bottom vignette for a cleaner edge-to-edge hero.
           vignette = Image.new('L', (1, canvas_h), 0)
           vg = vignette.load()
-          edge = 120
+          edge = 150
           for py in range(canvas_h):
               if py < edge:
-                  vg[0, py] = int(24 * (1 - py / edge))
+                  vg[0, py] = int(28 * (1 - py / edge))
               elif py > canvas_h - edge:
-                  vg[0, py] = int(24 * ((py - (canvas_h - edge)) / edge))
+                  vg[0, py] = int(22 * ((py - (canvas_h - edge)) / edge))
           vmask = vignette.resize((canvas_w, canvas_h))
           vlayer = Image.new('RGBA', (canvas_w, canvas_h), (0, 0, 0, 0))
           vlayer.putalpha(vmask)
@@ -115,7 +127,6 @@ jobs:
           founders.save(assets / 'founders.jpg', quality=90, optimize=True)
 
           # Build a clean white Brutti mark from the original square JPG.
-          # The source contains lots of empty space, so crop to the actual artwork.
           logo = Image.open(assets / 'logo brutti.jpg').convert('RGBA')
           bg_colour = logo.getpixel((0, 0))[:3]
           threshold = 62
