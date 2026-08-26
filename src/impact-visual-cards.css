@@ -1,0 +1,115 @@
+/* Visual metric cards using the real pallet + tree assets. Loaded after impact-saas.css. */
+
+.impact-stat {
+  isolation: isolate !important;
+  overflow: hidden !important;
+}
+
+.impact-stat::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  width: auto !important;
+  border-radius: inherit !important;
+  pointer-events: none !important;
+  opacity: 1 !important;
+}
+
+.impact-stat:first-child {
+  border-color: rgba(255,255,255,.10) !important;
+  background:
+    radial-gradient(circle at 82% 20%, rgba(255,255,255,.08), transparent 28%),
+    linear-gradient(135deg, #0b3022 0%, #154f39 100%) !important;
+  box-shadow: 0 18px 48px rgba(10,43,30,.16) !important;
+}
+
+.impact-stat:first-child::before {
+  background:
+    linear-gradient(90deg, rgba(11,48,34,0) 28%, rgba(11,48,34,.08) 44%, rgba(11,48,34,.26) 100%),
+    url('/assets/pallet.png') right 10px center / 43% auto no-repeat !important;
+  opacity: .42 !important;
+  filter: saturate(.75) contrast(1.04) !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 25%, rgba(0,0,0,.35) 46%, #000 78%);
+  mask-image: linear-gradient(90deg, transparent 25%, rgba(0,0,0,.35) 46%, #000 78%);
+}
+
+.impact-stat:last-child {
+  border-color: rgba(23,87,71,.11) !important;
+  background:
+    radial-gradient(circle at 84% 18%, rgba(23,87,71,.08), transparent 28%),
+    linear-gradient(145deg, rgba(255,255,255,.96), rgba(246,250,246,.88)) !important;
+  box-shadow: 0 18px 48px rgba(18,45,34,.06) !important;
+}
+
+.impact-stat:last-child::before {
+  background:
+    linear-gradient(90deg, rgba(248,250,247,0) 24%, rgba(248,250,247,.14) 45%, rgba(248,250,247,.48) 100%),
+    url('/assets/tree.jpg') right center / 45% cover no-repeat !important;
+  opacity: .24 !important;
+  filter: saturate(.55) contrast(.94) !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 22%, rgba(0,0,0,.28) 44%, #000 78%);
+  mask-image: linear-gradient(90deg, transparent 22%, rgba(0,0,0,.28) 44%, #000 78%);
+}
+
+.impact-stat > strong,
+.impact-stat > span,
+.impact-stat > b {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.impact-stat:first-child > strong,
+.impact-stat:first-child > strong > span {
+  color: #fff !important;
+}
+
+.impact-stat:first-child > span {
+  color: rgba(255,255,255,.86) !important;
+}
+
+.impact-stat:first-child > b {
+  border-color: rgba(255,255,255,.13) !important;
+  background: rgba(255,255,255,.10) !important;
+  color: rgba(255,255,255,.86) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+.impact-stat:first-child::after {
+  color: rgba(255,255,255,.50) !important;
+  z-index: 3 !important;
+}
+
+.impact-stat:last-child::after {
+  z-index: 3 !important;
+}
+
+.impact-stat:hover::before {
+  transform: scale(1.025) !important;
+  transition: transform .4s ease, opacity .4s ease !important;
+}
+
+@media (max-width: 900px) {
+  .impact-stat:first-child::before {
+    background-size: 34% auto !important;
+    background-position: right 16px center !important;
+  }
+
+  .impact-stat:last-child::before {
+    background-size: 36% cover !important;
+    background-position: right center !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .impact-stat:first-child::before {
+    background-size: 42% auto !important;
+    opacity: .34 !important;
+  }
+
+  .impact-stat:last-child::before {
+    background-size: 45% cover !important;
+    opacity: .19 !important;
+  }
+}
