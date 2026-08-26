@@ -40,22 +40,10 @@ function CollaboratorsPortal() {
 function BruttiSite() {
   useEffect(() => {
     const applyRealAssets = () => {
-      const heroWrap = document.querySelector('.hero__image-wrap')
-      const heroPhoto = heroWrap?.querySelector('.hero__image:not(.hero__image--backdrop)')
-
+      const heroPhoto = document.querySelector('.hero__image')
       if (heroPhoto) {
-        heroPhoto.src = asset('brutti team.jpg')
+        heroPhoto.src = asset('brutti-team-landscape.jpg')
         heroPhoto.alt = 'Benua Brutti team'
-        heroPhoto.classList.add('hero__image--full')
-      }
-
-      if (heroWrap && !heroWrap.querySelector('.hero__image--backdrop')) {
-        const backdrop = document.createElement('img')
-        backdrop.src = asset('brutti team.jpg')
-        backdrop.alt = ''
-        backdrop.setAttribute('aria-hidden', 'true')
-        backdrop.className = 'hero__image hero__image--backdrop'
-        heroWrap.insertBefore(backdrop, heroWrap.firstChild)
       }
 
       const storyPhoto = document.querySelector('.story__photo-wrap img')
