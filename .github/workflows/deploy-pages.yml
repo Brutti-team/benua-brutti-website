@@ -39,14 +39,11 @@ jobs:
           assets = Path('public/assets')
 
           # Brutti team hero: full-width landscape composition, natural and sharp.
-          # The complete original team photo stays intact on the right so nobody is cropped.
           team = Image.open(assets / 'brutti team.jpg')
           team = ImageOps.exif_transpose(team).convert('RGB')
 
           canvas_w, canvas_h = 2800, 1200
 
-          # Use the same photo as a very subtle full-width extension.
-          # Only a tiny blur is used so the left side still feels photographic, not foggy.
           bg = ImageOps.fit(
               team,
               (canvas_w, canvas_h),
@@ -58,7 +55,6 @@ jobs:
           bg = ImageEnhance.Contrast(bg).enhance(0.94)
           bg = ImageEnhance.Brightness(bg).enhance(0.62).convert('RGBA')
 
-          # Keep the complete team photo sharp, including top and bottom rows.
           foreground = team.copy()
           target_h = 1140
           scale = target_h / foreground.height
@@ -66,7 +62,6 @@ jobs:
           fg_h = max(1, int(foreground.height * scale))
           foreground = foreground.resize((fg_w, fg_h), Image.Resampling.LANCZOS).convert('RGBA')
 
-          # Feather only the left edge so there is no obvious portrait-panel seam.
           fade_width = min(130, max(70, fg_w // 9))
           alpha = Image.new('L', (fg_w, fg_h), 255)
           alpha_px = alpha.load()
@@ -76,12 +71,10 @@ jobs:
                   alpha_px[px, py] = value
           foreground.putalpha(alpha)
 
-          # Push the full team composition to the right with safe margins.
           x = canvas_w - fg_w - 55
           y = (canvas_h - fg_h) // 2
           bg.alpha_composite(foreground, (x, y))
 
-          # Dark green text-safe gradient on the left, fading before the sharp team image.
           gradient = Image.new('L', (canvas_w, 1), 0)
           grad_px = gradient.load()
           fade_end = int(canvas_w * 0.58)
@@ -96,7 +89,6 @@ jobs:
           overlay.putalpha(gradient)
           bg = Image.alpha_composite(bg, overlay)
 
-          # Gentle top/bottom vignette for polish without hiding any faces.
           vignette = Image.new('L', (1, canvas_h), 0)
           vg = vignette.load()
           edge = 120
@@ -112,7 +104,6 @@ jobs:
 
           bg.convert('RGB').save(assets / 'brutti-team-landscape.jpg', quality=94, optimize=True)
 
-          # Browser-friendly full team fallback/mobile version.
           full_team = team.copy()
           full_team.thumbnail((1800, 1800), Image.Resampling.LANCZOS)
           full_team.save(assets / 'brutti-team-full.jpg', quality=92, optimize=True)
@@ -123,18 +114,33 @@ jobs:
           founders.thumbnail((1600, 1600), Image.Resampling.LANCZOS)
           founders.save(assets / 'founders.jpg', quality=90, optimize=True)
 
-          # Transparent Brutti logo.
+          # Build a clean white Brutti mark from the original square JPG.
+          # The source contains lots of empty space, so crop to the actual artwork.
           logo = Image.open(assets / 'logo brutti.jpg').convert('RGBA')
           bg_colour = logo.getpixel((0, 0))[:3]
-          pixels = logo.load()
           threshold = 62
+          mark = Image.new('RGBA', logo.size, (255, 255, 255, 0))
+          src = logo.load()
+          dst = mark.load()
+
           for py in range(logo.height):
               for px_i in range(logo.width):
-                  r, g, b, a = pixels[px_i, py]
+                  r, g, b, a = src[px_i, py]
                   distance = ((r-bg_colour[0])**2 + (g-bg_colour[1])**2 + (b-bg_colour[2])**2) ** 0.5
-                  if distance < threshold:
-                      pixels[px_i, py] = (r, g, b, 0)
-          logo.save(assets / 'logo-brutti-transparent.png')
+                  if distance >= threshold:
+                      dst[px_i, py] = (248, 246, 239, a)
+
+          bbox = mark.getchannel('A').getbbox()
+          if bbox:
+              left, top, right, bottom = bbox
+              pad = 12
+              left = max(0, left - pad)
+              top = max(0, top - pad)
+              right = min(mark.width, right + pad)
+              bottom = min(mark.height, bottom + pad)
+              mark = mark.crop((left, top, right, bottom))
+
+          mark.save(assets / 'logo-brutti-white.png')
           PY
 
       - name: Setup Node
