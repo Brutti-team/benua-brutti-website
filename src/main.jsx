@@ -59,7 +59,7 @@ function BruttiSite() {
       }
 
       document.querySelectorAll('.brand img, .footer img[alt="Benua Brutti"]').forEach((logo) => {
-        logo.src = asset('logo brutti.jpg')
+        logo.src = asset('logo-brutti-white.png')
         logo.classList.add('brutti-logo-img')
       })
     }
