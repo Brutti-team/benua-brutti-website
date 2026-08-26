@@ -8,12 +8,9 @@
 .impact-stat::before {
   content: '' !important;
   position: absolute !important;
-  inset: 0 !important;
   z-index: 0 !important;
-  width: auto !important;
   border-radius: inherit !important;
   pointer-events: none !important;
-  opacity: 1 !important;
   transition: transform .4s ease, opacity .4s ease !important;
 }
 
@@ -26,6 +23,8 @@
 }
 
 .impact-stat:first-child::before {
+  inset: 0 !important;
+  width: auto !important;
   background:
     linear-gradient(90deg, rgba(11,48,34,0) 28%, rgba(11,48,34,.08) 44%, rgba(11,48,34,.26) 100%),
     url('/assets/pallet.png') right 10px center / 43% auto no-repeat !important;
@@ -37,21 +36,25 @@
 
 .impact-stat:last-child {
   border-color: rgba(23,87,71,.11) !important;
-  background:
-    radial-gradient(circle at 84% 18%, rgba(23,87,71,.06), transparent 28%),
-    linear-gradient(145deg, rgba(255,255,255,.98), rgba(244,249,245,.90)) !important;
+  background: linear-gradient(145deg, #ffffff, #f5f8f5) !important;
   box-shadow: 0 18px 48px rgba(18,45,34,.06) !important;
 }
 
-/* Tree image: deliberately more visible than before, while fading softly toward the text. */
+/* Tree image is now a real right-side visual panel instead of a faint watermark. */
 .impact-stat:last-child::before {
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: auto !important;
+  width: 49% !important;
   background:
-    linear-gradient(90deg, rgba(248,250,247,0) 0%, rgba(248,250,247,.02) 42%, rgba(248,250,247,.08) 100%),
-    url('/assets/tree.jpg') right center / 48% cover no-repeat !important;
-  opacity: .62 !important;
-  filter: saturate(.82) contrast(1.08) brightness(.94) !important;
-  -webkit-mask-image: linear-gradient(90deg, transparent 30%, rgba(0,0,0,.42) 45%, rgba(0,0,0,.82) 62%, #000 76%);
-  mask-image: linear-gradient(90deg, transparent 30%, rgba(0,0,0,.42) 45%, rgba(0,0,0,.82) 62%, #000 76%);
+    linear-gradient(90deg, rgba(245,248,245,.18) 0%, rgba(245,248,245,0) 32%),
+    url('/assets/tree.jpg') center 48% / cover no-repeat !important;
+  opacity: .92 !important;
+  filter: saturate(.95) contrast(1.08) brightness(.92) !important;
+  border-radius: 0 18px 18px 0 !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.72) 24%, #000 46%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.72) 24%, #000 46%);
 }
 
 .impact-stat > strong,
@@ -84,12 +87,12 @@
 }
 
 .impact-stat:last-child::after {
-  color: rgba(23,87,71,.50) !important;
+  color: rgba(23,87,71,.48) !important;
   z-index: 3 !important;
 }
 
 .impact-stat:hover::before {
-  transform: scale(1.03) !important;
+  transform: scale(1.025) !important;
 }
 
 @media (max-width: 900px) {
@@ -99,9 +102,8 @@
   }
 
   .impact-stat:last-child::before {
-    background-size: 42% cover !important;
-    background-position: right center !important;
-    opacity: .56 !important;
+    width: 44% !important;
+    background-position: center 48% !important;
   }
 }
 
@@ -112,7 +114,7 @@
   }
 
   .impact-stat:last-child::before {
-    background-size: 48% cover !important;
-    opacity: .48 !important;
+    width: 45% !important;
+    opacity: .88 !important;
   }
 }
