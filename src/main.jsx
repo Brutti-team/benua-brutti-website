@@ -12,6 +12,7 @@ import './final-tune.css'
 import './modern-2026.css'
 import './footer-tune.css'
 import './hero-landscape.css'
+import './hero-ui-refresh.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
@@ -58,7 +59,7 @@ function BruttiSite() {
       }
 
       document.querySelectorAll('.brand img, .footer img[alt="Benua Brutti"]').forEach((logo) => {
-        logo.src = asset('logo-brutti-transparent.png')
+        logo.src = asset('logo brutti.jpg')
         logo.classList.add('brutti-logo-img')
       })
     }
