@@ -40,7 +40,7 @@ jobs:
 
           # Brutti team hero: full-width landscape composition, natural and sharp.
           # The complete original team photo stays intact on the right so nobody is cropped.
-          team = Image.open(assets / 'brutti team.HEIC')
+          team = Image.open(assets / 'brutti team.jpg')
           team = ImageOps.exif_transpose(team).convert('RGB')
 
           canvas_w, canvas_h = 2800, 1200
