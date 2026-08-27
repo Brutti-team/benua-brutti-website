@@ -64,6 +64,28 @@ function BruttiSite() {
         logo.src = asset('logo-brutti-white.png')
         logo.classList.add('brutti-logo-img')
       })
+
+      const impactStats = document.querySelectorAll('.impact-stat')
+
+      const palletCard = impactStats[0]
+      if (palletCard && !palletCard.querySelector('.impact-stat__visual--pallet')) {
+        const palletImage = document.createElement('img')
+        palletImage.src = asset('pallet.png')
+        palletImage.alt = 'Recovered pallet wood'
+        palletImage.className = 'impact-stat__visual impact-stat__visual--pallet'
+        palletImage.setAttribute('aria-hidden', 'true')
+        palletCard.prepend(palletImage)
+      }
+
+      const treeCard = impactStats[1]
+      if (treeCard && !treeCard.querySelector('.impact-stat__visual--tree')) {
+        const treeImage = document.createElement('img')
+        treeImage.src = asset('tree.jpg')
+        treeImage.alt = 'Tree representing trees saved through pallet upcycling'
+        treeImage.className = 'impact-stat__visual impact-stat__visual--tree'
+        treeImage.setAttribute('aria-hidden', 'true')
+        treeCard.prepend(treeImage)
+      }
     }
 
     applyRealAssets()
