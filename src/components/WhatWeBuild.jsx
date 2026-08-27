@@ -14,7 +14,7 @@ const physicalWorks = [
   { title: 'Built-in Cabinet', image: builtInCabinet, tag: 'Furniture' },
   { title: 'Camper Builds', image: camper, tag: 'Custom Build' },
   { title: 'Kiosk', image: kiosk, tag: 'Commercial' },
-  { title: 'Mementos', image: mementoTwo, imageSecondary: asset('memento.png'), tag: 'Custom Pieces' },
+  { title: 'Mementos', image: mementoTwo, tag: 'Custom Pieces' },
   { title: 'Racks & Shelves', image: asset('racks  & shelves.png'), tag: 'Furniture' },
   { title: 'Rental Pieces', image: asset('rental.png'), tag: 'Rental' },
   { title: 'Signages', image: asset('signatures.png'), tag: 'Brand Display' },
@@ -38,18 +38,17 @@ function BuildCard({ className = '', children, delay = 0 }) {
 
 function ServiceCard({ item, index }) {
   return (
-    <BuildCard className={`wwb-service-card ${item.imageSecondary ? 'wwb-service-card--double' : ''}`} delay={(index % 5) * 0.035}>
+    <BuildCard className="wwb-service-card" delay={(index % 5) * 0.035}>
       <div className="wwb-service-media">
         <img src={item.image} alt={`Benua Brutti ${item.title}`} />
-        {item.imageSecondary && <img src={item.imageSecondary} alt="More Benua Brutti memento work" />}
+        <span className="wwb-service-index">{String(index + 1).padStart(2, '0')}</span>
       </div>
       <div className="wwb-service-meta">
-        <span>{String(index + 1).padStart(2, '0')}</span>
         <div>
           <small>{item.tag}</small>
           <h3>{item.title}</h3>
         </div>
-        <ArrowUpRight size={16} />
+        <span className="wwb-service-arrow"><ArrowUpRight size={15} /></span>
       </div>
     </BuildCard>
   )
