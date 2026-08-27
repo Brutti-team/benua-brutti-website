@@ -23,6 +23,7 @@ import './logo-premium.css'
 import './scroll-replay.css'
 import './gallery-premium.css'
 import './story-premium.css'
+import './story-crop-fix.css'
 import './journey.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
