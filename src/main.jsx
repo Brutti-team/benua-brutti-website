@@ -30,6 +30,7 @@ import './what-we-build-two.css'
 import './what-we-build-refine.css'
 import './what-we-build-heading.css'
 import './what-we-build-lightbox.css'
+import './what-we-build-spacing.css'
 import './journey.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
