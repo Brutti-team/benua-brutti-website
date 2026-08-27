@@ -1,0 +1,35 @@
+/* Final founders crop correction.
+   The source photo contains a large empty area on the left, so object-position alone
+   cannot visually center the people. Shift the actual image layer left instead. */
+
+.story__photo-wrap img {
+  object-position: 50% 7% !important;
+  transform: translateX(-10%) scale(1.10) !important;
+  transform-origin: center center !important;
+}
+
+.story__photo-wrap:hover img {
+  transform: translateX(-10%) scale(1.115) !important;
+}
+
+@media (max-width: 1050px) {
+  .story__photo-wrap img {
+    object-position: 50% 7% !important;
+    transform: translateX(-9%) scale(1.10) !important;
+  }
+
+  .story__photo-wrap:hover img {
+    transform: translateX(-9%) scale(1.115) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .story__photo-wrap img {
+    object-position: 50% 6% !important;
+    transform: translateX(-8%) scale(1.09) !important;
+  }
+
+  .story__photo-wrap:hover img {
+    transform: translateX(-8%) scale(1.105) !important;
+  }
+}
