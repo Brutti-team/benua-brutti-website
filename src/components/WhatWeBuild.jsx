@@ -190,54 +190,59 @@ export default function WhatWeBuild() {
         </div>
 
         <div className="wwb-digital-grid">
-          <BuildCard className="wwb-card--digital wwb-card--selesai wwb-selesa-card" delay={0.06}>
-            <div className="wwb-selesa-copy">
-              <div className="wwb-selesa-kicker">
-                <span className="wwb-product-icon"><Blocks size={17} /></span>
-                <span>Home services platform</span>
-              </div>
+          <BuildCard className="wwb-card--digital wwb-card--selesai wwb-card--selesai-smart" delay={0.06}>
+            <div className="wwb-selesaai-layout">
+              <div className="wwb-selesaai-copy">
+                <div className="wwb-product-head">
+                  <span className="wwb-product-icon"><Blocks size={18} /></span>
+                  <span>Home services</span>
+                </div>
 
-              <div className="wwb-selesa-title-row">
                 <div className="wwb-product-wordmark">SelesaAI</div>
-                <span className="wwb-selesa-status">Platform concept</span>
+
+                <p className="wwb-product-desc">
+                  A platform concept connecting homeowners with trusted repair and maintenance support.
+                </p>
+
+                <div className="wwb-selesaai-pills">
+                  <span>Trusted repair support</span>
+                  <span>Homeowner-first flow</span>
+                  <span>Simple request journey</span>
+                </div>
+
+                <div className="wwb-product-foot">
+                  <span>Digital product</span>
+                  <ArrowUpRight size={16} />
+                </div>
               </div>
 
-              <p className="wwb-product-desc">
-                A platform concept connecting homeowners with trusted repair and maintenance support.
-              </p>
+              <div className="wwb-selesaai-preview" aria-hidden="true">
+                <div className="wwb-selesaai-preview__eyebrow">Concept flow</div>
 
-              <div className="wwb-selesa-tags" aria-label="SelesaAI focus areas">
-                <span>Homeowners</span>
-                <span>Repair requests</span>
-                <span>Trusted support</span>
-              </div>
-            </div>
+                <div className="wwb-selesaai-steps">
+                  <div className="wwb-selesaai-step">
+                    <b>01</b>
+                    <strong>Request</strong>
+                    <span>Homeowners submit a repair need.</span>
+                  </div>
 
-            <div className="wwb-selesa-preview" aria-hidden="true">
-              <div className="wwb-selesa-preview__head">
-                <span>Service flow</span>
-                <i />
-              </div>
+                  <div className="wwb-selesaai-step">
+                    <b>02</b>
+                    <strong>Match</strong>
+                    <span>Suitable support is identified.</span>
+                  </div>
 
-              <div className="wwb-selesa-step">
-                <span>01</span>
-                <div><small>Start</small><strong>Request</strong></div>
-                <b />
-              </div>
-              <div className="wwb-selesa-step">
-                <span>02</span>
-                <div><small>Connect</small><strong>Support</strong></div>
-                <b />
-              </div>
-              <div className="wwb-selesa-step">
-                <span>03</span>
-                <div><small>Complete</small><strong>Resolve</strong></div>
-                <b />
-              </div>
+                  <div className="wwb-selesaai-step">
+                    <b>03</b>
+                    <strong>Resolve</strong>
+                    <span>Jobs move toward a smoother outcome.</span>
+                  </div>
+                </div>
 
-              <div className="wwb-selesa-preview__foot">
-                <span>From request to support</span>
-                <ArrowUpRight size={15} />
+                <div className="wwb-selesaai-mini-card">
+                  <small>Positioning</small>
+                  <strong>Practical home support, made simpler.</strong>
+                </div>
               </div>
             </div>
           </BuildCard>
