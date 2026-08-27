@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowUpRight, Blocks, ChevronLeft, ChevronRight, Laptop2, Maximize2, X } from 'lucide-react'
+import { ArrowUpRight, Blocks, ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react'
 import bedBunkbed from '../../bed & bunkbed.png'
 import builtInCabinet from '../../built in cabinet.png'
 import camper from '../../camper.png'
@@ -190,27 +190,12 @@ export default function WhatWeBuild() {
         </div>
 
         <div className="wwb-digital-grid">
-          <BuildCard className="wwb-card--digital wwb-card--tumbooh" delay={0.04}>
-            <div className="wwb-product-head">
-              <span className="wwb-product-icon"><Laptop2 size={18} /></span>
-              <span>Grant management</span>
-            </div>
-            <div className="wwb-product-wordmark">TUMBOOH</div>
-            <p className="wwb-product-desc">A grant management system designed to make applications, reviews and reporting easier to manage.</p>
-            <div className="wwb-mini-ui" aria-hidden="true">
-              <span className="wwb-mini-ui__bar" />
-              <div><i /><i /><i /></div>
-              <b /><b />
-            </div>
-            <div className="wwb-product-foot"><span>Digital product</span><ArrowUpRight size={16} /></div>
-          </BuildCard>
-
-          <BuildCard className="wwb-card--digital wwb-card--selesai" delay={0.08}>
+          <BuildCard className="wwb-card--digital wwb-card--selesai" delay={0.06}>
             <div className="wwb-product-head">
               <span className="wwb-product-icon"><Blocks size={18} /></span>
               <span>Home services</span>
             </div>
-            <div className="wwb-product-wordmark">SelesAI</div>
+            <div className="wwb-product-wordmark">SelesaAI</div>
             <p className="wwb-product-desc">A platform concept connecting homeowners with trusted repair and maintenance support.</p>
             <div className="wwb-orbit" aria-hidden="true"><i /><i /><i /></div>
             <div className="wwb-product-foot"><span>Digital product</span><ArrowUpRight size={16} /></div>
