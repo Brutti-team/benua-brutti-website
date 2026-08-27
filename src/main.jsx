@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { createPortal } from 'react-dom'
 import App from './App.jsx'
 import Collaborators from './components/Collaborators.jsx'
+import JourneyPage from './components/JourneyPage.jsx'
 import './styles.css'
 import './overrides.css'
 import './hero-fix.css'
@@ -22,6 +23,7 @@ import './logo-premium.css'
 import './scroll-replay.css'
 import './gallery-premium.css'
 import './story-premium.css'
+import './journey.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
@@ -47,6 +49,18 @@ function CollaboratorsPortal() {
 }
 
 function BruttiSite() {
+  const [view, setView] = useState(() => (window.location.hash === '#journey' ? 'journey' : 'home'))
+
+  useEffect(() => {
+    const onHashChange = () => {
+      setView(window.location.hash === '#journey' ? 'journey' : 'home')
+      window.scrollTo({ top: 0, behavior: 'auto' })
+    }
+
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
+  }, [])
+
   useEffect(() => {
     const applyRealAssets = () => {
       const heroPhoto = document.querySelector('.hero__image')
@@ -57,7 +71,7 @@ function BruttiSite() {
 
       const storyPhoto = document.querySelector('.story__photo-wrap img')
       if (storyPhoto) {
-        storyPhoto.src = asset('founders.jpg')
+        storyPhoto.src = asset('founder & co founder.JPG')
         storyPhoto.alt = 'Benua Brutti founder and co-founder'
       }
 
@@ -155,6 +169,10 @@ function BruttiSite() {
       mutationObserver.disconnect()
     }
   }, [])
+
+  if (view === 'journey') {
+    return <JourneyPage />
+  }
 
   return (
     <>
