@@ -113,14 +113,14 @@
   height: 100% !important;
   max-height: none !important;
   object-fit: cover !important;
-  object-position: 50% 7% !important;
-  transform: scale(1.01) !important;
+  object-position: 61% 8% !important;
+  transform: scale(1.04) !important;
   filter: saturate(.98) contrast(1.015) brightness(1.015) !important;
   transition: transform .75s cubic-bezier(.22,1,.36,1), filter .4s ease !important;
 }
 
 .story__photo-wrap:hover img {
-  transform: scale(1.025) !important;
+  transform: scale(1.055) !important;
   filter: saturate(1.01) contrast(1.02) brightness(1.02) !important;
 }
 
@@ -336,7 +336,8 @@
   }
 
   .story__photo-wrap img {
-    object-position: 50% 6% !important;
+    object-position: 61% 7% !important;
+    transform: scale(1.035) !important;
   }
 
   .story__content .eyebrow,
