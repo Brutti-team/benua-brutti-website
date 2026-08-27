@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowUpRight, Blocks, ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react'
+import { ArrowUpRight, ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react'
 import bedBunkbed from '../../bed & bunkbed.png'
 import builtInCabinet from '../../built in cabinet.png'
 import camper from '../../camper.png'
@@ -193,13 +193,16 @@ export default function WhatWeBuild() {
           <BuildCard className="wwb-card--digital wwb-card--selesai wwb-selesa-mini" delay={0.06}>
             <div className="wwb-selesa-mini__main">
               <div className="wwb-selesa-mini__top">
-                <span className="wwb-product-icon"><Blocks size={17} /></span>
                 <span>AI home services · Kota Kinabalu</span>
               </div>
 
               <div className="wwb-selesa-mini__title-row">
-                <div>
-                  <div className="wwb-product-wordmark">SelesaAI</div>
+                <div className="wwb-selesa-mini__brand">
+                  <img
+                    className="wwb-selesa-mini__logo"
+                    src={asset('logo selesaai.jpg')}
+                    alt="SelesaAI"
+                  />
                   <p className="wwb-selesa-mini__tagline">Ambil gambar. SelesaAI uruskan.</p>
                 </div>
                 <a
