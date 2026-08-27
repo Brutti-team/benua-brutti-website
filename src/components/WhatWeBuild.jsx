@@ -101,17 +101,6 @@ export default function WhatWeBuild() {
             <div className="wwb-orbit" aria-hidden="true"><i /><i /><i /></div>
             <div className="wwb-product-foot"><span>Digital product</span><ArrowUpRight size={16} /></div>
           </BuildCard>
-
-          <BuildCard className="wwb-card--digital wwb-card--os" delay={0.12}>
-            <div className="wwb-product-head">
-              <span className="wwb-product-icon"><Blocks size={18} /></span>
-              <span>Operations</span>
-            </div>
-            <div className="wwb-product-wordmark">BRUTTI OS</div>
-            <p className="wwb-product-desc">An internal operating system for tasks, attendance, leave, projects and day-to-day team operations.</p>
-            <div className="wwb-os-grid" aria-hidden="true"><i /><i /><i /><i /><i /><i /></div>
-            <div className="wwb-product-foot"><span>Internal system</span><ArrowUpRight size={16} /></div>
-          </BuildCard>
         </div>
 
         <div className="wwb-bottom-note">
