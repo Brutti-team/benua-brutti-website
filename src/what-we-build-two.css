@@ -1,13 +1,12 @@
-/* Digital products refinement */
-
+/* Compact single digital-product presentation */
 .wwb-section-label--digital {
-  margin-top: 74px !important;
-  margin-bottom: 26px !important;
+  margin-top: 68px !important;
+  margin-bottom: 22px !important;
 }
 
 .wwb-digital-grid {
   grid-template-columns: minmax(0, 1fr) !important;
-  max-width: 1100px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -15,269 +14,228 @@
   min-height: 0 !important;
 }
 
-.wwb-card--selesai-smart {
-  padding: 0 !important;
-  overflow: hidden !important;
-  border-radius: 28px !important;
-  border: 1px solid rgba(13, 78, 56, 0.10) !important;
-  background:
-    linear-gradient(135deg, rgba(255,255,255,.98), rgba(247,250,248,.97)) !important;
-  box-shadow:
-    0 20px 50px rgba(11, 44, 32, 0.08),
-    inset 0 1px 0 rgba(255,255,255,.75) !important;
-}
-
 .wwb-card--selesai {
   background: transparent !important;
 }
 
-.wwb-selesaai-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
-  align-items: stretch;
+.wwb-selesa-mini {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 220px !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(23,87,71,.11) !important;
+  border-radius: 24px !important;
+  background: #fbfcfa !important;
+  color: #103f31 !important;
+  box-shadow:
+    0 18px 45px rgba(18,45,34,.085),
+    inset 0 1px 0 rgba(255,255,255,.85) !important;
 }
 
-.wwb-selesaai-copy {
-  padding: 34px 36px 30px !important;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.97), rgba(248,250,249,.98));
+.wwb-selesa-mini__main {
+  padding: 28px 30px 26px;
 }
 
-.wwb-card--selesai-smart .wwb-product-head {
-  margin-bottom: 24px !important;
-  color: #4e7264 !important;
+.wwb-selesa-mini__top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #648078;
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .11em;
+  text-transform: uppercase;
 }
 
-.wwb-card--selesai-smart .wwb-product-head > span:last-child {
-  color: rgba(13, 78, 56, 0.70) !important;
-  font-size: 10px !important;
-  font-weight: 800 !important;
-  letter-spacing: .11em !important;
-  text-transform: uppercase !important;
-}
-
-.wwb-card--selesai-smart .wwb-product-icon {
-  width: 38px !important;
-  height: 38px !important;
-  border: 1px solid rgba(13, 78, 56, .12) !important;
-  background: rgba(13, 78, 56, .045) !important;
+.wwb-selesa-mini .wwb-product-icon {
+  width: 34px !important;
+  height: 34px !important;
+  flex: 0 0 34px;
+  border: 1px solid rgba(23,87,71,.12) !important;
+  border-radius: 10px !important;
+  background: rgba(23,87,71,.045) !important;
   color: #1b6049 !important;
 }
 
-.wwb-card--selesai-smart .wwb-product-wordmark {
-  margin: 0 0 17px !important;
-  color: #083b2a !important;
-  font-size: clamp(42px, 4vw, 56px) !important;
+.wwb-selesa-mini__title-row {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.wwb-selesa-mini .wwb-product-wordmark {
+  margin: 0 !important;
+  color: #0a3a2b !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: clamp(34px, 3.4vw, 46px) !important;
   font-weight: 680 !important;
   line-height: .95 !important;
-  letter-spacing: -.05em !important;
+  letter-spacing: -.052em !important;
 }
 
-.wwb-card--selesai-smart .wwb-product-desc {
-  max-width: 540px !important;
-  margin: 0 0 24px !important;
-  color: rgba(9, 45, 33, 0.76) !important;
-  font-size: 15px !important;
-  line-height: 1.68 !important;
+.wwb-selesa-mini__tagline {
+  margin: 8px 0 0;
+  color: #2d6c57;
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 720;
+  letter-spacing: -.018em;
 }
 
-.wwb-selesaai-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
-  margin-bottom: 30px;
-}
-
-.wwb-selesaai-pills span {
+.wwb-selesa-mini__link {
+  flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
-  min-height: 32px;
-  padding: 0 13px;
+  gap: 7px;
+  padding: 10px 12px;
+  border: 1px solid rgba(23,87,71,.12);
   border-radius: 999px;
-  border: 1px solid rgba(13, 78, 56, 0.11);
-  background: rgba(13, 78, 56, 0.045);
-  color: rgba(9, 52, 38, 0.80);
-  font-size: 10px;
-  font-weight: 760;
-  letter-spacing: .01em;
+  background: #fff;
+  color: #245d4a;
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: transform .25s ease, border-color .25s ease, background .25s ease;
 }
 
-.wwb-card--selesai-smart .wwb-product-foot {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  margin-top: 0 !important;
-  padding-top: 17px !important;
-  border-top: 1px solid rgba(13, 78, 56, 0.10) !important;
-  color: rgba(9, 52, 38, 0.80) !important;
+.wwb-selesa-mini__link:hover {
+  transform: translateY(-2px);
+  border-color: rgba(23,87,71,.22);
+  background: #f5f8f5;
 }
 
-.wwb-card--selesai-smart .wwb-product-foot span {
-  font-size: 9px !important;
-  font-weight: 800 !important;
-  letter-spacing: .12em !important;
-  text-transform: uppercase !important;
+.wwb-selesa-mini .wwb-product-desc {
+  max-width: 640px !important;
+  margin: 18px 0 0 !important;
+  color: #60736c !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: 13px !important;
+  line-height: 1.64 !important;
 }
 
-.wwb-selesaai-preview {
-  position: relative;
-  padding: 30px 28px;
-  background:
-    radial-gradient(circle at 80% 18%, rgba(255,255,255,.13), transparent 28%),
-    linear-gradient(145deg, #0d4b35 0%, #165c43 52%, #2d725b 100%);
-  color: #f4f8f5;
+.wwb-selesa-mini__features {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 19px;
 }
 
-.wwb-selesaai-preview::before {
+.wwb-selesa-mini__features span {
+  padding: 7px 10px;
+  border: 1px solid rgba(23,87,71,.10);
+  border-radius: 999px;
+  background: rgba(23,87,71,.035);
+  color: #4c6f62;
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 730;
+}
+
+.wwb-selesa-mini__facts {
+  position: relative;
+  padding: 22px 20px;
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  background:
+    radial-gradient(circle at 78% 10%, rgba(255,255,255,.10), transparent 28%),
+    linear-gradient(150deg, #103f31 0%, #24614f 100%);
+}
+
+.wwb-selesa-mini__facts::before {
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(255,255,255,.04) 1px, transparent 1px);
-  background-size: 32px 32px;
-  opacity: .10;
   pointer-events: none;
+  background:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
-.wwb-selesaai-preview__eyebrow {
+.wwb-selesa-mini__facts > div {
   position: relative;
   z-index: 1;
-  margin-bottom: 16px;
-  color: rgba(255,255,255,.72);
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: .13em;
-  text-transform: uppercase;
-}
-
-.wwb-selesaai-steps {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  gap: 10px;
-}
-
-.wwb-selesaai-step {
-  padding: 15px 16px 14px;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,.10);
+  padding: 12px 13px;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 13px;
   background: rgba(255,255,255,.055);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
-.wwb-selesaai-step b {
+.wwb-selesa-mini__facts small,
+.wwb-selesa-mini__facts strong {
   display: block;
-  margin-bottom: 7px;
-  color: rgba(255,255,255,.56);
-  font-size: 8px;
+  font-family: 'Manrope', system-ui, sans-serif;
+}
+
+.wwb-selesa-mini__facts small {
+  margin-bottom: 4px;
+  color: rgba(255,255,255,.52);
+  font-size: 7px;
   font-weight: 800;
-  letter-spacing: .12em;
-}
-
-.wwb-selesaai-step strong {
-  display: block;
-  margin-bottom: 3px;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: -.02em;
-}
-
-.wwb-selesaai-step span {
-  display: block;
-  color: rgba(244,248,245,.76);
-  font-size: 11px;
-  line-height: 1.5;
-}
-
-.wwb-selesaai-mini-card {
-  position: relative;
-  z-index: 1;
-  margin-top: 16px;
-  padding: 16px 17px 15px;
-  border-radius: 16px;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.10);
-}
-
-.wwb-selesaai-mini-card small {
-  display: block;
-  margin-bottom: 7px;
-  color: rgba(255,255,255,.62);
-  font-size: 8px;
-  font-weight: 800;
-  letter-spacing: .12em;
+  letter-spacing: .11em;
   text-transform: uppercase;
 }
 
-.wwb-selesaai-mini-card strong {
-  display: block;
-  color: #fff;
-  font-size: 14px;
-  line-height: 1.4;
+.wwb-selesa-mini__facts strong {
+  color: rgba(255,255,255,.94);
+  font-size: 12px;
+  font-weight: 680;
   letter-spacing: -.02em;
 }
 
 .wwb-bottom-note {
-  margin-top: 34px !important;
+  margin-top: 30px !important;
 }
 
-@media (max-width: 1050px) {
-  .wwb-section-label--digital {
-    margin-top: 62px !important;
-    margin-bottom: 24px !important;
-  }
-
+@media (max-width: 900px) {
   .wwb-digital-grid {
     max-width: none;
   }
 
-  .wwb-selesaai-layout {
-    grid-template-columns: 1fr;
+  .wwb-selesa-mini {
+    grid-template-columns: 1fr !important;
   }
 
-  .wwb-selesaai-preview {
-    padding: 24px;
+  .wwb-selesa-mini__facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 16px;
   }
 }
 
 @media (max-width: 650px) {
   .wwb-section-label--digital {
-    margin-top: 50px !important;
-    margin-bottom: 20px !important;
+    margin-top: 48px !important;
+    margin-bottom: 18px !important;
   }
 
-  .wwb-selesaai-copy {
-    padding: 24px 20px 22px !important;
+  .wwb-selesa-mini {
+    border-radius: 20px !important;
   }
 
-  .wwb-card--selesai-smart {
-    border-radius: 22px !important;
+  .wwb-selesa-mini__main {
+    padding: 23px 20px 21px;
   }
 
-  .wwb-card--selesai-smart .wwb-product-wordmark {
-    font-size: 38px !important;
+  .wwb-selesa-mini__title-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 18px;
   }
 
-  .wwb-card--selesai-smart .wwb-product-desc {
-    font-size: 14px !important;
+  .wwb-selesa-mini .wwb-product-wordmark {
+    font-size: 36px !important;
   }
 
-  .wwb-selesaai-preview {
-    padding: 20px;
-  }
-
-  .wwb-selesaai-step strong {
-    font-size: 14px;
-  }
-
-  .wwb-selesaai-step span,
-  .wwb-selesaai-mini-card strong {
-    font-size: 11px;
+  .wwb-selesa-mini__facts {
+    grid-template-columns: 1fr;
   }
 }
