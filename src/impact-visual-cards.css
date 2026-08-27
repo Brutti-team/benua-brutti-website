@@ -18,8 +18,23 @@
   padding: 20px 4px 24px !important;
 }
 
+.impact__grid > div:first-child::before {
+  content: '';
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  right: 8%;
+  bottom: 24px;
+  border: 1px solid rgba(23,87,71,.08);
+  border-radius: 50%;
+  box-shadow: 0 0 0 34px rgba(23,87,71,.025), 0 0 0 68px rgba(23,87,71,.012);
+  pointer-events: none;
+}
+
 .impact__grid > div:first-child::after {
   content: 'PALLET WOOD   →   RESCUED   →   CRAFTED   →   SECOND LIFE';
+  position: relative;
+  z-index: 1;
   display: block;
   width: min(100%, 500px);
   margin-top: 38px;
@@ -54,21 +69,57 @@
 .impact-stat {
   isolation: isolate !important;
   overflow: hidden !important;
-  min-height: 142px !important;
+  min-height: 146px !important;
   padding: 22px 24px !important;
   border-radius: 21px !important;
 }
 
+/* Real DOM images are injected in main.jsx so they cannot disappear behind
+   browser mask/background handling. */
+.impact-stat__visual {
+  position: absolute !important;
+  z-index: 0 !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  display: block !important;
+  height: 100% !important;
+  margin: 0 !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  transition: transform .5s cubic-bezier(.22,1,.36,1), opacity .35s ease !important;
+}
+
+.impact-stat__visual--pallet {
+  width: 48% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  opacity: .46 !important;
+  filter: saturate(.82) contrast(1.06) brightness(.88) !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.54) 24%, #000 58%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.54) 24%, #000 58%);
+}
+
+.impact-stat__visual--tree {
+  width: 54% !important;
+  object-fit: cover !important;
+  object-position: center 46% !important;
+  opacity: 1 !important;
+  filter: saturate(.98) contrast(1.08) brightness(.94) !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.78) 20%, #000 42%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.78) 20%, #000 42%);
+}
+
+/* Keep the left text areas crisp while the real photos sit behind them. */
 .impact-stat::before {
   content: '' !important;
   position: absolute !important;
-  z-index: 0 !important;
+  inset: 0 !important;
+  z-index: 1 !important;
   border-radius: inherit !important;
   pointer-events: none !important;
-  transition: transform .45s ease, opacity .45s ease !important;
 }
 
-/* 57 tonnes — real pallet photo on the right side. */
 .impact-stat:first-child {
   border-color: rgba(255,255,255,.10) !important;
   background:
@@ -78,35 +129,17 @@
 }
 
 .impact-stat:first-child::before {
-  inset: 0 !important;
-  width: auto !important;
-  background:
-    linear-gradient(90deg, rgba(11,48,34,0) 25%, rgba(11,48,34,.08) 40%, rgba(11,48,34,.24) 100%),
-    url('/assets/pallet.png') right 6px center / 47% auto no-repeat !important;
-  opacity: .50 !important;
-  filter: saturate(.80) contrast(1.06) !important;
-  -webkit-mask-image: linear-gradient(90deg, transparent 22%, rgba(0,0,0,.38) 42%, #000 72%);
-  mask-image: linear-gradient(90deg, transparent 22%, rgba(0,0,0,.38) 42%, #000 72%);
+  background: linear-gradient(90deg, rgba(11,48,34,.98) 0%, rgba(11,48,34,.88) 38%, rgba(11,48,34,.20) 68%, transparent 100%) !important;
 }
 
-/* 600 trees — render tree.jpg directly on the card background.
-   This avoids the previous masked pseudo-element becoming invisible. */
 .impact-stat:last-child {
   border-color: rgba(23,87,71,.11) !important;
-  background:
-    linear-gradient(90deg,
-      #ffffff 0%,
-      rgba(255,255,255,.98) 39%,
-      rgba(247,250,247,.88) 50%,
-      rgba(247,250,247,.28) 66%,
-      rgba(247,250,247,.04) 100%),
-    url('/assets/tree.jpg') right 42% center / 54% cover no-repeat !important;
+  background: linear-gradient(145deg, #ffffff 0%, #eef4ef 100%) !important;
   box-shadow: 0 20px 54px rgba(18,45,34,.075) !important;
 }
 
 .impact-stat:last-child::before {
-  display: none !important;
-  content: none !important;
+  background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,.98) 38%, rgba(248,251,248,.68) 55%, rgba(248,251,248,.04) 82%, transparent 100%) !important;
 }
 
 .impact-stat > strong,
@@ -133,22 +166,25 @@
   -webkit-backdrop-filter: blur(8px) !important;
 }
 
+.impact-stat:first-child::after,
+.impact-stat:last-child::after {
+  z-index: 3 !important;
+}
+
 .impact-stat:first-child::after {
   color: rgba(255,255,255,.50) !important;
-  z-index: 3 !important;
 }
 
 .impact-stat:last-child::after {
   color: rgba(23,87,71,.48) !important;
-  z-index: 3 !important;
 }
 
 .impact-stat:hover {
   transform: translateY(-4px) !important;
 }
 
-.impact-stat:first-child:hover::before {
-  transform: scale(1.035) !important;
+.impact-stat:hover .impact-stat__visual {
+  transform: scale(1.045) !important;
 }
 
 @media (max-width: 900px) {
@@ -166,6 +202,13 @@
     padding: 4px 0 14px !important;
   }
 
+  .impact__grid > div:first-child::before {
+    width: 130px;
+    height: 130px;
+    right: 4%;
+    bottom: 4px;
+  }
+
   .impact__grid > div:first-child::after {
     margin-top: 26px;
   }
@@ -174,19 +217,20 @@
     min-height: 310px !important;
   }
 
-  .impact-stat:first-child::before {
-    background-size: 40% auto !important;
-    background-position: right 14px center !important;
+  .impact-stat__visual--pallet {
+    width: 42% !important;
   }
 
-  .impact-stat:last-child {
-    background:
-      linear-gradient(90deg, #fff 0%, rgba(255,255,255,.96) 43%, rgba(247,250,247,.34) 66%, rgba(247,250,247,.04) 100%),
-      url('/assets/tree.jpg') right center / 48% cover no-repeat !important;
+  .impact-stat__visual--tree {
+    width: 48% !important;
   }
 }
 
 @media (max-width: 560px) {
+  .impact__grid > div:first-child::before {
+    display: none;
+  }
+
   .impact__grid > div:first-child::after {
     content: 'PALLET WOOD  →  RESCUED  →  CRAFTED  →  SECOND LIFE';
     margin-top: 22px;
@@ -200,19 +244,18 @@
   }
 
   .impact-stat {
-    min-height: 122px !important;
+    min-height: 126px !important;
     padding: 17px 18px !important;
     border-radius: 17px !important;
   }
 
-  .impact-stat:first-child::before {
-    background-size: 44% auto !important;
-    opacity: .42 !important;
+  .impact-stat__visual--pallet {
+    width: 45% !important;
+    opacity: .40 !important;
   }
 
-  .impact-stat:last-child {
-    background:
-      linear-gradient(90deg, #fff 0%, rgba(255,255,255,.97) 50%, rgba(247,250,247,.40) 72%, rgba(247,250,247,.05) 100%),
-      url('/assets/tree.jpg') right center / 46% cover no-repeat !important;
+  .impact-stat__visual--tree {
+    width: 46% !important;
+    object-position: center !important;
   }
 }
