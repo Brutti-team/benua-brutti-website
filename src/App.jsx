@@ -231,6 +231,17 @@ function App() {
                 “The first piece was a humble bedside table, crafted in the backyard — a gift that became the beginning of something bigger.”
               </blockquote>
             </Reveal>
+            <Reveal delay={0.26}>
+              <button
+                className="story__journey-button"
+                onClick={() => {
+                  window.location.hash = 'journey'
+                  window.scrollTo({ top: 0, behavior: 'auto' })
+                }}
+              >
+                Explore our journey <ArrowUpRight size={17} />
+              </button>
+            </Reveal>
           </div>
         </div>
       </section>
