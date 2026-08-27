@@ -20,6 +20,7 @@ import './impact-luxury.css'
 import './hero-luxury.css'
 import './logo-premium.css'
 import './scroll-replay.css'
+import './gallery-premium.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
