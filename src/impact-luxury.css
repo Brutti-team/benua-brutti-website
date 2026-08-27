@@ -1,0 +1,305 @@
+/* Luxury motion pass for the impact section.
+   Loaded last so it only refines the current approved layout. */
+
+.impact {
+  padding: 88px 0 96px !important;
+  background:
+    radial-gradient(circle at 18% 16%, rgba(23,87,71,.065), transparent 23%),
+    radial-gradient(circle at 78% 72%, rgba(109,145,126,.075), transparent 24%),
+    linear-gradient(180deg, #fafcf9 0%, #f2f6f2 100%) !important;
+}
+
+/* Give the fine grid a very slow architectural drift. */
+.impact::before {
+  opacity: .92;
+  animation: impactGridDrift 22s ease-in-out infinite alternate;
+}
+
+/* Decorative ring becomes a quiet moving depth element. */
+.impact::after {
+  width: 360px !important;
+  height: 360px !important;
+  right: -178px !important;
+  top: 26px !important;
+  border-color: rgba(23,87,71,.075) !important;
+  box-shadow:
+    0 0 0 58px rgba(23,87,71,.018),
+    0 0 0 116px rgba(23,87,71,.010) !important;
+  animation: impactOrbFloat 11s cubic-bezier(.22,1,.36,1) infinite alternate;
+}
+
+.impact__grid {
+  grid-template-columns: minmax(0, .92fr) minmax(430px, 1.08fr) !important;
+  gap: clamp(38px, 4vw, 62px) !important;
+  align-items: center !important;
+  margin-bottom: 14px !important;
+}
+
+.impact__grid > div:first-child {
+  min-height: 300px !important;
+  padding-top: 8px !important;
+  padding-bottom: 18px !important;
+}
+
+.impact__grid > div:first-child::before {
+  opacity: .92;
+  animation: impactRingPulse 8s ease-in-out infinite alternate;
+}
+
+.impact .eyebrow::before {
+  animation: impactDotGlow 2.8s ease-in-out infinite;
+}
+
+.impact h2 {
+  max-width: 590px !important;
+  text-wrap: balance;
+}
+
+.impact h2 em {
+  text-shadow: 0 10px 30px rgba(23,87,71,.08);
+}
+
+/* Main visual gets a richer, museum-like frame without becoming flashy. */
+.impact__copy {
+  width: min(100%, 560px) !important;
+  min-height: 342px !important;
+  justify-self: end !important;
+  border: 1px solid rgba(255,255,255,.22) !important;
+  border-radius: 28px !important;
+  box-shadow:
+    0 32px 80px rgba(18,45,34,.18),
+    0 3px 10px rgba(18,45,34,.07),
+    inset 0 1px 0 rgba(255,255,255,.16) !important;
+  transform-origin: center;
+  transition:
+    transform .75s cubic-bezier(.22,1,.36,1),
+    box-shadow .75s cubic-bezier(.22,1,.36,1),
+    border-color .5s ease !important;
+}
+
+.impact__copy:hover {
+  transform: translateY(-8px) scale(1.008) !important;
+  border-color: rgba(255,255,255,.34) !important;
+  box-shadow:
+    0 42px 100px rgba(18,45,34,.22),
+    0 8px 22px rgba(18,45,34,.08),
+    inset 0 1px 0 rgba(255,255,255,.22) !important;
+}
+
+.impact__copy::before,
+.impact__copy::after {
+  transition:
+    transform .65s cubic-bezier(.22,1,.36,1),
+    background-color .4s ease,
+    border-color .4s ease !important;
+}
+
+.impact__copy:hover::before {
+  transform: translateY(-1px);
+  background: rgba(9,39,28,.68);
+  border-color: rgba(255,255,255,.30);
+}
+
+.impact__copy:hover::after {
+  transform: translate(2px,-2px) rotate(4deg);
+  background: rgba(255,255,255,.16);
+  border-color: rgba(255,255,255,.28);
+}
+
+.impact__copy p {
+  box-shadow: 0 12px 34px rgba(0,0,0,.08) !important;
+  transition:
+    background-color .45s ease,
+    transform .65s cubic-bezier(.22,1,.36,1),
+    border-color .45s ease !important;
+}
+
+.impact__copy:hover p {
+  transform: translateY(-2px);
+  background: rgba(5,27,19,.66) !important;
+  border-color: rgba(255,255,255,.20) !important;
+}
+
+/* Pull the proof points slightly upward so the composition feels tighter. */
+.impact__numbers {
+  gap: 22px !important;
+  margin-top: 0 !important;
+}
+
+.impact-stat {
+  min-height: 150px !important;
+  border-radius: 22px !important;
+  box-shadow:
+    0 20px 54px rgba(18,45,34,.075),
+    inset 0 1px 0 rgba(255,255,255,.16) !important;
+  transition:
+    transform .7s cubic-bezier(.22,1,.36,1),
+    box-shadow .7s cubic-bezier(.22,1,.36,1),
+    border-color .45s ease !important;
+  will-change: transform;
+}
+
+.impact-stat:hover {
+  transform: translateY(-7px) scale(1.008) !important;
+  box-shadow:
+    0 31px 74px rgba(18,45,34,.12),
+    inset 0 1px 0 rgba(255,255,255,.20) !important;
+}
+
+/* Keep the approved bright pallet treatment, but make motion more refined. */
+.impact-stat__visual {
+  transform-origin: 72% 50%;
+  transition:
+    transform 1.05s cubic-bezier(.22,1,.36,1),
+    filter .8s ease,
+    opacity .8s ease !important;
+}
+
+.impact-stat__visual--pallet {
+  animation: impactPhotoBreathe 13s ease-in-out infinite alternate;
+}
+
+.impact-stat__visual--tree {
+  animation: impactPhotoBreatheTree 15s ease-in-out infinite alternate;
+}
+
+.impact-stat:hover .impact-stat__visual {
+  transform: scale(1.075) translateX(-3px) !important;
+}
+
+.impact-stat__visual--pallet {
+  filter: saturate(.98) contrast(1.055) brightness(1.14) !important;
+}
+
+.impact-stat__visual--tree {
+  filter: saturate(.94) contrast(1.04) brightness(.97) !important;
+}
+
+/* More polished micro-label hierarchy. */
+.impact-stat:first-child::after,
+.impact-stat:last-child::after {
+  top: 15px !important;
+  right: 18px !important;
+  font-size: 8px !important;
+  font-weight: 800 !important;
+  letter-spacing: .17em !important;
+  transition: transform .55s cubic-bezier(.22,1,.36,1), opacity .45s ease !important;
+}
+
+.impact-stat:hover::after {
+  transform: translateX(-3px);
+}
+
+.impact-stat > strong {
+  text-shadow: 0 8px 24px rgba(0,0,0,.035);
+}
+
+.impact-stat:first-child > strong {
+  text-shadow: 0 10px 28px rgba(0,0,0,.14);
+}
+
+.impact-stat > b {
+  transition:
+    transform .5s cubic-bezier(.22,1,.36,1),
+    background-color .4s ease,
+    border-color .4s ease !important;
+}
+
+.impact-stat:hover > b {
+  transform: translateY(-1px);
+}
+
+/* The small material-flow line becomes a subtle animated editorial accent. */
+.impact__grid > div:first-child::after {
+  opacity: .76;
+  animation: impactFlowBreath 5.5s ease-in-out infinite alternate;
+}
+
+@keyframes impactGridDrift {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 18px 12px, 18px 12px; }
+}
+
+@keyframes impactOrbFloat {
+  0% { transform: translate3d(0,0,0) scale(1); opacity: .75; }
+  100% { transform: translate3d(-16px,16px,0) scale(1.035); opacity: 1; }
+}
+
+@keyframes impactRingPulse {
+  0% { transform: scale(.96); opacity: .55; }
+  100% { transform: scale(1.035); opacity: .95; }
+}
+
+@keyframes impactDotGlow {
+  0%, 100% { box-shadow: 0 0 0 5px rgba(23,87,71,.08); }
+  50% { box-shadow: 0 0 0 8px rgba(23,87,71,.035); }
+}
+
+@keyframes impactPhotoBreathe {
+  0% { transform: scale(1.00) translateX(0); }
+  100% { transform: scale(1.035) translateX(-2px); }
+}
+
+@keyframes impactPhotoBreatheTree {
+  0% { transform: scale(1.01) translateX(0); }
+  100% { transform: scale(1.045) translateX(-3px); }
+}
+
+@keyframes impactFlowBreath {
+  0% { opacity: .54; letter-spacing: .13em; }
+  100% { opacity: .82; letter-spacing: .145em; }
+}
+
+@media (max-width: 900px) {
+  .impact {
+    padding: 72px 0 78px !important;
+  }
+
+  .impact__grid {
+    grid-template-columns: 1fr !important;
+    gap: 26px !important;
+  }
+
+  .impact__copy {
+    width: 100% !important;
+    min-height: 315px !important;
+  }
+
+  .impact__numbers {
+    gap: 16px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .impact {
+    padding: 58px 0 64px !important;
+  }
+
+  .impact__copy {
+    min-height: 286px !important;
+    border-radius: 22px !important;
+  }
+
+  .impact-stat {
+    min-height: 128px !important;
+    border-radius: 18px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .impact::before,
+  .impact::after,
+  .impact__grid > div:first-child::before,
+  .impact .eyebrow::before,
+  .impact-stat__visual--pallet,
+  .impact-stat__visual--tree,
+  .impact__grid > div:first-child::after {
+    animation: none !important;
+  }
+
+  .impact__copy,
+  .impact-stat,
+  .impact-stat__visual {
+    transition-duration: .01ms !important;
+  }
+}
