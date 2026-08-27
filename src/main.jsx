@@ -19,6 +19,7 @@ import './impact-bright.css'
 import './impact-luxury.css'
 import './hero-luxury.css'
 import './logo-premium.css'
+import './scroll-replay.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
@@ -97,6 +98,60 @@ function BruttiSite() {
     observer.observe(document.body, { childList: true, subtree: true })
 
     return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const selectors = [
+      '.hero__content > .eyebrow',
+      '.hero__content > h1',
+      '.hero__intro',
+      '.hero__explore',
+      '.gallery-card',
+      '.story__photo-wrap',
+      '.process-step',
+      '.product-card',
+      '.showroom',
+      '.footer__grid > *',
+      '.footer__bottom',
+      '#strategic-collaborators article',
+      '#strategic-collaborators [class*="card"]',
+    ].join(', ')
+
+    const observed = new WeakSet()
+    const intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-scroll-visible')
+          } else {
+            entry.target.classList.remove('is-scroll-visible')
+          }
+        })
+      },
+      {
+        threshold: 0.16,
+        rootMargin: '0px 0px -7% 0px',
+      },
+    )
+
+    const attachScrollReplay = () => {
+      document.querySelectorAll(selectors).forEach((element, index) => {
+        if (observed.has(element)) return
+        observed.add(element)
+        element.classList.add('scroll-replay')
+        element.style.setProperty('--scroll-delay', `${(index % 4) * 55}ms`)
+        intersectionObserver.observe(element)
+      })
+    }
+
+    attachScrollReplay()
+    const mutationObserver = new MutationObserver(attachScrollReplay)
+    mutationObserver.observe(document.body, { childList: true, subtree: true })
+
+    return () => {
+      intersectionObserver.disconnect()
+      mutationObserver.disconnect()
+    }
   }, [])
 
   return (
