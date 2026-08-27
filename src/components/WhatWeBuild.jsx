@@ -1,5 +1,6 @@
-import { motion } from 'framer-motion'
-import { ArrowUpRight, Blocks, Laptop2 } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { ArrowUpRight, Blocks, ChevronLeft, ChevronRight, Laptop2, Maximize2, X } from 'lucide-react'
 import bedBunkbed from '../../bed & bunkbed.png'
 import builtInCabinet from '../../built in cabinet.png'
 import camper from '../../camper.png'
@@ -36,25 +37,127 @@ function BuildCard({ className = '', children, delay = 0 }) {
   )
 }
 
-function ServiceCard({ item, index }) {
+function ServiceCard({ item, index, onOpen }) {
   return (
     <BuildCard className="wwb-service-card" delay={(index % 5) * 0.035}>
-      <div className="wwb-service-media">
+      <button
+        type="button"
+        className="wwb-service-media wwb-service-media--clickable"
+        onClick={() => onOpen(index)}
+        aria-label={`View ${item.title} image`}
+      >
         <img src={item.image} alt={`Benua Brutti ${item.title}`} />
         <span className="wwb-service-index">{String(index + 1).padStart(2, '0')}</span>
-      </div>
+        <span className="wwb-service-view"><Maximize2 size={14} /> View</span>
+      </button>
       <div className="wwb-service-meta">
         <div>
           <small>{item.tag}</small>
           <h3>{item.title}</h3>
         </div>
-        <span className="wwb-service-arrow"><ArrowUpRight size={15} /></span>
+        <button
+          type="button"
+          className="wwb-service-arrow"
+          onClick={() => onOpen(index)}
+          aria-label={`Open ${item.title}`}
+        >
+          <ArrowUpRight size={15} />
+        </button>
       </div>
     </BuildCard>
   )
 }
 
+function GalleryLightbox({ index, onClose, onChange }) {
+  const item = physicalWorks[index]
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') onClose()
+      if (event.key === 'ArrowLeft') onChange((index - 1 + physicalWorks.length) % physicalWorks.length)
+      if (event.key === 'ArrowRight') onChange((index + 1) % physicalWorks.length)
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [index, onClose, onChange])
+
+  const previous = () => onChange((index - 1 + physicalWorks.length) % physicalWorks.length)
+  const next = () => onChange((index + 1) % physicalWorks.length)
+
+  return (
+    <motion.div
+      className="wwb-lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${item.title} image viewer`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.22 }}
+      onMouseDown={onClose}
+    >
+      <motion.div
+        className="wwb-lightbox__panel"
+        initial={{ y: 18, scale: 0.985, opacity: 0 }}
+        animate={{ y: 0, scale: 1, opacity: 1 }}
+        exit={{ y: 12, scale: 0.99, opacity: 0 }}
+        transition={{ duration: 0.34, ease }}
+        onMouseDown={(event) => event.stopPropagation()}
+      >
+        <div className="wwb-lightbox__topbar">
+          <div>
+            <span>{item.tag}</span>
+            <strong>{item.title}</strong>
+          </div>
+          <div className="wwb-lightbox__count">
+            {String(index + 1).padStart(2, '0')} / {String(physicalWorks.length).padStart(2, '0')}
+          </div>
+          <button type="button" className="wwb-lightbox__close" onClick={onClose} aria-label="Close image viewer">
+            <X size={19} />
+          </button>
+        </div>
+
+        <div className="wwb-lightbox__stage">
+          <button type="button" className="wwb-lightbox__nav wwb-lightbox__nav--prev" onClick={previous} aria-label="Previous image">
+            <ChevronLeft size={22} />
+          </button>
+
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.img
+              key={item.title}
+              src={item.image}
+              alt={`Benua Brutti ${item.title}`}
+              initial={{ opacity: 0, scale: 0.985 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.99 }}
+              transition={{ duration: 0.24 }}
+            />
+          </AnimatePresence>
+
+          <button type="button" className="wwb-lightbox__nav wwb-lightbox__nav--next" onClick={next} aria-label="Next image">
+            <ChevronRight size={22} />
+          </button>
+        </div>
+
+        <div className="wwb-lightbox__footer">
+          <span>Use ← → to browse</span>
+          <span>Press Esc to close</span>
+        </div>
+      </motion.div>
+    </motion.div>
+  )
+}
+
 export default function WhatWeBuild() {
+  const [lightboxIndex, setLightboxIndex] = useState(null)
+
   return (
     <section className="what-we-build" aria-labelledby="what-we-build-title">
       <div className="page-shell wwb-shell">
@@ -76,7 +179,7 @@ export default function WhatWeBuild() {
 
         <div className="wwb-services-grid">
           {physicalWorks.map((item, index) => (
-            <ServiceCard key={item.title} item={item} index={index} />
+            <ServiceCard key={item.title} item={item} index={index} onOpen={setLightboxIndex} />
           ))}
         </div>
 
@@ -119,6 +222,16 @@ export default function WhatWeBuild() {
           <p>Physical craft and digital problem-solving, developed from the same practical mindset.</p>
         </div>
       </div>
+
+      <AnimatePresence>
+        {lightboxIndex !== null && (
+          <GalleryLightbox
+            index={lightboxIndex}
+            onClose={() => setLightboxIndex(null)}
+            onChange={setLightboxIndex}
+          />
+        )}
+      </AnimatePresence>
     </section>
   )
 }
