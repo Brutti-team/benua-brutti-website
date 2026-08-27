@@ -3,11 +3,15 @@ import { useInView } from 'framer-motion'
 
 export default function Counter({ end, suffix = '', duration = 1500 }) {
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, amount: 0.6 })
+  const inView = useInView(ref, { once: false, amount: 0.6 })
   const [value, setValue] = useState(0)
 
   useEffect(() => {
-    if (!inView) return
+    if (!inView) {
+      setValue(0)
+      return undefined
+    }
+
     let frame
     const start = performance.now()
 
