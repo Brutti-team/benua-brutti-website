@@ -1,34 +1,43 @@
-/* Tighten vertical spacing for What We Build */
+/* Balanced vertical spacing for What We Build */
 .what-we-build {
-  padding-top: 42px !important;
+  padding-top: 58px !important;
 }
 
 .wwb-heading {
-  padding-top: 4px !important;
-  margin-bottom: 26px !important;
+  padding-top: 10px !important;
+  margin-bottom: 34px !important;
 }
 
 .wwb-eyebrow {
-  margin-bottom: 12px !important;
+  margin-bottom: 14px !important;
 }
 
 .wwb-section-label {
-  margin-top: 0 !important;
+  margin-top: 4px !important;
+  margin-bottom: 24px !important;
 }
 
 @media (max-width: 860px) {
   .what-we-build {
-    padding-top: 34px !important;
+    padding-top: 46px !important;
   }
 
   .wwb-heading {
-    padding-top: 0 !important;
-    margin-bottom: 24px !important;
+    padding-top: 6px !important;
+    margin-bottom: 30px !important;
+  }
+
+  .wwb-section-label {
+    margin-bottom: 20px !important;
   }
 }
 
 @media (max-width: 650px) {
   .what-we-build {
-    padding-top: 28px !important;
+    padding-top: 38px !important;
+  }
+
+  .wwb-heading {
+    margin-bottom: 26px !important;
   }
 }
