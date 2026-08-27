@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowUpRight, ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react'
+import { ArrowUpRight, Camera, CheckCircle2, ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react'
 import bedBunkbed from '../../bed & bunkbed.png'
 import builtInCabinet from '../../built in cabinet.png'
 import camper from '../../camper.png'
@@ -190,54 +190,63 @@ export default function WhatWeBuild() {
         </div>
 
         <div className="wwb-digital-grid">
-          <BuildCard className="wwb-card--digital wwb-card--selesai wwb-selesa-mini" delay={0.06}>
-            <div className="wwb-selesa-mini__main">
-              <div className="wwb-selesa-mini__top">
-                <span>AI home services · Kota Kinabalu</span>
-              </div>
-
-              <div className="wwb-selesa-mini__title-row">
-                <div className="wwb-selesa-mini__brand">
-                  <img
-                    className="wwb-selesa-mini__logo"
-                    src={asset('logo selesaai.jpg')}
-                    alt="SelesaAI"
-                  />
-                  <p className="wwb-selesa-mini__tagline">Ambil gambar. SelesaAI uruskan.</p>
-                </div>
-                <a
-                  className="wwb-selesa-mini__link"
-                  href="https://selesaai.lovable.app"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  View MVP <ArrowUpRight size={14} />
-                </a>
-              </div>
-
-              <p className="wwb-product-desc">
-                AI understands the home issue from a photo, asks follow-up questions, provides a price estimate, then the team connects the customer with a verified technician.
+          <BuildCard className="wwb-card--digital wwb-card--selesai wwb-selesa-showcase" delay={0.06}>
+            <div className="wwb-selesa-showcase__content">
+              <div className="wwb-selesa-showcase__eyebrow">AI home services · Kota Kinabalu</div>
+              <img className="wwb-selesa-showcase__logo" src={asset('logo selesaai.jpg')} alt="SelesaAI" />
+              <p className="wwb-selesa-showcase__tagline">Ambil gambar. SelesaAI uruskan.</p>
+              <p className="wwb-selesa-showcase__desc">
+                AI understands a home issue from a photo, asks follow-up questions, provides a price estimate, then connects the customer with a verified technician.
               </p>
 
-              <div className="wwb-selesa-mini__features">
+              <div className="wwb-selesa-showcase__features">
                 <span>AI triage</span>
                 <span>Price estimate</span>
                 <span>Verified technicians</span>
               </div>
+
+              <a
+                className="wwb-selesa-showcase__cta"
+                href="https://selesaai.lovable.app"
+                target="_blank"
+                rel="noreferrer"
+              >
+                View MVP <ArrowUpRight size={14} />
+              </a>
             </div>
 
-            <div className="wwb-selesa-mini__facts" aria-label="SelesaAI MVP facts">
-              <div>
-                <small>Status</small>
-                <strong>Live MVP</strong>
+            <div className="wwb-selesa-showcase__preview" aria-hidden="true">
+              <div className="wwb-selesa-phone">
+                <div className="wwb-selesa-phone__bar">
+                  <span />
+                  <span>SelesaAI</span>
+                  <i />
+                </div>
+                <div className="wwb-selesa-phone__hero">
+                  <small>Describe your home issue</small>
+                  <strong>What needs fixing?</strong>
+                  <div className="wwb-selesa-phone__upload">
+                    <Camera size={18} />
+                    <span>Upload a photo</span>
+                  </div>
+                </div>
+                <div className="wwb-selesa-phone__result">
+                  <div>
+                    <small>AI assessment</small>
+                    <strong>Likely plumbing issue</strong>
+                  </div>
+                  <CheckCircle2 size={18} />
+                </div>
+                <div className="wwb-selesa-phone__estimate">
+                  <span>Estimated range</span>
+                  <strong>RM80 – RM150</strong>
+                </div>
               </div>
-              <div>
-                <small>Coverage</small>
-                <strong>KK &amp; nearby</strong>
-              </div>
-              <div>
-                <small>Services</small>
-                <strong>5 categories</strong>
+
+              <div className="wwb-selesa-showcase__badges">
+                <span><b>Live</b> MVP</span>
+                <span><b>KK</b> & nearby</span>
+                <span><b>5</b> services</span>
               </div>
             </div>
           </BuildCard>
