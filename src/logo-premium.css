@@ -1,18 +1,22 @@
-/* Clean premium logo treatment for the floating navigation.
-   Keep the signature mark simple: no divider, no glow box, no extra chrome. */
+/* Clean centered logo styling for the navbar.
+   Keep the Brutti signature simple, balanced and optically centered. */
 
 .brand {
   position: relative !important;
-  min-width: 92px !important;
-  min-height: 42px !important;
-  padding: 0 10px !important;
-  display: inline-flex !important;
+  display: flex !important;
   align-items: center !important;
-  justify-content: flex-start !important;
-  overflow: visible !important;
-  border-radius: 0 !important;
+  justify-content: center !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 86px !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  padding: 0 10px !important;
+  margin: 0 !important;
   background: transparent !important;
+  border-radius: 0 !important;
   box-shadow: none !important;
+  overflow: visible !important;
 }
 
 .brand::before,
@@ -23,67 +27,61 @@
 
 .brand img,
 .brand .brutti-logo-img {
+  display: block !important;
   position: relative !important;
   z-index: 1 !important;
-  width: 78px !important;
-  height: 32px !important;
+  width: 70px !important;
+  height: auto !important;
   max-width: none !important;
-  margin: 0 !important;
+  margin: 0 auto !important;
   padding: 0 !important;
   object-fit: contain !important;
-  object-position: left center !important;
+  object-position: center center !important;
   opacity: 1 !important;
-  filter:
-    brightness(1.08)
-    contrast(1.07)
-    drop-shadow(0 1px 5px rgba(0,0,0,.18)) !important;
-  transform-origin: left center !important;
-  transition:
-    transform .4s cubic-bezier(.22,1,.36,1),
-    filter .3s ease !important;
+  filter: brightness(1.12) contrast(1.08) drop-shadow(0 1px 5px rgba(0,0,0,.16)) !important;
+  transform: translateY(0) !important;
+  transform-origin: center center !important;
+  transition: transform .28s ease, filter .28s ease !important;
 }
 
 .brand:hover img,
 .brand:hover .brutti-logo-img {
-  transform: scale(1.035) !important;
-  filter:
-    brightness(1.14)
-    contrast(1.08)
-    drop-shadow(0 2px 7px rgba(0,0,0,.20)) !important;
+  transform: scale(1.025) !important;
+  filter: brightness(1.17) contrast(1.10) drop-shadow(0 2px 7px rgba(0,0,0,.18)) !important;
+}
+
+.nav,
+.nav.nav--scrolled {
+  display: flex !important;
+  align-items: center !important;
 }
 
 .nav.nav--scrolled .brand img,
 .nav.nav--scrolled .brand .brutti-logo-img {
-  filter:
-    brightness(1.10)
-    contrast(1.08)
-    drop-shadow(0 1px 5px rgba(0,0,0,.16)) !important;
+  filter: brightness(1.14) contrast(1.09) drop-shadow(0 1px 5px rgba(0,0,0,.14)) !important;
 }
 
 @media (max-width: 900px) {
   .brand {
-    min-width: 82px !important;
-    min-height: 40px !important;
+    min-width: 76px !important;
     padding: 0 8px !important;
   }
 
   .brand img,
   .brand .brutti-logo-img {
-    width: 70px !important;
-    height: 29px !important;
+    width: 62px !important;
   }
 }
 
 @media (max-width: 520px) {
   .brand {
-    min-width: 74px !important;
+    min-width: 70px !important;
     padding: 0 6px !important;
   }
 
   .brand img,
   .brand .brutti-logo-img {
-    width: 64px !important;
-    height: 27px !important;
+    width: 56px !important;
   }
 }
 
