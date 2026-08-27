@@ -1,0 +1,242 @@
+/* Refined editorial portfolio treatment for What We Build */
+
+.wwb-services-grid {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  gap: 30px 22px !important;
+}
+
+.wwb-service-card {
+  flex: 0 1 calc(25% - 17px) !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.wwb-service-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: none !important;
+}
+
+.wwb-service-media {
+  position: relative !important;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 4 / 5 !important;
+  padding: 10px !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(23,87,71,.10) !important;
+  border-radius: 22px !important;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255,255,255,.95), rgba(255,255,255,.38) 56%, transparent 72%),
+    linear-gradient(180deg, #edf2ee 0%, #e7ede8 100%) !important;
+  box-shadow:
+    0 18px 42px rgba(18,45,34,.08),
+    inset 0 1px 0 rgba(255,255,255,.75) !important;
+  transition:
+    transform .38s cubic-bezier(.22,1,.36,1),
+    box-shadow .38s ease,
+    border-color .38s ease !important;
+}
+
+.wwb-service-media::after {
+  content: '' !important;
+  position: absolute !important;
+  inset: 9px !important;
+  pointer-events: none !important;
+  border: 1px solid rgba(23,87,71,.055) !important;
+  border-radius: 15px !important;
+}
+
+.wwb-service-card:hover .wwb-service-media {
+  transform: translateY(-3px) !important;
+  border-color: rgba(23,87,71,.17) !important;
+  box-shadow:
+    0 28px 58px rgba(18,45,34,.13),
+    inset 0 1px 0 rgba(255,255,255,.78) !important;
+}
+
+.wwb-service-media img {
+  position: relative !important;
+  z-index: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  border-radius: 13px !important;
+  filter: saturate(.97) contrast(1.015) !important;
+  transform: none !important;
+  transition:
+    transform .72s cubic-bezier(.22,1,.36,1),
+    filter .35s ease !important;
+}
+
+.wwb-service-card:hover .wwb-service-media img {
+  transform: scale(1.018) !important;
+  filter: saturate(1.02) contrast(1.02) !important;
+}
+
+.wwb-service-index {
+  position: absolute !important;
+  z-index: 3 !important;
+  top: 17px !important;
+  left: 17px !important;
+  min-width: 34px !important;
+  height: 26px !important;
+  padding: 0 9px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 1px solid rgba(255,255,255,.42) !important;
+  border-radius: 999px !important;
+  background: rgba(8,45,32,.74) !important;
+  color: rgba(255,255,255,.92) !important;
+  backdrop-filter: blur(9px) !important;
+  -webkit-backdrop-filter: blur(9px) !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: 9px !important;
+  font-weight: 800 !important;
+  letter-spacing: .08em !important;
+}
+
+.wwb-service-meta {
+  min-height: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  padding: 15px 4px 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+}
+
+.wwb-service-meta > div {
+  min-width: 0 !important;
+}
+
+.wwb-service-meta small {
+  display: block !important;
+  margin: 0 0 5px !important;
+  color: #73877d !important;
+  font-size: 8px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+}
+
+.wwb-service-meta h3 {
+  margin: 0 !important;
+  color: #163e30 !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -.025em !important;
+}
+
+.wwb-service-arrow {
+  flex: 0 0 auto !important;
+  width: 34px !important;
+  height: 34px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid rgba(23,87,71,.11) !important;
+  border-radius: 50% !important;
+  background: rgba(255,255,255,.60) !important;
+  color: #315f4e !important;
+  transition:
+    transform .28s cubic-bezier(.22,1,.36,1),
+    background .28s ease,
+    color .28s ease !important;
+}
+
+.wwb-service-card:hover .wwb-service-arrow {
+  transform: translate(2px, -2px) !important;
+  background: #124a36 !important;
+  color: #fff !important;
+}
+
+/* Slightly quieter section divider so the work gets the attention. */
+.wwb-section-label {
+  margin-bottom: 22px !important;
+}
+
+.wwb-section-label--digital {
+  margin-top: 52px !important;
+}
+
+@media (max-width: 1180px) {
+  .wwb-service-card {
+    flex-basis: calc(33.333% - 15px) !important;
+  }
+}
+
+@media (max-width: 780px) {
+  .wwb-services-grid {
+    gap: 24px 14px !important;
+  }
+
+  .wwb-service-card {
+    flex-basis: calc(50% - 7px) !important;
+  }
+
+  .wwb-service-media {
+    border-radius: 19px !important;
+    padding: 8px !important;
+  }
+
+  .wwb-service-media::after {
+    inset: 7px !important;
+    border-radius: 13px !important;
+  }
+
+  .wwb-service-index {
+    top: 14px !important;
+    left: 14px !important;
+  }
+
+  .wwb-service-meta h3 {
+    font-size: 13px !important;
+  }
+
+  .wwb-service-arrow {
+    width: 30px !important;
+    height: 30px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .wwb-service-card {
+    flex-basis: 100% !important;
+  }
+
+  .wwb-service-media {
+    aspect-ratio: 4 / 4.8 !important;
+  }
+
+  .wwb-service-meta {
+    padding-top: 13px !important;
+  }
+
+  .wwb-service-meta h3 {
+    font-size: 15px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wwb-service-card,
+  .wwb-service-media,
+  .wwb-service-media img,
+  .wwb-service-arrow {
+    transition: none !important;
+  }
+}
