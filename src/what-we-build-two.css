@@ -1,6 +1,13 @@
-/* Two-product balance for What We Build */
+/* Single-product balance for What We Build */
+.wwb-section-label--digital {
+  margin-top: 72px !important;
+  margin-bottom: 28px !important;
+}
+
 .wwb-digital-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .wwb-card--digital {
@@ -8,7 +15,19 @@
 }
 
 @media (max-width: 1050px) {
+  .wwb-section-label--digital {
+    margin-top: 60px !important;
+    margin-bottom: 24px !important;
+  }
+
   .wwb-digital-grid {
-    grid-template-columns: 1fr !important;
+    max-width: none;
+  }
+}
+
+@media (max-width: 650px) {
+  .wwb-section-label--digital {
+    margin-top: 48px !important;
+    margin-bottom: 20px !important;
   }
 }
