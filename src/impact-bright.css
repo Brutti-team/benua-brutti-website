@@ -1,0 +1,55 @@
+/* Final impact-card visibility tuning. Loaded after impact-visual-cards.css. */
+
+/* Make the pallet photo visibly brighter while keeping the green card treatment. */
+.impact-stat__visual--pallet {
+  width: 50% !important;
+  opacity: .74 !important;
+  filter: saturate(.96) contrast(1.05) brightness(1.12) !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.62) 20%, #000 52%) !important;
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.62) 20%, #000 52%) !important;
+}
+
+/* Reduce the dark overlay over the image side so the pallet stacks read clearly. */
+.impact-stat:first-child::before {
+  background: linear-gradient(
+    90deg,
+    rgba(11,48,34,.98) 0%,
+    rgba(11,48,34,.84) 34%,
+    rgba(11,48,34,.34) 52%,
+    rgba(11,48,34,.08) 74%,
+    transparent 100%
+  ) !important;
+}
+
+/* Make 01 / MATERIAL and 02 / IMPACT easier to see without becoming loud. */
+.impact-stat:first-child::after,
+.impact-stat:last-child::after {
+  font-size: 8px !important;
+  font-weight: 800 !important;
+  letter-spacing: .16em !important;
+}
+
+.impact-stat:first-child::after {
+  color: rgba(255,255,255,.94) !important;
+  text-shadow: 0 1px 7px rgba(0,0,0,.28) !important;
+}
+
+.impact-stat:last-child::after {
+  color: rgba(23,87,71,.86) !important;
+  text-shadow: 0 1px 6px rgba(255,255,255,.70) !important;
+}
+
+@media (max-width: 900px) {
+  .impact-stat__visual--pallet {
+    width: 46% !important;
+    opacity: .72 !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .impact-stat__visual--pallet {
+    width: 46% !important;
+    opacity: .68 !important;
+    filter: saturate(.94) contrast(1.04) brightness(1.10) !important;
+  }
+}
