@@ -1,33 +1,289 @@
-/* Single-product balance for What We Build */
+/* Refined single-product balance for What We Build */
 .wwb-section-label--digital {
   margin-top: 72px !important;
-  margin-bottom: 28px !important;
+  margin-bottom: 26px !important;
 }
 
 .wwb-digital-grid {
   grid-template-columns: minmax(0, 1fr) !important;
-  max-width: 900px;
+  max-width: 1060px;
   margin: 0 auto;
 }
 
-.wwb-card--digital {
-  min-height: 320px;
+.wwb-selesa-card {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr) !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(23,87,71,.10) !important;
+  border-radius: 28px !important;
+  background: #f8faf7 !important;
+  color: #123d2f !important;
+  box-shadow:
+    0 24px 58px rgba(18,45,34,.09),
+    inset 0 1px 0 rgba(255,255,255,.8) !important;
 }
 
-@media (max-width: 1050px) {
-  .wwb-section-label--digital {
-    margin-top: 60px !important;
-    margin-bottom: 24px !important;
+.wwb-card--selesai {
+  background: #f8faf7 !important;
+}
+
+.wwb-selesa-copy {
+  padding: 36px 38px 34px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.wwb-selesa-kicker {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: #678078;
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.wwb-selesa-kicker .wwb-product-icon {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(23,87,71,.12);
+  border-radius: 11px;
+  background: rgba(23,87,71,.055);
+  color: #245f4b;
+}
+
+.wwb-selesa-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 26px;
+}
+
+.wwb-selesa-card .wwb-product-wordmark {
+  margin: 0 !important;
+  color: #0b3829 !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: clamp(38px, 4vw, 54px) !important;
+  font-weight: 670 !important;
+  line-height: .95 !important;
+  letter-spacing: -.055em !important;
+}
+
+.wwb-selesa-status {
+  padding: 7px 10px;
+  border: 1px solid rgba(23,87,71,.11);
+  border-radius: 999px;
+  background: rgba(255,255,255,.68);
+  color: #648076;
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.wwb-selesa-card .wwb-product-desc {
+  max-width: 560px !important;
+  margin: 17px 0 0 !important;
+  color: #61736c !important;
+  font-size: 14px !important;
+  line-height: 1.68 !important;
+}
+
+.wwb-selesa-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.wwb-selesa-tags span {
+  padding: 8px 10px;
+  border: 1px solid rgba(23,87,71,.095);
+  border-radius: 999px;
+  background: #fff;
+  color: #47675c;
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.wwb-selesa-preview {
+  position: relative;
+  min-height: 280px;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 86% 14%, rgba(255,255,255,.10), transparent 26%),
+    linear-gradient(145deg, #103f32 0%, #215f4e 100%);
+  color: #fff;
+}
+
+.wwb-selesa-preview::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 42px 42px;
+  opacity: .45;
+}
+
+.wwb-selesa-preview__head,
+.wwb-selesa-preview__foot,
+.wwb-selesa-step {
+  position: relative;
+  z-index: 1;
+}
+
+.wwb-selesa-preview__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 17px;
+  color: rgba(255,255,255,.64);
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.wwb-selesa-preview__head i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.78);
+  box-shadow: 0 0 0 5px rgba(255,255,255,.07);
+}
+
+.wwb-selesa-step {
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 13px 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 14px;
+  background: rgba(255,255,255,.055);
+  backdrop-filter: blur(7px);
+}
+
+.wwb-selesa-step + .wwb-selesa-step {
+  margin-top: 9px;
+}
+
+.wwb-selesa-step > span {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.11);
+  border-radius: 9px;
+  color: rgba(255,255,255,.72);
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.wwb-selesa-step small,
+.wwb-selesa-step strong {
+  display: block;
+  font-family: 'Manrope', system-ui, sans-serif;
+}
+
+.wwb-selesa-step small {
+  margin-bottom: 2px;
+  color: rgba(255,255,255,.48);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.wwb-selesa-step strong {
+  color: rgba(255,255,255,.92);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.wwb-selesa-step b {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.76);
+}
+
+.wwb-selesa-preview__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,.10);
+  color: rgba(255,255,255,.62);
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 8px;
+  font-weight: 750;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.wwb-bottom-note {
+  margin-top: 34px !important;
+}
+
+@media (max-width: 900px) {
+  .wwb-selesa-card {
+    grid-template-columns: 1fr !important;
   }
 
-  .wwb-digital-grid {
-    max-width: none;
+  .wwb-selesa-preview {
+    min-height: 240px;
   }
 }
 
 @media (max-width: 650px) {
   .wwb-section-label--digital {
-    margin-top: 48px !important;
+    margin-top: 50px !important;
     margin-bottom: 20px !important;
+  }
+
+  .wwb-digital-grid {
+    max-width: none;
+  }
+
+  .wwb-selesa-card {
+    border-radius: 22px !important;
+  }
+
+  .wwb-selesa-copy {
+    padding: 26px 22px 24px;
+  }
+
+  .wwb-selesa-title-row {
+    margin-top: 21px;
+  }
+
+  .wwb-selesa-card .wwb-product-wordmark {
+    font-size: clamp(34px, 12vw, 46px) !important;
+  }
+
+  .wwb-selesa-preview {
+    min-height: 230px;
+    padding: 21px;
   }
 }
