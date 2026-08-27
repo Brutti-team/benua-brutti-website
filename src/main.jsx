@@ -18,6 +18,7 @@ import './impact-visual-cards.css'
 import './impact-bright.css'
 import './impact-luxury.css'
 import './hero-luxury.css'
+import './logo-premium.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
