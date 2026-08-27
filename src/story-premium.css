@@ -1,0 +1,377 @@
+/* Premium editorial styling for the About / Story section.
+   Keeps the section calm and luxurious while centering the founders photo,
+   tightening typography, and giving the quote a deliberate feature treatment. */
+
+.story {
+  position: relative !important;
+  overflow: hidden !important;
+  padding: 84px 0 90px !important;
+  background:
+    radial-gradient(circle at 12% 20%, rgba(255,255,255,.045), transparent 24%),
+    radial-gradient(circle at 88% 86%, rgba(255,255,255,.026), transparent 22%),
+    linear-gradient(135deg, #0b412e 0%, #0d4934 48%, #0a3c2b 100%) !important;
+  isolation: isolate !important;
+}
+
+.story::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  background-image:
+    linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px) !important;
+  background-size: 72px 72px !important;
+  opacity: .10 !important;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%) !important;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%) !important;
+}
+
+.story::after {
+  content: '' !important;
+  position: absolute !important;
+  z-index: 0 !important;
+  width: 430px !important;
+  height: 430px !important;
+  right: -150px !important;
+  top: -140px !important;
+  border: 1px solid rgba(255,255,255,.055) !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 0 58px rgba(255,255,255,.014), 0 0 0 112px rgba(255,255,255,.008) !important;
+  pointer-events: none !important;
+}
+
+.story > .page-shell {
+  position: relative !important;
+  z-index: 1 !important;
+  width: min(1260px, calc(100% - 72px)) !important;
+}
+
+.story__grid {
+  display: grid !important;
+  grid-template-columns: minmax(440px, .96fr) minmax(0, 1.04fr) !important;
+  gap: clamp(48px, 5vw, 78px) !important;
+  align-items: center !important;
+}
+
+/* ---------- Visual ---------- */
+.story__visual {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 520px !important;
+  padding: 18px !important;
+}
+
+.story__visual::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border: 1px solid rgba(255,255,255,.065) !important;
+  border-radius: 34px !important;
+  background:
+    radial-gradient(circle at 18% 16%, rgba(255,255,255,.075), transparent 35%),
+    linear-gradient(145deg, rgba(255,255,255,.035), rgba(255,255,255,.014)) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.045),
+    0 28px 70px rgba(1,15,10,.13) !important;
+  pointer-events: none !important;
+}
+
+.story__photo-wrap {
+  position: relative !important;
+  z-index: 2 !important;
+  width: min(100%, 560px) !important;
+  height: 470px !important;
+  margin: 0 auto !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  border-radius: 28px !important;
+  background: rgba(255,255,255,.045) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.055),
+    0 28px 72px rgba(2,18,12,.22) !important;
+  transition:
+    transform .52s cubic-bezier(.22,1,.36,1),
+    box-shadow .45s ease !important;
+}
+
+.story__photo-wrap::after {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  background:
+    linear-gradient(180deg, rgba(6,32,23,.02) 0%, transparent 56%, rgba(6,32,23,.11) 100%) !important;
+}
+
+.story__photo-wrap:hover {
+  transform: translateY(-5px) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 36px 86px rgba(2,18,12,.27) !important;
+}
+
+.story__photo-wrap img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  transform: scale(1.015) !important;
+  filter: saturate(1.02) contrast(1.015) brightness(1.015) !important;
+  transition:
+    transform .9s cubic-bezier(.22,1,.36,1),
+    filter .5s ease !important;
+}
+
+.story__photo-wrap:hover img {
+  transform: scale(1.038) !important;
+  filter: saturate(1.045) contrast(1.025) brightness(1.025) !important;
+}
+
+.story__vertical {
+  position: absolute !important;
+  z-index: 3 !important;
+  left: 30px !important;
+  top: 50% !important;
+  transform: translateY(-50%) rotate(180deg) !important;
+  writing-mode: vertical-rl !important;
+  color: rgba(255,255,255,.36) !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: 8px !important;
+  font-weight: 700 !important;
+  letter-spacing: .34em !important;
+  text-transform: uppercase !important;
+  pointer-events: none !important;
+}
+
+/* ---------- Copy ---------- */
+.story__content {
+  position: relative !important;
+  z-index: 2 !important;
+  max-width: 620px !important;
+}
+
+.story__content .eyebrow,
+.story__content .eyebrow--light {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  margin: 0 0 16px !important;
+  color: rgba(236,243,238,.72) !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+}
+
+.story__content .eyebrow::before,
+.story__content .eyebrow--light::before {
+  content: '' !important;
+  width: 6px !important;
+  height: 6px !important;
+  flex: 0 0 auto !important;
+  border-radius: 50% !important;
+  background: rgba(239,248,242,.92) !important;
+  box-shadow: 0 0 0 5px rgba(239,248,242,.07) !important;
+}
+
+.story__content h2 {
+  max-width: 620px !important;
+  margin: 0 0 26px !important;
+  color: #f7faf7 !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: clamp(50px, 4.9vw, 70px) !important;
+  font-weight: 600 !important;
+  line-height: .94 !important;
+  letter-spacing: -.055em !important;
+  text-wrap: balance !important;
+}
+
+.story__content h2 em {
+  display: block !important;
+  margin-top: 5px !important;
+  color: rgba(245,248,243,.95) !important;
+  font-family: 'Italiana', Georgia, serif !important;
+  font-size: .90em !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  line-height: .96 !important;
+  letter-spacing: -.025em !important;
+}
+
+.story__content p {
+  max-width: 600px !important;
+  margin: 0 0 16px !important;
+  color: rgba(234,241,236,.80) !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  line-height: 1.72 !important;
+  letter-spacing: -.008em !important;
+}
+
+.story__content > div:nth-of-type(3) p {
+  margin-bottom: 26px !important;
+}
+
+.story__content blockquote {
+  position: relative !important;
+  overflow: hidden !important;
+  margin: 28px 0 0 !important;
+  padding: 26px 30px 27px 34px !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  border-radius: 22px !important;
+  background:
+    radial-gradient(circle at 84% 20%, rgba(255,255,255,.045), transparent 32%),
+    linear-gradient(135deg, rgba(255,255,255,.055), rgba(255,255,255,.022)) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.055),
+    0 18px 44px rgba(1,15,10,.10) !important;
+  color: rgba(249,251,248,.95) !important;
+  font-family: 'Italiana', Georgia, serif !important;
+  font-size: clamp(25px, 2.25vw, 34px) !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 1.28 !important;
+  letter-spacing: -.017em !important;
+}
+
+.story__content blockquote::before {
+  content: '“' !important;
+  position: absolute !important;
+  left: 15px !important;
+  top: 8px !important;
+  color: rgba(255,255,255,.17) !important;
+  font-family: Georgia, serif !important;
+  font-size: 58px !important;
+  line-height: 1 !important;
+  pointer-events: none !important;
+}
+
+.story__content blockquote::after {
+  content: '' !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 20px !important;
+  bottom: 20px !important;
+  width: 3px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(180deg, rgba(240,248,243,.38), rgba(240,248,243,.09)) !important;
+}
+
+@media (max-width: 1100px) {
+  .story {
+    padding: 70px 0 78px !important;
+  }
+
+  .story > .page-shell {
+    width: min(100% - 48px, 1060px) !important;
+  }
+
+  .story__grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+
+  .story__visual {
+    min-height: 0 !important;
+    max-width: 760px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  .story__photo-wrap {
+    width: min(100%, 720px) !important;
+    height: 500px !important;
+  }
+
+  .story__content {
+    width: min(100%, 760px) !important;
+    max-width: none !important;
+    margin: 0 auto !important;
+  }
+
+  .story__content h2 {
+    max-width: none !important;
+    font-size: clamp(46px, 7vw, 62px) !important;
+  }
+
+  .story__content p {
+    max-width: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .story {
+    padding: 50px 0 58px !important;
+  }
+
+  .story > .page-shell {
+    width: calc(100% - 26px) !important;
+  }
+
+  .story__grid {
+    gap: 30px !important;
+  }
+
+  .story__visual {
+    padding: 10px !important;
+  }
+
+  .story__visual::before {
+    border-radius: 22px !important;
+  }
+
+  .story__photo-wrap {
+    height: auto !important;
+    aspect-ratio: 4 / 5 !important;
+    border-radius: 20px !important;
+  }
+
+  .story__vertical {
+    display: none !important;
+  }
+
+  .story__content .eyebrow,
+  .story__content .eyebrow--light {
+    margin-bottom: 12px !important;
+    font-size: 9px !important;
+  }
+
+  .story__content h2 {
+    margin-bottom: 19px !important;
+    font-size: clamp(38px, 11.5vw, 49px) !important;
+  }
+
+  .story__content p {
+    font-size: 14px !important;
+    line-height: 1.68 !important;
+  }
+
+  .story__content blockquote {
+    margin-top: 22px !important;
+    padding: 22px 20px 22px 25px !important;
+    border-radius: 17px !important;
+    font-size: clamp(22px, 7.2vw, 29px) !important;
+  }
+
+  .story__content blockquote::before {
+    left: 8px !important;
+    top: 5px !important;
+    font-size: 44px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story__photo-wrap,
+  .story__photo-wrap img {
+    transition: none !important;
+  }
+}
