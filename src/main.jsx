@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom'
 import App from './App.jsx'
 import Collaborators from './components/Collaborators.jsx'
 import JourneyPage from './components/JourneyPage.jsx'
+import WhatWeBuild from './components/WhatWeBuild.jsx'
 import './styles.css'
 import './overrides.css'
 import './hero-fix.css'
@@ -24,6 +25,7 @@ import './scroll-replay.css'
 import './gallery-premium.css'
 import './story-premium.css'
 import './story-crop-fix.css'
+import './what-we-build.css'
 import './journey.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
@@ -47,6 +49,27 @@ function CollaboratorsPortal() {
   }, [])
 
   return target ? createPortal(<Collaborators />, target) : null
+}
+
+function WhatWeBuildPortal() {
+  const [target, setTarget] = useState(null)
+
+  useEffect(() => {
+    const about = document.getElementById('about')
+    if (!about?.parentNode) return undefined
+
+    const mount = document.createElement('div')
+    mount.id = 'what-we-build'
+    about.parentNode.insertBefore(mount, about)
+    setTarget(mount)
+
+    return () => {
+      setTarget(null)
+      mount.remove()
+    }
+  }, [])
+
+  return target ? createPortal(<WhatWeBuild />, target) : null
 }
 
 function BruttiSite() {
@@ -178,6 +201,7 @@ function BruttiSite() {
   return (
     <>
       <App />
+      <WhatWeBuildPortal />
       <CollaboratorsPortal />
     </>
   )
