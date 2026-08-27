@@ -190,59 +190,51 @@ export default function WhatWeBuild() {
         </div>
 
         <div className="wwb-digital-grid">
-          <BuildCard className="wwb-card--digital wwb-card--selesai wwb-card--selesai-smart" delay={0.06}>
-            <div className="wwb-selesaai-layout">
-              <div className="wwb-selesaai-copy">
-                <div className="wwb-product-head">
-                  <span className="wwb-product-icon"><Blocks size={18} /></span>
-                  <span>Home services</span>
-                </div>
-
-                <div className="wwb-product-wordmark">SelesaAI</div>
-
-                <p className="wwb-product-desc">
-                  A platform concept connecting homeowners with trusted repair and maintenance support.
-                </p>
-
-                <div className="wwb-selesaai-pills">
-                  <span>Trusted repair support</span>
-                  <span>Homeowner-first flow</span>
-                  <span>Simple request journey</span>
-                </div>
-
-                <div className="wwb-product-foot">
-                  <span>Digital product</span>
-                  <ArrowUpRight size={16} />
-                </div>
+          <BuildCard className="wwb-card--digital wwb-card--selesai wwb-selesa-mini" delay={0.06}>
+            <div className="wwb-selesa-mini__main">
+              <div className="wwb-selesa-mini__top">
+                <span className="wwb-product-icon"><Blocks size={17} /></span>
+                <span>AI home services · Kota Kinabalu</span>
               </div>
 
-              <div className="wwb-selesaai-preview" aria-hidden="true">
-                <div className="wwb-selesaai-preview__eyebrow">Concept flow</div>
-
-                <div className="wwb-selesaai-steps">
-                  <div className="wwb-selesaai-step">
-                    <b>01</b>
-                    <strong>Request</strong>
-                    <span>Homeowners submit a repair need.</span>
-                  </div>
-
-                  <div className="wwb-selesaai-step">
-                    <b>02</b>
-                    <strong>Match</strong>
-                    <span>Suitable support is identified.</span>
-                  </div>
-
-                  <div className="wwb-selesaai-step">
-                    <b>03</b>
-                    <strong>Resolve</strong>
-                    <span>Jobs move toward a smoother outcome.</span>
-                  </div>
+              <div className="wwb-selesa-mini__title-row">
+                <div>
+                  <div className="wwb-product-wordmark">SelesaAI</div>
+                  <p className="wwb-selesa-mini__tagline">Ambil gambar. SelesaAI uruskan.</p>
                 </div>
+                <a
+                  className="wwb-selesa-mini__link"
+                  href="https://selesaai.lovable.app"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View MVP <ArrowUpRight size={14} />
+                </a>
+              </div>
 
-                <div className="wwb-selesaai-mini-card">
-                  <small>Positioning</small>
-                  <strong>Practical home support, made simpler.</strong>
-                </div>
+              <p className="wwb-product-desc">
+                AI understands the home issue from a photo, asks follow-up questions, provides a price estimate, then the team connects the customer with a verified technician.
+              </p>
+
+              <div className="wwb-selesa-mini__features">
+                <span>AI triage</span>
+                <span>Price estimate</span>
+                <span>Verified technicians</span>
+              </div>
+            </div>
+
+            <div className="wwb-selesa-mini__facts" aria-label="SelesaAI MVP facts">
+              <div>
+                <small>Status</small>
+                <strong>Live MVP</strong>
+              </div>
+              <div>
+                <small>Coverage</small>
+                <strong>KK &amp; nearby</strong>
+              </div>
+              <div>
+                <small>Services</small>
+                <strong>5 categories</strong>
               </div>
             </div>
           </BuildCard>
