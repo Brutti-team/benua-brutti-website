@@ -1,0 +1,14 @@
+/* Two-product balance for What We Build */
+.wwb-digital-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.wwb-card--digital {
+  min-height: 320px;
+}
+
+@media (max-width: 1050px) {
+  .wwb-digital-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
