@@ -1,49 +1,50 @@
-/* Reusable scroll-entry motion. Elements reset after leaving the viewport,
-   so the animation plays again when the user scrolls back to them. */
+/* Premium scroll replay without flashing.
+   Elements stay visible while they reset, so re-entry feels like motion rather
+   than a blink. Framer Motion still handles the stronger section reveals. */
 
 .scroll-replay {
-  opacity: 0 !important;
-  transform: translate3d(0, 24px, 0) scale(.994) !important;
-  filter: blur(5px) !important;
-  transition:
-    opacity .78s cubic-bezier(.22,1,.36,1),
-    transform .92s cubic-bezier(.22,1,.36,1),
-    filter .72s ease !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transform: translate3d(0, 14px, 0) scale(.998) !important;
+  transition: transform .68s cubic-bezier(.22,1,.36,1) !important;
   transition-delay: var(--scroll-delay, 0ms) !important;
-  will-change: opacity, transform, filter;
+  will-change: transform;
 }
 
 .scroll-replay.is-scroll-visible {
   opacity: 1 !important;
+  filter: none !important;
   transform: translate3d(0, 0, 0) scale(1) !important;
-  filter: blur(0) !important;
 }
 
-/* Slight directional variation for large editorial images. */
 .gallery-card.scroll-replay,
-.story__photo-wrap.scroll-replay,
 .showroom.scroll-replay {
-  transform: translate3d(0, 34px, 0) scale(.985) !important;
+  transform: translate3d(0, 18px, 0) scale(.995) !important;
 }
 
 .gallery-card.scroll-replay.is-scroll-visible,
-.story__photo-wrap.scroll-replay.is-scroll-visible,
 .showroom.scroll-replay.is-scroll-visible {
   transform: translate3d(0, 0, 0) scale(1) !important;
 }
 
-/* Process rows feel more intentional with a tiny horizontal movement. */
+/* The founders photo already has its own motion treatment. Never hide/reset it. */
+.story__photo-wrap.scroll-replay,
+.story__photo-wrap.scroll-replay.is-scroll-visible {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+}
+
 .process-step.scroll-replay {
-  transform: translate3d(-22px, 0, 0) !important;
+  transform: translate3d(-14px, 0, 0) !important;
 }
 
 .process-step.scroll-replay.is-scroll-visible {
   transform: translate3d(0, 0, 0) !important;
 }
 
-/* Hero replays elegantly when returning to the top. */
 .hero__content > .scroll-replay {
-  transform: translate3d(0, 20px, 0) !important;
+  transform: translate3d(0, 10px, 0) !important;
 }
 
 .hero__content > .scroll-replay.is-scroll-visible {
@@ -53,26 +54,19 @@
 @media (max-width: 700px) {
   .scroll-replay,
   .gallery-card.scroll-replay,
-  .story__photo-wrap.scroll-replay,
   .showroom.scroll-replay {
-    transform: translate3d(0, 18px, 0) scale(.996) !important;
-    filter: blur(3px) !important;
+    transform: translate3d(0, 10px, 0) scale(.999) !important;
   }
 
   .scroll-replay.is-scroll-visible,
   .gallery-card.scroll-replay.is-scroll-visible,
-  .story__photo-wrap.scroll-replay.is-scroll-visible,
   .showroom.scroll-replay.is-scroll-visible {
     transform: translate3d(0, 0, 0) scale(1) !important;
-    filter: blur(0) !important;
   }
 
-  .process-step.scroll-replay {
-    transform: translate3d(-12px, 0, 0) !important;
-  }
-
-  .process-step.scroll-replay.is-scroll-visible {
-    transform: translate3d(0, 0, 0) !important;
+  .story__photo-wrap.scroll-replay,
+  .story__photo-wrap.scroll-replay.is-scroll-visible {
+    transform: none !important;
   }
 }
 
