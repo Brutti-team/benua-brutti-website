@@ -166,6 +166,7 @@ export default function WhatWeBuild() {
   const [lightboxIndex, setLightboxIndex] = useState(null)
   const [selesaSlideIndex, setSelesaSlideIndex] = useState(0)
   const [isSelesaPreviewOpen, setIsSelesaPreviewOpen] = useState(false)
+  const [isSelesaSliderPaused, setIsSelesaSliderPaused] = useState(false)
 
   const previousSelesaSlide = () => {
     setSelesaSlideIndex((current) => (current - 1 + selesaSlides.length) % selesaSlides.length)
@@ -174,6 +175,16 @@ export default function WhatWeBuild() {
   const nextSelesaSlide = () => {
     setSelesaSlideIndex((current) => (current + 1) % selesaSlides.length)
   }
+
+  useEffect(() => {
+    if (isSelesaPreviewOpen || isSelesaSliderPaused || selesaSlides.length <= 1) return undefined
+
+    const interval = window.setInterval(() => {
+      setSelesaSlideIndex((current) => (current + 1) % selesaSlides.length)
+    }, 3800)
+
+    return () => window.clearInterval(interval)
+  }, [isSelesaPreviewOpen, isSelesaSliderPaused])
 
   useEffect(() => {
     if (!isSelesaPreviewOpen) return undefined
@@ -252,7 +263,15 @@ export default function WhatWeBuild() {
             </div>
 
             <div className="wwb-selesa-showcase__preview">
-              <div className="wwb-selesa-slider">
+              <div
+                className="wwb-selesa-slider"
+                onMouseEnter={() => setIsSelesaSliderPaused(true)}
+                onMouseLeave={() => setIsSelesaSliderPaused(false)}
+                onFocusCapture={() => setIsSelesaSliderPaused(true)}
+                onBlurCapture={(event) => {
+                  if (!event.currentTarget.contains(event.relatedTarget)) setIsSelesaSliderPaused(false)
+                }}
+              >
                 <div className="wwb-selesa-home-frame">
                   <button
                     type="button"
