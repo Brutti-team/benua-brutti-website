@@ -116,6 +116,29 @@ function BruttiSite() {
         logo.classList.add('brutti-logo-img')
       })
 
+      const socialLogos = [
+        { file: 'tiktok.jpg', label: 'TikTok' },
+        { file: 'ig.jpg', label: 'Instagram' },
+        { file: 'fb.png', label: 'Facebook' },
+        { file: 'threads.png', label: 'Threads' },
+      ]
+
+      document.querySelectorAll('.footer__social-links a').forEach((link, index) => {
+        const social = socialLogos[index]
+        if (!social || link.dataset.logoApplied === 'true') return
+
+        link.textContent = ''
+        link.classList.add('footer__social-icon-link')
+        link.title = social.label
+        link.dataset.logoApplied = 'true'
+
+        const icon = document.createElement('img')
+        icon.src = asset(social.file)
+        icon.alt = `${social.label} logo`
+        icon.className = 'footer__social-logo'
+        link.append(icon)
+      })
+
       const impactStats = document.querySelectorAll('.impact-stat')
 
       const palletCard = impactStats[0]
