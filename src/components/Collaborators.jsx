@@ -77,40 +77,54 @@ function LogoCard({ file, onOpen }) {
   )
 }
 
-function DraggableRow({ files, label, onOpen, reverse = false, speed = 0.34 }) {
+function DraggableRow({ files, label, onOpen, reverse = false, speed = 30 }) {
   const rowRef = useRef(null)
   const frameRef = useRef(null)
+  const lastFrameRef = useRef(0)
   const pauseUntilRef = useRef(0)
-  const suppressClickRef = useRef(false)
+  const suppressClickUntilRef = useRef(0)
   const dragState = useRef({
     active: false,
     pointerId: null,
     startX: 0,
     startScrollLeft: 0,
     moved: false,
+    captured: false,
   })
 
   useEffect(() => {
     const row = rowRef.current
     if (!row) return undefined
 
-    let ready = false
+    let initialized = false
 
     const prepareLoop = () => {
       const half = row.scrollWidth / 2
       if (!half) return
-      if (!ready && reverse) row.scrollLeft = half
-      ready = true
+
+      if (!initialized && reverse) {
+        row.scrollLeft = half
+      }
+
+      initialized = true
     }
 
-    prepareLoop()
+    const initialFrame = window.requestAnimationFrame(prepareLoop)
 
-    const animate = () => {
+    const animate = (timestamp) => {
+      if (!lastFrameRef.current) lastFrameRef.current = timestamp
+      const delta = Math.min(timestamp - lastFrameRef.current, 40)
+      lastFrameRef.current = timestamp
+
       const half = row.scrollWidth / 2
-      const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
-      if (half && !reduceMotion && Date.now() >= pauseUntilRef.current && !dragState.current.active) {
-        row.scrollLeft += reverse ? -speed : speed
+      if (
+        half > 0 &&
+        timestamp >= pauseUntilRef.current &&
+        !dragState.current.active
+      ) {
+        const movement = (speed * delta) / 1000
+        row.scrollLeft += reverse ? -movement : movement
 
         if (!reverse && row.scrollLeft >= half) {
           row.scrollLeft -= half
@@ -125,11 +139,14 @@ function DraggableRow({ files, label, onOpen, reverse = false, speed = 0.34 }) {
     }
 
     frameRef.current = window.requestAnimationFrame(animate)
-    window.addEventListener('resize', prepareLoop)
+
+    const resizeObserver = new ResizeObserver(prepareLoop)
+    resizeObserver.observe(row)
 
     return () => {
+      window.cancelAnimationFrame(initialFrame)
       if (frameRef.current) window.cancelAnimationFrame(frameRef.current)
-      window.removeEventListener('resize', prepareLoop)
+      resizeObserver.disconnect()
     }
   }, [reverse, speed])
 
@@ -145,11 +162,8 @@ function DraggableRow({ files, label, onOpen, reverse = false, speed = 0.34 }) {
       startX: event.clientX,
       startScrollLeft: row.scrollLeft,
       moved: false,
+      captured: false,
     }
-
-    pauseUntilRef.current = Date.now() + 10000
-    row.classList.add('is-dragging')
-    row.setPointerCapture?.(event.pointerId)
   }
 
   const handlePointerMove = (event) => {
@@ -158,10 +172,20 @@ function DraggableRow({ files, label, onOpen, reverse = false, speed = 0.34 }) {
     if (!row || !state.active || state.pointerId !== event.pointerId) return
 
     const delta = event.clientX - state.startX
-    if (Math.abs(delta) > 8) {
+
+    if (!state.moved && Math.abs(delta) > 7) {
       state.moved = true
-      suppressClickRef.current = true
+      row.classList.add('is-dragging')
+
+      try {
+        row.setPointerCapture?.(event.pointerId)
+        state.captured = true
+      } catch {
+        state.captured = false
+      }
     }
+
+    if (!state.moved) return
 
     row.scrollLeft = state.startScrollLeft - delta
   }
@@ -171,19 +195,36 @@ function DraggableRow({ files, label, onOpen, reverse = false, speed = 0.34 }) {
     const state = dragState.current
     if (!row || !state.active) return
 
-    if (state.pointerId === event.pointerId) {
-      row.releasePointerCapture?.(event.pointerId)
+    if (state.captured && state.pointerId === event.pointerId) {
+      try {
+        if (row.hasPointerCapture?.(event.pointerId)) {
+          row.releasePointerCapture(event.pointerId)
+        }
+      } catch {
+        // Pointer capture may already have been released by the browser.
+      }
     }
 
-    state.active = false
-    state.pointerId = null
+    if (state.moved) {
+      suppressClickUntilRef.current = performance.now() + 260
+      pauseUntilRef.current = performance.now() + 650
+    }
+
+    dragState.current = {
+      active: false,
+      pointerId: null,
+      startX: 0,
+      startScrollLeft: row.scrollLeft,
+      moved: false,
+      captured: false,
+    }
+
     row.classList.remove('is-dragging')
-    pauseUntilRef.current = Date.now() + (state.moved ? 900 : 180)
   }
 
   const handleClickCapture = (event) => {
-    if (!suppressClickRef.current) return
-    suppressClickRef.current = false
+    if (performance.now() > suppressClickUntilRef.current) return
+
     event.preventDefault()
     event.stopPropagation()
   }
@@ -194,13 +235,13 @@ function DraggableRow({ files, label, onOpen, reverse = false, speed = 0.34 }) {
 
     if (event.key === 'ArrowRight') {
       event.preventDefault()
-      pauseUntilRef.current = Date.now() + 1200
+      pauseUntilRef.current = performance.now() + 900
       row.scrollBy({ left: 280, behavior: 'smooth' })
     }
 
     if (event.key === 'ArrowLeft') {
       event.preventDefault()
-      pauseUntilRef.current = Date.now() + 1200
+      pauseUntilRef.current = performance.now() + 900
       row.scrollBy({ left: -280, behavior: 'smooth' })
     }
   }
@@ -271,14 +312,14 @@ function Collaborators() {
             files={firstRow}
             label="Collaborators row one"
             onOpen={setSelectedLogo}
-            speed={0.34}
+            speed={30}
           />
           <DraggableRow
             files={secondRow}
             label="Collaborators row two"
             onOpen={setSelectedLogo}
             reverse
-            speed={0.3}
+            speed={26}
           />
         </div>
       </section>
