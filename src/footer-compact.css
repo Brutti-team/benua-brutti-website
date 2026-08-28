@@ -1,0 +1,238 @@
+/* Compact footer refinement — intentionally overrides footer-tune.css only. */
+.footer {
+  padding: 38px 0 18px !important;
+  background: #09291d !important;
+}
+
+.footer::before {
+  display: none !important;
+}
+
+.footer__grid {
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 430px) !important;
+  align-items: start !important;
+  gap: clamp(54px, 8vw, 120px) !important;
+}
+
+.footer__brand {
+  justify-content: flex-start !important;
+  padding: 3px 0 0 !important;
+}
+
+.footer .brutti-logo-img {
+  width: 92px !important;
+  max-height: 34px !important;
+  margin-bottom: 14px !important;
+}
+
+.footer p {
+  max-width: 360px !important;
+  margin: 0 !important;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  line-height: 1.45 !important;
+  letter-spacing: -.018em !important;
+  color: rgba(255,255,255,.76) !important;
+}
+
+.footer__connect {
+  display: grid !important;
+  gap: 15px !important;
+  padding: 2px 0 0 32px !important;
+  border: 0 !important;
+  border-left: 1px solid rgba(255,255,255,.10) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.footer__connect-head {
+  display: grid !important;
+  gap: 7px !important;
+}
+
+.footer__connect-head p {
+  max-width: none !important;
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+  text-align: left !important;
+  color: rgba(255,255,255,.62) !important;
+}
+
+.footer__connect-label,
+.footer__social-label {
+  font-size: 7.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: .17em !important;
+  color: rgba(255,255,255,.40) !important;
+}
+
+.footer__email-list {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 0 !important;
+  border-top: 1px solid rgba(255,255,255,.08) !important;
+}
+
+.footer__email-link {
+  display: grid !important;
+  grid-template-columns: 30px minmax(0, 1fr) 18px !important;
+  align-items: center !important;
+  gap: 10px !important;
+  min-height: 50px !important;
+  padding: 7px 2px !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(255,255,255,.08) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.footer__email-link:hover {
+  transform: translateX(3px) !important;
+  background: transparent !important;
+  border-color: rgba(255,255,255,.14) !important;
+  box-shadow: none !important;
+}
+
+.footer__email-icon {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 9px !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+.footer__email-icon img {
+  width: 19px !important;
+  height: 19px !important;
+}
+
+.footer__email-copy {
+  gap: 1px !important;
+}
+
+.footer__email-copy small {
+  font-size: 6.5px !important;
+  letter-spacing: .13em !important;
+  color: rgba(255,255,255,.36) !important;
+}
+
+.footer__email-copy strong {
+  font-size: 10.5px !important;
+  font-weight: 500 !important;
+  color: rgba(255,255,255,.84) !important;
+}
+
+.footer__email-open {
+  width: 18px !important;
+  height: 18px !important;
+  color: rgba(255,255,255,.38) !important;
+}
+
+.footer__connect-bottom {
+  display: flex !important;
+  align-items: end !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  padding-top: 1px !important;
+  border-top: 0 !important;
+}
+
+.footer__social {
+  gap: 8px !important;
+}
+
+.footer__social-links {
+  gap: 7px !important;
+}
+
+.footer__social-links a,
+.footer__social-icon-link {
+  flex: 0 0 44px !important;
+  width: 44px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 5px 8px !important;
+  border: 1px solid rgba(255,255,255,.09) !important;
+  border-radius: 999px !important;
+  background: rgba(255,255,255,.055) !important;
+  box-shadow: none !important;
+}
+
+.footer__social-logo {
+  width: 21px !important;
+  height: 21px !important;
+  max-width: 21px !important;
+  max-height: 21px !important;
+  border-radius: 5px !important;
+}
+
+.footer__social-links a:hover,
+.footer__social-icon-link:hover {
+  transform: translateY(-2px) !important;
+  background: rgba(255,255,255,.10) !important;
+  border-color: rgba(255,255,255,.17) !important;
+  box-shadow: none !important;
+}
+
+.footer__backtop {
+  min-height: 0 !important;
+  margin: 0 0 2px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  font-size: 9px !important;
+  color: rgba(255,255,255,.55) !important;
+}
+
+.footer__backtop:hover {
+  transform: translateY(-2px) !important;
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+.footer__bottom {
+  margin-top: 24px !important;
+  padding-top: 12px !important;
+  font-size: 8px !important;
+}
+
+@media (max-width: 900px) {
+  .footer {
+    padding: 34px 0 18px !important;
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr minmax(330px, 390px) !important;
+    gap: 34px !important;
+  }
+
+  .footer__connect {
+    padding-left: 24px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .footer__grid {
+    grid-template-columns: 1fr !important;
+    gap: 22px !important;
+  }
+
+  .footer__connect {
+    padding: 18px 0 0 !important;
+    border-left: 0 !important;
+    border-top: 1px solid rgba(255,255,255,.10) !important;
+  }
+
+  .footer__connect-bottom {
+    align-items: end !important;
+  }
+
+  .footer__bottom {
+    margin-top: 20px !important;
+  }
+}
