@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { X } from 'lucide-react'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
@@ -70,9 +70,111 @@ function LogoCard({ file, onOpen }) {
         src={asset(`collabolator brutti/${file}`)}
         alt={`${displayName(file)} logo`}
         loading="lazy"
+        draggable="false"
         style={{ '--logo-scale': logoScale[file] || 1 }}
       />
     </button>
+  )
+}
+
+function DraggableRow({ files, label, onOpen }) {
+  const rowRef = useRef(null)
+  const dragState = useRef({
+    active: false,
+    moved: false,
+    pointerId: null,
+    startX: 0,
+    startScrollLeft: 0,
+  })
+
+  const handlePointerDown = (event) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return
+
+    const row = rowRef.current
+    if (!row) return
+
+    dragState.current = {
+      active: true,
+      moved: false,
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startScrollLeft: row.scrollLeft,
+    }
+
+    row.classList.add('is-dragging')
+    row.setPointerCapture?.(event.pointerId)
+  }
+
+  const handlePointerMove = (event) => {
+    const row = rowRef.current
+    const state = dragState.current
+    if (!row || !state.active || state.pointerId !== event.pointerId) return
+
+    const delta = event.clientX - state.startX
+    if (Math.abs(delta) > 6) state.moved = true
+
+    row.scrollLeft = state.startScrollLeft - delta
+  }
+
+  const finishDrag = (event) => {
+    const row = rowRef.current
+    const state = dragState.current
+    if (!row || !state.active) return
+
+    if (state.pointerId === event.pointerId) {
+      row.releasePointerCapture?.(event.pointerId)
+    }
+
+    state.active = false
+    state.pointerId = null
+    row.classList.remove('is-dragging')
+
+    window.setTimeout(() => {
+      dragState.current.moved = false
+    }, 0)
+  }
+
+  const handleClickCapture = (event) => {
+    if (!dragState.current.moved) return
+    event.preventDefault()
+    event.stopPropagation()
+  }
+
+  const handleKeyDown = (event) => {
+    const row = rowRef.current
+    if (!row) return
+
+    if (event.key === 'ArrowRight') {
+      event.preventDefault()
+      row.scrollBy({ left: 280, behavior: 'smooth' })
+    }
+
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault()
+      row.scrollBy({ left: -280, behavior: 'smooth' })
+    }
+  }
+
+  return (
+    <div
+      ref={rowRef}
+      className="collaborators-row"
+      role="group"
+      tabIndex="0"
+      aria-label={`${label}. Drag or swipe horizontally to explore.`}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={finishDrag}
+      onPointerCancel={finishDrag}
+      onClickCapture={handleClickCapture}
+      onKeyDown={handleKeyDown}
+    >
+      <div className="collaborators-track">
+        {files.map((file) => (
+          <LogoCard key={`${label}-${file}`} file={file} onOpen={onOpen} />
+        ))}
+      </div>
+    </div>
   )
 }
 
@@ -112,22 +214,17 @@ function Collaborators() {
           </p>
         </div>
 
-        <div className="collaborators-marquee" aria-hidden="false">
-          <div className="collaborators-row collaborators-row--left">
-            <div className="collaborators-track">
-              {[...firstRow, ...firstRow].map((file, index) => (
-                <LogoCard key={`row1-${file}-${index}`} file={file} onOpen={setSelectedLogo} />
-              ))}
-            </div>
-          </div>
-
-          <div className="collaborators-row collaborators-row--right">
-            <div className="collaborators-track collaborators-track--reverse">
-              {[...secondRow, ...secondRow].map((file, index) => (
-                <LogoCard key={`row2-${file}-${index}`} file={file} onOpen={setSelectedLogo} />
-              ))}
-            </div>
-          </div>
+        <div className="collaborators-marquee">
+          <DraggableRow
+            files={firstRow}
+            label="Collaborators row one"
+            onOpen={setSelectedLogo}
+          />
+          <DraggableRow
+            files={secondRow}
+            label="Collaborators row two"
+            onOpen={setSelectedLogo}
+          />
         </div>
       </section>
 
