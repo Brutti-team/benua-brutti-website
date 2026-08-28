@@ -75,28 +75,47 @@
   background: linear-gradient(270deg, #f5f2eb 0%, rgba(245,242,235,.92) 35%, transparent 100%);
 }
 
+/* Manual horizontal drag / swipe. Visual styling stays the same. */
 .collaborators-row {
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   width: 100%;
-  padding: 2px 0;
+  padding: 2px 0 8px;
+  cursor: grab;
+  touch-action: pan-y;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.collaborators-row::-webkit-scrollbar {
+  display: none;
+}
+
+.collaborators-row:focus-visible {
+  outline: none;
+}
+
+.collaborators-row.is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+  scroll-snap-type: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.collaborators-row.is-dragging .collab-card {
+  pointer-events: none;
 }
 
 .collaborators-track {
   display: flex;
   width: max-content;
   gap: 14px;
-  animation: collab-scroll-left 48s linear infinite;
-  will-change: transform;
-}
-
-.collaborators-track--reverse {
-  animation-name: collab-scroll-right;
-  animation-duration: 54s;
-}
-
-.collaborators-marquee:hover .collaborators-track,
-.collaborators-marquee:focus-within .collaborators-track {
-  animation-play-state: paused;
+  padding-inline: max(24px, calc((100vw - 1440px) / 2));
 }
 
 .collab-card {
@@ -113,6 +132,7 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   cursor: zoom-in;
+  scroll-snap-align: start;
   transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease, background .28s ease;
 }
 
@@ -142,6 +162,9 @@
   transform: scale(var(--logo-scale, 1));
   transform-origin: center;
   transition: filter .28s ease, transform .28s ease;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 .collab-card:hover img,
@@ -150,7 +173,7 @@
   transform: scale(calc(var(--logo-scale, 1) + .04));
 }
 
-/* Enlarged collaborator preview. The marquee styling remains unchanged. */
+/* Enlarged collaborator preview. */
 .collab-lightbox {
   position: fixed;
   z-index: 9999;
@@ -250,16 +273,6 @@
   filter: saturate(1) contrast(1.02);
 }
 
-@keyframes collab-scroll-left {
-  from { transform: translateX(0); }
-  to { transform: translateX(calc(-50% - 7px)); }
-}
-
-@keyframes collab-scroll-right {
-  from { transform: translateX(calc(-50% - 7px)); }
-  to { transform: translateX(0); }
-}
-
 @keyframes collab-lightbox-in {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -283,6 +296,10 @@
 
   .collaborators-copy {
     justify-self: start;
+  }
+
+  .collaborators-track {
+    padding-inline: 24px;
   }
 
   .collab-card {
@@ -326,11 +343,7 @@
 
   .collaborators-track {
     gap: 10px;
-    animation-duration: 38s;
-  }
-
-  .collaborators-track--reverse {
-    animation-duration: 44s;
+    padding-inline: 16px;
   }
 
   .collab-card {
@@ -374,15 +387,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .collaborators-track,
-  .collaborators-track--reverse,
+  .collaborators-row {
+    scroll-behavior: auto;
+  }
+
   .collab-lightbox,
   .collab-lightbox__panel {
     animation: none !important;
-  }
-
-  .collaborators-row {
-    overflow-x: auto;
-    scrollbar-width: thin;
   }
 }
