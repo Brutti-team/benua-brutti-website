@@ -1,0 +1,54 @@
+/* Human editorial refinements: cleaner section markers, less template-like styling. */
+
+.hero .eyebrow::before,
+.impact .eyebrow::before,
+.gallery .eyebrow::before,
+.story__content .eyebrow::before,
+.story__content .eyebrow--light::before,
+.process .eyebrow::before,
+.catalogue .eyebrow::before,
+.contact .eyebrow::before {
+  content: '' !important;
+  width: 22px !important;
+  height: 1px !important;
+  flex: 0 0 22px !important;
+  border-radius: 0 !important;
+  background: currentColor !important;
+  box-shadow: none !important;
+  opacity: .55 !important;
+  animation: none !important;
+}
+
+.wwb-eyebrow span {
+  width: 22px !important;
+  height: 1px !important;
+  flex: 0 0 22px !important;
+  border-radius: 0 !important;
+  background: currentColor !important;
+  box-shadow: none !important;
+  opacity: .55 !important;
+}
+
+.collaborators-eyebrow::before {
+  content: '' !important;
+  display: inline-block !important;
+  width: 22px !important;
+  height: 1px !important;
+  margin-right: 9px !important;
+  vertical-align: middle !important;
+  border-radius: 0 !important;
+  background: currentColor !important;
+  box-shadow: none !important;
+  opacity: .55 !important;
+}
+
+/* Keep the story eyebrow calm and editorial. */
+.story__content .eyebrow,
+.story__content .eyebrow--light {
+  gap: 10px !important;
+}
+
+/* Remove any lingering animated glow intended for circular markers. */
+.impact .eyebrow::before {
+  animation: none !important;
+}
