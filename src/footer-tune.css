@@ -74,46 +74,52 @@
   font-size: 8px !important;
 }
 
-/* FOOTER — compact, premium, with real social media logos */
+/* FOOTER — cleaner two-column layout with contact and social on the right */
 .footer {
   min-height: 0 !important;
-  padding: 42px 0 22px !important;
-  background: #0b2a1e !important;
+  padding: 50px 0 22px !important;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(57, 116, 89, .10), transparent 26%),
+    #0b2a1e !important;
 }
 
 .footer__grid {
   min-height: 0 !important;
   display: grid !important;
-  grid-template-columns: 1fr auto !important;
+  grid-template-columns: minmax(0, 1fr) minmax(390px, 470px) !important;
   align-items: start !important;
-  gap: 56px !important;
+  gap: 86px !important;
 }
 
 .footer__brand {
   min-width: 0 !important;
+  padding-top: 3px !important;
 }
 
 .footer .brutti-logo-img {
-  width: 92px !important;
-  max-height: 32px !important;
-  margin-bottom: 14px !important;
+  width: 98px !important;
+  max-height: 36px !important;
+  margin-bottom: 16px !important;
 }
 
 .footer p {
   max-width: 360px !important;
   margin: 0 !important;
-  font-size: 15px !important;
+  font-size: 16px !important;
   line-height: 1.4 !important;
-  letter-spacing: -.018em !important;
-  color: rgba(255,255,255,.78) !important;
+  letter-spacing: -.02em !important;
+  color: rgba(255,255,255,.80) !important;
 }
 
-.footer__social {
+.footer__connect {
+  position: relative !important;
   display: grid !important;
-  gap: 10px !important;
-  margin-top: 22px !important;
+  gap: 13px !important;
+  padding-left: 38px !important;
+  border-left: 1px solid rgba(255,255,255,.10) !important;
 }
 
+.footer__connect-label,
 .footer__social-label {
   color: rgba(255,255,255,.42) !important;
   font-size: 8px !important;
@@ -123,11 +129,84 @@
   text-transform: uppercase !important;
 }
 
+.footer__email-list {
+  display: grid !important;
+  gap: 8px !important;
+}
+
+.footer__email-link {
+  min-width: 0 !important;
+  display: grid !important;
+  grid-template-columns: 36px minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: 11px !important;
+  padding: 8px 11px !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  border-radius: 13px !important;
+  background: rgba(255,255,255,.045) !important;
+  color: rgba(255,255,255,.88) !important;
+  text-decoration: none !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.035) !important;
+  transition: transform .22s ease, background .22s ease, border-color .22s ease !important;
+}
+
+.footer__email-link:hover {
+  transform: translateX(-3px) !important;
+  border-color: rgba(255,255,255,.18) !important;
+  background: rgba(255,255,255,.075) !important;
+}
+
+.footer__email-icon {
+  width: 36px !important;
+  height: 36px !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: hidden !important;
+  border-radius: 10px !important;
+  background: rgba(255,255,255,.94) !important;
+}
+
+.footer__email-icon img {
+  width: 23px !important;
+  height: 23px !important;
+  object-fit: contain !important;
+}
+
+.footer__email-copy {
+  min-width: 0 !important;
+  display: grid !important;
+  gap: 2px !important;
+}
+
+.footer__email-copy small {
+  color: rgba(255,255,255,.42) !important;
+  font-size: 7.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: .13em !important;
+  text-transform: uppercase !important;
+}
+
+.footer__email-copy strong {
+  overflow: hidden !important;
+  color: rgba(255,255,255,.86) !important;
+  font-size: 11.5px !important;
+  font-weight: 500 !important;
+  letter-spacing: -.01em !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.footer__social {
+  display: grid !important;
+  gap: 9px !important;
+  margin-top: 3px !important;
+}
+
 .footer__social-links {
   display: flex !important;
   flex-wrap: wrap !important;
   align-items: center !important;
-  gap: 9px !important;
+  gap: 8px !important;
 }
 
 .footer__social-links a,
@@ -135,41 +214,37 @@
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  flex: 0 0 40px !important;
-  width: 40px !important;
-  height: 40px !important;
-  min-height: 40px !important;
+  flex: 0 0 39px !important;
+  width: 39px !important;
+  height: 39px !important;
+  min-height: 39px !important;
   padding: 6px !important;
   overflow: hidden !important;
-  border: 1px solid rgba(255,255,255,.12) !important;
-  border-radius: 13px !important;
-  background: rgba(255,255,255,.055) !important;
+  border: 1px solid rgba(255,255,255,.11) !important;
+  border-radius: 12px !important;
+  background: rgba(255,255,255,.05) !important;
   color: transparent !important;
   text-decoration: none !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.04) !important;
-  transition: transform .22s ease, background .22s ease, border-color .22s ease, box-shadow .22s ease !important;
+  transition: transform .22s ease, background .22s ease, border-color .22s ease !important;
 }
 
 .footer__social-logo {
   display: block !important;
-  width: 26px !important;
-  height: 26px !important;
-  max-width: 26px !important;
-  max-height: 26px !important;
+  width: 25px !important;
+  height: 25px !important;
+  max-width: 25px !important;
+  max-height: 25px !important;
   object-fit: contain !important;
   border-radius: 6px !important;
-  mix-blend-mode: normal !important;
   transition: transform .22s ease, filter .22s ease !important;
 }
 
 .footer__social-links a:hover,
 .footer__social-icon-link:hover {
   transform: translateY(-3px) !important;
-  border-color: rgba(255,255,255,.24) !important;
-  background: rgba(255,255,255,.10) !important;
-  box-shadow: 0 9px 20px rgba(0,0,0,.13), inset 0 1px 0 rgba(255,255,255,.08) !important;
+  border-color: rgba(255,255,255,.22) !important;
+  background: rgba(255,255,255,.095) !important;
 }
 
 .footer__social-links a:hover .footer__social-logo,
@@ -179,40 +254,40 @@
 }
 
 .footer__social-links a:focus-visible,
-.footer__social-icon-link:focus-visible {
+.footer__social-icon-link:focus-visible,
+.footer__email-link:focus-visible,
+.footer__backtop:focus-visible {
   outline: 2px solid rgba(255,255,255,.65) !important;
   outline-offset: 3px !important;
 }
 
-.footer__links {
+.footer__backtop {
   justify-self: end !important;
-  display: grid !important;
-  justify-items: end !important;
-  gap: 10px !important;
-  font-size: 11.5px !important;
-  line-height: 1.35 !important;
-}
-
-.footer__links a,
-.footer__links span,
-.footer__links button {
-  color: rgba(255,255,255,.72) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  margin-top: 2px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: rgba(255,255,255,.64) !important;
+  font-size: 10px !important;
+  cursor: pointer !important;
   transition: color .22s ease, transform .22s ease !important;
 }
 
-.footer__links a:hover,
-.footer__links button:hover {
+.footer__backtop:hover {
   color: #fff !important;
-  transform: translateX(-2px) !important;
+  transform: translateY(-2px) !important;
 }
 
 .footer__bottom {
-  margin-top: 30px !important;
-  padding-top: 13px !important;
-  border-top: 1px solid rgba(255,255,255,.10) !important;
+  margin-top: 32px !important;
+  padding-top: 14px !important;
+  border-top: 1px solid rgba(255,255,255,.09) !important;
   font-size: 8.5px !important;
   letter-spacing: .05em !important;
-  color: rgba(255,255,255,.44) !important;
+  color: rgba(255,255,255,.42) !important;
 }
 
 @media (max-width: 900px) {
@@ -235,12 +310,16 @@
   }
 
   .footer {
-    padding: 38px 0 20px !important;
+    padding: 42px 0 20px !important;
   }
 
   .footer__grid {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 32px !important;
+    grid-template-columns: 1fr minmax(330px, .9fr) !important;
+    gap: 42px !important;
+  }
+
+  .footer__connect {
+    padding-left: 28px !important;
   }
 }
 
@@ -270,7 +349,7 @@
   }
 
   .footer {
-    padding: 34px 0 18px !important;
+    padding: 36px 0 18px !important;
   }
 
   .footer__grid {
@@ -278,14 +357,14 @@
     gap: 24px !important;
   }
 
-  .footer__links {
-    justify-self: start !important;
-    justify-items: start !important;
-    gap: 9px !important;
+  .footer__connect {
+    padding: 20px 0 0 !important;
+    border-left: 0 !important;
+    border-top: 1px solid rgba(255,255,255,.10) !important;
   }
 
   .footer .brutti-logo-img {
-    width: 88px !important;
+    width: 90px !important;
     margin-bottom: 12px !important;
   }
 
@@ -293,8 +372,8 @@
     font-size: 14px !important;
   }
 
-  .footer__social {
-    margin-top: 18px !important;
+  .footer__email-copy strong {
+    font-size: 11px !important;
   }
 
   .footer__social-links {
@@ -307,8 +386,6 @@
     width: 38px !important;
     height: 38px !important;
     min-height: 38px !important;
-    padding: 6px !important;
-    border-radius: 12px !important;
   }
 
   .footer__social-logo {
@@ -316,6 +393,10 @@
     height: 24px !important;
     max-width: 24px !important;
     max-height: 24px !important;
+  }
+
+  .footer__backtop {
+    justify-self: start !important;
   }
 
   .footer__bottom {
