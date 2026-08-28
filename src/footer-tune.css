@@ -74,7 +74,7 @@
   font-size: 8px !important;
 }
 
-/* FOOTER — compact, premium, with a subtle social layer */
+/* FOOTER — compact, premium, with real social media logos */
 .footer {
   min-height: 0 !important;
   padding: 42px 0 22px !important;
@@ -110,7 +110,7 @@
 
 .footer__social {
   display: grid !important;
-  gap: 9px !important;
+  gap: 10px !important;
   margin-top: 22px !important;
 }
 
@@ -126,43 +126,62 @@
 .footer__social-links {
   display: flex !important;
   flex-wrap: wrap !important;
-  gap: 7px !important;
+  align-items: center !important;
+  gap: 9px !important;
 }
 
-.footer__social-links a {
+.footer__social-links a,
+.footer__social-icon-link {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 5px !important;
-  min-height: 31px !important;
-  padding: 7px 10px !important;
-  border: 1px solid rgba(255,255,255,.11) !important;
-  border-radius: 999px !important;
-  background: rgba(255,255,255,.045) !important;
-  color: rgba(255,255,255,.72) !important;
-  font-size: 9.5px !important;
-  font-weight: 550 !important;
-  line-height: 1 !important;
+  justify-content: center !important;
+  flex: 0 0 40px !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 6px !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  border-radius: 13px !important;
+  background: rgba(255,255,255,.055) !important;
+  color: transparent !important;
   text-decoration: none !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
-  transition: transform .22s ease, background .22s ease, border-color .22s ease, color .22s ease !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04) !important;
+  transition: transform .22s ease, background .22s ease, border-color .22s ease, box-shadow .22s ease !important;
 }
 
-.footer__social-links a svg {
-  opacity: .64 !important;
-  transition: transform .22s ease, opacity .22s ease !important;
+.footer__social-logo {
+  display: block !important;
+  width: 26px !important;
+  height: 26px !important;
+  max-width: 26px !important;
+  max-height: 26px !important;
+  object-fit: contain !important;
+  border-radius: 6px !important;
+  mix-blend-mode: normal !important;
+  transition: transform .22s ease, filter .22s ease !important;
 }
 
-.footer__social-links a:hover {
-  transform: translateY(-2px) !important;
-  border-color: rgba(255,255,255,.22) !important;
-  background: rgba(255,255,255,.085) !important;
-  color: #fff !important;
+.footer__social-links a:hover,
+.footer__social-icon-link:hover {
+  transform: translateY(-3px) !important;
+  border-color: rgba(255,255,255,.24) !important;
+  background: rgba(255,255,255,.10) !important;
+  box-shadow: 0 9px 20px rgba(0,0,0,.13), inset 0 1px 0 rgba(255,255,255,.08) !important;
 }
 
-.footer__social-links a:hover svg {
-  opacity: 1 !important;
-  transform: translate(1px, -1px) !important;
+.footer__social-links a:hover .footer__social-logo,
+.footer__social-icon-link:hover .footer__social-logo {
+  transform: scale(1.07) !important;
+  filter: brightness(1.04) !important;
+}
+
+.footer__social-links a:focus-visible,
+.footer__social-icon-link:focus-visible {
+  outline: 2px solid rgba(255,255,255,.65) !important;
+  outline-offset: 3px !important;
 }
 
 .footer__links {
@@ -279,13 +298,24 @@
   }
 
   .footer__social-links {
-    gap: 6px !important;
+    gap: 8px !important;
   }
 
-  .footer__social-links a {
-    min-height: 30px !important;
-    padding: 7px 9px !important;
-    font-size: 9px !important;
+  .footer__social-links a,
+  .footer__social-icon-link {
+    flex-basis: 38px !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 6px !important;
+    border-radius: 12px !important;
+  }
+
+  .footer__social-logo {
+    width: 24px !important;
+    height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
   }
 
   .footer__bottom {
