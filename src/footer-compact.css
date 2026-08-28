@@ -1,8 +1,8 @@
-/* Final footer layout: balanced, compact and aligned with the approved reference. */
+/* Final compact footer layout. This file intentionally overrides footer-tune.css. */
 .footer {
-  padding: 44px 0 18px !important;
+  padding: 42px 0 18px !important;
   background:
-    radial-gradient(circle at 72% 0%, rgba(54, 111, 84, .08), transparent 28%),
+    radial-gradient(circle at 73% 0%, rgba(54, 111, 84, .08), transparent 28%),
     #09291d !important;
 }
 
@@ -13,10 +13,10 @@
 .footer__grid {
   min-height: 0 !important;
   display: grid !important;
-  grid-template-columns: minmax(0, 1.12fr) minmax(350px, .88fr) !important;
+  grid-template-columns: minmax(0, 1.12fr) minmax(330px, .88fr) !important;
   grid-template-rows: auto auto auto !important;
   align-items: start !important;
-  column-gap: clamp(56px, 7vw, 102px) !important;
+  column-gap: clamp(52px, 7vw, 96px) !important;
   row-gap: 0 !important;
 }
 
@@ -24,27 +24,26 @@
   grid-column: 1 !important;
   grid-row: 1 !important;
   justify-content: flex-start !important;
-  padding: 0 0 24px !important;
+  padding: 0 0 22px !important;
 }
 
 .footer .brutti-logo-img {
-  width: 96px !important;
-  max-height: 36px !important;
-  margin-bottom: 16px !important;
+  width: 94px !important;
+  max-height: 35px !important;
+  margin-bottom: 15px !important;
 }
 
 .footer__brand p,
 .footer p {
   max-width: 390px !important;
   margin: 0 !important;
-  font-size: 16px !important;
+  font-size: 15.5px !important;
   font-weight: 400 !important;
   line-height: 1.42 !important;
   letter-spacing: -.02em !important;
   color: rgba(255,255,255,.78) !important;
 }
 
-/* Let the connect children participate directly in the main footer grid. */
 .footer__connect {
   display: contents !important;
 }
@@ -54,11 +53,11 @@
   grid-row: 2 !important;
   display: grid !important;
   gap: 7px !important;
-  margin: 0 0 13px !important;
+  margin: 0 0 12px !important;
 }
 
 .footer__connect-head p {
-  max-width: 520px !important;
+  max-width: 470px !important;
   font-size: 11.5px !important;
   line-height: 1.5 !important;
   text-align: left !important;
@@ -75,10 +74,11 @@
   color: rgba(255,255,255,.42) !important;
 }
 
+/* Compact Gmail rows on the lower-left. */
 .footer__email-list {
   grid-column: 1 !important;
   grid-row: 3 !important;
-  width: min(100%, 620px) !important;
+  width: min(100%, 500px) !important;
   display: grid !important;
   grid-template-columns: 1fr !important;
   gap: 8px !important;
@@ -88,14 +88,14 @@
 .footer__email-link {
   min-width: 0 !important;
   display: grid !important;
-  grid-template-columns: 38px minmax(0, 1fr) 22px !important;
+  grid-template-columns: 36px minmax(0, 1fr) 20px !important;
   align-items: center !important;
-  gap: 12px !important;
-  min-height: 58px !important;
-  padding: 9px 12px !important;
+  gap: 11px !important;
+  min-height: 54px !important;
+  padding: 8px 11px !important;
   border: 1px solid rgba(255,255,255,.10) !important;
   border-radius: 13px !important;
-  background: rgba(4, 28, 20, .22) !important;
+  background: rgba(4, 28, 20, .20) !important;
   color: rgba(255,255,255,.90) !important;
   text-decoration: none !important;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.025) !important;
@@ -104,29 +104,29 @@
 
 .footer__email-link:hover {
   transform: translateX(3px) !important;
-  background: rgba(255,255,255,.055) !important;
+  background: rgba(255,255,255,.05) !important;
   border-color: rgba(255,255,255,.18) !important;
   box-shadow: none !important;
 }
 
 .footer__email-icon {
-  width: 38px !important;
-  height: 38px !important;
+  width: 36px !important;
+  height: 36px !important;
   display: grid !important;
   place-items: center !important;
   overflow: hidden !important;
-  border-radius: 11px !important;
-  background: rgba(0,0,0,.18) !important;
+  border-radius: 10px !important;
+  background: rgba(255,255,255,.96) !important;
   box-shadow: none !important;
 }
 
 .footer__email-icon img {
-  width: 38px !important;
-  height: 38px !important;
-  max-width: none !important;
-  max-height: none !important;
-  object-fit: cover !important;
-  transform: scale(1.22) !important;
+  width: 25px !important;
+  height: 25px !important;
+  max-width: 25px !important;
+  max-height: 25px !important;
+  object-fit: contain !important;
+  transform: none !important;
 }
 
 .footer__email-copy {
@@ -136,7 +136,7 @@
 }
 
 .footer__email-copy small {
-  font-size: 6.5px !important;
+  font-size: 6.3px !important;
   font-weight: 700 !important;
   letter-spacing: .14em !important;
   text-transform: uppercase !important;
@@ -145,7 +145,7 @@
 
 .footer__email-copy strong {
   overflow: hidden !important;
-  font-size: 11px !important;
+  font-size: 10.7px !important;
   font-weight: 500 !important;
   letter-spacing: -.012em !important;
   text-overflow: ellipsis !important;
@@ -154,11 +154,11 @@
 }
 
 .footer__email-open {
-  width: 22px !important;
-  height: 22px !important;
+  width: 20px !important;
+  height: 20px !important;
   display: grid !important;
   place-items: center !important;
-  color: rgba(255,255,255,.42) !important;
+  color: rgba(255,255,255,.40) !important;
 }
 
 .footer__email-link:hover .footer__email-open {
@@ -166,7 +166,7 @@
   transform: translate(2px, -2px) !important;
 }
 
-/* Right side: social media first, back-to-top below. */
+/* Right side: clean branded social pills. */
 .footer__connect-bottom {
   grid-column: 2 !important;
   grid-row: 1 / span 3 !important;
@@ -176,7 +176,7 @@
   align-items: stretch !important;
   justify-content: flex-start !important;
   gap: 0 !important;
-  padding: 54px 0 0 54px !important;
+  padding: 52px 0 0 50px !important;
   border: 0 !important;
   border-left: 1px solid rgba(255,255,255,.10) !important;
 }
@@ -198,60 +198,55 @@
 .footer__social-links a,
 .footer__social-icon-link {
   position: relative !important;
-  flex: 0 0 70px !important;
-  width: 70px !important;
-  height: 42px !important;
-  min-height: 42px !important;
+  flex: 0 0 54px !important;
+  width: 54px !important;
+  height: 38px !important;
+  min-height: 38px !important;
   padding: 0 !important;
   overflow: hidden !important;
-  border: 1px solid rgba(255,255,255,.12) !important;
+  border: 1px solid rgba(255,255,255,.13) !important;
   border-radius: 999px !important;
-  background: #071d15 !important;
   color: transparent !important;
   text-decoration: none !important;
   box-shadow: none !important;
-  transition: transform .22s ease, border-color .22s ease, background .22s ease !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 21px 21px !important;
+  transition: transform .22s ease, border-color .22s ease, filter .22s ease !important;
 }
 
-/* Crop the white padding baked into the uploaded social logo files. */
+/* Use transparent SVG brand marks so the uploaded white image backgrounds never show. */
+.footer__social-links a:nth-child(1) {
+  background-color: #050505 !important;
+  background-image: url('https://cdn.simpleicons.org/tiktok/FFFFFF') !important;
+}
+
+.footer__social-links a:nth-child(2) {
+  background-color: #111c17 !important;
+  background-image: url('https://cdn.simpleicons.org/instagram/E4405F') !important;
+}
+
+.footer__social-links a:nth-child(3) {
+  background-color: #1877F2 !important;
+  background-image: url('https://cdn.simpleicons.org/facebook/FFFFFF') !important;
+}
+
+.footer__social-links a:nth-child(4) {
+  background-color: #050505 !important;
+  background-image: url('https://cdn.simpleicons.org/threads/FFFFFF') !important;
+}
+
 .footer__social-logo {
-  position: absolute !important;
-  inset: 0 !important;
-  display: block !important;
-  width: 100% !important;
-  height: 100% !important;
-  max-width: none !important;
-  max-height: none !important;
-  object-fit: cover !important;
-  object-position: center !important;
-  border-radius: 0 !important;
-  transform: scale(1.46) !important;
-  transition: transform .22s ease, filter .22s ease !important;
-}
-
-.footer__social-links a:nth-child(2) .footer__social-logo {
-  transform: scale(1.42) !important;
-}
-
-.footer__social-links a:nth-child(3) .footer__social-logo {
-  transform: scale(1.50) !important;
-}
-
-.footer__social-links a:nth-child(4) .footer__social-logo {
-  transform: scale(1.48) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 .footer__social-links a:hover,
 .footer__social-icon-link:hover {
   transform: translateY(-2px) !important;
-  border-color: rgba(255,255,255,.22) !important;
-  background: rgba(255,255,255,.08) !important;
+  border-color: rgba(255,255,255,.28) !important;
+  filter: brightness(1.08) !important;
   box-shadow: none !important;
-}
-
-.footer__social-links a:hover .footer__social-logo,
-.footer__social-icon-link:hover .footer__social-logo {
-  filter: brightness(1.06) saturate(1.05) !important;
 }
 
 .footer__backtop {
@@ -261,8 +256,8 @@
   align-items: center !important;
   justify-content: flex-end !important;
   gap: 7px !important;
-  margin: 34px 0 0 !important;
-  padding: 24px 0 0 !important;
+  margin: 32px 0 0 !important;
+  padding: 22px 0 0 !important;
   border: 0 !important;
   border-top: 1px solid rgba(255,255,255,.09) !important;
   border-radius: 0 !important;
@@ -279,7 +274,7 @@
 }
 
 .footer__bottom {
-  margin-top: 34px !important;
+  margin-top: 32px !important;
   padding-top: 13px !important;
   border-top: 1px solid rgba(255,255,255,.085) !important;
   font-size: 8px !important;
@@ -301,20 +296,25 @@
   }
 
   .footer__grid {
-    grid-template-columns: minmax(0, 1fr) minmax(300px, .78fr) !important;
-    column-gap: 34px !important;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, .75fr) !important;
+    column-gap: 32px !important;
+  }
+
+  .footer__email-list {
+    width: min(100%, 460px) !important;
   }
 
   .footer__connect-bottom {
-    padding-left: 30px !important;
+    padding-left: 28px !important;
   }
 
   .footer__social-links a,
   .footer__social-icon-link {
-    flex-basis: 60px !important;
-    width: 60px !important;
-    height: 40px !important;
-    min-height: 40px !important;
+    flex-basis: 50px !important;
+    width: 50px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    background-size: 19px 19px !important;
   }
 }
 
@@ -326,7 +326,6 @@
   .footer__grid {
     grid-template-columns: 1fr !important;
     grid-template-rows: auto auto auto auto !important;
-    row-gap: 0 !important;
   }
 
   .footer__brand {
@@ -343,7 +342,7 @@
   .footer__email-list {
     grid-column: 1 !important;
     grid-row: 3 !important;
-    width: 100% !important;
+    width: min(100%, 500px) !important;
   }
 
   .footer__connect-bottom {
@@ -354,14 +353,6 @@
     padding: 22px 0 0 !important;
     border-left: 0 !important;
     border-top: 1px solid rgba(255,255,255,.10) !important;
-  }
-
-  .footer__social-links a,
-  .footer__social-icon-link {
-    flex-basis: 58px !important;
-    width: 58px !important;
-    height: 40px !important;
-    min-height: 40px !important;
   }
 
   .footer__backtop {
