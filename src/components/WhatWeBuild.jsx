@@ -177,7 +177,7 @@ export default function WhatWeBuild() {
   }
 
   useEffect(() => {
-    if (isSelesaPreviewOpen || isSelesaSliderPaused || selesaSlides.length <= 1) return undefined
+    if ((!isSelesaPreviewOpen && isSelesaSliderPaused) || selesaSlides.length <= 1) return undefined
 
     const interval = window.setInterval(() => {
       setSelesaSlideIndex((current) => (current + 1) % selesaSlides.length)
@@ -363,23 +363,17 @@ export default function WhatWeBuild() {
                 </button>
               </div>
               <div className="wwb-selesa-viewer__stage">
-                <button type="button" className="wwb-selesa-viewer__nav wwb-selesa-viewer__nav--prev" onClick={previousSelesaSlide} aria-label="Previous SelesaAI image">
-                  <ChevronLeft size={22} />
-                </button>
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.img
                     key={selesaSlides[selesaSlideIndex].image}
                     src={selesaSlides[selesaSlideIndex].image}
                     alt={`${selesaSlides[selesaSlideIndex].alt} full preview`}
-                    initial={{ opacity: 0, scale: 0.985 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.99 }}
-                    transition={{ duration: 0.24 }}
+                    initial={{ opacity: 0, x: 18 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -18 }}
+                    transition={{ duration: 0.28, ease }}
                   />
                 </AnimatePresence>
-                <button type="button" className="wwb-selesa-viewer__nav wwb-selesa-viewer__nav--next" onClick={nextSelesaSlide} aria-label="Next SelesaAI image">
-                  <ChevronRight size={22} />
-                </button>
               </div>
             </motion.div>
           </motion.div>
