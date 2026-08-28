@@ -1,11 +1,11 @@
-/* SelesaAI — larger full homepage showcase */
+/* SelesaAI — balanced product-style showcase */
 .wwb-section-label--digital {
   margin-bottom: 34px !important;
 }
 
 .wwb-digital-grid {
   grid-template-columns: minmax(0, 1fr) !important;
-  max-width: 1100px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -20,24 +20,24 @@
 .wwb-selesa-showcase {
   position: relative;
   display: grid !important;
-  grid-template-columns: minmax(0, .92fr) minmax(420px, 1.08fr) !important;
-  min-height: 390px !important;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr) !important;
+  min-height: 370px !important;
   overflow: hidden !important;
   padding: 0 !important;
   border: 1px solid rgba(23, 87, 71, .09) !important;
-  border-radius: 26px !important;
+  border-radius: 24px !important;
   background: rgba(255,255,255,.97) !important;
   box-shadow:
-    0 18px 48px rgba(18, 45, 34, .065),
+    0 16px 42px rgba(18,45,34,.065),
     inset 0 1px 0 rgba(255,255,255,.94) !important;
 }
 
 .wwb-selesa-showcase::after {
   content: '';
   position: absolute;
-  left: 34px;
+  left: 30px;
   bottom: 0;
-  width: 84px;
+  width: 72px;
   height: 2px;
   border-radius: 999px;
   background: linear-gradient(90deg, #2b8a68, #7fc85d);
@@ -51,14 +51,14 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 36px 34px 34px;
+  padding: 30px 32px 30px;
 }
 
 .wwb-selesa-showcase__eyebrow {
   margin: 0;
   color: #748880;
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 800;
   letter-spacing: .135em;
   text-transform: uppercase;
@@ -66,49 +66,49 @@
 
 .wwb-selesa-showcase__logo {
   display: block;
-  width: 172px;
+  width: 150px;
   max-width: 100%;
   height: auto;
-  margin-top: 15px;
-  border-radius: 8px;
+  margin-top: 13px;
+  border-radius: 7px;
   object-fit: contain;
   object-position: left center;
   box-shadow: none;
 }
 
 .wwb-selesa-showcase__tagline {
-  margin: 16px 0 0;
+  margin: 14px 0 0;
   color: #1e604b;
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 770;
   letter-spacing: -.02em;
 }
 
 .wwb-selesa-showcase__desc {
-  max-width: 470px;
-  margin: 14px 0 0;
+  max-width: 455px;
+  margin: 12px 0 0;
   color: #6b7c76;
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 12.5px;
-  line-height: 1.7;
+  font-size: 11px;
+  line-height: 1.66;
 }
 
 .wwb-selesa-showcase__features {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 17px;
+  gap: 7px;
+  margin-top: 14px;
 }
 
 .wwb-selesa-showcase__features span {
-  padding: 7px 10px;
-  border: 1px solid rgba(23, 87, 71, .085);
+  padding: 6px 9px;
+  border: 1px solid rgba(23,87,71,.085);
   border-radius: 999px;
   background: #f6f9f7;
   color: #58756b;
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 9px;
+  font-size: 7.5px;
   font-weight: 720;
 }
 
@@ -116,27 +116,27 @@
   align-self: flex-start;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 19px;
-  padding: 10px 14px;
+  gap: 5px;
+  margin-top: 16px;
+  padding: 9px 12px;
   border: 1px solid #174f3c;
   border-radius: 999px;
   background: #174f3c;
   color: #fff;
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 9px;
+  font-size: 7.5px;
   font-weight: 800;
   letter-spacing: .07em;
   text-decoration: none;
   text-transform: uppercase;
-  box-shadow: 0 8px 18px rgba(23,79,60,.12);
+  box-shadow: 0 7px 16px rgba(23,79,60,.12);
   transition: transform .24s ease, background .24s ease, box-shadow .24s ease;
 }
 
 .wwb-selesa-showcase__cta:hover {
   transform: translateY(-2px);
   background: #103f30;
-  box-shadow: 0 11px 23px rgba(23,79,60,.16);
+  box-shadow: 0 10px 21px rgba(23,79,60,.16);
 }
 
 .wwb-selesa-showcase__preview {
@@ -145,11 +145,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 18px 18px 18px 0;
-  padding: 22px;
+  margin: 14px 14px 14px 0;
+  padding: 16px;
   overflow: hidden;
   border: 1px solid rgba(23,87,71,.055);
-  border-radius: 20px;
+  border-radius: 18px;
   background:
     radial-gradient(circle at 82% 10%, rgba(125,201,96,.10), transparent 31%),
     linear-gradient(145deg, #f2f7f4 0%, #eaf3ee 58%, #e2eee7 100%);
@@ -163,43 +163,43 @@
   background:
     linear-gradient(rgba(23,87,71,.019) 1px, transparent 1px),
     linear-gradient(90deg, rgba(23,87,71,.019) 1px, transparent 1px);
-  background-size: 26px 26px;
+  background-size: 24px 24px;
   mask-image: linear-gradient(to left, #000 45%, transparent 96%);
 }
 
 .wwb-selesa-home-frame {
   position: relative;
   z-index: 2;
-  width: min(455px, 100%);
+  width: min(215px, 100%);
   height: auto;
   overflow: hidden;
-  border: 7px solid rgba(255,255,255,.98);
-  border-radius: 18px;
+  border: 5px solid rgba(255,255,255,.98);
+  border-radius: 15px;
   background: #fff;
   box-shadow:
-    0 18px 36px rgba(15,56,42,.12),
-    0 2px 8px rgba(15,56,42,.045);
+    0 14px 30px rgba(15,56,42,.11),
+    0 2px 7px rgba(15,56,42,.04);
   transition: transform .34s ease, box-shadow .34s ease;
 }
 
 .wwb-selesa-showcase:hover .wwb-selesa-home-frame {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   box-shadow:
-    0 22px 42px rgba(15,56,42,.15),
-    0 3px 9px rgba(15,56,42,.05);
+    0 18px 34px rgba(15,56,42,.14),
+    0 3px 8px rgba(15,56,42,.045);
 }
 
 .wwb-selesa-home-preview {
   display: block;
   width: 100%;
   height: auto;
-  max-height: none;
+  max-height: 340px;
   object-fit: contain;
   object-position: center top;
 }
 
 .wwb-bottom-note {
-  margin-top: 44px !important;
+  margin-top: 40px !important;
 }
 
 @media (max-width: 980px) {
@@ -213,50 +213,59 @@
   }
 
   .wwb-selesa-showcase__content {
-    padding: 30px 25px 26px;
+    padding: 28px 24px 24px;
   }
 
   .wwb-selesa-showcase__preview {
-    min-height: 0;
-    margin: 0 18px 18px;
-    padding: 20px;
+    min-height: 300px;
+    margin: 0 14px 14px;
+    padding: 18px;
   }
 
   .wwb-selesa-home-frame {
-    width: min(560px, 100%);
+    width: min(230px, 100%);
+  }
+
+  .wwb-selesa-home-preview {
+    max-height: 360px;
   }
 }
 
 @media (max-width: 650px) {
   .wwb-selesa-showcase {
-    border-radius: 20px !important;
+    border-radius: 19px !important;
   }
 
   .wwb-selesa-showcase__content {
-    padding: 24px 20px 22px;
+    padding: 22px 19px 21px;
   }
 
   .wwb-selesa-showcase__logo {
-    width: 150px;
+    width: 138px;
   }
 
   .wwb-selesa-showcase__tagline {
-    font-size: 14px;
+    font-size: 12px;
   }
 
   .wwb-selesa-showcase__desc {
-    font-size: 11.5px;
+    font-size: 10.5px;
   }
 
   .wwb-selesa-showcase__preview {
-    margin: 0 12px 12px;
-    padding: 13px;
-    border-radius: 16px;
+    min-height: 275px;
+    margin: 0 10px 10px;
+    padding: 14px;
+    border-radius: 15px;
   }
 
   .wwb-selesa-home-frame {
-    width: 100%;
-    border-width: 5px;
-    border-radius: 14px;
+    width: min(205px, 100%);
+    border-width: 4px;
+    border-radius: 13px;
+  }
+
+  .wwb-selesa-home-preview {
+    max-height: 320px;
   }
 }
