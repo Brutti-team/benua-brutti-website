@@ -1,0 +1,121 @@
+/* Social icon stability + brand-correct colours. Loaded after footer-compact.css. */
+.footer__social-links {
+  gap: 10px !important;
+}
+
+.footer__social-links a,
+.footer__social-icon-link {
+  position: relative !important;
+  flex: 0 0 58px !important;
+  width: 58px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  background: #071d15 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.footer__social-logo {
+  position: static !important;
+  inset: auto !important;
+  width: 27px !important;
+  height: 27px !important;
+  max-width: 27px !important;
+  max-height: 27px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  border-radius: 7px !important;
+  transform: none !important;
+  filter: none !important;
+  transition: none !important;
+}
+
+/* TikTok */
+.footer__social-links a:nth-child(1) {
+  background: #050505 !important;
+}
+.footer__social-links a:nth-child(1) .footer__social-logo {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 0 !important;
+}
+
+/* Instagram: use the actual brand gradient instead of a flat pink treatment. */
+.footer__social-links a:nth-child(2) {
+  background:
+    radial-gradient(circle at 30% 105%, #fdf497 0 18%, #fd5949 38%, transparent 62%),
+    radial-gradient(circle at 78% 18%, #285AEB 0 12%, transparent 34%),
+    linear-gradient(135deg, #515BD4 0%, #8134AF 28%, #DD2A7B 58%, #F58529 82%, #FEDA77 100%) !important;
+  border-color: rgba(255,255,255,.16) !important;
+}
+.footer__social-links a:nth-child(2) .footer__social-logo {
+  display: none !important;
+}
+.footer__social-links a:nth-child(2)::before {
+  content: '' !important;
+  width: 20px !important;
+  height: 20px !important;
+  border: 2px solid #fff !important;
+  border-radius: 6px !important;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 0 4px, #fff 4.4px 6px, transparent 6.4px),
+    radial-gradient(circle at 76% 24%, #fff 0 1.7px, transparent 1.9px) !important;
+  box-sizing: border-box !important;
+}
+
+/* Facebook: prevent the uploaded artwork from clipping when hovered. */
+.footer__social-links a:nth-child(3) {
+  background: #1877F2 !important;
+}
+.footer__social-links a:nth-child(3) .footer__social-logo {
+  display: none !important;
+}
+.footer__social-links a:nth-child(3)::before {
+  content: 'f' !important;
+  display: block !important;
+  color: #fff !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 31px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  transform: translateY(3px) !important;
+}
+
+/* Threads */
+.footer__social-links a:nth-child(4) {
+  background: #050505 !important;
+}
+.footer__social-links a:nth-child(4) .footer__social-logo {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 0 !important;
+}
+
+.footer__social-links a:hover,
+.footer__social-icon-link:hover {
+  transform: translateY(-1px) !important;
+  border-color: rgba(255,255,255,.22) !important;
+  box-shadow: 0 8px 18px rgba(0,0,0,.12) !important;
+}
+
+.footer__social-links a:hover .footer__social-logo,
+.footer__social-icon-link:hover .footer__social-logo {
+  transform: none !important;
+  filter: none !important;
+}
+
+@media (max-width: 700px) {
+  .footer__social-links a,
+  .footer__social-icon-link {
+    flex-basis: 54px !important;
+    width: 54px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+  }
+}
