@@ -77,15 +77,61 @@ function LogoCard({ file, onOpen }) {
   )
 }
 
-function DraggableRow({ files, label, onOpen }) {
+function DraggableRow({ files, label, onOpen, reverse = false, speed = 0.34 }) {
   const rowRef = useRef(null)
+  const frameRef = useRef(null)
+  const pauseUntilRef = useRef(0)
+  const suppressClickRef = useRef(false)
   const dragState = useRef({
     active: false,
-    moved: false,
     pointerId: null,
     startX: 0,
     startScrollLeft: 0,
+    moved: false,
   })
+
+  useEffect(() => {
+    const row = rowRef.current
+    if (!row) return undefined
+
+    let ready = false
+
+    const prepareLoop = () => {
+      const half = row.scrollWidth / 2
+      if (!half) return
+      if (!ready && reverse) row.scrollLeft = half
+      ready = true
+    }
+
+    prepareLoop()
+
+    const animate = () => {
+      const half = row.scrollWidth / 2
+      const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+
+      if (half && !reduceMotion && Date.now() >= pauseUntilRef.current && !dragState.current.active) {
+        row.scrollLeft += reverse ? -speed : speed
+
+        if (!reverse && row.scrollLeft >= half) {
+          row.scrollLeft -= half
+        }
+
+        if (reverse && row.scrollLeft <= 0) {
+          row.scrollLeft += half
+        }
+      }
+
+      frameRef.current = window.requestAnimationFrame(animate)
+    }
+
+    frameRef.current = window.requestAnimationFrame(animate)
+    window.addEventListener('resize', prepareLoop)
+
+    return () => {
+      if (frameRef.current) window.cancelAnimationFrame(frameRef.current)
+      window.removeEventListener('resize', prepareLoop)
+    }
+  }, [reverse, speed])
 
   const handlePointerDown = (event) => {
     if (event.pointerType === 'mouse' && event.button !== 0) return
@@ -95,12 +141,13 @@ function DraggableRow({ files, label, onOpen }) {
 
     dragState.current = {
       active: true,
-      moved: false,
       pointerId: event.pointerId,
       startX: event.clientX,
       startScrollLeft: row.scrollLeft,
+      moved: false,
     }
 
+    pauseUntilRef.current = Date.now() + 10000
     row.classList.add('is-dragging')
     row.setPointerCapture?.(event.pointerId)
   }
@@ -111,7 +158,10 @@ function DraggableRow({ files, label, onOpen }) {
     if (!row || !state.active || state.pointerId !== event.pointerId) return
 
     const delta = event.clientX - state.startX
-    if (Math.abs(delta) > 6) state.moved = true
+    if (Math.abs(delta) > 8) {
+      state.moved = true
+      suppressClickRef.current = true
+    }
 
     row.scrollLeft = state.startScrollLeft - delta
   }
@@ -128,14 +178,12 @@ function DraggableRow({ files, label, onOpen }) {
     state.active = false
     state.pointerId = null
     row.classList.remove('is-dragging')
-
-    window.setTimeout(() => {
-      dragState.current.moved = false
-    }, 0)
+    pauseUntilRef.current = Date.now() + (state.moved ? 900 : 180)
   }
 
   const handleClickCapture = (event) => {
-    if (!dragState.current.moved) return
+    if (!suppressClickRef.current) return
+    suppressClickRef.current = false
     event.preventDefault()
     event.stopPropagation()
   }
@@ -146,14 +194,18 @@ function DraggableRow({ files, label, onOpen }) {
 
     if (event.key === 'ArrowRight') {
       event.preventDefault()
+      pauseUntilRef.current = Date.now() + 1200
       row.scrollBy({ left: 280, behavior: 'smooth' })
     }
 
     if (event.key === 'ArrowLeft') {
       event.preventDefault()
+      pauseUntilRef.current = Date.now() + 1200
       row.scrollBy({ left: -280, behavior: 'smooth' })
     }
   }
+
+  const repeatedFiles = [...files, ...files]
 
   return (
     <div
@@ -161,7 +213,7 @@ function DraggableRow({ files, label, onOpen }) {
       className="collaborators-row"
       role="group"
       tabIndex="0"
-      aria-label={`${label}. Drag or swipe horizontally to explore.`}
+      aria-label={`${label}. Drag or swipe horizontally to explore. Click a logo to view it.`}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={finishDrag}
@@ -170,8 +222,8 @@ function DraggableRow({ files, label, onOpen }) {
       onKeyDown={handleKeyDown}
     >
       <div className="collaborators-track">
-        {files.map((file) => (
-          <LogoCard key={`${label}-${file}`} file={file} onOpen={onOpen} />
+        {repeatedFiles.map((file, index) => (
+          <LogoCard key={`${label}-${file}-${index}`} file={file} onOpen={onOpen} />
         ))}
       </div>
     </div>
@@ -219,11 +271,14 @@ function Collaborators() {
             files={firstRow}
             label="Collaborators row one"
             onOpen={setSelectedLogo}
+            speed={0.34}
           />
           <DraggableRow
             files={secondRow}
             label="Collaborators row two"
             onOpen={setSelectedLogo}
+            reverse
+            speed={0.3}
           />
         </div>
       </section>
