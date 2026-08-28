@@ -338,49 +338,70 @@ function App() {
           </div>
 
           <div className="footer__connect">
-            <span className="footer__connect-label">Get in touch</span>
+            <div className="footer__connect-head">
+              <span className="footer__connect-label">Get in touch</span>
+              <p>For enquiries, collaborations and careers.</p>
+            </div>
 
             <div className="footer__email-list">
-              <a className="footer__email-link" href="mailto:benuabrutti@gmail.com">
+              <a
+                className="footer__email-link"
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=benuabrutti@gmail.com"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Compose an email to Benua Brutti in Gmail"
+              >
                 <span className="footer__email-icon" aria-hidden="true">
                   <img src={asset('gmail.png')} alt="" />
                 </span>
                 <span className="footer__email-copy">
-                  <small>General</small>
+                  <small>General enquiries</small>
                   <strong>benuabrutti@gmail.com</strong>
                 </span>
+                <span className="footer__email-open" aria-hidden="true"><ArrowUpRight size={14} /></span>
               </a>
 
-              <a className="footer__email-link" href="mailto:hr.bruttibesi@gmail.com">
+              <a
+                className="footer__email-link"
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=hr.bruttibesi@gmail.com"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Compose an email to Benua Brutti HR in Gmail"
+              >
                 <span className="footer__email-icon" aria-hidden="true">
                   <img src={asset('gmail.png')} alt="" />
                 </span>
                 <span className="footer__email-copy">
-                  <small>HR</small>
+                  <small>Careers & HR</small>
                   <strong>hr.bruttibesi@gmail.com</strong>
                 </span>
+                <span className="footer__email-open" aria-hidden="true"><ArrowUpRight size={14} /></span>
               </a>
             </div>
 
-            <div className="footer__social" aria-label="Benua Brutti social media">
-              <span className="footer__social-label">Follow Brutti</span>
-              <div className="footer__social-links">
-                <a data-logo-applied="true" href="https://www.tiktok.com/@brutti.my?_r=1&_t=ZS-99FmWlcm2fQ" target="_blank" rel="noreferrer" aria-label="Benua Brutti on TikTok" title="TikTok">
-                  <img className="footer__social-logo" src={asset('tiktok.jpg')} alt="TikTok logo" />
-                </a>
-                <a data-logo-applied="true" href="https://www.instagram.com/brutti.my?igsi=ZnU3dHVqOXRnZTJk" target="_blank" rel="noreferrer" aria-label="Benua Brutti on Instagram" title="Instagram">
-                  <img className="footer__social-logo" src={asset('ig.jpg')} alt="Instagram logo" />
-                </a>
-                <a data-logo-applied="true" href="https://www.facebook.com/share/1EfVN5HMJm/?mibextid=wwXIfr" target="_blank" rel="noreferrer" aria-label="Benua Brutti on Facebook" title="Facebook">
-                  <img className="footer__social-logo" src={asset('fb.png')} alt="Facebook logo" />
-                </a>
-                <a data-logo-applied="true" href="https://www.threads.com/@brutti.my?igshid=NTc4MTIwNjQ2YQ==" target="_blank" rel="noreferrer" aria-label="Benua Brutti on Threads" title="Threads">
-                  <img className="footer__social-logo" src={asset('threads.png')} alt="Threads logo" />
-                </a>
+            <div className="footer__connect-bottom">
+              <div className="footer__social" aria-label="Benua Brutti social media">
+                <span className="footer__social-label">Follow Brutti</span>
+                <div className="footer__social-links">
+                  <a data-logo-applied="true" href="https://www.tiktok.com/@brutti.my?_r=1&_t=ZS-99FmWlcm2fQ" target="_blank" rel="noreferrer" aria-label="Benua Brutti on TikTok" title="TikTok">
+                    <img className="footer__social-logo" src={asset('tiktok.jpg')} alt="TikTok logo" />
+                  </a>
+                  <a data-logo-applied="true" href="https://www.instagram.com/brutti.my?igsi=ZnU3dHVqOXRnZTJk" target="_blank" rel="noreferrer" aria-label="Benua Brutti on Instagram" title="Instagram">
+                    <img className="footer__social-logo" src={asset('ig.jpg')} alt="Instagram logo" />
+                  </a>
+                  <a data-logo-applied="true" href="https://www.facebook.com/share/1EfVN5HMJm/?mibextid=wwXIfr" target="_blank" rel="noreferrer" aria-label="Benua Brutti on Facebook" title="Facebook">
+                    <img className="footer__social-logo" src={asset('fb.png')} alt="Facebook logo" />
+                  </a>
+                  <a data-logo-applied="true" href="https://www.threads.com/@brutti.my?igshid=NTc4MTIwNjQ2YQ==" target="_blank" rel="noreferrer" aria-label="Benua Brutti on Threads" title="Threads">
+                    <img className="footer__social-logo" src={asset('threads.png')} alt="Threads logo" />
+                  </a>
+                </div>
               </div>
-            </div>
 
-            <button className="footer__backtop" onClick={() => scrollToId('home')}>Back to top <span>↑</span></button>
+              <button className="footer__backtop" onClick={() => scrollToId('home')}>
+                Back to top <span>↑</span>
+              </button>
+            </div>
           </div>
         </div>
         <div className="page-shell footer__bottom">© {new Date().getFullYear()} Benua Brutti. Crafted in Sabah.</div>
