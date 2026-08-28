@@ -184,7 +184,7 @@ export default function WhatWeBuild() {
   }, [])
 
   useEffect(() => {
-    if ((!isSelesaPreviewOpen && isSelesaSliderPaused) || selesaSlides.length <= 1) return undefined
+    if (isSelesaPreviewOpen || isSelesaSliderPaused || selesaSlides.length <= 1) return undefined
 
     const interval = window.setInterval(() => {
       setSelesaSlideIndex((current) => (current + 1) % selesaSlides.length)
@@ -201,6 +201,8 @@ export default function WhatWeBuild() {
 
     const onKeyDown = (event) => {
       if (event.key === 'Escape') setIsSelesaPreviewOpen(false)
+      if (event.key === 'ArrowLeft') previousSelesaSlide()
+      if (event.key === 'ArrowRight') nextSelesaSlide()
     }
 
     window.addEventListener('keydown', onKeyDown)
@@ -368,12 +370,25 @@ export default function WhatWeBuild() {
                 </button>
               </div>
               <div className="wwb-selesa-viewer__stage">
-                <img
+                <motion.img
                   key={selesaSlides[selesaSlideIndex].image}
                   src={selesaSlides[selesaSlideIndex].image}
                   alt={`${selesaSlides[selesaSlideIndex].alt} full preview`}
                   loading="eager"
                   decoding="async"
+                  draggable={false}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.22}
+                  dragMomentum={false}
+                  onDragEnd={(_, info) => {
+                    const swipe = info.offset.x
+                    const velocity = info.velocity.x
+                    if (swipe < -45 || velocity < -450) nextSelesaSlide()
+                    if (swipe > 45 || velocity > 450) previousSelesaSlide()
+                  }}
+                  style={{ touchAction: 'pan-y', cursor: 'grab', userSelect: 'none' }}
+                  whileTap={{ cursor: 'grabbing' }}
                 />
               </div>
             </motion.div>
