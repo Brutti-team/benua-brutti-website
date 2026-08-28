@@ -4,11 +4,58 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#183d2d" />
-    <meta name="description" content="Benua Brutti — Upcycled pallet wood furniture crafted in Sabah." />
-    <title>Benua Brutti — Furniture With A Second Life</title>
+    <meta name="description" content="Benua Brutti: Upcycled pallet wood furniture crafted in Sabah." />
+    <title>Benua Brutti | Furniture With A Second Life</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      (() => {
+        const root = document.getElementById('root')
+        if (!root) return
+
+        const cleanCopy = (value) => value
+          .replace(/\s*[—–]\s*/g, ', ')
+          .replace(/([A-Za-z])[-‑]([A-Za-z])/g, '$1 $2')
+          .replace(/\s{2,}/g, ' ')
+
+        const cleanTextNodes = (node) => {
+          if (!node) return
+
+          if (node.nodeType === Node.TEXT_NODE) {
+            const parent = node.parentElement
+            if (!parent || ['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEXTAREA'].includes(parent.tagName)) return
+            const nextValue = cleanCopy(node.nodeValue || '')
+            if (nextValue !== node.nodeValue) node.nodeValue = nextValue
+            return
+          }
+
+          if (node.nodeType !== Node.ELEMENT_NODE) return
+          if (['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEXTAREA'].includes(node.tagName)) return
+
+          const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT)
+          let textNode = walker.nextNode()
+          while (textNode) {
+            const parent = textNode.parentElement
+            if (parent && !['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEXTAREA'].includes(parent.tagName)) {
+              const nextValue = cleanCopy(textNode.nodeValue || '')
+              if (nextValue !== textNode.nodeValue) textNode.nodeValue = nextValue
+            }
+            textNode = walker.nextNode()
+          }
+        }
+
+        cleanTextNodes(root)
+
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach(cleanTextNodes)
+          })
+        })
+
+        observer.observe(root, { childList: true, subtree: true })
+      })()
+    </script>
   </body>
 </html>
