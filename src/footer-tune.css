@@ -74,7 +74,7 @@
   font-size: 8px !important;
 }
 
-/* FOOTER — no longer oversized, closer to a polished SaaS footer */
+/* FOOTER — compact, premium, with a subtle social layer */
 .footer {
   min-height: 0 !important;
   padding: 42px 0 22px !important;
@@ -87,6 +87,10 @@
   grid-template-columns: 1fr auto !important;
   align-items: start !important;
   gap: 56px !important;
+}
+
+.footer__brand {
+  min-width: 0 !important;
 }
 
 .footer .brutti-logo-img {
@@ -102,6 +106,63 @@
   line-height: 1.4 !important;
   letter-spacing: -.018em !important;
   color: rgba(255,255,255,.78) !important;
+}
+
+.footer__social {
+  display: grid !important;
+  gap: 9px !important;
+  margin-top: 22px !important;
+}
+
+.footer__social-label {
+  color: rgba(255,255,255,.42) !important;
+  font-size: 8px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+}
+
+.footer__social-links {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+}
+
+.footer__social-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  min-height: 31px !important;
+  padding: 7px 10px !important;
+  border: 1px solid rgba(255,255,255,.11) !important;
+  border-radius: 999px !important;
+  background: rgba(255,255,255,.045) !important;
+  color: rgba(255,255,255,.72) !important;
+  font-size: 9.5px !important;
+  font-weight: 550 !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  transition: transform .22s ease, background .22s ease, border-color .22s ease, color .22s ease !important;
+}
+
+.footer__social-links a svg {
+  opacity: .64 !important;
+  transition: transform .22s ease, opacity .22s ease !important;
+}
+
+.footer__social-links a:hover {
+  transform: translateY(-2px) !important;
+  border-color: rgba(255,255,255,.22) !important;
+  background: rgba(255,255,255,.085) !important;
+  color: #fff !important;
+}
+
+.footer__social-links a:hover svg {
+  opacity: 1 !important;
+  transform: translate(1px, -1px) !important;
 }
 
 .footer__links {
@@ -211,6 +272,20 @@
 
   .footer p {
     font-size: 14px !important;
+  }
+
+  .footer__social {
+    margin-top: 18px !important;
+  }
+
+  .footer__social-links {
+    gap: 6px !important;
+  }
+
+  .footer__social-links a {
+    min-height: 30px !important;
+    padding: 7px 9px !important;
+    font-size: 9px !important;
   }
 
   .footer__bottom {
