@@ -1,7 +1,9 @@
-/* Compact footer refinement — intentionally overrides footer-tune.css only. */
+/* Final footer layout: balanced, compact and aligned with the approved reference. */
 .footer {
-  padding: 38px 0 18px !important;
-  background: #09291d !important;
+  padding: 44px 0 18px !important;
+  background:
+    radial-gradient(circle at 72% 0%, rgba(54, 111, 84, .08), transparent 28%),
+    #09291d !important;
 }
 
 .footer::before {
@@ -9,230 +11,366 @@
 }
 
 .footer__grid {
-  grid-template-columns: minmax(0, 1fr) minmax(360px, 430px) !important;
+  min-height: 0 !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.12fr) minmax(350px, .88fr) !important;
+  grid-template-rows: auto auto auto !important;
   align-items: start !important;
-  gap: clamp(54px, 8vw, 120px) !important;
+  column-gap: clamp(56px, 7vw, 102px) !important;
+  row-gap: 0 !important;
 }
 
 .footer__brand {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
   justify-content: flex-start !important;
-  padding: 3px 0 0 !important;
+  padding: 0 0 24px !important;
 }
 
 .footer .brutti-logo-img {
-  width: 92px !important;
-  max-height: 34px !important;
-  margin-bottom: 14px !important;
+  width: 96px !important;
+  max-height: 36px !important;
+  margin-bottom: 16px !important;
 }
 
+.footer__brand p,
 .footer p {
-  max-width: 360px !important;
+  max-width: 390px !important;
   margin: 0 !important;
-  font-size: 15px !important;
+  font-size: 16px !important;
   font-weight: 400 !important;
-  line-height: 1.45 !important;
-  letter-spacing: -.018em !important;
-  color: rgba(255,255,255,.76) !important;
+  line-height: 1.42 !important;
+  letter-spacing: -.02em !important;
+  color: rgba(255,255,255,.78) !important;
 }
 
+/* Let the connect children participate directly in the main footer grid. */
 .footer__connect {
-  display: grid !important;
-  gap: 15px !important;
-  padding: 2px 0 0 32px !important;
-  border: 0 !important;
-  border-left: 1px solid rgba(255,255,255,.10) !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  display: contents !important;
 }
 
 .footer__connect-head {
+  grid-column: 1 !important;
+  grid-row: 2 !important;
   display: grid !important;
   gap: 7px !important;
+  margin: 0 0 13px !important;
 }
 
 .footer__connect-head p {
-  max-width: none !important;
-  font-size: 12px !important;
-  line-height: 1.45 !important;
+  max-width: 520px !important;
+  font-size: 11.5px !important;
+  line-height: 1.5 !important;
   text-align: left !important;
-  color: rgba(255,255,255,.62) !important;
+  color: rgba(255,255,255,.54) !important;
 }
 
 .footer__connect-label,
 .footer__social-label {
   font-size: 7.5px !important;
   font-weight: 700 !important;
-  letter-spacing: .17em !important;
-  color: rgba(255,255,255,.40) !important;
+  line-height: 1 !important;
+  letter-spacing: .18em !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,.42) !important;
 }
 
 .footer__email-list {
+  grid-column: 1 !important;
+  grid-row: 3 !important;
+  width: min(100%, 620px) !important;
   display: grid !important;
   grid-template-columns: 1fr !important;
-  gap: 0 !important;
-  border-top: 1px solid rgba(255,255,255,.08) !important;
+  gap: 8px !important;
+  border: 0 !important;
 }
 
 .footer__email-link {
+  min-width: 0 !important;
   display: grid !important;
-  grid-template-columns: 30px minmax(0, 1fr) 18px !important;
+  grid-template-columns: 38px minmax(0, 1fr) 22px !important;
   align-items: center !important;
-  gap: 10px !important;
-  min-height: 50px !important;
-  padding: 7px 2px !important;
-  border: 0 !important;
-  border-bottom: 1px solid rgba(255,255,255,.08) !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
+  gap: 12px !important;
+  min-height: 58px !important;
+  padding: 9px 12px !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  border-radius: 13px !important;
+  background: rgba(4, 28, 20, .22) !important;
+  color: rgba(255,255,255,.90) !important;
+  text-decoration: none !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025) !important;
+  transition: transform .22s ease, background .22s ease, border-color .22s ease !important;
 }
 
 .footer__email-link:hover {
   transform: translateX(3px) !important;
-  background: transparent !important;
-  border-color: rgba(255,255,255,.14) !important;
+  background: rgba(255,255,255,.055) !important;
+  border-color: rgba(255,255,255,.18) !important;
   box-shadow: none !important;
 }
 
 .footer__email-icon {
-  width: 30px !important;
-  height: 30px !important;
-  border-radius: 9px !important;
-  background: #fff !important;
+  width: 38px !important;
+  height: 38px !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: hidden !important;
+  border-radius: 11px !important;
+  background: rgba(0,0,0,.18) !important;
   box-shadow: none !important;
 }
 
 .footer__email-icon img {
-  width: 19px !important;
-  height: 19px !important;
+  width: 38px !important;
+  height: 38px !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  transform: scale(1.22) !important;
 }
 
 .footer__email-copy {
-  gap: 1px !important;
+  min-width: 0 !important;
+  display: grid !important;
+  gap: 2px !important;
 }
 
 .footer__email-copy small {
   font-size: 6.5px !important;
-  letter-spacing: .13em !important;
-  color: rgba(255,255,255,.36) !important;
+  font-weight: 700 !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,.34) !important;
 }
 
 .footer__email-copy strong {
-  font-size: 10.5px !important;
+  overflow: hidden !important;
+  font-size: 11px !important;
   font-weight: 500 !important;
-  color: rgba(255,255,255,.84) !important;
+  letter-spacing: -.012em !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  color: rgba(255,255,255,.88) !important;
 }
 
 .footer__email-open {
-  width: 18px !important;
-  height: 18px !important;
-  color: rgba(255,255,255,.38) !important;
+  width: 22px !important;
+  height: 22px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: rgba(255,255,255,.42) !important;
 }
 
+.footer__email-link:hover .footer__email-open {
+  color: rgba(255,255,255,.90) !important;
+  transform: translate(2px, -2px) !important;
+}
+
+/* Right side: social media first, back-to-top below. */
 .footer__connect-bottom {
+  grid-column: 2 !important;
+  grid-row: 1 / span 3 !important;
+  min-height: 100% !important;
   display: flex !important;
-  align-items: end !important;
-  justify-content: space-between !important;
-  gap: 18px !important;
-  padding-top: 1px !important;
-  border-top: 0 !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  gap: 0 !important;
+  padding: 54px 0 0 54px !important;
+  border: 0 !important;
+  border-left: 1px solid rgba(255,255,255,.10) !important;
 }
 
 .footer__social {
-  gap: 8px !important;
+  width: 100% !important;
+  display: grid !important;
+  gap: 12px !important;
+  margin: 0 !important;
 }
 
 .footer__social-links {
-  gap: 7px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 10px !important;
 }
 
 .footer__social-links a,
 .footer__social-icon-link {
-  flex: 0 0 44px !important;
-  width: 44px !important;
-  height: 34px !important;
-  min-height: 34px !important;
-  padding: 5px 8px !important;
-  border: 1px solid rgba(255,255,255,.09) !important;
+  position: relative !important;
+  flex: 0 0 70px !important;
+  width: 70px !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
   border-radius: 999px !important;
-  background: rgba(255,255,255,.055) !important;
+  background: #071d15 !important;
+  color: transparent !important;
+  text-decoration: none !important;
   box-shadow: none !important;
+  transition: transform .22s ease, border-color .22s ease, background .22s ease !important;
 }
 
+/* Crop the white padding baked into the uploaded social logo files. */
 .footer__social-logo {
-  width: 21px !important;
-  height: 21px !important;
-  max-width: 21px !important;
-  max-height: 21px !important;
-  border-radius: 5px !important;
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 0 !important;
+  transform: scale(1.46) !important;
+  transition: transform .22s ease, filter .22s ease !important;
+}
+
+.footer__social-links a:nth-child(2) .footer__social-logo {
+  transform: scale(1.42) !important;
+}
+
+.footer__social-links a:nth-child(3) .footer__social-logo {
+  transform: scale(1.50) !important;
+}
+
+.footer__social-links a:nth-child(4) .footer__social-logo {
+  transform: scale(1.48) !important;
 }
 
 .footer__social-links a:hover,
 .footer__social-icon-link:hover {
   transform: translateY(-2px) !important;
-  background: rgba(255,255,255,.10) !important;
-  border-color: rgba(255,255,255,.17) !important;
+  border-color: rgba(255,255,255,.22) !important;
+  background: rgba(255,255,255,.08) !important;
   box-shadow: none !important;
 }
 
+.footer__social-links a:hover .footer__social-logo,
+.footer__social-icon-link:hover .footer__social-logo {
+  filter: brightness(1.06) saturate(1.05) !important;
+}
+
 .footer__backtop {
+  width: 100% !important;
   min-height: 0 !important;
-  margin: 0 0 2px !important;
-  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 7px !important;
+  margin: 34px 0 0 !important;
+  padding: 24px 0 0 !important;
   border: 0 !important;
+  border-top: 1px solid rgba(255,255,255,.09) !important;
   border-radius: 0 !important;
   background: transparent !important;
-  font-size: 9px !important;
-  color: rgba(255,255,255,.55) !important;
+  color: rgba(255,255,255,.54) !important;
+  font-size: 9.5px !important;
+  cursor: pointer !important;
 }
 
 .footer__backtop:hover {
-  transform: translateY(-2px) !important;
+  transform: none !important;
   background: transparent !important;
-  border-color: transparent !important;
+  color: rgba(255,255,255,.88) !important;
 }
 
 .footer__bottom {
-  margin-top: 24px !important;
-  padding-top: 12px !important;
+  margin-top: 34px !important;
+  padding-top: 13px !important;
+  border-top: 1px solid rgba(255,255,255,.085) !important;
   font-size: 8px !important;
+  letter-spacing: .04em !important;
+  color: rgba(255,255,255,.38) !important;
+}
+
+.footer__social-links a:focus-visible,
+.footer__social-icon-link:focus-visible,
+.footer__email-link:focus-visible,
+.footer__backtop:focus-visible {
+  outline: 2px solid rgba(255,255,255,.60) !important;
+  outline-offset: 3px !important;
 }
 
 @media (max-width: 900px) {
   .footer {
-    padding: 34px 0 18px !important;
+    padding: 38px 0 18px !important;
   }
 
   .footer__grid {
-    grid-template-columns: 1fr minmax(330px, 390px) !important;
-    gap: 34px !important;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, .78fr) !important;
+    column-gap: 34px !important;
   }
 
-  .footer__connect {
-    padding-left: 24px !important;
+  .footer__connect-bottom {
+    padding-left: 30px !important;
+  }
+
+  .footer__social-links a,
+  .footer__social-icon-link {
+    flex-basis: 60px !important;
+    width: 60px !important;
+    height: 40px !important;
+    min-height: 40px !important;
   }
 }
 
 @media (max-width: 700px) {
-  .footer__grid {
-    grid-template-columns: 1fr !important;
-    gap: 22px !important;
+  .footer {
+    padding: 34px 0 17px !important;
   }
 
-  .footer__connect {
-    padding: 18px 0 0 !important;
+  .footer__grid {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto auto auto auto !important;
+    row-gap: 0 !important;
+  }
+
+  .footer__brand {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    padding-bottom: 22px !important;
+  }
+
+  .footer__connect-head {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+  }
+
+  .footer__email-list {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    width: 100% !important;
+  }
+
+  .footer__connect-bottom {
+    grid-column: 1 !important;
+    grid-row: 4 !important;
+    min-height: 0 !important;
+    margin-top: 24px !important;
+    padding: 22px 0 0 !important;
     border-left: 0 !important;
     border-top: 1px solid rgba(255,255,255,.10) !important;
   }
 
-  .footer__connect-bottom {
-    align-items: end !important;
+  .footer__social-links a,
+  .footer__social-icon-link {
+    flex-basis: 58px !important;
+    width: 58px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+  }
+
+  .footer__backtop {
+    margin-top: 24px !important;
+    padding-top: 18px !important;
+    justify-content: flex-start !important;
   }
 
   .footer__bottom {
-    margin-top: 20px !important;
+    margin-top: 26px !important;
   }
 }
