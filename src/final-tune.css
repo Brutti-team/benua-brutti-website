@@ -241,3 +241,8 @@ h2,
 @media (prefers-reduced-motion: reduce) {
   .nav { animation: none !important; }
 }
+
+/* The material cycle section was exploratory copy, not source-backed Brutti content. */
+.process {
+  display: none !important;
+}
