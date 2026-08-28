@@ -75,7 +75,7 @@
   background: linear-gradient(270deg, #f5f2eb 0%, rgba(245,242,235,.92) 35%, transparent 100%);
 }
 
-/* Manual horizontal drag / swipe. Visual styling stays the same. */
+/* Auto-moving rows that still support manual drag and swipe. */
 .collaborators-row {
   overflow-x: auto;
   overflow-y: hidden;
@@ -86,8 +86,7 @@
   overscroll-behavior-x: contain;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  scroll-snap-type: x proximity;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -101,14 +100,12 @@
 
 .collaborators-row.is-dragging {
   cursor: grabbing;
-  scroll-behavior: auto;
-  scroll-snap-type: none;
   user-select: none;
   -webkit-user-select: none;
 }
 
 .collaborators-row.is-dragging .collab-card {
-  pointer-events: none;
+  cursor: grabbing;
 }
 
 .collaborators-track {
@@ -116,6 +113,7 @@
   width: max-content;
   gap: 14px;
   padding-inline: max(24px, calc((100vw - 1440px) / 2));
+  will-change: transform;
 }
 
 .collab-card {
@@ -132,7 +130,6 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   cursor: zoom-in;
-  scroll-snap-align: start;
   transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease, background .28s ease;
 }
 
