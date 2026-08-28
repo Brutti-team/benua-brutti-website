@@ -32,6 +32,7 @@ import './what-we-build-heading.css'
 import './what-we-build-lightbox.css'
 import './what-we-build-spacing.css'
 import './journey.css'
+import './human-touch.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
@@ -144,6 +145,41 @@ function BruttiSite() {
 
     return () => observer.disconnect()
   }, [])
+
+  useEffect(() => {
+    if (view !== 'home') return undefined
+
+    const rewriteVisibleCopy = () => {
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT)
+      const nodes = []
+
+      while (walker.nextNode()) nodes.push(walker.currentNode)
+
+      nodes.forEach((node) => {
+        const parent = node.parentElement
+        if (!parent || parent.closest('script, style, noscript')) return
+
+        const original = node.nodeValue
+        if (!original) return
+
+        let next = original
+          .replace('pieces — built in Sabah', 'pieces. Built in Sabah')
+          .replace('crew — turning a hobby', 'crew, turning a hobby')
+          .replace('backyard — a gift that became', 'backyard. It was a gift that became')
+          .replace(/[—–]/g, ',')
+          .replace(/([A-Za-z])-([A-Za-z])/g, '$1 $2')
+          .replace(/\s-\s/g, ' ')
+
+        if (next !== original) node.nodeValue = next
+      })
+    }
+
+    rewriteVisibleCopy()
+    const observer = new MutationObserver(rewriteVisibleCopy)
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true })
+
+    return () => observer.disconnect()
+  }, [view])
 
   useEffect(() => {
     const selectors = [
