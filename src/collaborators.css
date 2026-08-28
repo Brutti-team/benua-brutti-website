@@ -94,13 +94,15 @@
   animation-duration: 54s;
 }
 
-.collaborators-marquee:hover .collaborators-track {
+.collaborators-marquee:hover .collaborators-track,
+.collaborators-marquee:focus-within .collaborators-track {
   animation-play-state: paused;
 }
 
 .collab-card {
   flex: 0 0 168px;
   height: 92px;
+  appearance: none;
   display: grid;
   place-items: center;
   padding: 18px 22px;
@@ -110,30 +112,142 @@
   box-shadow: 0 10px 28px rgba(20, 52, 37, .05);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  cursor: zoom-in;
   transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease, background .28s ease;
 }
 
-.collab-card:hover {
+.collab-card:hover,
+.collab-card:focus-visible {
   transform: translateY(-4px) scale(1.02);
   border-color: rgba(20, 63, 46, .18);
   background: #fff;
   box-shadow: 0 16px 34px rgba(20, 52, 37, .10);
+  outline: none;
+}
+
+.collab-card:focus-visible {
+  box-shadow:
+    0 0 0 3px rgba(23, 87, 71, .12),
+    0 16px 34px rgba(20, 52, 37, .10);
 }
 
 .collab-card img {
   display: block;
-  max-width: 122px;
-  max-height: 52px;
+  max-width: 128px;
+  max-height: 56px;
   width: auto;
   height: auto;
   object-fit: contain;
-  filter: saturate(.88) contrast(.98);
+  filter: saturate(.9) contrast(1.02);
+  transform: scale(var(--logo-scale, 1));
+  transform-origin: center;
   transition: filter .28s ease, transform .28s ease;
 }
 
-.collab-card:hover img {
-  filter: saturate(1) contrast(1);
-  transform: scale(1.035);
+.collab-card:hover img,
+.collab-card:focus-visible img {
+  filter: saturate(1) contrast(1.06);
+  transform: scale(calc(var(--logo-scale, 1) + .04));
+}
+
+/* Enlarged collaborator preview. The marquee styling remains unchanged. */
+.collab-lightbox {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background: rgba(7, 28, 20, .60);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  animation: collab-lightbox-in .22s ease both;
+}
+
+.collab-lightbox__panel {
+  width: min(720px, 100%);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.5);
+  border-radius: 28px;
+  background: #f8f8f4;
+  box-shadow: 0 32px 90px rgba(3, 21, 14, .28);
+  animation: collab-panel-in .34s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+.collab-lightbox__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 24px 18px;
+  border-bottom: 1px solid rgba(20, 63, 46, .08);
+  background: rgba(255,255,255,.74);
+}
+
+.collab-lightbox__head > div {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.collab-lightbox__head span {
+  color: #7a8c83;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.collab-lightbox__head strong {
+  overflow: hidden;
+  color: #17382a;
+  font-size: clamp(18px, 2.4vw, 25px);
+  font-weight: 600;
+  letter-spacing: -.025em;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.collab-lightbox__close {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(20, 63, 46, .11);
+  border-radius: 50%;
+  background: rgba(247,249,246,.92);
+  color: #245744;
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+
+.collab-lightbox__close:hover {
+  transform: rotate(4deg) scale(1.04);
+  border-color: rgba(20, 63, 46, .2);
+  background: #fff;
+}
+
+.collab-lightbox__visual {
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+  padding: 56px 64px;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(38,105,80,.07), transparent 42%),
+    linear-gradient(135deg, #fbfbf8 0%, #f3f6f1 100%);
+}
+
+.collab-lightbox__visual img {
+  display: block;
+  max-width: min(420px, 86%);
+  max-height: 210px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: saturate(1) contrast(1.02);
 }
 
 @keyframes collab-scroll-left {
@@ -144,6 +258,16 @@
 @keyframes collab-scroll-right {
   from { transform: translateX(calc(-50% - 7px)); }
   to { transform: translateX(0); }
+}
+
+@keyframes collab-lightbox-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes collab-panel-in {
+  from { opacity: 0; transform: translateY(14px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @media (max-width: 900px) {
@@ -169,8 +293,13 @@
   }
 
   .collab-card img {
-    max-width: 108px;
-    max-height: 46px;
+    max-width: 114px;
+    max-height: 49px;
+  }
+
+  .collab-lightbox__visual {
+    min-height: 320px;
+    padding: 46px 42px;
   }
 }
 
@@ -212,14 +341,43 @@
   }
 
   .collab-card img {
-    max-width: 96px;
-    max-height: 40px;
+    max-width: 102px;
+    max-height: 43px;
+  }
+
+  .collab-lightbox {
+    padding: 16px;
+  }
+
+  .collab-lightbox__panel {
+    border-radius: 22px;
+  }
+
+  .collab-lightbox__head {
+    padding: 18px 18px 15px;
+  }
+
+  .collab-lightbox__close {
+    width: 40px;
+    height: 40px;
+  }
+
+  .collab-lightbox__visual {
+    min-height: 260px;
+    padding: 36px 26px;
+  }
+
+  .collab-lightbox__visual img {
+    max-width: 88%;
+    max-height: 170px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .collaborators-track,
-  .collaborators-track--reverse {
+  .collaborators-track--reverse,
+  .collab-lightbox,
+  .collab-lightbox__panel {
     animation: none !important;
   }
 
