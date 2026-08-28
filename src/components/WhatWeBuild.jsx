@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowUpRight, Camera, CheckCircle2, ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react'
+import { ArrowUpRight, ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react'
 import bedBunkbed from '../../bed & bunkbed.png'
 import builtInCabinet from '../../built in cabinet.png'
 import camper from '../../camper.png'
@@ -215,32 +215,14 @@ export default function WhatWeBuild() {
               </a>
             </div>
 
-            <div className="wwb-selesa-showcase__preview" aria-hidden="true">
-              <div className="wwb-selesa-phone">
-                <div className="wwb-selesa-phone__bar">
-                  <span />
-                  <span>SelesaAI</span>
-                  <i />
-                </div>
-                <div className="wwb-selesa-phone__hero">
-                  <small>Describe your home issue</small>
-                  <strong>What needs fixing?</strong>
-                  <div className="wwb-selesa-phone__upload">
-                    <Camera size={16} />
-                    <span>Upload a photo</span>
-                  </div>
-                </div>
-                <div className="wwb-selesa-phone__result">
-                  <div>
-                    <small>AI assessment</small>
-                    <strong>Likely plumbing issue</strong>
-                  </div>
-                  <CheckCircle2 size={16} />
-                </div>
-                <div className="wwb-selesa-phone__estimate">
-                  <span>Estimated range</span>
-                  <strong>RM80 – RM150</strong>
-                </div>
+            <div className="wwb-selesa-showcase__preview">
+              <div className="wwb-selesa-home-frame">
+                <img
+                  className="wwb-selesa-home-preview"
+                  src={asset('selesaai home page.jpg')}
+                  alt="SelesaAI homepage"
+                  loading="lazy"
+                />
               </div>
             </div>
           </BuildCard>
