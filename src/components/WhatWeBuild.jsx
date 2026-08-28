@@ -177,6 +177,13 @@ export default function WhatWeBuild() {
   }
 
   useEffect(() => {
+    selesaSlides.forEach((slide) => {
+      const image = new Image()
+      image.src = slide.image
+    })
+  }, [])
+
+  useEffect(() => {
     if ((!isSelesaPreviewOpen && isSelesaSliderPaused) || selesaSlides.length <= 1) return undefined
 
     const interval = window.setInterval(() => {
@@ -361,25 +368,13 @@ export default function WhatWeBuild() {
                 </button>
               </div>
               <div className="wwb-selesa-viewer__stage">
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.img
-                    key={selesaSlides[selesaSlideIndex].image}
-                    src={selesaSlides[selesaSlideIndex].image}
-                    alt={`${selesaSlides[selesaSlideIndex].alt} full preview`}
-                    initial={{ opacity: 0, x: 18 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -18 }}
-                    transition={{ duration: 0.28, ease }}
-                    drag="x"
-                    dragConstraints={{ left: 0, right: 0 }}
-                    dragElastic={0.16}
-                    onDragEnd={(_, info) => {
-                      if (info.offset.x < -55) nextSelesaSlide()
-                      if (info.offset.x > 55) previousSelesaSlide()
-                    }}
-                    style={{ touchAction: 'pan-y', cursor: 'grab' }}
-                  />
-                </AnimatePresence>
+                <img
+                  key={selesaSlides[selesaSlideIndex].image}
+                  src={selesaSlides[selesaSlideIndex].image}
+                  alt={`${selesaSlides[selesaSlideIndex].alt} full preview`}
+                  loading="eager"
+                  decoding="async"
+                />
               </div>
             </motion.div>
           </motion.div>
