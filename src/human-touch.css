@@ -146,6 +146,321 @@
   content: none !important;
 }
 
+/* Material cycle: premium editorial card system. */
+.process {
+  position: relative !important;
+  overflow: hidden !important;
+  padding: 106px 0 112px !important;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(38, 105, 80, .075), transparent 27%),
+    linear-gradient(180deg, #f7f7f2 0%, #f3f5ef 100%) !important;
+  border-top: 1px solid rgba(23, 87, 71, .07) !important;
+  border-bottom: 1px solid rgba(23, 87, 71, .07) !important;
+}
+
+.process::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  background-image:
+    linear-gradient(rgba(23, 87, 71, .018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 87, 71, .018) 1px, transparent 1px) !important;
+  background-size: 70px 70px !important;
+  opacity: .42 !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 18%, #000 82%, transparent 100%) !important;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 18%, #000 82%, transparent 100%) !important;
+}
+
+.process > .page-shell {
+  position: relative !important;
+  z-index: 1 !important;
+  width: min(1260px, calc(100% - 72px)) !important;
+}
+
+.process__heading {
+  max-width: 820px !important;
+  margin: 0 !important;
+}
+
+.process__heading .eyebrow {
+  margin-bottom: 22px !important;
+}
+
+.process__heading h2 {
+  max-width: 820px !important;
+  margin: 0 !important;
+  color: #0b3022 !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: clamp(50px, 5.2vw, 72px) !important;
+  font-weight: 640 !important;
+  line-height: .98 !important;
+  letter-spacing: -.055em !important;
+}
+
+.process__heading h2 br {
+  display: block !important;
+}
+
+.process__heading h2 em {
+  display: inline-block !important;
+  margin-top: 5px !important;
+  color: #2b6d56 !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: .94em !important;
+  font-style: normal !important;
+  font-weight: 380 !important;
+  line-height: 1 !important;
+  letter-spacing: -.05em !important;
+}
+
+.process__steps {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+  margin-top: 54px !important;
+}
+
+.process-step {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  grid-template-rows: auto auto 1fr !important;
+  align-content: start !important;
+  min-height: 218px !important;
+  padding: 26px 28px 28px !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(23, 87, 71, .085) !important;
+  border-radius: 24px !important;
+  background: rgba(255, 255, 255, .68) !important;
+  box-shadow:
+    0 14px 34px rgba(18, 45, 34, .04),
+    inset 0 1px 0 rgba(255, 255, 255, .88) !important;
+  transition:
+    transform .32s cubic-bezier(.22, 1, .36, 1),
+    box-shadow .32s ease,
+    border-color .32s ease,
+    background .32s ease !important;
+}
+
+.process-step::before {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  align-self: start !important;
+  justify-self: end !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: 8px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  letter-spacing: .15em !important;
+  text-transform: uppercase !important;
+  color: #82958d !important;
+}
+
+.process-step:nth-child(1)::before { content: 'Material' !important; }
+.process-step:nth-child(2)::before { content: 'Recovery' !important; }
+.process-step:nth-child(3)::before { content: 'Craft' !important; }
+.process-step:nth-child(4)::before { content: 'Outcome' !important; }
+
+.process-step::after {
+  grid-column: 1 / -1 !important;
+  grid-row: 3 !important;
+  align-self: end !important;
+  max-width: 440px !important;
+  margin-top: 26px !important;
+  color: #687971 !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: 13.5px !important;
+  font-weight: 430 !important;
+  line-height: 1.65 !important;
+  letter-spacing: -.008em !important;
+}
+
+.process-step:nth-child(1)::after {
+  content: 'Selected from reclaimed pallet wood with real potential for reuse.' !important;
+}
+.process-step:nth-child(2)::after {
+  content: 'Recovered and prepared so useful material stays out of waste.' !important;
+}
+.process-step:nth-child(3)::after {
+  content: 'Refined through practical woodworking and careful making.' !important;
+}
+.process-step:nth-child(4)::after {
+  content: 'Returned to use as furniture designed to live longer.' !important;
+}
+
+.process-step > span {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  width: 42px !important;
+  height: 28px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 0 28px !important;
+  border: 1px solid rgba(23, 87, 71, .10) !important;
+  border-radius: 999px !important;
+  background: rgba(23, 87, 71, .045) !important;
+  color: #657d73 !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: 9px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  letter-spacing: .12em !important;
+}
+
+.process-step strong {
+  grid-column: 1 / -1 !important;
+  grid-row: 2 !important;
+  display: block !important;
+  margin: 0 !important;
+  padding-right: 58px !important;
+  color: #123527 !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: clamp(30px, 3.1vw, 43px) !important;
+  font-weight: 620 !important;
+  line-height: 1.04 !important;
+  letter-spacing: -.045em !important;
+  text-transform: lowercase !important;
+}
+
+.process-step strong::first-letter {
+  text-transform: uppercase !important;
+}
+
+.process-step__line {
+  position: absolute !important;
+  top: 76px !important;
+  right: 26px !important;
+  width: 42px !important;
+  height: 42px !important;
+  margin: 0 !important;
+  border: 1px solid rgba(23, 87, 71, .11) !important;
+  border-radius: 50% !important;
+  background: rgba(247, 249, 246, .9) !important;
+  transform: none !important;
+  box-shadow: 0 8px 20px rgba(18, 45, 34, .04) !important;
+}
+
+.process-step__line::before {
+  content: '↗' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #245c47 !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 1 !important;
+}
+
+.process-step:nth-child(1) {
+  border-color: rgba(13, 68, 49, .30) !important;
+  background:
+    radial-gradient(circle at 92% 12%, rgba(255, 255, 255, .10), transparent 34%),
+    linear-gradient(145deg, #0d4431 0%, #175a43 100%) !important;
+  box-shadow: 0 22px 50px rgba(13, 68, 49, .16) !important;
+}
+
+.process-step:nth-child(1) > span {
+  border-color: rgba(255,255,255,.16) !important;
+  background: rgba(255,255,255,.08) !important;
+  color: rgba(255,255,255,.72) !important;
+}
+
+.process-step:nth-child(1)::before {
+  color: rgba(255,255,255,.56) !important;
+}
+
+.process-step:nth-child(1) strong {
+  color: #ffffff !important;
+}
+
+.process-step:nth-child(1)::after {
+  color: rgba(255,255,255,.70) !important;
+}
+
+.process-step:nth-child(1) .process-step__line {
+  border-color: rgba(255,255,255,.16) !important;
+  background: rgba(255,255,255,.09) !important;
+  box-shadow: none !important;
+}
+
+.process-step:nth-child(1) .process-step__line::before {
+  color: #ffffff !important;
+}
+
+.process-step:last-child::before {
+  padding: 7px 10px !important;
+  border-radius: 999px !important;
+  background: rgba(23,87,71,.055) !important;
+}
+
+.process-step:hover,
+.process-step.scroll-replay:hover,
+.process-step.scroll-replay.is-scroll-visible:hover {
+  transform: translateY(-4px) !important;
+  border-color: rgba(23, 87, 71, .15) !important;
+  box-shadow:
+    0 22px 48px rgba(18, 45, 34, .075),
+    inset 0 1px 0 rgba(255, 255, 255, .9) !important;
+}
+
+.process-step:nth-child(1):hover,
+.process-step:nth-child(1).scroll-replay:hover,
+.process-step:nth-child(1).scroll-replay.is-scroll-visible:hover {
+  border-color: rgba(255,255,255,.16) !important;
+  box-shadow: 0 28px 58px rgba(13, 68, 49, .22) !important;
+}
+
+@media (max-width: 800px) {
+  .process {
+    padding: 78px 0 84px !important;
+  }
+
+  .process > .page-shell {
+    width: min(100% - 32px, 720px) !important;
+  }
+
+  .process__heading h2 {
+    font-size: clamp(42px, 11vw, 58px) !important;
+  }
+
+  .process__steps {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    margin-top: 40px !important;
+  }
+
+  .process-step {
+    min-height: 190px !important;
+    padding: 22px 22px 24px !important;
+    border-radius: 20px !important;
+  }
+
+  .process-step > span {
+    margin-bottom: 24px !important;
+  }
+
+  .process-step strong {
+    padding-right: 52px !important;
+    font-size: 31px !important;
+  }
+
+  .process-step::after {
+    margin-top: 22px !important;
+    font-size: 13px !important;
+  }
+
+  .process-step__line {
+    top: 67px !important;
+    right: 20px !important;
+    width: 38px !important;
+    height: 38px !important;
+  }
+}
+
 @media (max-width: 600px) {
   .hero .eyebrow,
   .impact .eyebrow,
@@ -172,5 +487,56 @@
     line-height: 1.68 !important;
     text-align: justify !important;
     text-align-last: left !important;
+  }
+
+  .process {
+    padding: 64px 0 70px !important;
+  }
+
+  .process > .page-shell {
+    width: calc(100% - 26px) !important;
+  }
+
+  .process__heading .eyebrow {
+    margin-bottom: 17px !important;
+  }
+
+  .process__heading h2 {
+    font-size: clamp(38px, 11.5vw, 48px) !important;
+  }
+
+  .process__steps {
+    margin-top: 32px !important;
+  }
+
+  .process-step {
+    min-height: 178px !important;
+    padding: 20px !important;
+    border-radius: 18px !important;
+  }
+
+  .process-step > span {
+    width: 38px !important;
+    height: 26px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .process-step strong {
+    padding-right: 46px !important;
+    font-size: 28px !important;
+  }
+
+  .process-step::after {
+    max-width: 90% !important;
+    margin-top: 20px !important;
+    font-size: 12.5px !important;
+    line-height: 1.6 !important;
+  }
+
+  .process-step__line {
+    top: 60px !important;
+    right: 17px !important;
+    width: 36px !important;
+    height: 36px !important;
   }
 }
