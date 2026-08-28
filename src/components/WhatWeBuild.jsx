@@ -6,6 +6,7 @@ import builtInCabinet from '../../built in cabinet.png'
 import camper from '../../camper.png'
 import kiosk from '../../kiosk.png'
 import mementoTwo from '../../memento 2.png'
+import '../selesaai-viewer-fix.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 const ease = [0.22, 1, 0.36, 1]
