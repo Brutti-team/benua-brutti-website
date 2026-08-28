@@ -1,0 +1,157 @@
+/* Refined SelesaAI image viewer — compact, image-first, no oversized empty canvas */
+.wwb-selesa-viewer {
+  padding: 18px !important;
+  background: rgba(5, 19, 14, 0.82) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.wwb-selesa-viewer__dialog {
+  width: min(520px, 94vw) !important;
+  max-height: 94vh !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 22px !important;
+  background: #f7faf8 !important;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.34) !important;
+}
+
+.wwb-selesa-viewer__bar {
+  padding: 14px 14px 13px 17px !important;
+  border-bottom: 1px solid rgba(23, 87, 71, 0.08) !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+}
+
+.wwb-selesa-viewer__bar small {
+  margin-bottom: 3px !important;
+  font-size: 7.5px !important;
+  letter-spacing: 0.13em !important;
+}
+
+.wwb-selesa-viewer__bar strong {
+  font-size: 13px !important;
+  letter-spacing: -0.01em !important;
+}
+
+.wwb-selesa-viewer__bar button {
+  width: 38px !important;
+  height: 38px !important;
+  border-color: rgba(23, 87, 71, 0.10) !important;
+  background: #f9fbfa !important;
+  transition: transform 0.2s ease, background 0.2s ease !important;
+}
+
+.wwb-selesa-viewer__bar button:hover {
+  transform: rotate(4deg) !important;
+  background: #eef5f1 !important;
+}
+
+.wwb-selesa-viewer__stage {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 0 !important;
+  max-height: calc(94vh - 66px) !important;
+  overflow: hidden !important;
+  padding: 16px 56px !important;
+  background:
+    radial-gradient(circle at 86% 8%, rgba(111, 186, 125, 0.10), transparent 30%),
+    linear-gradient(145deg, #edf4f0 0%, #e8f1ec 100%) !important;
+}
+
+.wwb-selesa-viewer__stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(23, 87, 71, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 87, 71, 0.022) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.65;
+}
+
+.wwb-selesa-viewer__stage img {
+  position: relative !important;
+  z-index: 2 !important;
+  display: block !important;
+  width: auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: calc(94vh - 105px) !important;
+  object-fit: contain !important;
+  margin: 0 auto !important;
+  border-radius: 13px !important;
+  background: #fff !important;
+  box-shadow:
+    0 18px 42px rgba(14, 50, 37, 0.13),
+    0 2px 8px rgba(14, 50, 37, 0.05) !important;
+}
+
+.wwb-selesa-viewer__nav {
+  top: 50% !important;
+  width: 38px !important;
+  height: 38px !important;
+  border: 1px solid rgba(23, 87, 71, 0.10) !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  color: #175747 !important;
+  box-shadow: 0 9px 22px rgba(18, 55, 42, 0.12) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.wwb-selesa-viewer__nav:hover {
+  box-shadow: 0 12px 26px rgba(18, 55, 42, 0.17) !important;
+}
+
+.wwb-selesa-viewer__nav--prev {
+  left: 10px !important;
+}
+
+.wwb-selesa-viewer__nav--next {
+  right: 10px !important;
+}
+
+@media (max-width: 650px) {
+  .wwb-selesa-viewer {
+    padding: 10px !important;
+  }
+
+  .wwb-selesa-viewer__dialog {
+    width: min(430px, 100%) !important;
+    max-height: 96vh !important;
+    border-radius: 18px !important;
+  }
+
+  .wwb-selesa-viewer__bar {
+    padding: 12px 12px 11px 14px !important;
+  }
+
+  .wwb-selesa-viewer__bar button {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  .wwb-selesa-viewer__stage {
+    max-height: calc(96vh - 60px) !important;
+    padding: 12px 44px !important;
+  }
+
+  .wwb-selesa-viewer__stage img {
+    max-height: calc(96vh - 86px) !important;
+    border-radius: 11px !important;
+  }
+
+  .wwb-selesa-viewer__nav {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .wwb-selesa-viewer__nav--prev {
+    left: 6px !important;
+  }
+
+  .wwb-selesa-viewer__nav--next {
+    right: 6px !important;
+  }
+}
