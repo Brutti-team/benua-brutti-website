@@ -335,30 +335,52 @@ function App() {
               style={{ width: 110, height: 'auto', marginBottom: 12, borderRadius: 4 }}
             />
             <p>Furniture with a second life.</p>
+          </div>
+
+          <div className="footer__connect">
+            <span className="footer__connect-label">Get in touch</span>
+
+            <div className="footer__email-list">
+              <a className="footer__email-link" href="mailto:benuabrutti@gmail.com">
+                <span className="footer__email-icon" aria-hidden="true">
+                  <img src={asset('gmail.png')} alt="" />
+                </span>
+                <span className="footer__email-copy">
+                  <small>General</small>
+                  <strong>benuabrutti@gmail.com</strong>
+                </span>
+              </a>
+
+              <a className="footer__email-link" href="mailto:hr.bruttibesi@gmail.com">
+                <span className="footer__email-icon" aria-hidden="true">
+                  <img src={asset('gmail.png')} alt="" />
+                </span>
+                <span className="footer__email-copy">
+                  <small>HR</small>
+                  <strong>hr.bruttibesi@gmail.com</strong>
+                </span>
+              </a>
+            </div>
 
             <div className="footer__social" aria-label="Benua Brutti social media">
               <span className="footer__social-label">Follow Brutti</span>
               <div className="footer__social-links">
-                <a href="https://www.tiktok.com/@brutti.my?_r=1&_t=ZS-99FmWlcm2fQ" target="_blank" rel="noreferrer" aria-label="Benua Brutti on TikTok">
-                  TikTok <ArrowUpRight size={12} />
+                <a data-logo-applied="true" href="https://www.tiktok.com/@brutti.my?_r=1&_t=ZS-99FmWlcm2fQ" target="_blank" rel="noreferrer" aria-label="Benua Brutti on TikTok" title="TikTok">
+                  <img className="footer__social-logo" src={asset('tiktok.jpg')} alt="TikTok logo" />
                 </a>
-                <a href="https://www.instagram.com/brutti.my?igsi=ZnU3dHVqOXRnZTJk" target="_blank" rel="noreferrer" aria-label="Benua Brutti on Instagram">
-                  Instagram <ArrowUpRight size={12} />
+                <a data-logo-applied="true" href="https://www.instagram.com/brutti.my?igsi=ZnU3dHVqOXRnZTJk" target="_blank" rel="noreferrer" aria-label="Benua Brutti on Instagram" title="Instagram">
+                  <img className="footer__social-logo" src={asset('ig.jpg')} alt="Instagram logo" />
                 </a>
-                <a href="https://www.facebook.com/share/1EfVN5HMJm/?mibextid=wwXIfr" target="_blank" rel="noreferrer" aria-label="Benua Brutti on Facebook">
-                  Facebook <ArrowUpRight size={12} />
+                <a data-logo-applied="true" href="https://www.facebook.com/share/1EfVN5HMJm/?mibextid=wwXIfr" target="_blank" rel="noreferrer" aria-label="Benua Brutti on Facebook" title="Facebook">
+                  <img className="footer__social-logo" src={asset('fb.png')} alt="Facebook logo" />
                 </a>
-                <a href="https://www.threads.com/@brutti.my?igshid=NTc4MTIwNjQ2YQ==" target="_blank" rel="noreferrer" aria-label="Benua Brutti on Threads">
-                  Threads <ArrowUpRight size={12} />
+                <a data-logo-applied="true" href="https://www.threads.com/@brutti.my?igshid=NTc4MTIwNjQ2YQ==" target="_blank" rel="noreferrer" aria-label="Benua Brutti on Threads" title="Threads">
+                  <img className="footer__social-logo" src={asset('threads.png')} alt="Threads logo" />
                 </a>
               </div>
             </div>
-          </div>
 
-          <div className="footer__links">
-            <a href="mailto:benuabrutti@gmail.com">benuabrutti@gmail.com</a>
-            <span>@brutti.my</span>
-            <button onClick={() => scrollToId('home')}>Back to top ↑</button>
+            <button className="footer__backtop" onClick={() => scrollToId('home')}>Back to top <span>↑</span></button>
           </div>
         </div>
         <div className="page-shell footer__bottom">© {new Date().getFullYear()} Benua Brutti. Crafted in Sabah.</div>
