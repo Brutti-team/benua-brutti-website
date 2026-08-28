@@ -246,31 +246,6 @@ function App() {
         </div>
       </section>
 
-      <section className="process section-pad">
-        <div className="page-shell">
-          <Reveal className="process__heading">
-            <p className="eyebrow">How we think</p>
-            <h2>A simple material.<br /><em>A better cycle.</em></h2>
-          </Reveal>
-          <div className="process__steps">
-            {['PALLET WOOD', 'RESCUED', 'CRAFTED', 'SECOND LIFE'].map((step, index) => (
-              <motion.div
-                className="process-step"
-                key={step}
-                initial={{ opacity: 0.2, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.7 }}
-                transition={{ duration: 0.6, delay: index * 0.12 }}
-              >
-                <span>0{index + 1}</span>
-                <strong>{step}</strong>
-                {index < 3 && <div className="process-step__line" />}
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section id="catalogue" className="catalogue section-pad">
         <div className="page-shell">
           <div className="catalogue__heading">
@@ -353,14 +328,33 @@ function App() {
 
       <footer className="footer">
         <div className="page-shell footer__grid">
-          <div>
+          <div className="footer__brand">
             <img
               src={asset('logo brutti.jpg')}
               alt="Benua Brutti"
               style={{ width: 110, height: 'auto', marginBottom: 12, borderRadius: 4 }}
             />
             <p>Furniture with a second life.</p>
+
+            <div className="footer__social" aria-label="Benua Brutti social media">
+              <span className="footer__social-label">Follow Brutti</span>
+              <div className="footer__social-links">
+                <a href="https://www.tiktok.com/@brutti.my?_r=1&_t=ZS-99FmWlcm2fQ" target="_blank" rel="noreferrer" aria-label="Benua Brutti on TikTok">
+                  TikTok <ArrowUpRight size={12} />
+                </a>
+                <a href="https://www.instagram.com/brutti.my?igsi=ZnU3dHVqOXRnZTJk" target="_blank" rel="noreferrer" aria-label="Benua Brutti on Instagram">
+                  Instagram <ArrowUpRight size={12} />
+                </a>
+                <a href="https://www.facebook.com/share/1EfVN5HMJm/?mibextid=wwXIfr" target="_blank" rel="noreferrer" aria-label="Benua Brutti on Facebook">
+                  Facebook <ArrowUpRight size={12} />
+                </a>
+                <a href="https://www.threads.com/@brutti.my?igshid=NTc4MTIwNjQ2YQ==" target="_blank" rel="noreferrer" aria-label="Benua Brutti on Threads">
+                  Threads <ArrowUpRight size={12} />
+                </a>
+              </div>
+            </div>
           </div>
+
           <div className="footer__links">
             <a href="mailto:benuabrutti@gmail.com">benuabrutti@gmail.com</a>
             <span>@brutti.my</span>
