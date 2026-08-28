@@ -1,12 +1,12 @@
-/* SelesaAI — compact premium digital-product showcase */
+/* SelesaAI — cleaner compact showcase */
 .wwb-section-label--digital {
-  margin-top: 68px !important;
+  margin-top: 70px !important;
   margin-bottom: 22px !important;
 }
 
 .wwb-digital-grid {
   grid-template-columns: minmax(0, 1fr) !important;
-  max-width: 940px;
+  max-width: 860px;
   margin: 0 auto;
 }
 
@@ -21,16 +21,16 @@
 .wwb-selesa-showcase {
   position: relative;
   display: grid !important;
-  grid-template-columns: minmax(0, 1.16fr) minmax(290px, .84fr) !important;
-  min-height: 330px !important;
+  grid-template-columns: minmax(0, 1.2fr) minmax(230px, .8fr) !important;
+  min-height: 282px !important;
   overflow: hidden !important;
   padding: 0 !important;
   border: 1px solid rgba(23, 87, 71, .10) !important;
-  border-radius: 24px !important;
+  border-radius: 22px !important;
   background: #fbfcfa !important;
   box-shadow:
-    0 18px 44px rgba(18, 45, 34, .07),
-    inset 0 1px 0 rgba(255,255,255,.9) !important;
+    0 16px 38px rgba(18, 45, 34, .065),
+    inset 0 1px 0 rgba(255,255,255,.92) !important;
 }
 
 .wwb-selesa-showcase::after {
@@ -39,9 +39,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #2b8a68 0%, #7fc85d 46%, rgba(127,200,93,0) 78%);
-  opacity: .72;
+  height: 2px;
+  background: linear-gradient(90deg, #2b8a68 0%, #7fc85d 42%, rgba(127,200,93,0) 74%);
+  opacity: .62;
   pointer-events: none;
 }
 
@@ -51,14 +51,14 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 30px 32px 28px;
+  padding: 25px 28px 24px;
 }
 
 .wwb-selesa-showcase__eyebrow {
   margin: 0;
-  color: #6c837b;
+  color: #70857d;
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 8px;
+  font-size: 7.5px;
   font-weight: 800;
   letter-spacing: .13em;
   text-transform: uppercase;
@@ -66,49 +66,49 @@
 
 .wwb-selesa-showcase__logo {
   display: block;
-  width: 168px;
+  width: 148px;
   max-width: 100%;
   height: auto;
-  margin-top: 14px;
-  border-radius: 8px;
+  margin-top: 12px;
+  border-radius: 7px;
   object-fit: contain;
   object-position: left center;
   box-shadow: none;
 }
 
 .wwb-selesa-showcase__tagline {
-  margin: 13px 0 0;
-  color: #1e624c;
+  margin: 12px 0 0;
+  color: #1f624d;
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 13px;
+  font-size: 11.5px;
   font-weight: 760;
   letter-spacing: -.02em;
 }
 
 .wwb-selesa-showcase__desc {
-  max-width: 505px;
-  margin: 14px 0 0;
-  color: #677972;
+  max-width: 455px;
+  margin: 12px 0 0;
+  color: #697a74;
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 12px;
+  font-size: 10.5px;
   line-height: 1.62;
 }
 
 .wwb-selesa-showcase__features {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
-  margin-top: 16px;
+  gap: 6px;
+  margin-top: 14px;
 }
 
 .wwb-selesa-showcase__features span {
-  padding: 6px 9px;
+  padding: 5px 8px;
   border: 1px solid rgba(23, 87, 71, .09);
   border-radius: 999px;
   background: rgba(23, 87, 71, .03);
-  color: #56746a;
+  color: #58756b;
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 8px;
+  font-size: 7px;
   font-weight: 720;
 }
 
@@ -116,41 +116,40 @@
   align-self: flex-start;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 18px;
-  padding: 9px 12px;
+  gap: 5px;
+  margin-top: 15px;
+  padding: 8px 11px;
   border: 1px solid #174f3c;
   border-radius: 999px;
   background: #174f3c;
   color: #fff;
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 8px;
+  font-size: 7px;
   font-weight: 800;
   letter-spacing: .07em;
   text-decoration: none;
   text-transform: uppercase;
-  box-shadow: 0 8px 18px rgba(23,79,60,.14);
+  box-shadow: 0 7px 16px rgba(23,79,60,.13);
   transition: transform .24s ease, background .24s ease, box-shadow .24s ease;
 }
 
 .wwb-selesa-showcase__cta:hover {
   transform: translateY(-2px);
   background: #103f30;
-  box-shadow: 0 11px 22px rgba(23,79,60,.18);
+  box-shadow: 0 9px 20px rgba(23,79,60,.17);
 }
 
 .wwb-selesa-showcase__preview {
   position: relative;
   z-index: 1;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  padding: 24px 22px 20px;
+  justify-content: center;
+  padding: 18px 18px;
   border-left: 1px solid rgba(23,87,71,.07);
   background:
-    radial-gradient(circle at 82% 8%, rgba(125, 201, 96, .13), transparent 31%),
-    linear-gradient(150deg, #eef5f1 0%, #e7f1ec 56%, #dcebe4 100%);
+    radial-gradient(circle at 80% 9%, rgba(125,201,96,.13), transparent 30%),
+    linear-gradient(150deg, #eff6f2 0%, #e8f2ed 56%, #deece5 100%);
 }
 
 .wwb-selesa-showcase__preview::before {
@@ -159,48 +158,48 @@
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(rgba(23,87,71,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(23,87,71,.025) 1px, transparent 1px);
-  background-size: 28px 28px;
-  mask-image: linear-gradient(to left, #000 40%, transparent 95%);
+    linear-gradient(rgba(23,87,71,.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23,87,71,.022) 1px, transparent 1px);
+  background-size: 25px 25px;
+  mask-image: linear-gradient(to left, #000 45%, transparent 95%);
 }
 
 .wwb-selesa-phone {
   position: relative;
   z-index: 2;
-  width: min(224px, 100%);
+  width: min(188px, 100%);
   margin: 0 auto;
-  padding: 9px;
-  border: 1px solid rgba(19, 75, 55, .09);
-  border-radius: 21px;
-  background: rgba(255,255,255,.96);
+  padding: 8px;
+  border: 1px solid rgba(19,75,55,.08);
+  border-radius: 18px;
+  background: rgba(255,255,255,.97);
   box-shadow:
-    0 17px 36px rgba(15, 56, 42, .13),
-    0 2px 7px rgba(15, 56, 42, .05);
-  transform: rotate(-1.2deg);
-  transition: transform .36s ease, box-shadow .36s ease;
+    0 15px 32px rgba(15,56,42,.12),
+    0 2px 6px rgba(15,56,42,.04);
+  transform: rotate(-.8deg);
+  transition: transform .34s ease, box-shadow .34s ease;
 }
 
 .wwb-selesa-showcase:hover .wwb-selesa-phone {
-  transform: rotate(0deg) translateY(-3px);
+  transform: rotate(0deg) translateY(-2px);
   box-shadow:
-    0 22px 42px rgba(15, 56, 42, .16),
-    0 3px 9px rgba(15, 56, 42, .06);
+    0 18px 36px rgba(15,56,42,.15),
+    0 3px 8px rgba(15,56,42,.05);
 }
 
 .wwb-selesa-phone__bar {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 4px 5px 8px;
+  padding: 4px 4px 7px;
   color: #335d4e;
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 6.5px;
+  font-size: 5.8px;
   font-weight: 800;
 }
 
 .wwb-selesa-phone__bar span:first-child {
-  width: 17px;
+  width: 15px;
   height: 3px;
   border-radius: 999px;
   background: rgba(23,87,71,.12);
@@ -215,8 +214,8 @@
 }
 
 .wwb-selesa-phone__hero {
-  padding: 12px;
-  border-radius: 15px;
+  padding: 10px;
+  border-radius: 13px;
   background: linear-gradient(145deg, #eef8f3, #fbfdfb);
 }
 
@@ -225,7 +224,7 @@
   display: block;
   color: #789087;
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 5.8px;
+  font-size: 5px;
   font-weight: 760;
   text-transform: uppercase;
   letter-spacing: .08em;
@@ -236,22 +235,22 @@
   margin-top: 4px;
   color: #123f30;
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 13px;
+  font-size: 11px;
   letter-spacing: -.03em;
 }
 
 .wwb-selesa-phone__upload {
   display: flex;
   align-items: center;
-  gap: 7px;
-  margin-top: 11px;
-  padding: 9px;
+  gap: 6px;
+  margin-top: 9px;
+  padding: 8px;
   border: 1px dashed rgba(23,87,71,.18);
-  border-radius: 11px;
+  border-radius: 9px;
   color: #316c56;
-  background: rgba(255,255,255,.72);
+  background: rgba(255,255,255,.74);
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 7px;
+  font-size: 6px;
   font-weight: 700;
 }
 
@@ -259,13 +258,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  margin-top: 7px;
-  padding: 9px 10px;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 8px 9px;
   border: 1px solid rgba(23,87,71,.08);
-  border-radius: 11px;
+  border-radius: 9px;
   color: #1d7352;
-  background: rgba(255,255,255,.72);
+  background: rgba(255,255,255,.76);
 }
 
 .wwb-selesa-phone__result strong {
@@ -273,7 +272,7 @@
   margin-top: 3px;
   color: #173f32;
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 7.5px;
+  font-size: 6.5px;
 }
 
 .wwb-selesa-phone__estimate {
@@ -281,58 +280,25 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  margin-top: 7px;
-  padding: 8px 10px;
-  border-radius: 11px;
+  margin-top: 6px;
+  padding: 7px 9px;
+  border-radius: 9px;
   background: #174f3c;
   color: #fff;
   font-family: 'Manrope', system-ui, sans-serif;
 }
 
 .wwb-selesa-phone__estimate span {
-  font-size: 6px;
+  font-size: 5.5px;
   color: rgba(255,255,255,.66);
 }
 
 .wwb-selesa-phone__estimate strong {
-  font-size: 8px;
-}
-
-.wwb-selesa-showcase__badges {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 7px;
-  margin-top: 12px;
-}
-
-.wwb-selesa-showcase__badges span {
-  min-width: 62px;
-  padding: 6px 8px;
-  border: 1px solid rgba(23,87,71,.09);
-  border-radius: 999px;
-  background: rgba(255,255,255,.62);
-  color: #61776f;
-  text-align: center;
-  font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 6px;
-  line-height: 1.15;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.wwb-selesa-showcase__badges b {
-  display: inline;
-  margin-right: 3px;
-  color: #245e49;
   font-size: 7px;
 }
 
 .wwb-bottom-note {
-  margin-top: 30px !important;
+  margin-top: 26px !important;
 }
 
 @media (max-width: 900px) {
@@ -345,8 +311,8 @@
   }
 
   .wwb-selesa-showcase__preview {
-    min-height: 270px;
-    padding: 22px;
+    min-height: 225px;
+    padding: 18px;
     border-left: 0;
     border-top: 1px solid rgba(23,87,71,.07);
   }
@@ -354,32 +320,28 @@
 
 @media (max-width: 650px) {
   .wwb-section-label--digital {
-    margin-top: 48px !important;
+    margin-top: 50px !important;
     margin-bottom: 18px !important;
   }
 
   .wwb-selesa-showcase {
-    border-radius: 19px !important;
+    border-radius: 18px !important;
   }
 
   .wwb-selesa-showcase__content {
-    padding: 23px 20px 21px;
+    padding: 21px 18px 20px;
   }
 
   .wwb-selesa-showcase__logo {
-    width: 152px;
+    width: 138px;
   }
 
   .wwb-selesa-showcase__preview {
-    min-height: 245px;
-    padding: 20px;
+    min-height: 210px;
+    padding: 17px;
   }
 
   .wwb-selesa-phone {
-    width: min(210px, 100%);
-  }
-
-  .wwb-selesa-showcase__badges {
-    gap: 5px;
+    width: min(182px, 100%);
   }
 }
