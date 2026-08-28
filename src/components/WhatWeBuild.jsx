@@ -280,11 +280,33 @@ export default function WhatWeBuild() {
                 }}
               >
                 <div className="wwb-selesa-home-frame">
-                  <button
-                    type="button"
+                  <motion.div
                     className="wwb-selesa-home-frame__image-button"
-                    onClick={() => setIsSelesaPreviewOpen(true)}
-                    aria-label={`View ${selesaSlides[selesaSlideIndex].alt} full size`}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Swipe SelesaAI images or open ${selesaSlides[selesaSlideIndex].alt} full size`}
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.2}
+                    dragMomentum={false}
+                    dragTransition={{ bounceStiffness: 520, bounceDamping: 32 }}
+                    onDragStart={() => setIsSelesaSliderPaused(true)}
+                    onDragEnd={(_, info) => {
+                      const swipe = info.offset.x
+                      const velocity = info.velocity.x
+                      if (swipe < -42 || velocity < -420) nextSelesaSlide()
+                      if (swipe > 42 || velocity > 420) previousSelesaSlide()
+                      window.setTimeout(() => setIsSelesaSliderPaused(false), 180)
+                    }}
+                    onTap={() => setIsSelesaPreviewOpen(true)}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault()
+                        setIsSelesaPreviewOpen(true)
+                      }
+                    }}
+                    style={{ touchAction: 'pan-y', cursor: 'grab', userSelect: 'none' }}
+                    whileTap={{ cursor: 'grabbing' }}
                   >
                     <AnimatePresence mode="wait" initial={false}>
                       <motion.img
@@ -293,14 +315,15 @@ export default function WhatWeBuild() {
                         src={selesaSlides[selesaSlideIndex].image}
                         alt={selesaSlides[selesaSlideIndex].alt}
                         loading="lazy"
-                        initial={{ opacity: 0, x: 16 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -16 }}
-                        transition={{ duration: 0.28, ease }}
+                        draggable={false}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.18, ease }}
                       />
                     </AnimatePresence>
                     <span className="wwb-selesa-home-frame__view"><Maximize2 size={13} /> View</span>
-                  </button>
+                  </motion.div>
                 </div>
 
                 <div className="wwb-selesa-slider__footer">
@@ -316,6 +339,7 @@ export default function WhatWeBuild() {
                       />
                     ))}
                   </div>
+                  <span>Swipe ↔</span>
                   <span>{String(selesaSlideIndex + 1).padStart(2, '0')} / {String(selesaSlides.length).padStart(2, '0')}</span>
                 </div>
               </div>
