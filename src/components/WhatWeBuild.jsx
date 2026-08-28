@@ -294,23 +294,6 @@ export default function WhatWeBuild() {
                     </AnimatePresence>
                     <span className="wwb-selesa-home-frame__view"><Maximize2 size={13} /> View</span>
                   </button>
-
-                  <button
-                    type="button"
-                    className="wwb-selesa-slider__arrow wwb-selesa-slider__arrow--prev"
-                    onClick={previousSelesaSlide}
-                    aria-label="Previous SelesaAI image"
-                  >
-                    <ChevronLeft size={17} />
-                  </button>
-                  <button
-                    type="button"
-                    className="wwb-selesa-slider__arrow wwb-selesa-slider__arrow--next"
-                    onClick={nextSelesaSlide}
-                    aria-label="Next SelesaAI image"
-                  >
-                    <ChevronRight size={17} />
-                  </button>
                 </div>
 
                 <div className="wwb-selesa-slider__footer">
