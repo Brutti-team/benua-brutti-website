@@ -194,8 +194,6 @@ export default function WhatWeBuild() {
 
     const onKeyDown = (event) => {
       if (event.key === 'Escape') setIsSelesaPreviewOpen(false)
-      if (event.key === 'ArrowLeft') previousSelesaSlide()
-      if (event.key === 'ArrowRight') nextSelesaSlide()
     }
 
     window.addEventListener('keydown', onKeyDown)
@@ -372,6 +370,14 @@ export default function WhatWeBuild() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -18 }}
                     transition={{ duration: 0.28, ease }}
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.16}
+                    onDragEnd={(_, info) => {
+                      if (info.offset.x < -55) nextSelesaSlide()
+                      if (info.offset.x > 55) previousSelesaSlide()
+                    }}
+                    style={{ touchAction: 'pan-y', cursor: 'grab' }}
                   />
                 </AnimatePresence>
               </div>
