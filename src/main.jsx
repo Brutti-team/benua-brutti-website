@@ -170,6 +170,35 @@ function BruttiSite() {
   }, [])
 
   useEffect(() => {
+    const handleGmailCompose = (event) => {
+      const link = event.target.closest('.footer__email-link')
+      if (!link) return
+
+      // On smaller/mobile screens, let Gmail open normally in a new tab.
+      if (window.innerWidth < 760) return
+
+      event.preventDefault()
+
+      const width = Math.min(720, Math.max(560, window.screen.availWidth - 80))
+      const height = Math.min(660, Math.max(520, window.screen.availHeight - 120))
+      const left = Math.max(0, Math.round((window.screen.availWidth - width) / 2))
+      const top = Math.max(0, Math.round((window.screen.availHeight - height) / 2))
+      const popupName = link.href.includes('hr.bruttibesi') ? 'brutti-hr-gmail' : 'brutti-general-gmail'
+
+      const popup = window.open(
+        link.href,
+        popupName,
+        `popup=yes,width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`,
+      )
+
+      if (popup) popup.focus()
+    }
+
+    document.addEventListener('click', handleGmailCompose)
+    return () => document.removeEventListener('click', handleGmailCompose)
+  }, [])
+
+  useEffect(() => {
     if (view !== 'home') return undefined
 
     const rewriteVisibleCopy = () => {
