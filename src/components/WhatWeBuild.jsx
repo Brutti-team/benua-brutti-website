@@ -23,6 +23,12 @@ const physicalWorks = [
   { title: 'Other Custom Builds', image: asset('others.png'), tag: 'Custom Work' },
 ]
 
+const selesaSlides = [
+  { image: asset('selesaai home page.jpg'), alt: 'SelesaAI homepage' },
+  { image: asset('selesaai 2.jpg'), alt: 'SelesaAI product screen 2' },
+  { image: asset('selesaai 3.jpg'), alt: 'SelesaAI product screen 3' },
+]
+
 function BuildCard({ className = '', children, delay = 0 }) {
   return (
     <motion.article
@@ -157,7 +163,16 @@ function GalleryLightbox({ index, onClose, onChange }) {
 
 export default function WhatWeBuild() {
   const [lightboxIndex, setLightboxIndex] = useState(null)
+  const [selesaSlideIndex, setSelesaSlideIndex] = useState(0)
   const [isSelesaPreviewOpen, setIsSelesaPreviewOpen] = useState(false)
+
+  const previousSelesaSlide = () => {
+    setSelesaSlideIndex((current) => (current - 1 + selesaSlides.length) % selesaSlides.length)
+  }
+
+  const nextSelesaSlide = () => {
+    setSelesaSlideIndex((current) => (current + 1) % selesaSlides.length)
+  }
 
   useEffect(() => {
     if (!isSelesaPreviewOpen) return undefined
@@ -167,6 +182,8 @@ export default function WhatWeBuild() {
 
     const onKeyDown = (event) => {
       if (event.key === 'Escape') setIsSelesaPreviewOpen(false)
+      if (event.key === 'ArrowLeft') previousSelesaSlide()
+      if (event.key === 'ArrowRight') nextSelesaSlide()
     }
 
     window.addEventListener('keydown', onKeyDown)
@@ -234,20 +251,64 @@ export default function WhatWeBuild() {
             </div>
 
             <div className="wwb-selesa-showcase__preview">
-              <button
-                type="button"
-                className="wwb-selesa-home-frame wwb-selesa-home-frame--button"
-                onClick={() => setIsSelesaPreviewOpen(true)}
-                aria-label="View SelesaAI homepage full size"
-              >
-                <img
-                  className="wwb-selesa-home-preview"
-                  src={asset('selesaai home page.jpg')}
-                  alt="SelesaAI homepage"
-                  loading="lazy"
-                />
-                <span className="wwb-selesa-home-frame__view"><Maximize2 size={13} /> View</span>
-              </button>
+              <div className="wwb-selesa-slider">
+                <div className="wwb-selesa-home-frame">
+                  <button
+                    type="button"
+                    className="wwb-selesa-home-frame__image-button"
+                    onClick={() => setIsSelesaPreviewOpen(true)}
+                    aria-label={`View ${selesaSlides[selesaSlideIndex].alt} full size`}
+                  >
+                    <AnimatePresence mode="wait" initial={false}>
+                      <motion.img
+                        key={selesaSlides[selesaSlideIndex].image}
+                        className="wwb-selesa-home-preview"
+                        src={selesaSlides[selesaSlideIndex].image}
+                        alt={selesaSlides[selesaSlideIndex].alt}
+                        loading="lazy"
+                        initial={{ opacity: 0, x: 16 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -16 }}
+                        transition={{ duration: 0.28, ease }}
+                      />
+                    </AnimatePresence>
+                    <span className="wwb-selesa-home-frame__view"><Maximize2 size={13} /> View</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    className="wwb-selesa-slider__arrow wwb-selesa-slider__arrow--prev"
+                    onClick={previousSelesaSlide}
+                    aria-label="Previous SelesaAI image"
+                  >
+                    <ChevronLeft size={17} />
+                  </button>
+                  <button
+                    type="button"
+                    className="wwb-selesa-slider__arrow wwb-selesa-slider__arrow--next"
+                    onClick={nextSelesaSlide}
+                    aria-label="Next SelesaAI image"
+                  >
+                    <ChevronRight size={17} />
+                  </button>
+                </div>
+
+                <div className="wwb-selesa-slider__footer">
+                  <div className="wwb-selesa-slider__dots" aria-label="SelesaAI image slides">
+                    {selesaSlides.map((slide, index) => (
+                      <button
+                        key={slide.image}
+                        type="button"
+                        className={index === selesaSlideIndex ? 'is-active' : ''}
+                        onClick={() => setSelesaSlideIndex(index)}
+                        aria-label={`Show SelesaAI image ${index + 1}`}
+                        aria-current={index === selesaSlideIndex ? 'true' : undefined}
+                      />
+                    ))}
+                  </div>
+                  <span>{String(selesaSlideIndex + 1).padStart(2, '0')} / {String(selesaSlides.length).padStart(2, '0')}</span>
+                </div>
+              </div>
             </div>
           </BuildCard>
         </div>
@@ -274,7 +335,7 @@ export default function WhatWeBuild() {
             className="wwb-selesa-viewer"
             role="dialog"
             aria-modal="true"
-            aria-label="SelesaAI homepage preview"
+            aria-label="SelesaAI image preview"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -292,14 +353,30 @@ export default function WhatWeBuild() {
               <div className="wwb-selesa-viewer__bar">
                 <div>
                   <small>Digital product</small>
-                  <strong>SelesaAI homepage</strong>
+                  <strong>SelesaAI · {String(selesaSlideIndex + 1).padStart(2, '0')} / {String(selesaSlides.length).padStart(2, '0')}</strong>
                 </div>
-                <button type="button" onClick={() => setIsSelesaPreviewOpen(false)} aria-label="Close SelesaAI homepage preview">
+                <button type="button" onClick={() => setIsSelesaPreviewOpen(false)} aria-label="Close SelesaAI image preview">
                   <X size={18} />
                 </button>
               </div>
               <div className="wwb-selesa-viewer__stage">
-                <img src={asset('selesaai home page.jpg')} alt="SelesaAI homepage full preview" />
+                <button type="button" className="wwb-selesa-viewer__nav wwb-selesa-viewer__nav--prev" onClick={previousSelesaSlide} aria-label="Previous SelesaAI image">
+                  <ChevronLeft size={22} />
+                </button>
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.img
+                    key={selesaSlides[selesaSlideIndex].image}
+                    src={selesaSlides[selesaSlideIndex].image}
+                    alt={`${selesaSlides[selesaSlideIndex].alt} full preview`}
+                    initial={{ opacity: 0, scale: 0.985 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.99 }}
+                    transition={{ duration: 0.24 }}
+                  />
+                </AnimatePresence>
+                <button type="button" className="wwb-selesa-viewer__nav wwb-selesa-viewer__nav--next" onClick={nextSelesaSlide} aria-label="Next SelesaAI image">
+                  <ChevronRight size={22} />
+                </button>
               </div>
             </motion.div>
           </motion.div>
