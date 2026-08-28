@@ -157,6 +157,24 @@ function GalleryLightbox({ index, onClose, onChange }) {
 
 export default function WhatWeBuild() {
   const [lightboxIndex, setLightboxIndex] = useState(null)
+  const [isSelesaPreviewOpen, setIsSelesaPreviewOpen] = useState(false)
+
+  useEffect(() => {
+    if (!isSelesaPreviewOpen) return undefined
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setIsSelesaPreviewOpen(false)
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [isSelesaPreviewOpen])
 
   return (
     <section className="what-we-build" aria-labelledby="what-we-build-title">
@@ -216,14 +234,20 @@ export default function WhatWeBuild() {
             </div>
 
             <div className="wwb-selesa-showcase__preview">
-              <div className="wwb-selesa-home-frame">
+              <button
+                type="button"
+                className="wwb-selesa-home-frame wwb-selesa-home-frame--button"
+                onClick={() => setIsSelesaPreviewOpen(true)}
+                aria-label="View SelesaAI homepage full size"
+              >
                 <img
                   className="wwb-selesa-home-preview"
                   src={asset('selesaai home page.jpg')}
                   alt="SelesaAI homepage"
                   loading="lazy"
                 />
-              </div>
+                <span className="wwb-selesa-home-frame__view"><Maximize2 size={13} /> View</span>
+              </button>
             </div>
           </BuildCard>
         </div>
@@ -241,6 +265,44 @@ export default function WhatWeBuild() {
             onClose={() => setLightboxIndex(null)}
             onChange={setLightboxIndex}
           />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isSelesaPreviewOpen && (
+          <motion.div
+            className="wwb-selesa-viewer"
+            role="dialog"
+            aria-modal="true"
+            aria-label="SelesaAI homepage preview"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onMouseDown={() => setIsSelesaPreviewOpen(false)}
+          >
+            <motion.div
+              className="wwb-selesa-viewer__dialog"
+              initial={{ y: 18, scale: 0.985, opacity: 0 }}
+              animate={{ y: 0, scale: 1, opacity: 1 }}
+              exit={{ y: 12, scale: 0.99, opacity: 0 }}
+              transition={{ duration: 0.32, ease }}
+              onMouseDown={(event) => event.stopPropagation()}
+            >
+              <div className="wwb-selesa-viewer__bar">
+                <div>
+                  <small>Digital product</small>
+                  <strong>SelesaAI homepage</strong>
+                </div>
+                <button type="button" onClick={() => setIsSelesaPreviewOpen(false)} aria-label="Close SelesaAI homepage preview">
+                  <X size={18} />
+                </button>
+              </div>
+              <div className="wwb-selesa-viewer__stage">
+                <img src={asset('selesaai home page.jpg')} alt="SelesaAI homepage full preview" />
+              </div>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </section>
