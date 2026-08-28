@@ -226,7 +226,7 @@ export default function WhatWeBuild() {
                   <small>Describe your home issue</small>
                   <strong>What needs fixing?</strong>
                   <div className="wwb-selesa-phone__upload">
-                    <Camera size={18} />
+                    <Camera size={16} />
                     <span>Upload a photo</span>
                   </div>
                 </div>
@@ -235,18 +235,12 @@ export default function WhatWeBuild() {
                     <small>AI assessment</small>
                     <strong>Likely plumbing issue</strong>
                   </div>
-                  <CheckCircle2 size={18} />
+                  <CheckCircle2 size={16} />
                 </div>
                 <div className="wwb-selesa-phone__estimate">
                   <span>Estimated range</span>
                   <strong>RM80 – RM150</strong>
                 </div>
-              </div>
-
-              <div className="wwb-selesa-showcase__badges">
-                <span><b>Live</b> MVP</span>
-                <span><b>KK</b> & nearby</span>
-                <span><b>5</b> services</span>
               </div>
             </div>
           </BuildCard>
