@@ -119,7 +119,7 @@ function BruttiSite() {
 
       const socialLogos = [
         { file: 'tiktok.jpg', label: 'TikTok' },
-        { file: 'ig.jpg', label: 'Instagram' },
+        { file: null, label: 'Instagram', cssOnly: true },
         { file: 'fb.png', label: 'Facebook' },
         { file: 'threads.png', label: 'Threads' },
       ]
@@ -132,6 +132,11 @@ function BruttiSite() {
         link.classList.add('footer__social-icon-link')
         link.title = social.label
         link.dataset.logoApplied = 'true'
+
+        if (social.cssOnly) {
+          link.classList.add('footer__social-icon-link--instagram')
+          return
+        }
 
         const icon = document.createElement('img')
         icon.src = asset(social.file)
