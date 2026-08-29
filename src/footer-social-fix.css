@@ -49,7 +49,7 @@
   filter: none !important;
 }
 
-/* Instagram: original uploaded image only; slightly tighter crop and upward alignment so the white edge disappears while the camera mark stays visible. */
+/* Instagram: clean circular badge with fully visible camera mark. */
 .footer__social-links a[href*="instagram.com"] {
   overflow: hidden !important;
   width: 40px !important;
@@ -59,35 +59,20 @@
   padding: 0 !important;
   border: 0 !important;
   border-radius: 50% !important;
-  background: transparent !important;
-  background-image: none !important;
+  background-color: transparent !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='g' cx='30%25' cy='107%25' r='115%25'%3E%3Cstop offset='0%25' stop-color='%23ffd76a'/%3E%3Cstop offset='22%25' stop-color='%23ff7a33'/%3E%3Cstop offset='48%25' stop-color='%23f2295b'/%3E%3Cstop offset='72%25' stop-color='%23c837ab'/%3E%3Cstop offset='100%25' stop-color='%236a4bdc'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='32' fill='url(%23g)'/%3E%3Crect x='15.5' y='15.5' width='33' height='33' rx='9.5' fill='none' stroke='white' stroke-width='4.5'/%3E%3Ccircle cx='32' cy='32' r='8.5' fill='none' stroke='white' stroke-width='4.5'/%3E%3Ccircle cx='42.7' cy='21.8' r='3.1' fill='white'/%3E%3C/svg%3E") !important;
+  background-size: 100% 100% !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
   box-shadow: none !important;
 }
 
 .footer__social-links a[href*="instagram.com"] .footer__social-logo,
-.footer__social-links a[href*="instagram.com"] img {
-  display: block !important;
-  width: 59px !important;
-  height: 59px !important;
-  max-width: none !important;
-  max-height: none !important;
-  flex: 0 0 auto !important;
-  object-fit: cover !important;
-  object-position: 49% 50% !important;
-  border-radius: 50% !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: translate(-1px, -3px) !important;
-  mix-blend-mode: normal !important;
-  background: transparent !important;
-  filter: none !important;
-  box-shadow: none !important;
-}
-
+.footer__social-links a[href*="instagram.com"] img,
 .footer__social-links a[href*="instagram.com"]::before,
 .footer__social-links a[href*="instagram.com"]::after {
-  content: none !important;
   display: none !important;
+  content: none !important;
 }
 
 /* Facebook: self-contained SVG, unchanged. */
@@ -157,16 +142,6 @@
     width: 38px !important;
     height: 38px !important;
     min-height: 38px !important;
-  }
-
-  .footer__social-links a[href*="instagram.com"] .footer__social-logo,
-  .footer__social-links a[href*="instagram.com"] img {
-    width: 56px !important;
-    height: 56px !important;
-    max-width: none !important;
-    max-height: none !important;
-    object-position: 49% 50% !important;
-    transform: translate(-1px, -3px) !important;
   }
 
   .footer__social-links a:nth-child(1) .footer__social-logo,
