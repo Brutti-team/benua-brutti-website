@@ -49,8 +49,9 @@
   filter: none !important;
 }
 
-/* Instagram: full brand-gradient circle with a clean white camera glyph. */
-.footer__social-links a:nth-child(2) {
+/* Instagram: CSS-only mark. No uploaded image, no dark square, no duplicate layer. */
+.footer__social-links a:nth-child(2),
+.footer__social-icon-link--instagram {
   overflow: hidden !important;
   width: 40px !important;
   height: 40px !important;
@@ -58,38 +59,44 @@
   border-radius: 50% !important;
   border: 0 !important;
   background:
-    radial-gradient(circle at 32% 102%, #fdf497 0 8%, #fd5949 31%, #d6249f 56%, #8134af 79%, #515bd4 100%) !important;
+    radial-gradient(circle at 30% 107%, #ffd776 0 9%, #ff7a3d 30%, #f72585 53%, #c52fbd 76%, #6b35d9 100%) !important;
   box-shadow: none !important;
 }
 
-.footer__social-links a:nth-child(2) .footer__social-logo {
+.footer__social-links a:nth-child(2) img,
+.footer__social-links a:nth-child(2) .footer__social-logo,
+.footer__social-icon-link--instagram img {
   display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
 
-.footer__social-links a:nth-child(2)::after {
+.footer__social-links a:nth-child(2)::after,
+.footer__social-icon-link--instagram::after {
   content: none !important;
   display: none !important;
 }
 
-.footer__social-links a:nth-child(2)::before {
+.footer__social-links a:nth-child(2)::before,
+.footer__social-icon-link--instagram::before {
   content: '' !important;
   display: block !important;
   position: absolute !important;
   left: 50% !important;
   top: 50% !important;
-  width: 21px !important;
-  height: 21px !important;
+  width: 23px !important;
+  height: 23px !important;
   transform: translate(-50%, -50%) !important;
-  border: 2.35px solid #fff !important;
-  border-radius: 6.5px !important;
+  border: 2.6px solid #fff !important;
+  border-radius: 7.2px !important;
   box-sizing: border-box !important;
   background:
-    radial-gradient(circle at 50% 50%, transparent 0 3.9px, #fff 4.1px 5.55px, transparent 5.75px),
-    radial-gradient(circle at 76% 24%, #fff 0 1.45px, transparent 1.6px) !important;
+    radial-gradient(circle at 50% 50%, transparent 0 4.2px, #fff 4.35px 6px, transparent 6.15px),
+    radial-gradient(circle at 76% 24%, #fff 0 1.55px, transparent 1.7px) !important;
   box-shadow: none !important;
 }
 
-/* Facebook: self-contained SVG, same footprint and alignment as Instagram. */
+/* Facebook: self-contained SVG, unchanged. */
 .footer__social-links a:nth-child(3) {
   overflow: hidden !important;
   width: 40px !important;
@@ -151,7 +158,8 @@
   .footer__social-links a,
   .footer__social-icon-link,
   .footer__social-links a:nth-child(2),
-  .footer__social-links a:nth-child(3) {
+  .footer__social-links a:nth-child(3),
+  .footer__social-icon-link--instagram {
     flex-basis: 38px !important;
     width: 38px !important;
     height: 38px !important;
