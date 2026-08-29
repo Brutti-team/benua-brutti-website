@@ -1,8 +1,8 @@
-/* Footer social icons: clean, balanced and consistent. */
+/* Footer social icons: balanced brand marks without artificial glyphs. */
 .footer__social-links {
   display: flex !important;
   align-items: center !important;
-  gap: 14px !important;
+  gap: 13px !important;
 }
 
 .footer__social-links a,
@@ -24,31 +24,39 @@
   transition: transform .18s ease, opacity .18s ease !important;
 }
 
+/* Hide uploaded raster marks by default. We only reuse TikTok and Threads,
+   where screen blending removes the black artwork background cleanly. */
 .footer__social-logo {
   display: none !important;
+  pointer-events: none !important;
+  user-select: none !important;
 }
 
-/* TikTok: icon only, no black button/background. */
-.footer__social-links a:nth-child(1)::before {
-  content: '♪' !important;
+/* TikTok: use the real uploaded logo, with no visible black tile. */
+.footer__social-links a:nth-child(1)::before,
+.footer__social-links a:nth-child(1)::after {
+  content: none !important;
+}
+
+.footer__social-links a:nth-child(1) .footer__social-logo {
   display: block !important;
-  color: #fff !important;
-  font-family: Arial, Helvetica, sans-serif !important;
-  font-size: 27px !important;
-  font-weight: 700 !important;
-  line-height: 1 !important;
-  transform: translateY(-1px) rotate(-4deg) !important;
-  text-shadow: -1px 0 #25f4ee, 1px 0 #fe2c55 !important;
+  width: 30px !important;
+  height: 30px !important;
+  object-fit: contain !important;
+  border-radius: 0 !important;
+  mix-blend-mode: screen !important;
+  background: transparent !important;
+  filter: none !important;
 }
 
-/* Instagram: compact brand gradient circle. */
+/* Instagram: brand gradient from the logo itself, kept compact and crisp. */
 .footer__social-links a:nth-child(2) {
   overflow: hidden !important;
   background:
-    radial-gradient(circle at 32% 106%, #fdf497 0 18%, #fd5949 37%, transparent 61%),
-    radial-gradient(circle at 80% 18%, #4c68d7 0 11%, transparent 32%),
-    linear-gradient(135deg, #515bd4 0%, #8134af 28%, #dd2a7b 57%, #f58529 82%, #feda77 100%) !important;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.12) !important;
+    radial-gradient(circle at 31% 107%, #fdf497 0 17%, #fd5949 36%, transparent 60%),
+    radial-gradient(circle at 80% 18%, #4c68d7 0 10%, transparent 31%),
+    linear-gradient(135deg, #515bd4 0%, #8134af 27%, #dd2a7b 56%, #f58529 81%, #feda77 100%) !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.13) !important;
 }
 
 .footer__social-links a:nth-child(2)::before {
@@ -63,7 +71,7 @@
     radial-gradient(circle at 77% 23%, #fff 0 1.45px, transparent 1.65px) !important;
 }
 
-/* Facebook: same visual size as Instagram. */
+/* Facebook: same visual footprint as Instagram. */
 .footer__social-links a:nth-child(3) {
   overflow: hidden !important;
   background: #1877f2 !important;
@@ -81,23 +89,27 @@
   transform: translateY(2px) !important;
 }
 
-/* Threads: simple icon only, no black button/background. */
-.footer__social-links a:nth-child(4)::before {
-  content: '@' !important;
+/* Threads: use the actual uploaded Threads mark, no artificial @ glyph. */
+.footer__social-links a:nth-child(4)::before,
+.footer__social-links a:nth-child(4)::after {
+  content: none !important;
+}
+
+.footer__social-links a:nth-child(4) .footer__social-logo {
   display: block !important;
-  color: rgba(255,255,255,.96) !important;
-  font-family: Arial, Helvetica, sans-serif !important;
-  font-size: 28px !important;
-  font-weight: 600 !important;
-  line-height: 1 !important;
-  letter-spacing: -.09em !important;
-  transform: translateY(-1px) scaleX(.93) !important;
+  width: 30px !important;
+  height: 30px !important;
+  object-fit: contain !important;
+  border-radius: 0 !important;
+  mix-blend-mode: screen !important;
+  background: transparent !important;
+  filter: none !important;
 }
 
 .footer__social-links a:hover,
 .footer__social-icon-link:hover {
-  transform: translateY(-1px) !important;
-  opacity: .86 !important;
+  transform: translateY(-2px) !important;
+  opacity: .9 !important;
   box-shadow: none !important;
 }
 
@@ -109,7 +121,7 @@
 
 @media (max-width: 700px) {
   .footer__social-links {
-    gap: 12px !important;
+    gap: 11px !important;
   }
 
   .footer__social-links a,
@@ -120,11 +132,9 @@
     min-height: 38px !important;
   }
 
-  .footer__social-links a:nth-child(1)::before {
-    font-size: 25px !important;
-  }
-
-  .footer__social-links a:nth-child(4)::before {
-    font-size: 26px !important;
+  .footer__social-links a:nth-child(1) .footer__social-logo,
+  .footer__social-links a:nth-child(4) .footer__social-logo {
+    width: 28px !important;
+    height: 28px !important;
   }
 }
