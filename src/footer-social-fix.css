@@ -21,21 +21,21 @@
   background: transparent !important;
   box-shadow: none !important;
   transform: none !important;
+  isolation: isolate !important;
   transition: transform .18s ease, opacity .18s ease !important;
 }
 
-/* Hide uploaded raster marks by default. We only reuse TikTok and Threads,
-   where screen blending removes the black artwork background cleanly. */
 .footer__social-logo {
   display: none !important;
   pointer-events: none !important;
   user-select: none !important;
 }
 
-/* TikTok: use the real uploaded logo, with no visible black tile. */
+/* TikTok: real uploaded mark with no visible tile. */
 .footer__social-links a:nth-child(1)::before,
 .footer__social-links a:nth-child(1)::after {
   content: none !important;
+  display: none !important;
 }
 
 .footer__social-links a:nth-child(1) .footer__social-logo {
@@ -49,50 +49,89 @@
   filter: none !important;
 }
 
-/* Instagram: brand gradient from the logo itself, kept compact and crisp. */
+/* Instagram: one clean brand circle only. */
 .footer__social-links a:nth-child(2) {
   overflow: hidden !important;
+  width: 40px !important;
+  height: 40px !important;
+  flex-basis: 40px !important;
+  border-radius: 50% !important;
+  border: 0 !important;
   background:
-    radial-gradient(circle at 31% 107%, #fdf497 0 17%, #fd5949 36%, transparent 60%),
-    radial-gradient(circle at 80% 18%, #4c68d7 0 10%, transparent 31%),
-    linear-gradient(135deg, #515bd4 0%, #8134af 27%, #dd2a7b 56%, #f58529 81%, #feda77 100%) !important;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.13) !important;
+    radial-gradient(circle at 30% 108%, #fdf497 0 18%, #fd5949 38%, transparent 62%),
+    radial-gradient(circle at 78% 16%, #4c68d7 0 10%, transparent 31%),
+    linear-gradient(135deg, #515bd4 0%, #8134af 28%, #dd2a7b 57%, #f58529 82%, #feda77 100%) !important;
+  box-shadow: none !important;
+}
+
+.footer__social-links a:nth-child(2) .footer__social-logo {
+  display: none !important;
+}
+
+.footer__social-links a:nth-child(2)::after {
+  content: none !important;
+  display: none !important;
 }
 
 .footer__social-links a:nth-child(2)::before {
   content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 50% auto auto 50% !important;
   width: 19px !important;
   height: 19px !important;
+  transform: translate(-50%, -50%) !important;
   border: 2px solid #fff !important;
   border-radius: 6px !important;
   box-sizing: border-box !important;
   background:
-    radial-gradient(circle at 50% 50%, transparent 0 3.4px, #fff 3.7px 5.1px, transparent 5.4px),
+    radial-gradient(circle at 50% 50%, transparent 0 3.3px, #fff 3.6px 5px, transparent 5.3px),
     radial-gradient(circle at 77% 23%, #fff 0 1.45px, transparent 1.65px) !important;
+  box-shadow: none !important;
 }
 
-/* Facebook: same visual footprint as Instagram. */
+/* Facebook: one clean blue circle only. */
 .footer__social-links a:nth-child(3) {
   overflow: hidden !important;
+  width: 40px !important;
+  height: 40px !important;
+  flex-basis: 40px !important;
+  border-radius: 50% !important;
+  border: 0 !important;
   background: #1877f2 !important;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.08) !important;
+  box-shadow: none !important;
+}
+
+.footer__social-links a:nth-child(3) .footer__social-logo {
+  display: none !important;
+}
+
+.footer__social-links a:nth-child(3)::after {
+  content: none !important;
+  display: none !important;
 }
 
 .footer__social-links a:nth-child(3)::before {
   content: 'f' !important;
   display: block !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -45%) !important;
   color: #fff !important;
   font-family: Arial, Helvetica, sans-serif !important;
-  font-size: 27px !important;
+  font-size: 28px !important;
   font-weight: 700 !important;
   line-height: 1 !important;
-  transform: translateY(2px) !important;
+  letter-spacing: 0 !important;
+  text-shadow: none !important;
 }
 
-/* Threads: use the actual uploaded Threads mark, no artificial @ glyph. */
+/* Threads: real uploaded mark with no visible tile. */
 .footer__social-links a:nth-child(4)::before,
 .footer__social-links a:nth-child(4)::after {
   content: none !important;
+  display: none !important;
 }
 
 .footer__social-links a:nth-child(4) .footer__social-logo {
@@ -125,7 +164,9 @@
   }
 
   .footer__social-links a,
-  .footer__social-icon-link {
+  .footer__social-icon-link,
+  .footer__social-links a:nth-child(2),
+  .footer__social-links a:nth-child(3) {
     flex-basis: 38px !important;
     width: 38px !important;
     height: 38px !important;
