@@ -33,6 +33,7 @@ import './what-we-build-lightbox.css'
 import './what-we-build-spacing.css'
 import './journey.css'
 import './human-touch.css'
+import './footer-social-fix.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
