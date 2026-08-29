@@ -49,7 +49,7 @@
   filter: none !important;
 }
 
-/* Instagram: keep the original uploaded artwork; crop only the outer square so it reads as a clean circle like Facebook. */
+/* Instagram: original uploaded image only. Crop the outer white frame and keep the mark circular like Facebook. */
 .footer__social-links a[href*="instagram.com"] {
   overflow: hidden !important;
   width: 40px !important;
@@ -67,16 +67,17 @@
 .footer__social-links a[href*="instagram.com"] .footer__social-logo,
 .footer__social-links a[href*="instagram.com"] img {
   display: block !important;
-  width: 54px !important;
-  height: 54px !important;
+  width: 58px !important;
+  height: 58px !important;
   max-width: none !important;
   max-height: none !important;
+  flex: 0 0 auto !important;
   object-fit: cover !important;
   object-position: center !important;
   border-radius: 50% !important;
   opacity: 1 !important;
   visibility: visible !important;
-  transform: none !important;
+  transform: translateY(-2px) !important;
   mix-blend-mode: normal !important;
   background: transparent !important;
   filter: none !important;
@@ -160,10 +161,11 @@
 
   .footer__social-links a[href*="instagram.com"] .footer__social-logo,
   .footer__social-links a[href*="instagram.com"] img {
-    width: 51px !important;
-    height: 51px !important;
+    width: 55px !important;
+    height: 55px !important;
     max-width: none !important;
     max-height: none !important;
+    transform: translateY(-2px) !important;
   }
 
   .footer__social-links a:nth-child(1) .footer__social-logo,
