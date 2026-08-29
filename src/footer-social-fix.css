@@ -49,7 +49,7 @@
   filter: none !important;
 }
 
-/* Instagram: original uploaded image only; tighter circular crop to remove the remaining white cap. */
+/* Instagram: original uploaded image only; crop gently so the full camera mark stays visible. */
 .footer__social-links a[href*="instagram.com"] {
   overflow: hidden !important;
   width: 40px !important;
@@ -67,17 +67,17 @@
 .footer__social-links a[href*="instagram.com"] .footer__social-logo,
 .footer__social-links a[href*="instagram.com"] img {
   display: block !important;
-  width: 66px !important;
-  height: 66px !important;
+  width: 50px !important;
+  height: 50px !important;
   max-width: none !important;
   max-height: none !important;
   flex: 0 0 auto !important;
   object-fit: cover !important;
-  object-position: center !important;
+  object-position: center center !important;
   border-radius: 50% !important;
   opacity: 1 !important;
   visibility: visible !important;
-  transform: translateY(-5px) !important;
+  transform: none !important;
   mix-blend-mode: normal !important;
   background: transparent !important;
   filter: none !important;
@@ -161,11 +161,11 @@
 
   .footer__social-links a[href*="instagram.com"] .footer__social-logo,
   .footer__social-links a[href*="instagram.com"] img {
-    width: 63px !important;
-    height: 63px !important;
+    width: 48px !important;
+    height: 48px !important;
     max-width: none !important;
     max-height: none !important;
-    transform: translateY(-5px) !important;
+    transform: none !important;
   }
 
   .footer__social-links a:nth-child(1) .footer__social-logo,
