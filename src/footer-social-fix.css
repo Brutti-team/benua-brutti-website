@@ -31,7 +31,7 @@
   user-select: none !important;
 }
 
-/* TikTok: real uploaded mark with no visible tile. */
+/* TikTok: keep current real uploaded mark. */
 .footer__social-links a:nth-child(1)::before,
 .footer__social-links a:nth-child(1)::after {
   content: none !important;
@@ -49,7 +49,7 @@
   filter: none !important;
 }
 
-/* Instagram: clean circular badge with fully visible camera mark. */
+/* Instagram: full clean brand badge. Use base64 SVG so no URL-encoding/CSS parsing issue can clip the logo. */
 .footer__social-links a[href*="instagram.com"] {
   overflow: hidden !important;
   width: 40px !important;
@@ -60,8 +60,8 @@
   border: 0 !important;
   border-radius: 50% !important;
   background-color: transparent !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='g' cx='30%25' cy='107%25' r='115%25'%3E%3Cstop offset='0%25' stop-color='%23ffd76a'/%3E%3Cstop offset='22%25' stop-color='%23ff7a33'/%3E%3Cstop offset='48%25' stop-color='%23f2295b'/%3E%3Cstop offset='72%25' stop-color='%23c837ab'/%3E%3Cstop offset='100%25' stop-color='%236a4bdc'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='32' fill='url(%23g)'/%3E%3Crect x='15.5' y='15.5' width='33' height='33' rx='9.5' fill='none' stroke='white' stroke-width='4.5'/%3E%3Ccircle cx='32' cy='32' r='8.5' fill='none' stroke='white' stroke-width='4.5'/%3E%3Ccircle cx='42.7' cy='21.8' r='3.1' fill='white'/%3E%3C/svg%3E") !important;
-  background-size: 100% 100% !important;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CjxkZWZzPgo8cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSIzMCUiIGN5PSIxMDclIiByPSIxMTUlIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZDc2YSIvPgo8c3RvcCBvZmZzZXQ9IjIyJSIgc3RvcC1jb2xvcj0iI2ZmN2EzMyIvPgo8c3RvcCBvZmZzZXQ9IjQ4JSIgc3RvcC1jb2xvcj0iI2YyMjk1YiIvPgo8c3RvcCBvZmZzZXQ9IjcyJSIgc3RvcC1jb2xvcj0iI2M4MzdhYiIvPgo8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM2YTRiZGMiLz4KPC9yYWRpYWxHcmFkaWVudD4KPC9kZWZzPgo8Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIgZmlsbD0idXJsKCNnKSIvPgo8cmVjdCB4PSIxNCIgeT0iMTQiIHdpZHRoPSIzNiIgaGVpZ2h0PSIzNiIgcng9IjEwLjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI0LjYiLz4KPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iOS4yIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNC42Ii8+CjxjaXJjbGUgY3g9IjQzLjUiIGN5PSIyMC41IiByPSIzLjIiIGZpbGw9IiNmZmYiLz4KPC9zdmc+") !important;
+  background-size: 40px 40px !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
   box-shadow: none !important;
@@ -75,7 +75,7 @@
   content: none !important;
 }
 
-/* Facebook: self-contained SVG, unchanged. */
+/* Facebook: unchanged. */
 .footer__social-links a:nth-child(3) {
   overflow: hidden !important;
   width: 40px !important;
@@ -98,7 +98,7 @@
   content: none !important;
 }
 
-/* Threads: real uploaded mark with no visible tile. */
+/* Threads: keep current real uploaded mark. */
 .footer__social-links a:nth-child(4)::before,
 .footer__social-links a:nth-child(4)::after {
   content: none !important;
@@ -142,6 +142,10 @@
     width: 38px !important;
     height: 38px !important;
     min-height: 38px !important;
+  }
+
+  .footer__social-links a[href*="instagram.com"] {
+    background-size: 38px 38px !important;
   }
 
   .footer__social-links a:nth-child(1) .footer__social-logo,
