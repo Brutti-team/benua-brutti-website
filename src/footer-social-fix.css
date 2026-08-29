@@ -1,4 +1,4 @@
-/* Footer social icons: balanced brand marks without artificial glyphs. */
+/* Footer social icons: balanced brand marks. */
 .footer__social-links {
   display: flex !important;
   align-items: center !important;
@@ -31,7 +31,7 @@
   user-select: none !important;
 }
 
-/* TikTok: real uploaded mark with no visible tile. */
+/* TikTok: real uploaded mark, no extra tile. */
 .footer__social-links a:nth-child(1)::before,
 .footer__social-links a:nth-child(1)::after {
   content: none !important;
@@ -49,7 +49,7 @@
   filter: none !important;
 }
 
-/* Instagram: self-contained SVG, so no uploaded-image white edges or duplicate layers. */
+/* Instagram: full gradient circle with a clean white camera glyph. */
 .footer__social-links a:nth-child(2) {
   overflow: hidden !important;
   width: 40px !important;
@@ -58,7 +58,7 @@
   border-radius: 50% !important;
   border: 0 !important;
   background-color: transparent !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='g1' cx='0' cy='1' r='1'%3E%3Cstop offset='0' stop-color='%23ffd66b'/%3E%3Cstop offset='.34' stop-color='%23ff7a3d'/%3E%3Cstop offset='.62' stop-color='%23e1306c'/%3E%3Cstop offset='.82' stop-color='%23c13584'/%3E%3Cstop offset='1' stop-color='%23833ab4'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='32' fill='url(%23g1)'/%3E%3Crect x='17' y='17' width='30' height='30' rx='9' fill='none' stroke='white' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='7' fill='none' stroke='white' stroke-width='4'/%3E%3Ccircle cx='42' cy='22' r='2.4' fill='white'/%3E%3C/svg%3E") !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='ig' cx='18%25' cy='92%25' r='105%25'%3E%3Cstop offset='0%25' stop-color='%23FFD776'/%3E%3Cstop offset='25%25' stop-color='%23FF7A3D'/%3E%3Cstop offset='52%25' stop-color='%23F72585'/%3E%3Cstop offset='76%25' stop-color='%23C72FC9'/%3E%3Cstop offset='100%25' stop-color='%236A2FD4'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='32' fill='url(%23ig)'/%3E%3Crect x='16.5' y='16.5' width='31' height='31' rx='9.5' fill='none' stroke='%23fff' stroke-width='4.6'/%3E%3Ccircle cx='32' cy='32' r='7.4' fill='none' stroke='%23fff' stroke-width='4.6'/%3E%3Ccircle cx='42.2' cy='21.8' r='2.6' fill='%23fff'/%3E%3C/svg%3E") !important;
   background-size: 100% 100% !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
@@ -72,30 +72,31 @@
   content: none !important;
 }
 
-/* Facebook: self-contained SVG, same footprint and alignment as Instagram. */
+/* Facebook: keep the existing uploaded Facebook icon exactly as it is. */
 .footer__social-links a:nth-child(3) {
-  overflow: hidden !important;
-  width: 40px !important;
-  height: 40px !important;
-  flex-basis: 40px !important;
-  border-radius: 50% !important;
-  border: 0 !important;
-  background-color: transparent !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%231877F2'/%3E%3Cpath fill='white' d='M37.2 20h6V12.4c-1.1-.2-4.7-.4-9-.4-8.8 0-14.8 5.2-14.8 14.8V35H10v8.5h9.4V64h11.5V43.5h9.4L41.8 35H30.9v-7.4c0-2.5.7-4.2 4.3-4.2h2z' transform='translate(7 -6) scale(.92)'/%3E%3C/svg%3E") !important;
-  background-size: 100% 100% !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
+  overflow: visible !important;
+  background: transparent !important;
   box-shadow: none !important;
 }
 
-.footer__social-links a:nth-child(3) .footer__social-logo,
 .footer__social-links a:nth-child(3)::before,
 .footer__social-links a:nth-child(3)::after {
-  display: none !important;
   content: none !important;
+  display: none !important;
 }
 
-/* Threads: real uploaded mark with no visible tile. */
+.footer__social-links a:nth-child(3) .footer__social-logo {
+  display: block !important;
+  width: 40px !important;
+  height: 40px !important;
+  object-fit: contain !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  mix-blend-mode: normal !important;
+  filter: none !important;
+}
+
+/* Threads: real uploaded mark, no extra tile. */
 .footer__social-links a:nth-child(4)::before,
 .footer__social-links a:nth-child(4)::after {
   content: none !important;
@@ -132,9 +133,7 @@
   }
 
   .footer__social-links a,
-  .footer__social-icon-link,
-  .footer__social-links a:nth-child(2),
-  .footer__social-links a:nth-child(3) {
+  .footer__social-icon-link {
     flex-basis: 38px !important;
     width: 38px !important;
     height: 38px !important;
@@ -145,5 +144,10 @@
   .footer__social-links a:nth-child(4) .footer__social-logo {
     width: 28px !important;
     height: 28px !important;
+  }
+
+  .footer__social-links a:nth-child(3) .footer__social-logo {
+    width: 38px !important;
+    height: 38px !important;
   }
 }
