@@ -49,46 +49,44 @@
   filter: none !important;
 }
 
-/* Instagram: clean circular brand gradient with a crisp white Instagram mark. */
+/* Instagram: use the original uploaded image exactly as-is; sizing only. */
 .footer__social-links a[href*="instagram.com"] {
-  overflow: hidden !important;
+  overflow: visible !important;
   width: 40px !important;
   height: 40px !important;
   flex: 0 0 40px !important;
   min-height: 40px !important;
+  padding: 0 !important;
   border: 0 !important;
-  border-radius: 50% !important;
-  background:
-    radial-gradient(circle at 30% 105%, #ffd36a 0 8%, #ff7a3d 31%, #ef2d72 53%, #c92fa8 74%, #6a45db 100%) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  background-image: none !important;
   box-shadow: none !important;
 }
 
 .footer__social-links a[href*="instagram.com"] .footer__social-logo,
 .footer__social-links a[href*="instagram.com"] img {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
+  display: block !important;
+  width: 40px !important;
+  height: 40px !important;
+  max-width: 40px !important;
+  max-height: 40px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  border-radius: 0 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  mix-blend-mode: normal !important;
+  background: transparent !important;
+  filter: none !important;
+  box-shadow: none !important;
 }
 
+.footer__social-links a[href*="instagram.com"]::before,
 .footer__social-links a[href*="instagram.com"]::after {
   content: none !important;
   display: none !important;
-}
-
-.footer__social-links a[href*="instagram.com"]::before {
-  content: '' !important;
-  display: block !important;
-  position: absolute !important;
-  inset: 8px !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2.5' y='2.5' width='19' height='19' rx='5.5' fill='none' stroke='white' stroke-width='2.2'/%3E%3Ccircle cx='12' cy='12' r='4.2' fill='none' stroke='white' stroke-width='2.2'/%3E%3Ccircle cx='17.4' cy='6.6' r='1.35' fill='white'/%3E%3C/svg%3E") !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  background-size: contain !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  pointer-events: none !important;
 }
 
 /* Facebook: self-contained SVG, unchanged. */
@@ -160,8 +158,12 @@
     min-height: 38px !important;
   }
 
-  .footer__social-links a[href*="instagram.com"]::before {
-    inset: 7.5px !important;
+  .footer__social-links a[href*="instagram.com"] .footer__social-logo,
+  .footer__social-links a[href*="instagram.com"] img {
+    width: 38px !important;
+    height: 38px !important;
+    max-width: 38px !important;
+    max-height: 38px !important;
   }
 
   .footer__social-links a:nth-child(1) .footer__social-logo,
