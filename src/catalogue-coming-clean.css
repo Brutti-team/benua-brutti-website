@@ -1,0 +1,28 @@
+.catalogue-coming::after {
+  display: none !important;
+}
+
+.catalogue-coming__media-top span:first-child::before {
+  display: none !important;
+}
+
+.catalogue-coming__media-top span:first-child {
+  gap: 0 !important;
+}
+
+.catalogue-coming__copy-foot {
+  gap: 16px !important;
+}
+
+.catalogue-coming__copy-foot span {
+  position: relative;
+}
+
+.catalogue-coming__eyebrow {
+  gap: 0 !important;
+}
+
+.catalogue-coming__status,
+.catalogue-coming__pill {
+  gap: 0 !important;
+}
