@@ -10,19 +10,71 @@
   gap: 0 !important;
 }
 
+.catalogue-coming__eyebrow {
+  gap: 0 !important;
+}
+
+/* Keep the top-right copy editorial instead of looking like a UI card. */
+.catalogue-coming__copy {
+  width: min(100%, 390px) !important;
+  justify-self: end !important;
+  padding: 0 0 4px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.catalogue-coming__status {
+  display: inline-block !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #315846 !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  letter-spacing: .22em !important;
+  line-height: 1.2 !important;
+}
+
+.catalogue-coming__copy p {
+  margin: 17px 0 0 !important;
+  max-width: 370px;
+  color: #555b56 !important;
+  font-size: 16.5px !important;
+  line-height: 1.72 !important;
+}
+
 .catalogue-coming__copy-foot {
-  gap: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 18px !important;
+  margin-top: 18px !important;
+  padding-top: 14px !important;
+  border-top: 1px solid rgba(24, 61, 45, .12) !important;
+  color: #747a74 !important;
+  font-size: 8px !important;
+  font-weight: 600 !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
 }
 
 .catalogue-coming__copy-foot span {
   position: relative;
 }
 
-.catalogue-coming__eyebrow {
+.catalogue-coming__pill {
   gap: 0 !important;
 }
 
-.catalogue-coming__status,
-.catalogue-coming__pill {
-  gap: 0 !important;
+@media (max-width: 900px) {
+  .catalogue-coming__copy {
+    justify-self: start !important;
+    width: min(100%, 520px) !important;
+  }
 }
