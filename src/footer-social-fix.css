@@ -214,3 +214,22 @@
     max-height: 36px !important;
   }
 }
+
+/* Final size tune: only TikTok + Threads. Keep IG and Facebook untouched. */
+.footer__social-links > a:nth-child(1) {
+  background-size: 86% 86% !important;
+}
+
+.footer__social-links > a:nth-child(4) {
+  background-size: 84% 84% !important;
+}
+
+@media (max-width: 700px) {
+  .footer__social-links > a:nth-child(1) {
+    background-size: 86% 86% !important;
+  }
+
+  .footer__social-links > a:nth-child(4) {
+    background-size: 84% 84% !important;
+  }
+}
