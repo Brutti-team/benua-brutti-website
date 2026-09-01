@@ -44,8 +44,7 @@
   font-family: 'Italiana', serif !important;
   font-weight: 400 !important;
   letter-spacing: -.03em !important;
-  animation: catalogueComingFloat 5.2s ease-in-out infinite;
-  will-change: transform;
+  animation: catalogueComingGlow 4.8s ease-in-out infinite;
 }
 
 .catalogue-coming__lead {
@@ -71,6 +70,12 @@
 
 .catalogue-coming__categories span {
   position: relative;
+  transition: color .28s ease, transform .28s ease;
+}
+
+.catalogue-coming__categories span:hover {
+  color: #315846;
+  transform: translateY(-1px);
 }
 
 .catalogue-coming__categories span:not(:last-child)::after {
@@ -104,6 +109,19 @@
   will-change: transform;
 }
 
+.catalogue-coming__soft-light {
+  position: absolute;
+  z-index: 2;
+  inset: -12%;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(circle at 30% 45%, rgba(255, 235, 205, .16), transparent 28%),
+    linear-gradient(115deg, transparent 34%, rgba(255,255,255,.10) 50%, transparent 66%);
+  mix-blend-mode: screen;
+  animation: catalogueSoftLight 7.5s ease-in-out infinite;
+}
+
 .catalogue-coming__media-top,
 .catalogue-coming__media-bottom {
   transition: opacity .35s ease, transform .35s ease;
@@ -116,15 +134,15 @@
 
 .catalogue-coming__pill {
   animation: cataloguePillBreathe 3.2s ease-in-out infinite;
-  will-change: transform, box-shadow;
+  will-change: box-shadow;
 }
 
-@keyframes catalogueComingFloat {
+@keyframes catalogueComingGlow {
   0%, 100% {
-    transform: translateY(0);
+    text-shadow: 0 0 0 rgba(168, 97, 60, 0);
   }
   50% {
-    transform: translateY(-2.5px);
+    text-shadow: 0 10px 28px rgba(168, 97, 60, .14);
   }
 }
 
@@ -133,17 +151,29 @@
     transform: scale(1.005) translate3d(0, 0, 0);
   }
   100% {
-    transform: scale(1.035) translate3d(-4px, -2px, 0);
+    transform: scale(1.04) translate3d(-5px, -2px, 0);
+  }
+}
+
+@keyframes catalogueSoftLight {
+  0%, 18%, 100% {
+    opacity: 0;
+    transform: translate3d(-4%, 0, 0) scale(.98);
+  }
+  42% {
+    opacity: .58;
+  }
+  64% {
+    opacity: .18;
+    transform: translate3d(5%, -1%, 0) scale(1.03);
   }
 }
 
 @keyframes cataloguePillBreathe {
   0%, 100% {
-    transform: scale(1);
     box-shadow: 0 0 0 0 rgba(45, 83, 62, 0);
   }
   50% {
-    transform: scale(1.025);
     box-shadow: 0 0 0 8px rgba(45, 83, 62, .07);
   }
 }
@@ -218,7 +248,8 @@
 @media (prefers-reduced-motion: reduce) {
   .catalogue-coming__intro h2 em,
   .catalogue-coming__video,
-  .catalogue-coming__pill {
+  .catalogue-coming__pill,
+  .catalogue-coming__soft-light {
     animation: none !important;
     transform: none !important;
   }
