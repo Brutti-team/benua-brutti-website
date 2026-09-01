@@ -26,7 +26,7 @@
           const link = document.querySelector('.contact__phone')
           if (!link || link.dataset.whatsappApplied === 'true') return
 
-          const message = encodeURIComponent('Hi, I have an enquiry about your products.')
+          const message = encodeURIComponent('Hi! I’m interested in your products and would like to know more.')
           link.href = `https://wa.me/601136043432?text=${message}`
           link.target = '_blank'
           link.rel = 'noreferrer'
