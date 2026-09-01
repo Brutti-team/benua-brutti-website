@@ -3,6 +3,8 @@ import '../catalogue-coming-clean.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
+const categories = ['Furniture', 'Custom Work', 'Spaces', 'Projects']
+
 export default function CatalogueComingSoon() {
   return (
     <section className="catalogue-coming section-pad" aria-labelledby="catalogue-coming-title">
@@ -10,27 +12,65 @@ export default function CatalogueComingSoon() {
       <div className="catalogue-coming__ambient catalogue-coming__ambient--two" aria-hidden="true" />
 
       <div className="page-shell catalogue-coming__shell">
-        <motion.div
-          className="catalogue-coming__intro"
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <p className="eyebrow catalogue-coming__eyebrow">Brutti Catalog</p>
+        <div className="catalogue-coming__intro">
+          <motion.p
+            className="eyebrow catalogue-coming__eyebrow"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.7 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          >
+            Brutti Catalog
+          </motion.p>
+
           <h2 id="catalogue-coming-title">
-            Our catalog is <em>coming soon.</em>
+            <motion.span
+              style={{ display: 'inline-block' }}
+              initial={{ opacity: 0, y: 26 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.72, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+            >
+              Our catalog is
+            </motion.span>{' '}
+            <motion.em
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: 0.78, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
+            >
+              coming soon.
+            </motion.em>
           </h2>
-          <p className="catalogue-coming__lead">
+
+          <motion.p
+            className="catalogue-coming__lead"
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.65 }}
+            transition={{ duration: 0.65, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          >
             A curated collection of Benua Brutti furniture, custom work, spaces and projects, gathered in one place.
-          </p>
+          </motion.p>
+
           <div className="catalogue-coming__categories" aria-label="Catalogue categories">
-            <span>Furniture</span>
-            <span>Custom Work</span>
-            <span>Spaces</span>
-            <span>Projects</span>
+            {categories.map((category, index) => (
+              <motion.span
+                key={category}
+                initial={{ opacity: 0, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.8 }}
+                transition={{
+                  duration: 0.45,
+                  delay: 0.38 + index * 0.07,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                {category}
+              </motion.span>
+            ))}
           </div>
-        </motion.div>
+        </div>
 
         <motion.div
           className="catalogue-coming__media"
