@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import '../catalogue-coming-clean.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
