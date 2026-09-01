@@ -5,6 +5,7 @@ import App from './App.jsx'
 import Collaborators from './components/Collaborators.jsx'
 import JourneyPage from './components/JourneyPage.jsx'
 import WhatWeBuild from './components/WhatWeBuild.jsx'
+import CatalogueComingSoon from './components/CatalogueComingSoon.jsx'
 import './styles.css'
 import './overrides.css'
 import './hero-fix.css'
@@ -34,6 +35,7 @@ import './what-we-build-spacing.css'
 import './journey.css'
 import './human-touch.css'
 import './footer-social-fix.css'
+import './catalogue-coming-soon.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
@@ -77,6 +79,29 @@ function WhatWeBuildPortal() {
   }, [])
 
   return target ? createPortal(<WhatWeBuild />, target) : null
+}
+
+function CatalogueComingSoonPortal() {
+  const [target, setTarget] = useState(null)
+
+  useEffect(() => {
+    const catalogue = document.getElementById('catalogue')
+    if (!catalogue?.parentNode) return undefined
+
+    const mount = document.createElement('div')
+    mount.id = 'catalogue-coming-soon'
+    catalogue.parentNode.insertBefore(mount, catalogue.nextSibling)
+    catalogue.classList.add('catalogue--anchor-only')
+    setTarget(mount)
+
+    return () => {
+      setTarget(null)
+      catalogue.classList.remove('catalogue--anchor-only')
+      mount.remove()
+    }
+  }, [])
+
+  return target ? createPortal(<CatalogueComingSoon />, target) : null
 }
 
 function BruttiSite() {
@@ -300,6 +325,7 @@ function BruttiSite() {
   return (
     <>
       <App />
+      <CatalogueComingSoonPortal />
       <WhatWeBuildPortal />
       <CollaboratorsPortal />
     </>
