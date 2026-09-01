@@ -1,0 +1,215 @@
+.catalogue.catalogue--anchor-only {
+  height: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+.catalogue.catalogue--anchor-only > * {
+  display: none !important;
+}
+
+.catalogue-coming {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 82% 8%, rgba(24, 61, 45, 0.075), transparent 31%),
+    var(--paper);
+}
+
+.catalogue-coming__head {
+  display: grid;
+  grid-template-columns: 1.15fr 0.6fr;
+  gap: 90px;
+  align-items: end;
+  margin-bottom: 62px;
+}
+
+.catalogue-coming__head h2 {
+  max-width: 850px;
+}
+
+.catalogue-coming__copy {
+  max-width: 420px;
+  justify-self: end;
+  padding-bottom: 8px;
+}
+
+.catalogue-coming__copy p {
+  margin: 18px 0 0;
+  color: #5a5e58;
+  font-size: 18px;
+  line-height: 1.72;
+}
+
+.catalogue-coming__status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 14px;
+  border: 1px solid rgba(24, 61, 45, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.52);
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+}
+
+.catalogue-coming__media {
+  position: relative;
+  height: min(72vw, 780px);
+  min-height: 540px;
+  overflow: hidden;
+  border-radius: 28px;
+  background: #1b211d;
+  box-shadow: 0 30px 80px rgba(18, 25, 21, 0.14);
+  isolation: isolate;
+}
+
+.catalogue-coming__video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.012);
+}
+
+.catalogue-coming__shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(8, 13, 10, 0.26) 0%, transparent 32%),
+    linear-gradient(0deg, rgba(8, 13, 10, 0.67) 0%, transparent 42%);
+}
+
+.catalogue-coming__media-top,
+.catalogue-coming__media-bottom {
+  position: absolute;
+  z-index: 2;
+  left: 28px;
+  right: 28px;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  color: white;
+}
+
+.catalogue-coming__media-top {
+  top: 26px;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.catalogue-coming__media-top span:last-child {
+  opacity: 0.66;
+}
+
+.catalogue-coming__media-bottom {
+  bottom: 28px;
+  align-items: end;
+}
+
+.catalogue-coming__media-bottom > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.catalogue-coming__mini {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  opacity: 0.68;
+}
+
+.catalogue-coming__media-bottom strong {
+  font-size: clamp(18px, 2vw, 28px);
+  line-height: 1.25;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+
+.catalogue-coming__pill {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  border-radius: 999px;
+  background: rgba(18, 34, 25, 0.38);
+  backdrop-filter: blur(12px);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+@media (max-width: 900px) {
+  .catalogue-coming__head {
+    grid-template-columns: 1fr;
+    gap: 34px;
+    margin-bottom: 44px;
+  }
+
+  .catalogue-coming__copy {
+    justify-self: start;
+    max-width: 560px;
+  }
+
+  .catalogue-coming__media {
+    height: 72svh;
+    min-height: 520px;
+    max-height: 720px;
+    border-radius: 22px;
+  }
+}
+
+@media (max-width: 620px) {
+  .catalogue-coming__copy p {
+    font-size: 16px;
+  }
+
+  .catalogue-coming__media {
+    height: 64svh;
+    min-height: 470px;
+    border-radius: 18px;
+  }
+
+  .catalogue-coming__media-top,
+  .catalogue-coming__media-bottom {
+    left: 18px;
+    right: 18px;
+  }
+
+  .catalogue-coming__media-top {
+    top: 18px;
+  }
+
+  .catalogue-coming__media-top span:last-child {
+    display: none;
+  }
+
+  .catalogue-coming__media-bottom {
+    bottom: 18px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .catalogue-coming__media-bottom strong {
+    font-size: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catalogue-coming__video {
+    transform: none;
+  }
+}
