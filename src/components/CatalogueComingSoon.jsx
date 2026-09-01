@@ -16,10 +16,7 @@ export default function CatalogueComingSoon() {
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className="eyebrow catalogue-coming__eyebrow">
-              <span className="catalogue-coming__eyebrow-dot" aria-hidden="true" />
-              Brutti Catalog
-            </p>
+            <p className="eyebrow catalogue-coming__eyebrow">Brutti Catalog</p>
             <h2 id="catalogue-coming-title">
               Our catalog is<br /><em>coming soon.</em>
             </h2>
@@ -32,20 +29,14 @@ export default function CatalogueComingSoon() {
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="catalogue-coming__status">
-              <span className="catalogue-coming__status-dot" aria-hidden="true" />
-              COMING SOON
-            </span>
+            <span className="catalogue-coming__status">COMING SOON</span>
             <p>
               A curated collection of Benua Brutti furniture, custom works and spaces, all in one place.
             </p>
             <div className="catalogue-coming__copy-foot" aria-hidden="true">
               <span>Furniture</span>
-              <i />
               <span>Custom</span>
-              <i />
               <span>Spaces</span>
-              <i />
               <span>Projects</span>
             </div>
           </motion.div>
@@ -93,7 +84,7 @@ export default function CatalogueComingSoon() {
               viewport={{ once: true }}
               transition={{ delay: 0.45, duration: 0.7 }}
             >
-              01 / Preview
+              Preview 01
             </motion.span>
           </div>
 
@@ -115,16 +106,8 @@ export default function CatalogueComingSoon() {
               viewport={{ once: true }}
               transition={{ opacity: { delay: 0.58, duration: 0.5 }, scale: { delay: 0.58, duration: 0.5 }, boxShadow: { duration: 2.6, repeat: Infinity, ease: 'easeInOut' } }}
             >
-              <span className="catalogue-coming__pill-dot" aria-hidden="true" />
               COMING SOON
             </motion.span>
-          </div>
-
-          <div className="catalogue-coming__progress" aria-hidden="true">
-            <span className="is-active" />
-            <span />
-            <span />
-            <span />
           </div>
         </motion.div>
       </div>
