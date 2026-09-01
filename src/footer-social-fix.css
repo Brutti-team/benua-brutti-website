@@ -31,36 +31,62 @@
   user-select: none !important;
 }
 
-/* TikTok: keep the uploaded mark exactly as-is and prevent hover/click zoom. */
-.footer__social-links a:nth-child(1)::before,
-.footer__social-links a:nth-child(1)::after {
+/* TikTok: same full circular badge treatment as the finished Instagram/Facebook icons. */
+.footer__social-links > a:nth-child(1) {
+  overflow: hidden !important;
+  width: 40px !important;
+  height: 40px !important;
+  flex: 0 0 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  max-width: 40px !important;
+  max-height: 40px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.footer__social-links > a:nth-child(1)::before,
+.footer__social-links > a:nth-child(1)::after {
   content: none !important;
   display: none !important;
 }
 
-.footer__social-links a:nth-child(1) .footer__social-logo {
+.footer__social-links > a:nth-child(1) .footer__social-logo {
   display: block !important;
-  width: 30px !important;
-  height: 30px !important;
-  max-width: 30px !important;
-  max-height: 30px !important;
-  object-fit: contain !important;
-  border-radius: 0 !important;
-  mix-blend-mode: screen !important;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+  max-width: 38px !important;
+  max-height: 38px !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 50% !important;
+  mix-blend-mode: normal !important;
   background: transparent !important;
   filter: none !important;
+  opacity: 1 !important;
   transform: none !important;
 }
 
-.footer__social-links a:nth-child(1):hover,
-.footer__social-links a:nth-child(1):active,
-.footer__social-links a:nth-child(1):focus,
-.footer__social-links a:nth-child(1):focus-visible,
-.footer__social-links a:nth-child(1):hover .footer__social-logo,
-.footer__social-links a:nth-child(1):active .footer__social-logo,
-.footer__social-links a:nth-child(1):focus .footer__social-logo,
-.footer__social-links a:nth-child(1):focus-visible .footer__social-logo {
+.footer__social-links > a:nth-child(1):hover,
+.footer__social-links > a:nth-child(1):active,
+.footer__social-links > a:nth-child(1):focus,
+.footer__social-links > a:nth-child(1):focus-visible {
+  transform: translateY(-2px) !important;
+  opacity: .94 !important;
+  box-shadow: none !important;
+}
+
+.footer__social-links > a:nth-child(1):hover .footer__social-logo,
+.footer__social-links > a:nth-child(1):active .footer__social-logo,
+.footer__social-links > a:nth-child(1):focus .footer__social-logo,
+.footer__social-links > a:nth-child(1):focus-visible .footer__social-logo {
   transform: none !important;
+  scale: 1 !important;
   filter: none !important;
 }
 
@@ -130,53 +156,70 @@
   content: none !important;
 }
 
-/* Threads: keep the uploaded mark exactly as-is and prevent hover/click zoom. */
-.footer__social-links a:nth-child(4)::before,
-.footer__social-links a:nth-child(4)::after {
+/* Threads: same full circular badge treatment as the finished Instagram/Facebook icons. */
+.footer__social-links > a:nth-child(4) {
+  overflow: hidden !important;
+  width: 40px !important;
+  height: 40px !important;
+  flex: 0 0 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  max-width: 40px !important;
+  max-height: 40px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.footer__social-links > a:nth-child(4)::before,
+.footer__social-links > a:nth-child(4)::after {
   content: none !important;
   display: none !important;
 }
 
-.footer__social-links a:nth-child(4) .footer__social-logo {
+.footer__social-links > a:nth-child(4) .footer__social-logo {
   display: block !important;
-  width: 30px !important;
-  height: 30px !important;
-  max-width: 30px !important;
-  max-height: 30px !important;
-  object-fit: contain !important;
-  border-radius: 0 !important;
-  mix-blend-mode: screen !important;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+  max-width: 38px !important;
+  max-height: 38px !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 50% !important;
+  mix-blend-mode: normal !important;
   background: transparent !important;
   filter: none !important;
+  opacity: 1 !important;
   transform: none !important;
 }
 
-.footer__social-links a:nth-child(4):hover,
-.footer__social-links a:nth-child(4):active,
-.footer__social-links a:nth-child(4):focus,
-.footer__social-links a:nth-child(4):focus-visible,
-.footer__social-links a:nth-child(4):hover .footer__social-logo,
-.footer__social-links a:nth-child(4):active .footer__social-logo,
-.footer__social-links a:nth-child(4):focus .footer__social-logo,
-.footer__social-links a:nth-child(4):focus-visible .footer__social-logo {
-  transform: none !important;
-  filter: none !important;
-}
-
-/* General hover only for Instagram/Facebook. TikTok and Threads are locked above. */
-.footer__social-links a:hover,
-.footer__social-icon-link:hover {
+.footer__social-links > a:nth-child(4):hover,
+.footer__social-links > a:nth-child(4):active,
+.footer__social-links > a:nth-child(4):focus,
+.footer__social-links > a:nth-child(4):focus-visible {
   transform: translateY(-2px) !important;
   opacity: .94 !important;
   box-shadow: none !important;
 }
 
-.footer__social-links a:nth-child(1):hover,
-.footer__social-links a:nth-child(1):active,
-.footer__social-links a:nth-child(4):hover,
-.footer__social-links a:nth-child(4):active {
+.footer__social-links > a:nth-child(4):hover .footer__social-logo,
+.footer__social-links > a:nth-child(4):active .footer__social-logo,
+.footer__social-links > a:nth-child(4):focus .footer__social-logo,
+.footer__social-links > a:nth-child(4):focus-visible .footer__social-logo {
   transform: none !important;
-  opacity: 1 !important;
+  scale: 1 !important;
+  filter: none !important;
+}
+
+.footer__social-links a:hover,
+.footer__social-icon-link:hover {
+  transform: translateY(-2px) !important;
+  opacity: .94 !important;
+  box-shadow: none !important;
 }
 
 .footer__social-links a:focus-visible,
@@ -193,102 +236,25 @@
   .footer__social-links a,
   .footer__social-icon-link,
   .footer__social-links a:nth-child(3),
-  .footer__social-links a[href*="instagram.com"] {
-    flex-basis: 38px !important;
-    width: 38px !important;
-    height: 38px !important;
-    min-height: 38px !important;
-  }
-
-  .footer__social-links a[href*="instagram.com"] .footer__social-logo,
-  .footer__social-links a[href*="instagram.com"] img {
-    width: 36px !important;
-    height: 36px !important;
-    max-width: 36px !important;
-    max-height: 36px !important;
-  }
-
-  .footer__social-links a:nth-child(1) .footer__social-logo,
-  .footer__social-links a:nth-child(4) .footer__social-logo {
-    width: 28px !important;
-    height: 28px !important;
-    max-width: 28px !important;
-    max-height: 28px !important;
-  }
-}
-
-/* Final lock: TikTok + Threads must stay exactly the same size on pointer/focus/press. */
-.footer__social-links > a:nth-child(1),
-.footer__social-links > a:nth-child(4),
-.footer__social-links > a:nth-child(1):hover,
-.footer__social-links > a:nth-child(1):active,
-.footer__social-links > a:nth-child(1):focus,
-.footer__social-links > a:nth-child(1):focus-visible,
-.footer__social-links > a:nth-child(4):hover,
-.footer__social-links > a:nth-child(4):active,
-.footer__social-links > a:nth-child(4):focus,
-.footer__social-links > a:nth-child(4):focus-visible {
-  flex: 0 0 40px !important;
-  width: 40px !important;
-  height: 40px !important;
-  min-width: 40px !important;
-  min-height: 40px !important;
-  max-width: 40px !important;
-  max-height: 40px !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-color: transparent !important;
-  border-radius: 50% !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  transform: none !important;
-  opacity: 1 !important;
-}
-
-.footer__social-links > a:nth-child(1) .footer__social-logo,
-.footer__social-links > a:nth-child(4) .footer__social-logo,
-.footer__social-links > a:nth-child(1):hover .footer__social-logo,
-.footer__social-links > a:nth-child(1):active .footer__social-logo,
-.footer__social-links > a:nth-child(1):focus .footer__social-logo,
-.footer__social-links > a:nth-child(4):hover .footer__social-logo,
-.footer__social-links > a:nth-child(4):active .footer__social-logo,
-.footer__social-links > a:nth-child(4):focus .footer__social-logo {
-  width: 30px !important;
-  height: 30px !important;
-  min-width: 30px !important;
-  min-height: 30px !important;
-  max-width: 30px !important;
-  max-height: 30px !important;
-  transform: none !important;
-  scale: 1 !important;
-  filter: none !important;
-}
-
-@media (max-width: 700px) {
+  .footer__social-links a[href*="instagram.com"],
   .footer__social-links > a:nth-child(1),
-  .footer__social-links > a:nth-child(4),
-  .footer__social-links > a:nth-child(1):hover,
-  .footer__social-links > a:nth-child(1):active,
-  .footer__social-links > a:nth-child(4):hover,
-  .footer__social-links > a:nth-child(4):active {
+  .footer__social-links > a:nth-child(4) {
     flex-basis: 38px !important;
     width: 38px !important;
     height: 38px !important;
     min-width: 38px !important;
     min-height: 38px !important;
-    max-width: 38px !important;
-    max-height: 38px !important;
   }
 
+  .footer__social-links a[href*="instagram.com"] .footer__social-logo,
+  .footer__social-links a[href*="instagram.com"] img,
   .footer__social-links > a:nth-child(1) .footer__social-logo,
-  .footer__social-links > a:nth-child(4) .footer__social-logo,
-  .footer__social-links > a:nth-child(1):hover .footer__social-logo,
-  .footer__social-links > a:nth-child(4):hover .footer__social-logo {
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    min-height: 28px !important;
-    max-width: 28px !important;
-    max-height: 28px !important;
+  .footer__social-links > a:nth-child(4) .footer__social-logo {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
   }
 }
