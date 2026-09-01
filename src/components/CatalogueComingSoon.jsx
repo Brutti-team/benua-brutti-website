@@ -10,38 +10,27 @@ export default function CatalogueComingSoon() {
       <div className="catalogue-coming__ambient catalogue-coming__ambient--two" aria-hidden="true" />
 
       <div className="page-shell catalogue-coming__shell">
-        <div className="catalogue-coming__head">
-          <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <p className="eyebrow catalogue-coming__eyebrow">Brutti Catalog</p>
-            <h2 id="catalogue-coming-title">
-              Our catalog is<br /><em>coming soon.</em>
-            </h2>
-          </motion.div>
-
-          <motion.div
-            className="catalogue-coming__copy"
-            initial={{ opacity: 0, y: 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <span className="catalogue-coming__status">COMING SOON</span>
-            <p>
-              A curated collection of Benua Brutti furniture, custom works and spaces, all in one place.
-            </p>
-            <div className="catalogue-coming__copy-foot" aria-hidden="true">
-              <span>Furniture</span>
-              <span>Custom</span>
-              <span>Spaces</span>
-              <span>Projects</span>
-            </div>
-          </motion.div>
-        </div>
+        <motion.div
+          className="catalogue-coming__intro"
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <p className="eyebrow catalogue-coming__eyebrow">Brutti Catalog</p>
+          <h2 id="catalogue-coming-title">
+            Our catalog is <em>coming soon.</em>
+          </h2>
+          <p className="catalogue-coming__lead">
+            A curated collection of Benua Brutti furniture, custom work, spaces and projects, gathered in one place.
+          </p>
+          <div className="catalogue-coming__categories" aria-label="Catalogue categories">
+            <span>Furniture</span>
+            <span>Custom Work</span>
+            <span>Spaces</span>
+            <span>Projects</span>
+          </div>
+        </motion.div>
 
         <motion.div
           className="catalogue-coming__media"
