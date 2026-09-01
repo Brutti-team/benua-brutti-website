@@ -34,36 +34,42 @@ export default function CatalogueComingSoon() {
         </div>
 
         <motion.div
-          className="catalogue-coming__media"
-          initial={{ opacity: 0, y: 44, scale: 0.985 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, amount: 0.16 }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="catalogue-coming__feature"
+          initial={{ opacity: 0, y: 36 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.18 }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         >
-          <video
-            className="catalogue-coming__video"
-            src={asset('vid catalog.MOV')}
-            poster={asset('racks.png')}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-label="Preview of Benua Brutti furniture and showroom"
-          />
-          <div className="catalogue-coming__shade" />
-
-          <div className="catalogue-coming__media-top">
-            <span>A glimpse of what&apos;s coming</span>
-            <span>01 / Preview</span>
+          <div className="catalogue-coming__media">
+            <video
+              className="catalogue-coming__video"
+              src={asset('vid catalog.MOV')}
+              poster={asset('racks.png')}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label="Preview of Benua Brutti furniture and showroom"
+            />
+            <div className="catalogue-coming__shade" />
+            <div className="catalogue-coming__preview-label">
+              <span>Preview</span>
+              <span>01</span>
+            </div>
           </div>
 
-          <div className="catalogue-coming__media-bottom">
-            <div>
-              <span className="catalogue-coming__mini">THE BRUTTI COLLECTION</span>
-              <strong>Furniture · Custom Work · Spaces · Projects</strong>
+          <div className="catalogue-coming__meta">
+            <div className="catalogue-coming__categories" aria-label="Catalogue categories">
+              <span>Furniture</span>
+              <i />
+              <span>Custom Work</span>
+              <i />
+              <span>Spaces</span>
+              <i />
+              <span>Projects</span>
             </div>
-            <span className="catalogue-coming__pill">COMING SOON</span>
+            <span className="catalogue-coming__meta-note">Full collection coming soon</span>
           </div>
         </motion.div>
       </div>
