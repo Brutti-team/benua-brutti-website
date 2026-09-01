@@ -38,13 +38,48 @@
   letter-spacing: -.048em !important;
 }
 
-.catalogue-coming__intro h2 em {
+.catalogue-coming__intro h2 > span {
   display: inline-block;
-  color: #a8613c !important;
+  animation: catalogueTitleTone 4.8s ease-in-out infinite;
+}
+
+.catalogue-coming__intro h2 em {
+  position: relative;
+  display: inline-block;
   font-family: 'Italiana', serif !important;
   font-weight: 400 !important;
   letter-spacing: -.03em !important;
-  animation: catalogueComingGlow 4.8s ease-in-out infinite;
+  color: transparent !important;
+  background: linear-gradient(
+    105deg,
+    #9c5633 0%,
+    #b96e46 32%,
+    #d09a72 47%,
+    #a8613c 62%,
+    #95502f 100%
+  );
+  background-size: 220% 100%;
+  background-position: 100% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation:
+    catalogueComingShimmer 4.2s ease-in-out infinite,
+    catalogueComingGlow 4.2s ease-in-out infinite;
+}
+
+.catalogue-coming__intro h2 em::after {
+  content: '';
+  position: absolute;
+  left: 5%;
+  right: 2%;
+  bottom: -7px;
+  height: 1px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(168, 97, 60, .75), transparent);
+  transform: scaleX(.18);
+  transform-origin: left center;
+  opacity: 0;
+  animation: catalogueUnderlineSweep 4.2s ease-in-out infinite;
 }
 
 .catalogue-coming__lead {
@@ -118,12 +153,52 @@
   will-change: transform, box-shadow;
 }
 
+@keyframes catalogueTitleTone {
+  0%, 100% {
+    color: #15261d;
+  }
+  50% {
+    color: #20392b;
+  }
+}
+
+@keyframes catalogueComingShimmer {
+  0%, 18% {
+    background-position: 100% 50%;
+  }
+  55% {
+    background-position: 0% 50%;
+  }
+  82%, 100% {
+    background-position: -35% 50%;
+  }
+}
+
 @keyframes catalogueComingGlow {
   0%, 100% {
     text-shadow: 0 0 0 rgba(168, 97, 60, 0);
   }
-  50% {
-    text-shadow: 0 10px 28px rgba(168, 97, 60, .16);
+  48% {
+    text-shadow: 0 10px 30px rgba(168, 97, 60, .18);
+  }
+}
+
+@keyframes catalogueUnderlineSweep {
+  0%, 20%, 100% {
+    transform: scaleX(.12);
+    opacity: 0;
+  }
+  42% {
+    transform: scaleX(.52);
+    opacity: .45;
+  }
+  62% {
+    transform: scaleX(1);
+    opacity: .75;
+  }
+  80% {
+    transform: scaleX(.82);
+    opacity: 0;
   }
 }
 
@@ -215,7 +290,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .catalogue-coming__intro h2 > span,
   .catalogue-coming__intro h2 em,
+  .catalogue-coming__intro h2 em::after,
   .catalogue-coming__video,
   .catalogue-coming__pill {
     animation: none !important;
