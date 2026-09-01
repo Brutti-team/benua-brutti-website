@@ -34,11 +34,11 @@ export default function CatalogueComingSoon() {
 
         <motion.div
           className="catalogue-coming__media"
-          initial={{ opacity: 0, y: 44, scale: 0.985 }}
+          initial={{ opacity: 0, y: 36, scale: 0.99 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          whileHover={{ y: -3 }}
-          viewport={{ once: true, amount: 0.16 }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          whileHover={{ y: -2 }}
+          viewport={{ once: true, amount: 0.18 }}
+          transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
         >
           <video
             className="catalogue-coming__video"
@@ -52,27 +52,21 @@ export default function CatalogueComingSoon() {
             aria-label="Preview of Benua Brutti furniture and showroom"
           />
           <div className="catalogue-coming__shade" />
-          <motion.div
-            className="catalogue-coming__scan"
-            aria-hidden="true"
-            animate={{ x: ['-120%', '230%'] }}
-            transition={{ duration: 5.6, ease: 'easeInOut', repeat: Infinity, repeatDelay: 1.8 }}
-          />
 
           <div className="catalogue-coming__media-top">
             <motion.span
-              initial={{ opacity: 0, x: -16 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.35, duration: 0.7 }}
+              transition={{ delay: 0.3, duration: 0.65 }}
             >
               A glimpse of what&apos;s coming
             </motion.span>
             <motion.span
-              initial={{ opacity: 0, x: 14 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.45, duration: 0.7 }}
+              transition={{ delay: 0.4, duration: 0.65 }}
             >
               Preview 01
             </motion.span>
@@ -80,21 +74,20 @@ export default function CatalogueComingSoon() {
 
           <div className="catalogue-coming__media-bottom">
             <motion.div
-              initial={{ opacity: 0, y: 14 }}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.48, duration: 0.7 }}
+              transition={{ delay: 0.44, duration: 0.7 }}
             >
               <span className="catalogue-coming__mini">THE BRUTTI COLLECTION</span>
               <strong>Furniture · Custom Work · Spaces · Projects</strong>
             </motion.div>
             <motion.span
               className="catalogue-coming__pill"
-              initial={{ opacity: 0, scale: 0.92 }}
+              initial={{ opacity: 0, scale: 0.94 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              animate={{ boxShadow: ['0 0 0 0 rgba(255,255,255,0)', '0 0 0 7px rgba(255,255,255,0.05)', '0 0 0 0 rgba(255,255,255,0)'] }}
               viewport={{ once: true }}
-              transition={{ opacity: { delay: 0.58, duration: 0.5 }, scale: { delay: 0.58, duration: 0.5 }, boxShadow: { duration: 2.6, repeat: Infinity, ease: 'easeInOut' } }}
+              transition={{ delay: 0.54, duration: 0.55 }}
             >
               COMING SOON
             </motion.span>
