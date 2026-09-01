@@ -10,71 +10,134 @@
   gap: 0 !important;
 }
 
-.catalogue-coming__eyebrow {
-  gap: 0 !important;
-}
-
-/* Keep the top-right copy editorial instead of looking like a UI card. */
-.catalogue-coming__copy {
-  width: min(100%, 390px) !important;
-  justify-self: end !important;
-  padding: 0 0 4px !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-}
-
-.catalogue-coming__status {
-  display: inline-block !important;
-  min-height: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  color: #315846 !important;
-  font-size: 9px !important;
-  font-weight: 700 !important;
-  letter-spacing: .22em !important;
-  line-height: 1.2 !important;
-}
-
-.catalogue-coming__copy p {
-  margin: 17px 0 0 !important;
-  max-width: 370px;
-  color: #555b56 !important;
-  font-size: 16.5px !important;
-  line-height: 1.72 !important;
-}
-
-.catalogue-coming__copy-foot {
-  display: flex !important;
-  align-items: center !important;
-  flex-wrap: wrap !important;
-  gap: 18px !important;
-  margin-top: 18px !important;
-  padding-top: 14px !important;
-  border-top: 1px solid rgba(24, 61, 45, .12) !important;
-  color: #747a74 !important;
-  font-size: 8px !important;
-  font-weight: 600 !important;
-  letter-spacing: .14em !important;
-  text-transform: uppercase !important;
-}
-
-.catalogue-coming__copy-foot span {
-  position: relative;
-}
-
 .catalogue-coming__pill {
   gap: 0 !important;
 }
 
+/* Editorial intro: one clean composition aligned to the video. */
+.catalogue-coming__intro {
+  width: min(100%, 900px);
+  margin: 0 auto 34px;
+}
+
+.catalogue-coming__eyebrow {
+  margin: 0 0 14px !important;
+  color: #315846 !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  letter-spacing: .24em !important;
+  text-transform: uppercase;
+}
+
+.catalogue-coming__intro h2 {
+  max-width: 850px !important;
+  margin: 0 !important;
+  color: #15261d !important;
+  font-size: clamp(48px, 4.8vw, 72px) !important;
+  line-height: .98 !important;
+  letter-spacing: -.05em !important;
+}
+
+.catalogue-coming__intro h2 em {
+  color: #a8613c !important;
+  font-family: 'Italiana', serif !important;
+  font-weight: 400 !important;
+  letter-spacing: -.03em !important;
+}
+
+.catalogue-coming__lead {
+  max-width: 620px;
+  margin: 20px 0 0;
+  color: #59605a;
+  font-size: 16px;
+  line-height: 1.72;
+}
+
+.catalogue-coming__categories {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin-top: 20px;
+  color: #6f756f;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.catalogue-coming__categories span {
+  position: relative;
+}
+
+.catalogue-coming__categories span:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -12px;
+  width: 1px;
+  height: 10px;
+  background: rgba(24, 61, 45, .16);
+  transform: translateY(-50%);
+}
+
+/* Keep the video as the main hero element. */
+.catalogue-coming__media {
+  width: min(100%, 900px) !important;
+  margin: 0 auto !important;
+}
+
 @media (max-width: 900px) {
-  .catalogue-coming__copy {
-    justify-self: start !important;
-    width: min(100%, 520px) !important;
+  .catalogue-coming__intro {
+    width: min(100%, 700px);
+    margin-bottom: 28px;
+  }
+
+  .catalogue-coming__intro h2 {
+    font-size: clamp(45px, 10vw, 66px) !important;
+  }
+
+  .catalogue-coming__lead {
+    max-width: 560px;
+    font-size: 15.5px;
+  }
+
+  .catalogue-coming__categories {
+    gap: 18px;
+  }
+
+  .catalogue-coming__categories span:not(:last-child)::after {
+    right: -10px;
+  }
+}
+
+@media (max-width: 620px) {
+  .catalogue-coming__intro {
+    width: 100%;
+    margin-bottom: 24px;
+  }
+
+  .catalogue-coming__eyebrow {
+    margin-bottom: 11px !important;
+  }
+
+  .catalogue-coming__intro h2 {
+    font-size: clamp(43px, 13.5vw, 60px) !important;
+  }
+
+  .catalogue-coming__lead {
+    margin-top: 16px;
+    font-size: 14.5px;
+    line-height: 1.65;
+  }
+
+  .catalogue-coming__categories {
+    gap: 14px;
+    margin-top: 16px;
+    font-size: 7.5px;
+  }
+
+  .catalogue-coming__categories span:not(:last-child)::after {
+    display: none;
   }
 }
