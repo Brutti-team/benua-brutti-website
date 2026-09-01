@@ -49,19 +49,19 @@
   filter: none !important;
 }
 
-/* Instagram: full circular Instagram badge, edge-to-edge. */
+/* Instagram: standard rounded-square app mark, not a circular badge. */
 .footer__social-links a[href*="instagram.com"] {
-  overflow: hidden !important;
-  width: 42px !important;
-  height: 42px !important;
-  flex: 0 0 42px !important;
-  min-height: 42px !important;
+  overflow: visible !important;
+  width: 40px !important;
+  height: 40px !important;
+  flex: 0 0 40px !important;
+  min-height: 40px !important;
   padding: 0 !important;
   border: 0 !important;
-  border-radius: 50% !important;
+  border-radius: 0 !important;
   background-color: transparent !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='g' cx='30%25' cy='107%25' r='115%25'%3E%3Cstop offset='0%25' stop-color='%23ffd76a'/%3E%3Cstop offset='22%25' stop-color='%23ff7a33'/%3E%3Cstop offset='48%25' stop-color='%23f2295b'/%3E%3Cstop offset='72%25' stop-color='%23c837ab'/%3E%3Cstop offset='100%25' stop-color='%236a4bdc'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='32' fill='url(%23g)'/%3E%3Crect x='13.5' y='13.5' width='37' height='37' rx='11' fill='none' stroke='%23fff' stroke-width='4.6'/%3E%3Ccircle cx='32' cy='32' r='9.4' fill='none' stroke='%23fff' stroke-width='4.6'/%3E%3Ccircle cx='43.8' cy='20.4' r='3.2' fill='%23fff'/%3E%3C/svg%3E") !important;
-  background-size: 100% 100% !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='g' cx='30%25' cy='107%25' r='115%25'%3E%3Cstop offset='0%25' stop-color='%23ffd76a'/%3E%3Cstop offset='22%25' stop-color='%23ff7a33'/%3E%3Cstop offset='48%25' stop-color='%23f2295b'/%3E%3Cstop offset='72%25' stop-color='%23c837ab'/%3E%3Cstop offset='100%25' stop-color='%236a4bdc'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect x='5' y='5' width='54' height='54' rx='15' fill='url(%23g)'/%3E%3Crect x='17' y='17' width='30' height='30' rx='9' fill='none' stroke='%23fff' stroke-width='4.2'/%3E%3Ccircle cx='32' cy='32' r='7.6' fill='none' stroke='%23fff' stroke-width='4.2'/%3E%3Ccircle cx='42.4' cy='21.8' r='2.8' fill='%23fff'/%3E%3C/svg%3E") !important;
+  background-size: 32px 32px !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
   box-shadow: none !important;
@@ -145,6 +145,10 @@
     width: 38px !important;
     height: 38px !important;
     min-height: 38px !important;
+  }
+
+  .footer__social-links a[href*="instagram.com"] {
+    background-size: 30px 30px !important;
   }
 
   .footer__social-links a:nth-child(1) .footer__social-logo,
