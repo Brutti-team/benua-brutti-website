@@ -71,7 +71,7 @@ export default function ImpactReportPage() {
     if (!soundEnabled) return
 
     const timestamp = performance.now()
-    if (timestamp - lastPaperSoundAt.current < 220) return
+    if (timestamp - lastPaperSoundAt.current < 260) return
     lastPaperSoundAt.current = timestamp
 
     const AudioContextClass = window.AudioContext || window.webkitAudioContext
@@ -83,48 +83,56 @@ export default function ImpactReportPage() {
       audioContextRef.current = context
     }
 
-    const makeRustle = (startTime, duration, peakGain, highpassFrequency, lowpassFrequency, rate = 1) => {
+    const noiseBurst = ({ start, duration, gainValue, highpass, lowpass, attack = 0.018 }) => {
       const frameCount = Math.max(1, Math.floor(context.sampleRate * duration))
       const buffer = context.createBuffer(1, frameCount, context.sampleRate)
       const data = buffer.getChannelData(0)
 
+      let previous = 0
       for (let index = 0; index < frameCount; index += 1) {
         const progress = index / frameCount
-        const attack = Math.min(1, progress / 0.1)
-        const release = Math.pow(1 - progress, 1.35)
-        const texture = 0.72 + 0.28 * Math.sin(progress * Math.PI * 11)
-        data[index] = (Math.random() * 2 - 1) * attack * release * texture
+        const white = Math.random() * 2 - 1
+        previous = previous * 0.35 + white * 0.65
+        const texture = 0.78 + Math.sin(progress * Math.PI * 14) * 0.08 + Math.sin(progress * Math.PI * 5) * 0.06
+        data[index] = previous * texture
       }
 
       const source = context.createBufferSource()
-      const highpass = context.createBiquadFilter()
-      const lowpass = context.createBiquadFilter()
+      const hp = context.createBiquadFilter()
+      const lp = context.createBiquadFilter()
       const gain = context.createGain()
 
       source.buffer = buffer
-      source.playbackRate.value = rate
-      highpass.type = 'highpass'
-      highpass.frequency.value = highpassFrequency
-      lowpass.type = 'lowpass'
-      lowpass.frequency.value = lowpassFrequency
+      hp.type = 'highpass'
+      hp.frequency.value = highpass
+      lp.type = 'lowpass'
+      lp.frequency.value = lowpass
 
-      gain.gain.setValueAtTime(0.0001, startTime)
-      gain.gain.exponentialRampToValueAtTime(peakGain, startTime + 0.028)
-      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration)
+      gain.gain.setValueAtTime(0.0001, start)
+      gain.gain.exponentialRampToValueAtTime(gainValue, start + attack)
+      gain.gain.exponentialRampToValueAtTime(Math.max(0.00012, gainValue * 0.45), start + duration * 0.68)
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + duration)
 
-      source.connect(highpass)
-      highpass.connect(lowpass)
-      lowpass.connect(gain)
+      source.connect(hp)
+      hp.connect(lp)
+      lp.connect(gain)
       gain.connect(context.destination)
-
-      source.start(startTime)
-      source.stop(startTime + duration + 0.04)
+      source.start(start)
+      source.stop(start + duration + 0.025)
     }
 
     const play = () => {
-      const start = context.currentTime + 0.008
-      makeRustle(start, 0.31, 0.115, 420, 7200, 0.96 + Math.random() * 0.08)
-      makeRustle(start + 0.09, 0.22, 0.052, 900, 5600, 1.05 + Math.random() * 0.08)
+      const start = context.currentTime + 0.006
+
+      // Soft pickup of the paper.
+      noiseBurst({ start, duration: 0.075, gainValue: 0.052, highpass: 1150, lowpass: 7600, attack: 0.008 })
+
+      // Continuous page-rustle while the sheet bends.
+      noiseBurst({ start: start + 0.025, duration: 0.43, gainValue: 0.038, highpass: 620, lowpass: 6900, attack: 0.05 })
+
+      // Crisp paper landing near the end of the turn, matching the reference feel.
+      noiseBurst({ start: start + 0.315, duration: 0.105, gainValue: 0.12, highpass: 1050, lowpass: 6200, attack: 0.009 })
+      noiseBurst({ start: start + 0.34, duration: 0.07, gainValue: 0.052, highpass: 1900, lowpass: 8200, attack: 0.006 })
     }
 
     if (context.state === 'suspended') {
@@ -139,8 +147,8 @@ export default function ImpactReportPage() {
       const pageFlip = bookRef.current?.pageFlip?.()
       if (!pageFlip || isFlipping) return
 
-      if (event.key === 'ArrowRight') pageFlip.flipNext()
-      if (event.key === 'ArrowLeft') pageFlip.flipPrev()
+      if (event.key === 'ArrowRight') pageFlip.flipNext('top')
+      if (event.key === 'ArrowLeft') pageFlip.flipPrev('top')
       if (event.key === 'Escape' && document.fullscreenElement) document.exitFullscreen?.()
     }
 
@@ -189,11 +197,11 @@ export default function ImpactReportPage() {
   }
 
   const pageLabel = useMemo(() => {
-    if (currentPage <= 1 || currentPage >= TOTAL_PAGES) return `${currentPage} / ${TOTAL_PAGES}`
+    if (currentPage <= 1 || currentPage >= TOTAL_PAGES) return `${currentPage}/${TOTAL_PAGES}`
 
     const left = currentPage % 2 === 0 ? currentPage : currentPage - 1
     const right = Math.min(TOTAL_PAGES, left + 1)
-    return `${left}–${right} / ${TOTAL_PAGES}`
+    return `${left}–${right}/${TOTAL_PAGES}`
   }, [currentPage])
 
   return (
@@ -225,35 +233,6 @@ export default function ImpactReportPage() {
           </div>
 
           <div className={`impact-report-reader${isFlipping ? ' is-flipping' : ''}`} ref={readerRef}>
-            <div className="impact-report-reader__toolbar">
-              <div className="impact-report-reader__title">
-                <span className="impact-report-reader__dot" />
-                <strong>Brutti Impact Report 2026</strong>
-              </div>
-
-              <div className="impact-report-reader__actions">
-                {zoom !== 1 && (
-                  <button onClick={() => setZoom(1)} aria-label="Reset zoom" title="Reset zoom">
-                    <RotateCcw size={15} />
-                    <span>Reset</span>
-                  </button>
-                )}
-                <button
-                  onClick={() => setSoundEnabled((enabled) => !enabled)}
-                  aria-label={soundEnabled ? 'Mute page sound' : 'Enable page sound'}
-                  title={soundEnabled ? 'Page sound on' : 'Page sound off'}
-                  aria-pressed={soundEnabled}
-                >
-                  {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
-                  <span>{soundEnabled ? 'Sound' : 'Muted'}</span>
-                </button>
-                <button onClick={toggleFullscreen} aria-label={isFullscreen ? 'Exit fullscreen' : 'Open fullscreen'}>
-                  {isFullscreen ? <Minimize2 size={17} /> : <Expand size={17} />}
-                  <span>{isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}</span>
-                </button>
-              </div>
-            </div>
-
             <div className="impact-report-reader__stage">
               <button
                 className="impact-report-reader__edge impact-report-reader__edge--left"
@@ -261,7 +240,7 @@ export default function ImpactReportPage() {
                 disabled={currentPage <= 1 || isFlipping}
                 aria-label="Previous page"
               >
-                <ChevronLeft size={28} />
+                <ChevronLeft size={35} strokeWidth={1.75} />
               </button>
 
               <div className={`impact-report-reader__viewport${zoom > 1 ? ' is-zoomed' : ''}`}>
@@ -272,22 +251,22 @@ export default function ImpactReportPage() {
                       width={447}
                       height={632}
                       size="stretch"
-                      minWidth={275}
-                      maxWidth={470}
-                      minHeight={389}
-                      maxHeight={665}
+                      minWidth={260}
+                      maxWidth={445}
+                      minHeight={368}
+                      maxHeight={630}
                       startPage={0}
                       drawShadow
-                      flippingTime={1050}
+                      flippingTime={680}
                       usePortrait
                       startZIndex={10}
                       autoSize
-                      maxShadowOpacity={0.34}
+                      maxShadowOpacity={0.3}
                       showCover
                       mobileScrollSupport
                       clickEventForward={false}
                       useMouseEvents
-                      swipeDistance={28}
+                      swipeDistance={24}
                       showPageCorners
                       disableFlipByClick={false}
                       className="impact-html-flipbook"
@@ -312,52 +291,69 @@ export default function ImpactReportPage() {
                 disabled={currentPage >= TOTAL_PAGES || isFlipping}
                 aria-label="Next page"
               >
-                <ChevronRight size={28} />
-              </button>
-            </div>
-
-            <div className="impact-report-reader__controls">
-              <button onClick={previousPage} disabled={currentPage <= 1 || isFlipping} aria-label="Previous page">
-                <ChevronLeft size={18} />
+                <ChevronRight size={35} strokeWidth={1.75} />
               </button>
 
-              <strong>{pageLabel}</strong>
+              <div className="impact-report-reader__dock" aria-label="Impact report controls">
+                <strong className="impact-report-reader__page-count">{pageLabel}</strong>
+                <span className="impact-report-reader__dock-divider" />
 
-              <input
-                aria-label="Jump to page"
-                type="range"
-                min="1"
-                max={TOTAL_PAGES}
-                value={currentPage}
-                onChange={(event) => jumpToPage(event.target.value)}
-              />
-
-              <div className="impact-report-reader__zoom-controls">
                 <button
                   onClick={() => setZoom((value) => Math.max(0.9, Number((value - 0.1).toFixed(2))))}
                   disabled={zoom <= 0.9}
                   aria-label="Zoom out"
+                  title="Zoom out"
                 >
                   <ZoomOut size={16} />
                 </button>
-                <span>{Math.round(zoom * 100)}%</span>
+
+                <span className="impact-report-reader__zoom-value">{Math.round(zoom * 100)}%</span>
+
                 <button
                   onClick={() => setZoom((value) => Math.min(1.4, Number((value + 0.1).toFixed(2))))}
                   disabled={zoom >= 1.4}
                   aria-label="Zoom in"
+                  title="Zoom in"
                 >
                   <ZoomIn size={16} />
                 </button>
-              </div>
 
-              <button onClick={nextPage} disabled={currentPage >= TOTAL_PAGES || isFlipping} aria-label="Next page">
-                <ChevronRight size={18} />
-              </button>
+                {zoom !== 1 && (
+                  <button onClick={() => setZoom(1)} aria-label="Reset zoom" title="Reset zoom">
+                    <RotateCcw size={15} />
+                  </button>
+                )}
+
+                <span className="impact-report-reader__dock-divider" />
+
+                <button
+                  onClick={() => setSoundEnabled((enabled) => !enabled)}
+                  aria-label={soundEnabled ? 'Mute page sound' : 'Enable page sound'}
+                  title={soundEnabled ? 'Page sound on' : 'Page sound off'}
+                  aria-pressed={soundEnabled}
+                >
+                  {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
+                </button>
+
+                <button onClick={toggleFullscreen} aria-label={isFullscreen ? 'Exit fullscreen' : 'Open fullscreen'} title={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}>
+                  {isFullscreen ? <Minimize2 size={16} /> : <Expand size={16} />}
+                </button>
+              </div>
             </div>
           </div>
 
+          <input
+            className="impact-report-reader__scrubber"
+            aria-label="Jump to page"
+            type="range"
+            min="1"
+            max={TOTAL_PAGES}
+            value={currentPage}
+            onChange={(event) => jumpToPage(event.target.value)}
+          />
+
           <p className="impact-report-reader__hint">
-            Drag a page corner to turn it like a real book, tap the page edge, or use the arrows. On mobile, swipe left or right.
+            Drag a page corner to turn it like a real book, tap the page edge, or use the keyboard arrows. On mobile, swipe left or right.
           </p>
         </div>
       </section>
