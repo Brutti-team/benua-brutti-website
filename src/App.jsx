@@ -179,7 +179,6 @@ function App() {
               <span className="vm-card__index">01</span>
               <p className="vm-card__label">Visi</p>
               <h3>Angkat Reka Bangsa,<br />Tawan Dunia.</h3>
-              <p>Kami tidak sekadar mencipta. Kami membawa warisan bangsa ke pentas dunia.</p>
             </Reveal>
 
             <Reveal delay={0.1} className="vm-card vm-card--mission">
