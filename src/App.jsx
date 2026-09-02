@@ -6,13 +6,6 @@ import Reveal from './components/Reveal.jsx'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
-const catalogue = [
-  { image: asset('racks.png'), title: 'Racks & Shelves', category: 'Furniture' },
-  { image: asset('karya anak bangsa.png'), title: 'Karya Anak Bangsa', category: 'Custom Work' },
-  { image: asset('kilang kinarut.png'), title: 'Kinarut Workshop', category: 'Our Journey' },
-  { image: asset('kilang kkip.png'), title: 'KKIP Workshop', category: 'Our Journey' },
-]
-
 function scrollToId(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
@@ -41,6 +34,7 @@ function App() {
           <img
             src={asset('logo brutti.jpg')}
             alt="Benua Brutti"
+            decoding="async"
             style={{ width: 92, height: 'auto', display: 'block', borderRadius: 4 }}
           />
         </button>
@@ -83,6 +77,9 @@ function App() {
             src={asset('belakang rumah.png')}
             alt="The early Benua Brutti journey"
             className="hero__image"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
           />
           <div className="hero__shade" />
         </div>
@@ -151,51 +148,6 @@ function App() {
         </div>
       </section>
 
-      <section className="gallery section-pad--bottom">
-        <div className="page-shell">
-          <Reveal className="gallery__lead">
-            <p className="eyebrow">Made by Brutti</p>
-            <h2>Built with purpose.<br /><em>Made to be used.</em></h2>
-          </Reveal>
-
-          <div className="gallery__layout">
-            <motion.figure
-              className="gallery-card gallery-card--large"
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <img src={asset('racks.png')} alt="Benua Brutti racks and shelving" />
-              <figcaption>Furniture · Racks & shelves</figcaption>
-            </motion.figure>
-
-            <div className="gallery__stack">
-              <motion.figure
-                className="gallery-card"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.9, delay: 0.12 }}
-              >
-                <img src={asset('karya anak bangsa.png')} alt="Benua Brutti custom work" />
-                <figcaption>Custom work · Sabah</figcaption>
-              </motion.figure>
-              <motion.figure
-                className="gallery-card gallery-card--wide"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.9, delay: 0.2 }}
-              >
-                <img src={asset('kilang jalan ramayah.png')} alt="Benua Brutti workshop journey" />
-                <figcaption>Our journey · Workshop</figcaption>
-              </motion.figure>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section id="about" className="story section-pad">
         <div className="page-shell story__grid">
           <div className="story__visual">
@@ -206,7 +158,13 @@ function App() {
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
             >
-              <img src={asset('founder & co founder.JPG')} alt="Benua Brutti founders Lukman and Faznur" />
+              <img
+                src={asset('founder & co founder.JPG')}
+                alt="Benua Brutti founders Lukman and Faznur"
+                loading="lazy"
+                decoding="async"
+                fetchPriority="low"
+              />
             </motion.div>
             <span className="story__vertical">OUR STORY</span>
           </div>
@@ -246,41 +204,7 @@ function App() {
         </div>
       </section>
 
-      <section id="catalogue" className="catalogue section-pad">
-        <div className="page-shell">
-          <div className="catalogue__heading">
-            <Reveal>
-              <p className="eyebrow">Selected Brutti</p>
-              <h2>Work, spaces<br /><em>& our journey.</em></h2>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="catalogue__intro">A first look using the real Benua Brutti images currently uploaded to the website repository.</p>
-            </Reveal>
-          </div>
-
-          <div className="catalogue__grid">
-            {catalogue.map((item, index) => (
-              <motion.article
-                className="product-card"
-                key={item.title}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.8, delay: (index % 2) * 0.1 }}
-              >
-                <div className="product-card__image">
-                  <img src={item.image} alt={item.title} />
-                  <div className="product-card__hover"><ArrowUpRight /></div>
-                </div>
-                <div className="product-card__meta">
-                  <span>{item.category}</span>
-                  <h3>{item.title}</h3>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <section id="catalogue" className="catalogue catalogue--anchor-only" aria-hidden="true" />
 
       <section id="contact" className="contact section-pad">
         <div className="page-shell contact__head">
@@ -317,6 +241,9 @@ function App() {
           <motion.img
             src={asset('showroom.png')}
             alt="Benua Brutti shared showroom"
+            loading="lazy"
+            decoding="async"
+            fetchPriority="low"
             initial={{ scale: 1.07, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: true, amount: 0.25 }}
@@ -332,6 +259,8 @@ function App() {
             <img
               src={asset('logo brutti.jpg')}
               alt="Benua Brutti"
+              loading="lazy"
+              decoding="async"
               style={{ width: 110, height: 'auto', marginBottom: 12, borderRadius: 4 }}
             />
             <p>Furniture with a second life.</p>
@@ -352,7 +281,7 @@ function App() {
                 aria-label="Compose an email to Benua Brutti in Gmail"
               >
                 <span className="footer__email-icon" aria-hidden="true">
-                  <img src={asset('gmail.png')} alt="" />
+                  <img src={asset('gmail.png')} alt="" loading="lazy" decoding="async" />
                 </span>
                 <span className="footer__email-copy">
                   <small>General enquiries</small>
@@ -369,7 +298,7 @@ function App() {
                 aria-label="Compose an email to Benua Brutti HR in Gmail"
               >
                 <span className="footer__email-icon" aria-hidden="true">
-                  <img src={asset('gmail.png')} alt="" />
+                  <img src={asset('gmail.png')} alt="" loading="lazy" decoding="async" />
                 </span>
                 <span className="footer__email-copy">
                   <small>Careers & HR</small>
@@ -384,16 +313,16 @@ function App() {
                 <span className="footer__social-label">Follow Brutti</span>
                 <div className="footer__social-links">
                   <a data-logo-applied="true" href="https://www.tiktok.com/@brutti.my?_r=1&_t=ZS-99FmWlcm2fQ" target="_blank" rel="noreferrer" aria-label="Benua Brutti on TikTok" title="TikTok">
-                    <img className="footer__social-logo" src={asset('tiktok.jpg')} alt="TikTok logo" />
+                    <img className="footer__social-logo" src={asset('tiktok.jpg')} alt="TikTok logo" loading="lazy" decoding="async" />
                   </a>
                   <a data-logo-applied="true" href="https://www.instagram.com/brutti.my?igsi=ZnU3dHVqOXRnZTJk" target="_blank" rel="noreferrer" aria-label="Benua Brutti on Instagram" title="Instagram">
-                    <img className="footer__social-logo" src={asset('ig.jpg')} alt="Instagram logo" />
+                    <img className="footer__social-logo" src={asset('ig.jpg')} alt="Instagram logo" loading="lazy" decoding="async" />
                   </a>
                   <a data-logo-applied="true" href="https://www.facebook.com/share/1EfVN5HMJm/?mibextid=wwXIfr" target="_blank" rel="noreferrer" aria-label="Benua Brutti on Facebook" title="Facebook">
-                    <img className="footer__social-logo" src={asset('fb.png')} alt="Facebook logo" />
+                    <img className="footer__social-logo" src={asset('fb.png')} alt="Facebook logo" loading="lazy" decoding="async" />
                   </a>
                   <a data-logo-applied="true" href="https://www.threads.com/@brutti.my?igshid=NTc4MTIwNjQ2YQ==" target="_blank" rel="noreferrer" aria-label="Benua Brutti on Threads" title="Threads">
-                    <img className="footer__social-logo" src={asset('threads.png')} alt="Threads logo" />
+                    <img className="footer__social-logo" src={asset('threads.png')} alt="Threads logo" loading="lazy" decoding="async" />
                   </a>
                 </div>
               </div>
