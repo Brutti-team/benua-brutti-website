@@ -424,6 +424,39 @@
   display: none;
 }
 
+/* Brutti showcase visual for Vision */
+.vm-card--vision {
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(8,47,37,.96) 0%,
+      rgba(8,47,37,.93) 38%,
+      rgba(8,47,37,.76) 58%,
+      rgba(8,47,37,.38) 78%,
+      rgba(8,47,37,.16) 100%
+    ),
+    url('/assets/visi.jpeg');
+  background-size: 100% 100%, cover;
+  background-position: center, 60% 47%;
+  background-repeat: no-repeat;
+}
+
+.vm-card--vision::before {
+  display: none;
+}
+
+.vm-card--vision .vm-card__index,
+.vm-card--vision .vm-card__label,
+.vm-card--vision h3,
+.vm-card--vision p,
+.vm-card--mission .vm-card__index,
+.vm-card--mission .vm-card__label,
+.vm-card--mission h3,
+.vm-card--mission p {
+  position: relative;
+  z-index: 1;
+}
+
 @media (max-width: 720px) {
   .vm-card--mission {
     background-image:
@@ -435,5 +468,17 @@
       ),
       url('/assets/malaysia.jpg');
     background-position: center, center;
+  }
+
+  .vm-card--vision {
+    background-image:
+      linear-gradient(
+        90deg,
+        rgba(8,47,37,.96) 0%,
+        rgba(8,47,37,.90) 58%,
+        rgba(8,47,37,.48) 100%
+      ),
+      url('/assets/visi.jpeg');
+    background-position: center, 57% center;
   }
 }
