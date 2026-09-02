@@ -85,12 +85,12 @@ export default function CatalogueComingSoon() {
           <video
             className="catalogue-coming__video"
             src={asset('vid catalog.MOV')}
-            poster={asset('racks.png')}
+            poster={asset('catalogue-poster.jpg')}
             autoPlay
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="none"
             aria-label="Preview of Benua Brutti furniture and showroom"
           />
           <div className="catalogue-coming__shade" />
