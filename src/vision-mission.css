@@ -182,16 +182,16 @@
   line-height: 1 !important;
   letter-spacing: .15em;
   text-transform: uppercase;
-  opacity: .82;
+  opacity: .86;
 }
 
-/* Section labels are headings, so give them stronger hierarchy */
+/* VISI / MISI / NILAI are section titles */
 .vm-card__label {
   display: inline-flex;
   align-items: center;
   margin: 0 0 0 10px !important;
   vertical-align: middle;
-  font-size: 10.5px !important;
+  font-size: 12px !important;
 }
 
 .vm-card__index,
@@ -206,10 +206,10 @@
   max-width: 330px;
   margin: 13px 0 0;
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: clamp(22px, 1.65vw, 27px);
+  font-size: clamp(20px, 1.45vw, 24px);
   font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -.03em;
+  line-height: 1.12;
+  letter-spacing: -.025em;
   text-wrap: balance;
 }
 
@@ -262,8 +262,8 @@
 
 .vm-values__head > div p {
   margin: 0;
-  color: rgba(247,248,244,.94) !important;
-  font-size: 11.5px !important;
+  color: rgba(247,248,244,.96) !important;
+  font-size: 12px !important;
 }
 
 .vm-values__head h3 {
@@ -330,14 +330,14 @@
   .vm-lead { max-width: 670px; font-size: clamp(15px, 1.3vw, 18px); }
 
   .vm-card { min-height: 164px; padding: 19px 45% 18px 24px; }
-  .vm-card h3 { margin-top: 11px; font-size: clamp(20px, 1.55vw, 24px); }
+  .vm-card h3 { margin-top: 11px; font-size: clamp(19px, 1.4vw, 22px); }
   .vm-card > p:last-child { margin-top: 8px; font-size: 9.8px; }
-  .vm-card__label { font-size: 10px !important; }
+  .vm-card__label { font-size: 11.5px !important; }
 
   .vm-values { min-height: 204px; margin-top: 12px; padding: 17px 20px 15px; }
   .vm-values__head { padding-bottom: 10px; }
   .vm-values__head h3 { font-size: 15.5px; }
-  .vm-values__head > div p { font-size: 11px !important; }
+  .vm-values__head > div p { font-size: 11.5px !important; }
   .vm-value { min-height: 122px; padding-top: 14px; }
   .vm-value > span { font-size: 9px; }
   .vm-value h4 { font-size: 14.5px; }
@@ -358,7 +358,7 @@
 
   .vm-pillars { grid-template-columns: 1fr 1fr; gap: 12px; }
   .vm-card { min-height: 184px; padding: 21px 45% 20px 22px; }
-  .vm-card h3 { font-size: clamp(20px, 2.35vw, 25px); }
+  .vm-card h3 { font-size: clamp(19px, 2.1vw, 23px); }
   .vm-card > p:last-child { font-size: 10.3px; }
 
   .vm-values { min-height: auto; }
@@ -416,13 +416,13 @@
     background-position: center, 55% 50%;
   }
 
-  .vm-card__label { font-size: 10.5px !important; }
-  .vm-card h3 { margin-top: 12px; max-width: none; font-size: 23px; }
+  .vm-card__label { font-size: 12px !important; }
+  .vm-card h3 { margin-top: 12px; max-width: none; font-size: 21px; }
   .vm-card > p:last-child { max-width: none; font-size: 10.2px; }
 
   .vm-values { margin-top: 10px; padding: 18px 16px 11px; }
   .vm-values__head { flex-direction: column; align-items: flex-start; gap: 8px; }
-  .vm-values__head > div p { font-size: 11.5px !important; }
+  .vm-values__head > div p { font-size: 12px !important; }
   .vm-values__head h3 { font-size: 15.5px; text-align: left; }
   .vm-values__grid { grid-template-columns: 1fr; }
 
