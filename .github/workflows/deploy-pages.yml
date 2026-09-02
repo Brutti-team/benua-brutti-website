@@ -44,16 +44,10 @@ jobs:
               image.thumbnail(max_size, Image.Resampling.LANCZOS)
               image.save(output, quality=quality, optimize=True, progressive=True)
 
-          # Landscape hero built from the real Brutti team photo.
-          # The full team remains sharp on the right, while the left becomes a
-          # dark photographic extension for readable hero copy.
           team = Image.open(assets / 'brutti team.jpg')
           team = ImageOps.exif_transpose(team).convert('RGB')
 
           canvas_w, canvas_h = 2800, 1200
-
-          # Full-width photographic backdrop, intentionally softened so the
-          # repeated photo does not compete visually with the sharp team image.
           bg = ImageOps.fit(
               team,
               (canvas_w, canvas_h),
@@ -65,8 +59,6 @@ jobs:
           bg = ImageEnhance.Contrast(bg).enhance(0.88)
           bg = ImageEnhance.Brightness(bg).enhance(0.42).convert('RGBA')
 
-          # Keep every team member in-frame. Leave a safe band at the top so
-          # the floating navigation never covers anyone's head.
           foreground = ImageEnhance.Contrast(team).enhance(1.02)
           foreground = ImageEnhance.Color(foreground).enhance(1.02)
           target_h = 1040
@@ -75,8 +67,6 @@ jobs:
           fg_h = max(1, int(foreground.height * scale))
           foreground = foreground.resize((fg_w, fg_h), Image.Resampling.LANCZOS).convert('RGBA')
 
-          # Feather the left edge broadly so the sharp portrait melts naturally
-          # into the landscape instead of appearing as a pasted rectangle.
           fade_width = min(320, max(180, fg_w // 3))
           alpha = Image.new('L', (fg_w, fg_h), 255)
           alpha_px = alpha.load()
@@ -91,7 +81,6 @@ jobs:
           y = 120
           bg.alpha_composite(foreground, (x, y))
 
-          # Deep Brutti green text-safe field on the left, fading before the team.
           gradient = Image.new('L', (canvas_w, 1), 0)
           grad_px = gradient.load()
           fade_end = int(canvas_w * 0.61)
@@ -106,7 +95,6 @@ jobs:
           overlay.putalpha(gradient)
           bg = Image.alpha_composite(bg, overlay)
 
-          # Small top and bottom vignette for a cleaner edge-to-edge hero.
           vignette = Image.new('L', (1, canvas_h), 0)
           vg = vignette.load()
           edge = 150
@@ -126,15 +114,11 @@ jobs:
           full_team.thumbnail((1800, 1800), Image.Resampling.LANCZOS)
           full_team.save(assets / 'brutti-team-full.jpg', quality=88, optimize=True, progressive=True)
 
-          # Founder & co-founder.
           founders = Image.open(assets / 'founder & co founder.JPG')
           founders = ImageOps.exif_transpose(founders).convert('RGB')
           founders.thumbnail((1400, 1400), Image.Resampling.LANCZOS)
           founders.save(assets / 'founders.jpg', quality=84, optimize=True, progressive=True)
 
-          # Lightweight versions used on the landing page. Originals stay in
-          # the deployment for the fullscreen viewer, but are no longer fetched
-          # just to render small cards.
           preview_sources = [
               (Path('bed & bunkbed.png'), assets / 'wwb-bed-bunkbed.jpg'),
               (Path('built in cabinet.png'), assets / 'wwb-built-in-cabinet.jpg'),
@@ -154,7 +138,6 @@ jobs:
           save_web_preview(assets / 'our shared showroom.png', assets / 'showroom-web.jpg', max_size=(1600, 1200), quality=82)
           save_web_preview(assets / 'pallet.png', assets / 'pallet-web.jpg', max_size=(900, 900), quality=80)
 
-          # Build a clean white Brutti mark from the original square JPG.
           logo = Image.open(assets / 'logo brutti.jpg').convert('RGBA')
           bg_colour = logo.getpixel((0, 0))[:3]
           threshold = 62
@@ -192,6 +175,41 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Create clean page routes
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          base_path = Path('dist/index.html')
+          base = base_path.read_text(encoding='utf-8')
+
+          pages = {
+              'journey': {
+                  'title': 'Our Journey | Brutti™',
+                  'description': 'Discover the Benua Brutti journey, from a backyard DIY idea to a growing upcycled furniture business in Sabah.',
+                  'url': 'https://brutti.my/journey/',
+              },
+              'impact': {
+                  'title': 'Impact Report | Brutti™',
+                  'description': 'Explore Benua Brutti’s impact in Sabah, including recovered pallet wood, materials kept in use and the upcoming interactive impact report.',
+                  'url': 'https://brutti.my/impact/',
+              },
+          }
+
+          for slug, meta in pages.items():
+              html = base
+              html = html.replace('<title>Brutti™ (Benua Brutti Sdn Bhd)</title>', f"<title>{meta['title']}</title>")
+              html = html.replace('content="Brutti by Benua Brutti Sdn Bhd creates upcycled pallet wood furniture, custom pieces and functional spaces in Sabah, Malaysia."', f"content=\"{meta['description']}\"")
+              html = html.replace('<link rel="canonical" href="https://brutti.my/" />', f"<link rel=\"canonical\" href=\"{meta['url']}\" />")
+              html = html.replace('<meta property="og:title" content="Brutti™ (Benua Brutti Sdn Bhd)" />', f"<meta property=\"og:title\" content=\"{meta['title']}\" />")
+              html = html.replace('<meta property="og:url" content="https://brutti.my/" />', f"<meta property=\"og:url\" content=\"{meta['url']}\" />")
+              html = html.replace('<meta name="twitter:title" content="Brutti™ (Benua Brutti Sdn Bhd)" />', f"<meta name=\"twitter:title\" content=\"{meta['title']}\" />")
+
+              output = Path('dist') / slug / 'index.html'
+              output.parent.mkdir(parents=True, exist_ok=True)
+              output.write_text(html, encoding='utf-8')
+          PY
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
