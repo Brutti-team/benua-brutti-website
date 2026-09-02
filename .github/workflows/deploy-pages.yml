@@ -137,6 +137,7 @@ jobs:
           save_web_preview(assets / 'racks.png', assets / 'catalogue-poster.jpg', max_size=(1400, 1000), quality=80)
           save_web_preview(assets / 'our shared showroom.png', assets / 'showroom-web.jpg', max_size=(1600, 1200), quality=82)
           save_web_preview(assets / 'pallet.png', assets / 'pallet-web.jpg', max_size=(900, 900), quality=80)
+          save_web_preview(assets / 'our journey.JPG', assets / 'our-journey-web.jpg', max_size=(2200, 1600), quality=85)
 
           logo = Image.open(assets / 'logo brutti.jpg').convert('RGBA')
           bg_colour = logo.getpixel((0, 0))[:3]
