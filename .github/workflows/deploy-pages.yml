@@ -114,6 +114,13 @@ jobs:
           full_team.thumbnail((1800, 1800), Image.Resampling.LANCZOS)
           full_team.save(assets / 'brutti-team-full.jpg', quality=88, optimize=True, progressive=True)
 
+          # Keep the exact current hero photo/composition, but make the deployed
+          # file much lighter so refresh/first paint does not download the
+          # multi-megabyte original.
+          web_team = team.copy()
+          web_team.thumbnail((2200, 2200), Image.Resampling.LANCZOS)
+          web_team.save(assets / 'brutti team.jpg', quality=82, optimize=True, progressive=True)
+
           founders = Image.open(assets / 'founder & co founder.JPG')
           founders = ImageOps.exif_transpose(founders).convert('RGB')
           founders.thumbnail((1400, 1400), Image.Resampling.LANCZOS)
