@@ -25,7 +25,21 @@ function App() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const navItems = ['home', 'about', 'catalogue', 'contact']
+  const navItems = [
+    { id: 'home', label: 'home' },
+    { id: 'about', label: 'about' },
+    { id: 'catalogue', label: 'catalogue' },
+    { id: 'impact-report', label: 'impact report', page: '/impact/' },
+    { id: 'contact', label: 'contact' },
+  ]
+
+  const openNavItem = (item) => {
+    if (item.page) {
+      window.location.href = item.page
+      return
+    }
+    scrollToId(item.id)
+  }
 
   return (
     <main>
@@ -41,7 +55,7 @@ function App() {
 
         <nav className="nav__links" aria-label="Primary navigation">
           {navItems.map((item) => (
-            <button key={item} onClick={() => scrollToId(item)}>{item}</button>
+            <button key={item.id} onClick={() => openNavItem(item)}>{item.label}</button>
           ))}
         </nav>
 
@@ -60,11 +74,11 @@ function App() {
           <button className="mobile-menu__close" onClick={() => setMenuOpen(false)}><X /></button>
           {navItems.map((item, index) => (
             <button
-              key={item}
-              onClick={() => { scrollToId(item); setMenuOpen(false) }}
+              key={item.id}
+              onClick={() => { openNavItem(item); setMenuOpen(false) }}
               className="mobile-menu__link"
             >
-              <span>0{index + 1}</span>{item}
+              <span>0{index + 1}</span>{item.label}
             </button>
           ))}
         </motion.div>
@@ -193,8 +207,7 @@ function App() {
               <button
                 className="story__journey-button"
                 onClick={() => {
-                  window.location.hash = 'journey'
-                  window.scrollTo({ top: 0, behavior: 'auto' })
+                  window.location.href = '/journey/'
                 }}
               >
                 Explore our journey <ArrowUpRight size={17} />
