@@ -38,6 +38,12 @@ jobs:
           register_heif_opener()
           assets = Path('public/assets')
 
+          def save_web_preview(source, output, max_size=(1000, 1000), quality=84):
+              image = Image.open(source)
+              image = ImageOps.exif_transpose(image).convert('RGB')
+              image.thumbnail(max_size, Image.Resampling.LANCZOS)
+              image.save(output, quality=quality, optimize=True, progressive=True)
+
           # Landscape hero built from the real Brutti team photo.
           # The full team remains sharp on the right, while the left becomes a
           # dark photographic extension for readable hero copy.
@@ -114,17 +120,39 @@ jobs:
           vlayer.putalpha(vmask)
           bg = Image.alpha_composite(bg, vlayer)
 
-          bg.convert('RGB').save(assets / 'brutti-team-landscape.jpg', quality=94, optimize=True)
+          bg.convert('RGB').save(assets / 'brutti-team-landscape.jpg', quality=88, optimize=True, progressive=True)
 
           full_team = team.copy()
           full_team.thumbnail((1800, 1800), Image.Resampling.LANCZOS)
-          full_team.save(assets / 'brutti-team-full.jpg', quality=92, optimize=True)
+          full_team.save(assets / 'brutti-team-full.jpg', quality=88, optimize=True, progressive=True)
 
           # Founder & co-founder.
           founders = Image.open(assets / 'founder & co founder.JPG')
           founders = ImageOps.exif_transpose(founders).convert('RGB')
-          founders.thumbnail((1600, 1600), Image.Resampling.LANCZOS)
-          founders.save(assets / 'founders.jpg', quality=90, optimize=True)
+          founders.thumbnail((1400, 1400), Image.Resampling.LANCZOS)
+          founders.save(assets / 'founders.jpg', quality=84, optimize=True, progressive=True)
+
+          # Lightweight versions used on the landing page. Originals stay in
+          # the deployment for the fullscreen viewer, but are no longer fetched
+          # just to render small cards.
+          preview_sources = [
+              (Path('bed & bunkbed.png'), assets / 'wwb-bed-bunkbed.jpg'),
+              (Path('built in cabinet.png'), assets / 'wwb-built-in-cabinet.jpg'),
+              (Path('camper.png'), assets / 'wwb-camper.jpg'),
+              (Path('kiosk.png'), assets / 'wwb-kiosk.jpg'),
+              (Path('memento 2.png'), assets / 'wwb-mementos.jpg'),
+              (assets / 'racks  & shelves.png', assets / 'wwb-racks-shelves.jpg'),
+              (assets / 'rental.png', assets / 'wwb-rental.jpg'),
+              (assets / 'signatures.png', assets / 'wwb-signages.jpg'),
+              (assets / 'table & counters.png', assets / 'wwb-tables-counters.jpg'),
+              (assets / 'others.png', assets / 'wwb-other-builds.jpg'),
+          ]
+          for source, output in preview_sources:
+              save_web_preview(source, output, max_size=(900, 900), quality=80)
+
+          save_web_preview(assets / 'racks.png', assets / 'catalogue-poster.jpg', max_size=(1400, 1000), quality=80)
+          save_web_preview(assets / 'our shared showroom.png', assets / 'showroom-web.jpg', max_size=(1600, 1200), quality=82)
+          save_web_preview(assets / 'pallet.png', assets / 'pallet-web.jpg', max_size=(900, 900), quality=80)
 
           # Build a clean white Brutti mark from the original square JPG.
           logo = Image.open(assets / 'logo brutti.jpg').convert('RGBA')
