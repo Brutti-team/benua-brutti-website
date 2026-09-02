@@ -72,7 +72,7 @@
   text-transform: uppercase;
 }
 
-/* Karya Anak Bangsa mark — smaller, cleaner, more intentional */
+/* Karya Anak Bangsa mark */
 .vm-intro h2 {
   grid-area: brand;
   width: 145px;
@@ -194,26 +194,26 @@
   max-width: 620px;
   margin: 13px 0 0;
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: clamp(27px, 2.15vw, 33px);
+  font-size: clamp(24px, 1.95vw, 30px);
   font-weight: 450;
-  line-height: 1.08;
-  letter-spacing: -.035em;
+  line-height: 1.09;
+  letter-spacing: -.032em;
   text-wrap: balance;
 }
 
 .vm-card > p:last-child {
   max-width: 520px;
-  margin: 12px 0 0;
+  margin: 11px 0 0;
   color: inherit;
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 400;
   line-height: 1.55;
   letter-spacing: -.005em;
   opacity: .72;
 }
 
-/* Nilai */
+/* Nilai — intentionally larger for stronger readability */
 .vm-values {
   min-height: 236px;
   margin-top: 16px;
@@ -242,24 +242,27 @@
 }
 
 .vm-values__head > div span {
+  min-width: 36px;
+  height: 24px;
   border-color: rgba(247,248,244,.22);
   color: rgba(247,248,244,.78);
+  font-size: 8.5px;
 }
 
 .vm-values__head > div p {
   margin: 0;
-  color: rgba(247,248,244,.82) !important;
-  font-size: 9px !important;
+  color: rgba(247,248,244,.86) !important;
+  font-size: 10.5px !important;
 }
 
 .vm-values__head h3 {
   margin: 0;
   color: #f7f8f4;
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 17px;
+  font-weight: 600;
   line-height: 1.35;
-  letter-spacing: -.012em;
+  letter-spacing: -.014em;
   text-align: right;
 }
 
@@ -280,32 +283,32 @@
 
 .vm-value > span {
   display: block;
-  margin-bottom: 10px;
-  color: rgba(247,248,244,.42);
+  margin-bottom: 11px;
+  color: rgba(247,248,244,.48);
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 8px;
+  font-size: 9.5px;
   font-weight: 700;
   line-height: 1;
   letter-spacing: .14em;
 }
 
 .vm-value h4 {
-  margin: 0 0 8px;
+  margin: 0 0 9px;
   color: #f7f8f4;
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 13.5px;
-  font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: -.008em;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.28;
+  letter-spacing: -.012em;
 }
 
 .vm-value p {
   margin: 0;
-  color: rgba(247,248,244,.64);
+  color: rgba(247,248,244,.70);
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 400;
-  line-height: 1.56;
+  line-height: 1.52;
   letter-spacing: -.003em;
 }
 
@@ -317,15 +320,17 @@
   .vm-lead { max-width: 670px; font-size: clamp(15px, 1.3vw, 18px); }
 
   .vm-card { min-height: 164px; padding: 19px 24px 18px; }
-  .vm-card h3 { margin-top: 11px; font-size: clamp(23px, 1.95vw, 29px); }
-  .vm-card > p:last-child { margin-top: 8px; font-size: 10px; }
+  .vm-card h3 { margin-top: 11px; font-size: clamp(22px, 1.8vw, 27px); }
+  .vm-card > p:last-child { margin-top: 8px; font-size: 9.8px; }
 
   .vm-values { min-height: 204px; margin-top: 12px; padding: 17px 20px 15px; }
   .vm-values__head { padding-bottom: 10px; }
-  .vm-values__head h3 { font-size: 13.5px; }
+  .vm-values__head h3 { font-size: 15.5px; }
+  .vm-values__head > div p { font-size: 10px !important; }
   .vm-value { min-height: 122px; padding-top: 14px; }
-  .vm-value h4 { font-size: 12.5px; }
-  .vm-value p { font-size: 10px; }
+  .vm-value > span { font-size: 9px; }
+  .vm-value h4 { font-size: 14.5px; }
+  .vm-value p { font-size: 12px; }
 }
 
 @media (max-width: 1020px) {
@@ -342,10 +347,11 @@
 
   .vm-pillars { grid-template-columns: 1fr 1fr; gap: 12px; }
   .vm-card { min-height: 184px; padding: 21px 22px; }
-  .vm-card h3 { font-size: clamp(24px, 3vw, 30px); }
+  .vm-card h3 { font-size: clamp(23px, 2.7vw, 28px); }
+  .vm-card > p:last-child { font-size: 10.3px; }
 
   .vm-values { min-height: auto; }
-  .vm-values__head h3 { font-size: 14px; }
+  .vm-values__head h3 { font-size: 16px; }
   .vm-values__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .vm-value { min-height: 122px; border-bottom: 1px solid rgba(255,255,255,.08); }
   .vm-value:nth-child(2) { border-right: 0; }
@@ -374,12 +380,12 @@
   .vm-values { min-height: 0; border-radius: 18px; }
 
   .vm-card { padding: 20px 19px 19px; }
-  .vm-card h3 { margin-top: 12px; font-size: 25px; }
-  .vm-card > p:last-child { font-size: 10.8px; }
+  .vm-card h3 { margin-top: 12px; font-size: 23px; }
+  .vm-card > p:last-child { font-size: 10.2px; }
 
   .vm-values { margin-top: 10px; padding: 18px 16px 11px; }
   .vm-values__head { flex-direction: column; align-items: flex-start; gap: 8px; }
-  .vm-values__head h3 { font-size: 13.5px; text-align: left; }
+  .vm-values__head h3 { font-size: 15.5px; text-align: left; }
   .vm-values__grid { grid-template-columns: 1fr; }
 
   .vm-value,
@@ -393,6 +399,6 @@
   }
 
   .vm-value:last-child { border-bottom: 0; }
-  .vm-value h4 { font-size: 13px; }
-  .vm-value p { font-size: 10.5px; }
+  .vm-value h4 { font-size: 15px; }
+  .vm-value p { font-size: 12.5px; }
 }
