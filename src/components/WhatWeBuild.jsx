@@ -53,7 +53,13 @@ function ServiceCard({ item, index, onOpen }) {
         onClick={() => onOpen(index)}
         aria-label={`View ${item.title} image`}
       >
-        <img src={item.image} alt={`Benua Brutti ${item.title}`} />
+        <img
+          src={item.image}
+          alt={`Benua Brutti ${item.title}`}
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
+        />
         <span className="wwb-service-index">{String(index + 1).padStart(2, '0')}</span>
         <span className="wwb-service-view"><Maximize2 size={14} /> View</span>
       </button>
@@ -141,6 +147,9 @@ function GalleryLightbox({ index, onClose, onChange }) {
               key={item.title}
               src={item.image}
               alt={`Benua Brutti ${item.title}`}
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
               initial={{ opacity: 0, scale: 0.985 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.99 }}
@@ -247,7 +256,13 @@ export default function WhatWeBuild() {
           <BuildCard className="wwb-card--digital wwb-card--selesai wwb-selesa-showcase" delay={0.06}>
             <div className="wwb-selesa-showcase__content">
               <div className="wwb-selesa-showcase__eyebrow">AI home services · Kota Kinabalu</div>
-              <img className="wwb-selesa-showcase__logo" src={asset('logo selesaai.jpg')} alt="SelesaAI" />
+              <img
+                className="wwb-selesa-showcase__logo"
+                src={asset('logo selesaai.jpg')}
+                alt="SelesaAI"
+                loading="lazy"
+                decoding="async"
+              />
               <p className="wwb-selesa-showcase__tagline">Ambil gambar. SelesaAI uruskan.</p>
               <p className="wwb-selesa-showcase__desc">
                 AI understands a home issue from a photo, asks follow-up questions, provides a price estimate, then connects the customer with a verified technician.
@@ -315,6 +330,8 @@ export default function WhatWeBuild() {
                         src={selesaSlides[selesaSlideIndex].image}
                         alt={selesaSlides[selesaSlideIndex].alt}
                         loading="lazy"
+                        decoding="async"
+                        fetchPriority="low"
                         draggable={false}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
