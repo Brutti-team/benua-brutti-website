@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom'
 import App from './App.jsx'
 import Collaborators from './components/Collaborators.jsx'
 import JourneyPage from './components/JourneyPage.jsx'
+import ImpactReportPage from './components/ImpactReportPage.jsx'
 import WhatWeBuild from './components/WhatWeBuild.jsx'
 import CatalogueComingSoon from './components/CatalogueComingSoon.jsx'
 import './styles.css'
@@ -33,11 +34,20 @@ import './what-we-build-heading.css'
 import './what-we-build-lightbox.css'
 import './what-we-build-spacing.css'
 import './journey.css'
+import './impact-report.css'
 import './human-touch.css'
 import './footer-social-fix.css'
 import './catalogue-coming-soon.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
+
+function getViewFromLocation() {
+  const path = window.location.pathname.replace(/\/+$/, '') || '/'
+  if (path === '/journey') return 'journey'
+  if (path === '/impact') return 'impact-report'
+  if (window.location.hash === '#journey') return 'journey'
+  return 'home'
+}
 
 function CollaboratorsPortal() {
   const [target, setTarget] = useState(null)
@@ -105,16 +115,25 @@ function CatalogueComingSoonPortal() {
 }
 
 function BruttiSite() {
-  const [view, setView] = useState(() => (window.location.hash === '#journey' ? 'journey' : 'home'))
+  const [view, setView] = useState(getViewFromLocation)
 
   useEffect(() => {
-    const onHashChange = () => {
-      setView(window.location.hash === '#journey' ? 'journey' : 'home')
+    if (window.location.hash === '#journey') {
+      window.history.replaceState({}, '', '/journey/')
+      setView('journey')
+    }
+
+    const onLocationChange = () => {
+      setView(getViewFromLocation())
       window.scrollTo({ top: 0, behavior: 'auto' })
     }
 
-    window.addEventListener('hashchange', onHashChange)
-    return () => window.removeEventListener('hashchange', onHashChange)
+    window.addEventListener('popstate', onLocationChange)
+    window.addEventListener('hashchange', onLocationChange)
+    return () => {
+      window.removeEventListener('popstate', onLocationChange)
+      window.removeEventListener('hashchange', onLocationChange)
+    }
   }, [])
 
   useEffect(() => {
@@ -222,7 +241,6 @@ function BruttiSite() {
       const link = event.target.closest('.footer__email-link')
       if (!link) return
 
-      // On smaller/mobile screens, let Gmail open normally in a new tab.
       if (window.innerWidth < 760) return
 
       event.preventDefault()
@@ -337,6 +355,10 @@ function BruttiSite() {
 
   if (view === 'journey') {
     return <JourneyPage />
+  }
+
+  if (view === 'impact-report') {
+    return <ImpactReportPage />
   }
 
   return (
