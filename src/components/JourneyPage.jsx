@@ -11,8 +11,7 @@ const reveal = {
 }
 
 function backHome() {
-  window.location.hash = ''
-  window.scrollTo({ top: 0, behavior: 'auto' })
+  window.location.href = '/'
 }
 
 export default function JourneyPage() {
