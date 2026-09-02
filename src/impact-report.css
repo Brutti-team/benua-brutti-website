@@ -38,7 +38,7 @@
 }
 
 .impact-report-shell {
-  width: min(1280px, calc(100% - 44px));
+  width: min(1320px, calc(100% - 44px));
   margin: 0 auto;
 }
 
@@ -188,125 +188,118 @@
 
 .impact-report-reader__stage {
   position: relative;
-  min-height: clamp(590px, 70vh, 820px);
+  min-height: clamp(640px, 76vh, 860px);
   display: flex;
   align-items: center;
+  justify-content: center;
   background:
-    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.09), transparent 33%),
-    linear-gradient(145deg, #3a403e 0%, #262e2c 100%);
+    radial-gradient(circle at 50% 16%, rgba(255, 255, 255, 0.1), transparent 34%),
+    linear-gradient(145deg, #4b4d4c 0%, #303433 55%, #252b29 100%);
   user-select: none;
-  touch-action: pan-y;
+}
+
+.impact-report-reader__stage::after {
+  content: '';
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  bottom: 5.5%;
+  height: 6%;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.32);
+  filter: blur(24px);
+  pointer-events: none;
 }
 
 .impact-report-reader__viewport {
+  position: relative;
+  z-index: 2;
   width: 100%;
-  height: 100%;
   min-height: inherit;
   overflow: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(28px, 4vw, 54px) clamp(66px, 7vw, 92px);
+  padding: clamp(30px, 4vw, 56px) clamp(68px, 7vw, 96px);
   scrollbar-width: thin;
 }
 
 .impact-report-reader__zoom {
   width: 100%;
   display: flex;
+  align-items: center;
   justify-content: center;
   transform: scale(var(--impact-zoom, 1));
   transform-origin: center center;
   transition: transform 180ms ease;
 }
 
-.impact-book {
-  position: relative;
-  width: min(100%, 1030px);
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.impact-report-reader__book-wrap {
+  width: min(100%, 1040px);
+  height: clamp(540px, 66vw, 735px);
+  max-height: 72vh;
+  display: flex;
   align-items: center;
-  perspective: 1800px;
-  transform-style: preserve-3d;
-  filter: drop-shadow(0 24px 28px rgba(0, 0, 0, 0.28));
+  justify-content: center;
+  perspective: 2400px;
 }
 
-.impact-book--single {
-  width: min(50%, 515px);
-  grid-template-columns: minmax(0, 1fr);
+.impact-html-flipbook {
+  margin: 0 auto !important;
+  filter: drop-shadow(0 28px 30px rgba(0, 0, 0, 0.34));
 }
 
-.impact-book:not(.impact-book--single)::after {
-  content: '';
-  position: absolute;
-  z-index: 5;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 18px;
-  transform: translateX(-50%);
-  pointer-events: none;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.16), rgba(255, 255, 255, 0.08) 48%, rgba(0, 0, 0, 0.18));
-  mix-blend-mode: multiply;
-  opacity: 0.65;
-}
-
-.impact-book__page {
+.impact-flip-page {
   position: relative;
-  margin: 0;
-  aspect-ratio: 894 / 1264;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   background: #fff;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
+  border: 0;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.035);
 }
 
-.impact-book__page--left {
-  border-radius: 8px 1px 1px 8px;
-  box-shadow: inset -22px 0 32px -28px rgba(0, 0, 0, 0.55);
+.impact-flip-page::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.025), transparent 8%, transparent 92%, rgba(0, 0, 0, 0.035));
+  mix-blend-mode: multiply;
 }
 
-.impact-book__page--right {
-  border-radius: 1px 8px 8px 1px;
-  box-shadow: inset 22px 0 32px -28px rgba(0, 0, 0, 0.55);
-}
-
-.impact-book--single .impact-book__page {
-  border-radius: 8px;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
-}
-
-.impact-book__page img {
+.impact-flip-page img {
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
   -webkit-user-drag: none;
+  user-select: none;
 }
 
-.impact-book__page figcaption {
-  position: absolute;
-  right: 9px;
-  bottom: 7px;
-  display: none;
-  padding: 3px 6px;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.48);
-  color: #fff;
-  font-size: 9px;
+/* react-pageflip / StPageFlip generated layers */
+.impact-html-flipbook .stf__parent,
+.impact-html-flipbook .stf__wrapper {
+  overflow: visible !important;
+}
+
+.impact-html-flipbook .stf__block {
+  background: transparent !important;
 }
 
 .impact-report-reader__edge {
   position: absolute;
-  z-index: 10;
+  z-index: 20;
   top: 50%;
   width: 48px;
   height: 48px;
   display: grid;
   place-items: center;
   transform: translateY(-50%);
-  border: 1px solid rgba(255, 255, 255, 0.13);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 50%;
-  background: rgba(10, 32, 26, 0.68);
+  background: rgba(8, 31, 25, 0.7);
   color: #fff;
   backdrop-filter: blur(12px);
   cursor: pointer;
@@ -322,13 +315,13 @@
 }
 
 .impact-report-reader__edge:hover:not(:disabled) {
-  background: rgba(10, 50, 39, 0.92);
-  transform: translateY(-50%) scale(1.04);
+  background: rgba(8, 52, 40, 0.94);
+  transform: translateY(-50%) scale(1.05);
 }
 
 .impact-report-reader__edge:disabled,
 .impact-report-reader__controls button:disabled {
-  opacity: 0.28;
+  opacity: 0.26;
   cursor: default;
 }
 
@@ -355,7 +348,7 @@
 }
 
 .impact-report-reader__controls > strong {
-  min-width: 78px;
+  min-width: 68px;
   font-size: 12px;
   letter-spacing: 0.04em;
   text-align: center;
@@ -411,6 +404,12 @@
   min-height: 0;
 }
 
+.impact-report-reader:fullscreen .impact-report-reader__book-wrap,
+.impact-report-reader:-webkit-full-screen .impact-report-reader__book-wrap {
+  height: min(82vh, 760px);
+  max-height: none;
+}
+
 @media (max-width: 900px) {
   .impact-report-heading {
     grid-template-columns: 1fr;
@@ -423,11 +422,15 @@
   }
 
   .impact-report-reader__stage {
-    min-height: 600px;
+    min-height: 630px;
   }
 
   .impact-report-reader__viewport {
-    padding-inline: 64px;
+    padding-inline: 62px;
+  }
+
+  .impact-report-reader__book-wrap {
+    height: clamp(500px, 88vw, 700px);
   }
 }
 
@@ -438,21 +441,13 @@
 
   .impact-report-reader__viewport {
     align-items: center;
-    padding: 24px 52px;
+    padding: 24px 50px;
   }
 
-  .impact-book,
-  .impact-book--single {
-    width: min(100%, 470px);
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .impact-book::after {
-    display: none;
-  }
-
-  .impact-book__page {
-    border-radius: 7px;
+  .impact-report-reader__book-wrap {
+    width: min(100%, 500px);
+    height: min(68vh, 700px);
+    min-height: 480px;
   }
 
   .impact-report-reader__edge {
@@ -461,11 +456,11 @@
   }
 
   .impact-report-reader__edge--left {
-    left: 8px;
+    left: 7px;
   }
 
   .impact-report-reader__edge--right {
-    right: 8px;
+    right: 7px;
   }
 
   .impact-report-reader__controls {
@@ -479,7 +474,7 @@
 
 @media (max-width: 620px) {
   .impact-report-shell {
-    width: min(100% - 24px, 1280px);
+    width: min(100% - 24px, 1320px);
   }
 
   .impact-report-nav {
@@ -530,12 +525,13 @@
     display: none;
   }
 
-  .impact-report-reader__stage {
-    min-height: 68vh;
+  .impact-report-reader__viewport {
+    padding: 20px 42px;
   }
 
-  .impact-report-reader__viewport {
-    padding: 18px 46px;
+  .impact-report-reader__book-wrap {
+    min-height: 440px;
+    height: min(66vh, 640px);
   }
 
   .impact-report-reader__controls {
@@ -545,8 +541,13 @@
   }
 
   .impact-report-reader__controls > strong {
-    min-width: 62px;
+    min-width: 54px;
     font-size: 10px;
+  }
+
+  .impact-report-reader__controls > button {
+    width: 34px;
+    height: 34px;
   }
 
   .impact-report-reader__hint {
@@ -554,10 +555,33 @@
   }
 }
 
+@media (max-width: 420px) {
+  .impact-report-reader__viewport {
+    padding-inline: 34px;
+  }
+
+  .impact-report-reader__edge {
+    width: 36px;
+    height: 36px;
+  }
+
+  .impact-report-reader__edge--left {
+    left: 3px;
+  }
+
+  .impact-report-reader__edge--right {
+    right: 3px;
+  }
+
+  .impact-report-reader__controls input[type='range'] {
+    min-width: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .impact-report-reader__zoom,
-  .impact-report-reader__actions button,
   .impact-report-reader__edge,
+  .impact-report-reader__actions button,
   .impact-report-reader__controls button {
     transition: none;
   }
