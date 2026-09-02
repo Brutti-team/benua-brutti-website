@@ -24,6 +24,19 @@ const physicalWorks = [
   { title: 'Other Custom Builds', image: asset('others.png'), tag: 'Custom Work' },
 ]
 
+const physicalWorkPreviews = [
+  asset('wwb-bed-bunkbed.jpg'),
+  asset('wwb-built-in-cabinet.jpg'),
+  asset('wwb-camper.jpg'),
+  asset('wwb-kiosk.jpg'),
+  asset('wwb-mementos.jpg'),
+  asset('wwb-racks-shelves.jpg'),
+  asset('wwb-rental.jpg'),
+  asset('wwb-signages.jpg'),
+  asset('wwb-tables-counters.jpg'),
+  asset('wwb-other-builds.jpg'),
+]
+
 const selesaSlides = [
   { image: asset('selesaai home page.jpg'), alt: 'SelesaAI homepage' },
   { image: asset('selesaai 2.jpg'), alt: 'SelesaAI product screen 2' },
@@ -54,7 +67,7 @@ function ServiceCard({ item, index, onOpen }) {
         aria-label={`View ${item.title} image`}
       >
         <img
-          src={item.image}
+          src={physicalWorkPreviews[index] || item.image}
           alt={`Benua Brutti ${item.title}`}
           loading="lazy"
           decoding="async"
