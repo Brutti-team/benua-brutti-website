@@ -33,7 +33,7 @@ export default function JourneyPage() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.15, ease: [0.22, 1, 0.36, 1] }}
         >
-          <img src={asset('brutti team.jpg')} alt="Benua Brutti team" />
+          <img src={asset('our-journey-web.jpg')} alt="Benua Brutti journey" />
           <div className="journey-hero__shade" />
         </motion.div>
 
