@@ -7,6 +7,8 @@ import {
   Expand,
   Minimize2,
   RotateCcw,
+  Volume2,
+  VolumeX,
   ZoomIn,
   ZoomOut,
 } from 'lucide-react'
@@ -43,8 +45,11 @@ const ReportPage = forwardRef(function ReportPage({ page }, ref) {
 export default function ImpactReportPage() {
   const readerRef = useRef(null)
   const bookRef = useRef(null)
+  const audioContextRef = useRef(null)
+  const lastPaperSoundAt = useRef(0)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [isFlipping, setIsFlipping] = useState(false)
+  const [soundEnabled, setSoundEnabled] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [zoom, setZoom] = useState(1)
 
@@ -53,6 +58,81 @@ export default function ImpactReportPage() {
     document.addEventListener('fullscreenchange', onFullscreenChange)
     return () => document.removeEventListener('fullscreenchange', onFullscreenChange)
   }, [])
+
+  useEffect(() => {
+    return () => {
+      if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
+        audioContextRef.current.close?.()
+      }
+    }
+  }, [])
+
+  const playPaperSound = () => {
+    if (!soundEnabled) return
+
+    const timestamp = performance.now()
+    if (timestamp - lastPaperSoundAt.current < 220) return
+    lastPaperSoundAt.current = timestamp
+
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext
+    if (!AudioContextClass) return
+
+    let context = audioContextRef.current
+    if (!context || context.state === 'closed') {
+      context = new AudioContextClass()
+      audioContextRef.current = context
+    }
+
+    const makeRustle = (startTime, duration, peakGain, highpassFrequency, lowpassFrequency, rate = 1) => {
+      const frameCount = Math.max(1, Math.floor(context.sampleRate * duration))
+      const buffer = context.createBuffer(1, frameCount, context.sampleRate)
+      const data = buffer.getChannelData(0)
+
+      for (let index = 0; index < frameCount; index += 1) {
+        const progress = index / frameCount
+        const attack = Math.min(1, progress / 0.1)
+        const release = Math.pow(1 - progress, 1.35)
+        const texture = 0.72 + 0.28 * Math.sin(progress * Math.PI * 11)
+        data[index] = (Math.random() * 2 - 1) * attack * release * texture
+      }
+
+      const source = context.createBufferSource()
+      const highpass = context.createBiquadFilter()
+      const lowpass = context.createBiquadFilter()
+      const gain = context.createGain()
+
+      source.buffer = buffer
+      source.playbackRate.value = rate
+      highpass.type = 'highpass'
+      highpass.frequency.value = highpassFrequency
+      lowpass.type = 'lowpass'
+      lowpass.frequency.value = lowpassFrequency
+
+      gain.gain.setValueAtTime(0.0001, startTime)
+      gain.gain.exponentialRampToValueAtTime(peakGain, startTime + 0.028)
+      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration)
+
+      source.connect(highpass)
+      highpass.connect(lowpass)
+      lowpass.connect(gain)
+      gain.connect(context.destination)
+
+      source.start(startTime)
+      source.stop(startTime + duration + 0.04)
+    }
+
+    const play = () => {
+      const start = context.currentTime + 0.008
+      makeRustle(start, 0.31, 0.115, 420, 7200, 0.96 + Math.random() * 0.08)
+      makeRustle(start + 0.09, 0.22, 0.052, 900, 5600, 1.05 + Math.random() * 0.08)
+    }
+
+    if (context.state === 'suspended') {
+      context.resume().then(play).catch(() => {})
+    } else {
+      play()
+    }
+  }
 
   useEffect(() => {
     const onKeyDown = (event) => {
@@ -158,6 +238,15 @@ export default function ImpactReportPage() {
                     <span>Reset</span>
                   </button>
                 )}
+                <button
+                  onClick={() => setSoundEnabled((enabled) => !enabled)}
+                  aria-label={soundEnabled ? 'Mute page sound' : 'Enable page sound'}
+                  title={soundEnabled ? 'Page sound on' : 'Page sound off'}
+                  aria-pressed={soundEnabled}
+                >
+                  {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
+                  <span>{soundEnabled ? 'Sound' : 'Muted'}</span>
+                </button>
                 <button onClick={toggleFullscreen} aria-label={isFullscreen ? 'Exit fullscreen' : 'Open fullscreen'}>
                   {isFullscreen ? <Minimize2 size={17} /> : <Expand size={17} />}
                   <span>{isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}</span>
@@ -184,9 +273,9 @@ export default function ImpactReportPage() {
                       height={632}
                       size="stretch"
                       minWidth={275}
-                      maxWidth={500}
+                      maxWidth={470}
                       minHeight={389}
-                      maxHeight={707}
+                      maxHeight={665}
                       startPage={0}
                       drawShadow
                       flippingTime={1050}
@@ -203,7 +292,11 @@ export default function ImpactReportPage() {
                       disableFlipByClick={false}
                       className="impact-html-flipbook"
                       onFlip={(event) => setCurrentPage(event.data + 1)}
-                      onChangeState={(event) => setIsFlipping(event.data === 'flipping')}
+                      onChangeState={(event) => {
+                        const flipping = event.data === 'flipping'
+                        if (flipping) playPaperSound()
+                        setIsFlipping(flipping)
+                      }}
                     >
                       {Array.from({ length: TOTAL_PAGES }, (_, index) => (
                         <ReportPage page={index + 1} key={index + 1} />
