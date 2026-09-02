@@ -102,7 +102,7 @@
   text-wrap: balance;
 }
 
-/* Visi + Misi: exact same size */
+/* Visi + Misi */
 .vm-pillars {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -150,7 +150,7 @@
   border-color: rgba(255,255,255,.26);
 }
 
-/* Shared numbering / section labels */
+/* 01 VISI / 02 MISI on the same line */
 .vm-card__index,
 .vm-values__head > div span {
   display: inline-flex;
@@ -167,27 +167,31 @@
   line-height: 1;
   letter-spacing: .12em;
   opacity: .50;
+  vertical-align: middle;
 }
 
 .vm-card__label,
 .vm-values__head > div p {
   color: inherit !important;
   font-family: 'DM Sans', system-ui, sans-serif !important;
-  font-size: 8.5px !important;
+  font-size: 9px !important;
   font-weight: 700 !important;
   line-height: 1 !important;
   letter-spacing: .18em;
   text-transform: uppercase;
-  opacity: .62;
+  opacity: .65;
 }
 
 .vm-card__label {
-  margin: 14px 0 9px !important;
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0 0 10px !important;
+  vertical-align: middle;
 }
 
 .vm-card h3 {
   max-width: 640px;
-  margin: 0;
+  margin: 15px 0 0;
   font-family: 'DM Sans', system-ui, sans-serif;
   font-size: clamp(28px, 2.35vw, 36px);
   font-weight: 500;
@@ -207,7 +211,7 @@
   opacity: .72;
 }
 
-/* Nilai: same visual height as Visi/Misi */
+/* Nilai */
 .vm-values {
   min-height: 206px;
   margin-top: 16px;
@@ -230,26 +234,27 @@
 .vm-values__head > div {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 10px;
   color: #f7f8f4;
   flex: 0 0 auto;
 }
 
 .vm-values__head > div span {
   border-color: rgba(247,248,244,.24);
-  color: rgba(247,248,244,.78);
+  color: rgba(247,248,244,.82);
 }
 
 .vm-values__head > div p {
   margin: 0;
-  color: rgba(247,248,244,.80) !important;
+  color: rgba(247,248,244,.86) !important;
+  font-size: 9.5px !important;
 }
 
 .vm-values__head h3 {
   margin: 0;
   color: #f7f8f4;
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 1.3;
   letter-spacing: -.018em;
@@ -264,7 +269,7 @@
 
 .vm-value {
   min-height: 130px;
-  padding: 15px 18px 4px;
+  padding: 16px 20px 4px;
   border-right: 1px solid rgba(255,255,255,.085);
 }
 
@@ -273,35 +278,35 @@
 
 .vm-value > span {
   display: block;
-  margin-bottom: 9px;
-  color: rgba(247,248,244,.40);
+  margin-bottom: 10px;
+  color: rgba(247,248,244,.46);
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 7.5px;
+  font-size: 8.5px;
   font-weight: 700;
   line-height: 1;
   letter-spacing: .14em;
 }
 
 .vm-value h4 {
-  margin: 0 0 7px;
+  margin: 0 0 8px;
   color: #f7f8f4;
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 13px;
+  font-size: 14.5px;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.28;
   letter-spacing: -.014em;
 }
 
 .vm-value p {
   margin: 0;
-  color: rgba(247,248,244,.63);
+  color: rgba(247,248,244,.68);
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 10.5px;
+  font-size: 11.5px;
   font-weight: 400;
-  line-height: 1.48;
+  line-height: 1.52;
 }
 
-/* Short laptop screens: keep all three blocks balanced and inside one viewport */
+/* Short laptop screens */
 @media (min-width: 1021px) and (max-height: 740px) {
   .vision-mission.section-pad { padding: 24px 0 !important; }
   .vm-intro { margin-bottom: 14px; padding-bottom: 14px; }
@@ -312,16 +317,15 @@
   .vm-values { min-height: 186px; }
 
   .vm-card { padding: 21px 24px 20px; }
-  .vm-card__label { margin-top: 10px !important; }
-  .vm-card h3 { font-size: clamp(24px, 2.05vw, 31px); }
+  .vm-card h3 { margin-top: 12px; font-size: clamp(24px, 2.05vw, 31px); }
   .vm-card > p:last-child { margin-top: 9px; font-size: 10.3px; }
 
   .vm-values { margin-top: 12px; padding: 15px 20px 13px; }
   .vm-values__head { padding-bottom: 10px; }
-  .vm-values__head h3 { font-size: 12.5px; }
+  .vm-values__head h3 { font-size: 14px; }
   .vm-value { min-height: 106px; padding-top: 12px; }
-  .vm-value h4 { font-size: 11.5px; }
-  .vm-value p { font-size: 9.4px; }
+  .vm-value h4 { font-size: 13px; }
+  .vm-value p { font-size: 10.3px; }
 }
 
 @media (max-width: 1020px) {
@@ -341,8 +345,9 @@
   .vm-card h3 { font-size: clamp(25px, 3.2vw, 32px); }
 
   .vm-values { min-height: auto; }
+  .vm-values__head h3 { font-size: 15px; }
   .vm-values__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .vm-value { min-height: 112px; border-bottom: 1px solid rgba(255,255,255,.085); }
+  .vm-value { min-height: 116px; border-bottom: 1px solid rgba(255,255,255,.085); }
   .vm-value:nth-child(2) { border-right: 0; }
   .vm-value:nth-child(3) { padding-left: 0; }
   .vm-value:nth-last-child(-n+2) { border-bottom: 0; }
@@ -369,12 +374,12 @@
   .vm-values { min-height: 0; border-radius: 18px; }
 
   .vm-card { padding: 21px 19px 20px; }
-  .vm-card h3 { font-size: 26px; }
+  .vm-card h3 { margin-top: 13px; font-size: 26px; }
   .vm-card > p:last-child { font-size: 11px; }
 
   .vm-values { margin-top: 10px; padding: 16px 16px 9px; }
   .vm-values__head { flex-direction: column; align-items: flex-start; gap: 8px; }
-  .vm-values__head h3 { font-size: 13px; text-align: left; }
+  .vm-values__head h3 { font-size: 14px; text-align: left; }
   .vm-values__grid { grid-template-columns: 1fr; }
 
   .vm-value,
@@ -382,12 +387,12 @@
   .vm-value:last-child,
   .vm-value:nth-child(3) {
     min-height: 0;
-    padding: 12px 0;
+    padding: 13px 0;
     border-right: 0;
     border-bottom: 1px solid rgba(255,255,255,.085);
   }
 
   .vm-value:last-child { border-bottom: 0; }
-  .vm-value h4 { font-size: 12px; }
-  .vm-value p { font-size: 10px; }
+  .vm-value h4 { font-size: 13px; }
+  .vm-value p { font-size: 10.5px; }
 }
