@@ -402,3 +402,38 @@
   .vm-value h4 { font-size: 15px; }
   .vm-value p { font-size: 12.5px; }
 }
+
+/* Malaysia visual for Mission — image stays subtle so the copy remains the focus */
+.vm-card--mission {
+  background-image:
+    linear-gradient(
+      90deg,
+      #f4f1e8 0%,
+      #f4f1e8 40%,
+      rgba(244,241,232,.97) 56%,
+      rgba(244,241,232,.78) 72%,
+      rgba(244,241,232,.30) 100%
+    ),
+    url('/assets/malaysia.jpg');
+  background-size: 100% 100%, cover;
+  background-position: center, center 52%;
+  background-repeat: no-repeat;
+}
+
+.vm-card--mission::before {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .vm-card--mission {
+    background-image:
+      linear-gradient(
+        90deg,
+        rgba(244,241,232,.98) 0%,
+        rgba(244,241,232,.96) 58%,
+        rgba(244,241,232,.62) 100%
+      ),
+      url('/assets/malaysia.jpg');
+    background-position: center, center;
+  }
+}
