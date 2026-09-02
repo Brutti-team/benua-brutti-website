@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "node scripts/build-impact-assets.mjs && vite",
+    "build": "node scripts/build-impact-assets.mjs && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
