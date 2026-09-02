@@ -121,20 +121,29 @@ function BruttiSite() {
     const applyRealAssets = () => {
       const heroPhoto = document.querySelector('.hero__image')
       if (heroPhoto) {
-        heroPhoto.src = asset('brutti team.jpg')
+        heroPhoto.src = asset('brutti-team-landscape.jpg')
         heroPhoto.alt = 'Benua Brutti team'
+        heroPhoto.loading = 'eager'
+        heroPhoto.decoding = 'async'
+        heroPhoto.fetchPriority = 'high'
       }
 
       const storyPhoto = document.querySelector('.story__photo-wrap img')
       if (storyPhoto) {
-        storyPhoto.src = asset('founder & co founder.JPG')
+        storyPhoto.src = asset('founders.jpg')
         storyPhoto.alt = 'Benua Brutti founder and co-founder'
+        storyPhoto.loading = 'lazy'
+        storyPhoto.decoding = 'async'
+        storyPhoto.fetchPriority = 'low'
       }
 
       const sharedShowroom = document.querySelector('.showroom img')
       if (sharedShowroom) {
-        sharedShowroom.src = asset('our shared showroom.png')
+        sharedShowroom.src = asset('showroom-web.jpg')
         sharedShowroom.alt = 'Benua Brutti shared showroom'
+        sharedShowroom.loading = 'lazy'
+        sharedShowroom.decoding = 'async'
+        sharedShowroom.fetchPriority = 'low'
       }
 
       document.querySelectorAll('.brand img, .footer img[alt="Benua Brutti"]').forEach((logo) => {
@@ -167,6 +176,8 @@ function BruttiSite() {
         icon.src = asset(social.file)
         icon.alt = `${social.label} logo`
         icon.className = 'footer__social-logo'
+        icon.loading = 'lazy'
+        icon.decoding = 'async'
         link.append(icon)
       })
 
@@ -175,9 +186,12 @@ function BruttiSite() {
       const palletCard = impactStats[0]
       if (palletCard && !palletCard.querySelector('.impact-stat__visual--pallet')) {
         const palletImage = document.createElement('img')
-        palletImage.src = asset('pallet.png')
+        palletImage.src = asset('pallet-web.jpg')
         palletImage.alt = 'Recovered pallet wood'
         palletImage.className = 'impact-stat__visual impact-stat__visual--pallet'
+        palletImage.loading = 'lazy'
+        palletImage.decoding = 'async'
+        palletImage.fetchPriority = 'low'
         palletImage.setAttribute('aria-hidden', 'true')
         palletCard.prepend(palletImage)
       }
@@ -188,6 +202,9 @@ function BruttiSite() {
         treeImage.src = asset('tree.jpg')
         treeImage.alt = 'Tree representing trees saved through pallet upcycling'
         treeImage.className = 'impact-stat__visual impact-stat__visual--tree'
+        treeImage.loading = 'lazy'
+        treeImage.decoding = 'async'
+        treeImage.fetchPriority = 'low'
         treeImage.setAttribute('aria-hidden', 'true')
         treeCard.prepend(treeImage)
       }
