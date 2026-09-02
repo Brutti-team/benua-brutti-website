@@ -28,6 +28,7 @@ function App() {
   const navItems = [
     { id: 'home', label: 'home' },
     { id: 'about', label: 'about' },
+    { id: 'our-journey', label: 'our journey', page: '/journey/' },
     { id: 'catalogue', label: 'catalogue' },
     { id: 'impact-report', label: 'impact report', page: '/impact/' },
     { id: 'contact', label: 'contact' },
@@ -79,8 +80,7 @@ function App() {
               onClick={() => { openNavItem(item); setMenuOpen(false) }}
               className="mobile-menu__link"
             >
-              <span>0{index + 1}</span>{item.label}
-            </button>
+              <span>0{index + 1}</span>{item.label}</button>
           ))}
         </motion.div>
       )}
@@ -121,7 +121,7 @@ function App() {
             transition={{ delay: 0.45, duration: 0.8 }}
             className="hero__intro"
           >
-            We rescue pallet wood and turn it into functional, beautiful pieces — built in Sabah and made to live longer.
+            We rescue pallet wood and turn it into functional, beautiful pieces. Built in Sabah and made to live longer.
           </motion.p>
           <motion.button
             initial={{ opacity: 0 }}
@@ -163,58 +163,63 @@ function App() {
         </div>
       </section>
 
-      <section id="about" className="story section-pad">
-        <div className="page-shell story__grid">
-          <div className="story__visual">
-            <motion.div
-              className="story__photo-wrap"
-              initial={{ clipPath: 'inset(100% 0 0 0)' }}
-              whileInView={{ clipPath: 'inset(0% 0 0 0)' }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <img
-                src={asset('founders.jpg')}
-                alt="Benua Brutti founder and co-founder"
-                loading="lazy"
-                decoding="async"
-                fetchPriority="low"
-              />
-            </motion.div>
-            <span className="story__vertical">OUR STORY</span>
+      <section id="about" className="vision-mission section-pad">
+        <div className="page-shell vm-shell">
+          <Reveal className="vm-intro">
+            <p className="eyebrow">About Brutti</p>
+            <h2>Karya <em>anak bangsa.</em></h2>
+            <p className="vm-lead">
+              Reka dengan identiti Sabah, dibina dengan tujuan, dan dicipta untuk membawa nama Malaysia lebih jauh.
+            </p>
+          </Reveal>
+
+          <div className="vm-pillars">
+            <Reveal className="vm-card vm-card--vision">
+              <span className="vm-card__index">01</span>
+              <p className="vm-card__label">Visi</p>
+              <h3>Angkat Reka Bangsa,<br />Tawan Dunia.</h3>
+              <p>Kami tidak sekadar mencipta. Kami membawa warisan bangsa ke pentas dunia.</p>
+            </Reveal>
+
+            <Reveal delay={0.1} className="vm-card vm-card--mission">
+              <span className="vm-card__index">02</span>
+              <p className="vm-card__label">Misi</p>
+              <h3>Cipta yang cantik,<br />Buat yang berguna,<br />Bawa nama Malaysia.</h3>
+            </Reveal>
           </div>
 
-          <div className="story__content">
-            <Reveal>
-              <p className="eyebrow eyebrow--light">From a backyard idea</p>
-              <h2>Built through<br /><em>resilience.</em></h2>
-            </Reveal>
-            <Reveal delay={0.08}>
-              <p>
-                Lukman and Faznur were already living their DIY dreams when the 2020 pandemic disrupted businesses and livelihoods.
-              </p>
-            </Reveal>
-            <Reveal delay={0.14}>
-              <p>
-                Instead of stopping, they combined woodworking and metalworking skills to create a new revenue path for their crew — turning a hobby into a growing furniture business.
-              </p>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <blockquote>
-                “The first piece was a humble bedside table, crafted in the backyard — a gift that became the beginning of something bigger.”
-              </blockquote>
-            </Reveal>
-            <Reveal delay={0.26}>
-              <button
-                className="story__journey-button"
-                onClick={() => {
-                  window.location.href = '/journey/'
-                }}
-              >
-                Explore our journey <ArrowUpRight size={17} />
-              </button>
-            </Reveal>
-          </div>
+          <Reveal className="vm-values" delay={0.08}>
+            <div className="vm-values__head">
+              <div>
+                <span>03</span>
+                <p>Nilai</p>
+              </div>
+              <h3>Prinsip yang kami bawa dalam setiap karya.</h3>
+            </div>
+
+            <div className="vm-values__grid">
+              <article className="vm-value">
+                <span>01</span>
+                <h4>Reka dengan Jiwa Raga</h4>
+                <p>Setiap ciptaan lahir dari hati yang berapi dan tangan yang tidak kenal penat.</p>
+              </article>
+              <article className="vm-value">
+                <span>02</span>
+                <h4>Bangga dengan Asal Usul</h4>
+                <p>Kami bawa identiti Sabah dan Malaysia dalam setiap inci rekaan. Asal usul adalah kekuatan.</p>
+              </article>
+              <article className="vm-value">
+                <span>03</span>
+                <h4>Jiwa Belajar, Jiwa Merdeka</h4>
+                <p>Kami terus mencari, mencuba, dan berkembang. Bebas untuk jadi lebih baik, setiap hari.</p>
+              </article>
+              <article className="vm-value">
+                <span>04</span>
+                <h4>Buat untuk Dunia</h4>
+                <p>Kualiti global, rasa tempatan. Apa yang lahir di sini, layak dikagumi di mana-mana.</p>
+              </article>
+            </div>
+          </Reveal>
         </div>
       </section>
 
