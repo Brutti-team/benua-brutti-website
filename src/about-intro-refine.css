@@ -1,0 +1,112 @@
+/* About Brutti intro — cleaner hierarchy and stronger alignment */
+.vm-intro {
+  grid-template-columns: 176px minmax(0, 1fr);
+  grid-template-areas:
+    'eyebrow eyebrow'
+    'brand lead';
+  align-items: center;
+  column-gap: 34px;
+  row-gap: 12px;
+  margin-bottom: 18px;
+  padding: 2px 0 24px;
+}
+
+.vm-intro .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+  color: rgba(247,248,244,.58);
+  font-size: 9px;
+  letter-spacing: .18em;
+}
+
+.vm-intro .eyebrow::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  flex: 0 0 20px;
+  background: rgba(247,248,244,.26);
+}
+
+.vm-intro h2 {
+  width: 158px;
+  height: 108px;
+  align-self: center;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,.08));
+}
+
+.vm-lead {
+  justify-self: start;
+  max-width: 610px;
+  padding-left: 32px;
+  border-left: 1px solid rgba(247,248,244,.16);
+  font-size: clamp(18px, 1.5vw, 22px);
+  font-weight: 500;
+  line-height: 1.42;
+  letter-spacing: -.025em;
+  text-wrap: pretty;
+}
+
+@media (min-width: 1021px) and (max-height: 740px) {
+  .vm-intro {
+    grid-template-columns: 150px minmax(0, 1fr);
+    column-gap: 26px;
+    row-gap: 9px;
+    padding-bottom: 18px;
+  }
+
+  .vm-intro h2 {
+    width: 138px;
+    height: 94px;
+  }
+
+  .vm-lead {
+    max-width: 560px;
+    padding-left: 26px;
+    font-size: clamp(16px, 1.3vw, 18px);
+  }
+}
+
+@media (max-width: 1020px) {
+  .vm-intro {
+    grid-template-columns: 148px minmax(0, 1fr);
+    column-gap: 24px;
+  }
+
+  .vm-intro h2 {
+    width: 138px;
+    height: 94px;
+  }
+
+  .vm-lead {
+    max-width: 560px;
+    padding-left: 24px;
+    font-size: clamp(17px, 2vw, 19px);
+  }
+}
+
+@media (max-width: 720px) {
+  .vm-intro {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'eyebrow'
+      'brand'
+      'lead';
+    gap: 12px;
+    padding: 0 0 20px;
+  }
+
+  .vm-intro h2 {
+    width: 138px;
+    height: 94px;
+  }
+
+  .vm-lead {
+    max-width: 520px;
+    padding-left: 0;
+    border-left: 0;
+    font-size: 17px;
+    line-height: 1.48;
+  }
+}
