@@ -7,7 +7,7 @@
   overflow: hidden;
   padding: clamp(28px, 3.8vh, 40px) 0 !important;
   background:
-    radial-gradient(circle at 88% 8%, rgba(126, 174, 151, .09), transparent 29%),
+    radial-gradient(circle at 88% 8%, rgba(126,174,151,.09), transparent 29%),
     linear-gradient(135deg, #082f25 0%, #0b3b2f 52%, #124d3d 100%);
   color: #f7f8f4;
 }
@@ -45,13 +45,10 @@
   margin: 0 auto;
 }
 
-/* Intro */
 .vm-intro {
   display: grid;
   grid-template-columns: 162px minmax(0, 1fr);
-  grid-template-areas:
-    'eyebrow eyebrow'
-    'brand lead';
+  grid-template-areas: 'eyebrow eyebrow' 'brand lead';
   align-items: center;
   column-gap: clamp(44px, 5.8vw, 82px);
   row-gap: 8px;
@@ -102,7 +99,6 @@
   text-wrap: balance;
 }
 
-/* Vision + Mission */
 .vm-pillars {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -124,7 +120,6 @@
   isolation: isolate;
 }
 
-/* Image is deliberately contained on the right, similar to the Impact cards */
 .vm-card::after {
   content: '';
   position: absolute;
@@ -182,19 +177,20 @@
 .vm-values__head > div p {
   color: inherit !important;
   font-family: 'DM Sans', system-ui, sans-serif !important;
-  font-size: 8.5px !important;
-  font-weight: 700 !important;
+  font-weight: 750 !important;
   line-height: 1 !important;
-  letter-spacing: .18em;
+  letter-spacing: .15em;
   text-transform: uppercase;
-  opacity: .62;
+  opacity: .82;
 }
 
+/* Section labels are headings, so give them stronger hierarchy */
 .vm-card__label {
   display: inline-flex;
   align-items: center;
   margin: 0 0 0 10px !important;
   vertical-align: middle;
+  font-size: 10.5px !important;
 }
 
 .vm-card__index,
@@ -228,7 +224,6 @@
   opacity: .72;
 }
 
-/* Values */
 .vm-values {
   min-height: 236px;
   margin-top: 16px;
@@ -266,8 +261,8 @@
 
 .vm-values__head > div p {
   margin: 0;
-  color: rgba(247,248,244,.86) !important;
-  font-size: 10.5px !important;
+  color: rgba(247,248,244,.94) !important;
+  font-size: 11.5px !important;
 }
 
 .vm-values__head h3 {
@@ -327,7 +322,6 @@
   letter-spacing: -.003em;
 }
 
-/* Short laptop screens */
 @media (min-width: 1021px) and (max-height: 740px) {
   .vision-mission.section-pad { padding: 22px 0 !important; }
   .vm-intro { margin-bottom: 13px; padding-bottom: 14px; }
@@ -337,11 +331,12 @@
   .vm-card { min-height: 164px; padding: 19px 45% 18px 24px; }
   .vm-card h3 { margin-top: 11px; font-size: clamp(20px, 1.55vw, 24px); }
   .vm-card > p:last-child { margin-top: 8px; font-size: 9.8px; }
+  .vm-card__label { font-size: 10px !important; }
 
   .vm-values { min-height: 204px; margin-top: 12px; padding: 17px 20px 15px; }
   .vm-values__head { padding-bottom: 10px; }
   .vm-values__head h3 { font-size: 15.5px; }
-  .vm-values__head > div p { font-size: 10px !important; }
+  .vm-values__head > div p { font-size: 11px !important; }
   .vm-value { min-height: 122px; padding-top: 14px; }
   .vm-value > span { font-size: 9px; }
   .vm-value h4 { font-size: 14.5px; }
@@ -394,9 +389,7 @@
   .vm-card,
   .vm-values { min-height: 0; border-radius: 18px; }
 
-  .vm-card {
-    padding: 160px 19px 19px;
-  }
+  .vm-card { padding: 160px 19px 19px; }
 
   .vm-card::after {
     top: 0;
@@ -421,11 +414,13 @@
     background-position: center, center 52%;
   }
 
+  .vm-card__label { font-size: 10.5px !important; }
   .vm-card h3 { margin-top: 12px; max-width: none; font-size: 23px; }
   .vm-card > p:last-child { max-width: none; font-size: 10.2px; }
 
   .vm-values { margin-top: 10px; padding: 18px 16px 11px; }
   .vm-values__head { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .vm-values__head > div p { font-size: 11.5px !important; }
   .vm-values__head h3 { font-size: 15.5px; text-align: left; }
   .vm-values__grid { grid-template-columns: 1fr; }
 
