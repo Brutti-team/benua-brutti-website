@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#183d2d" />
 
+    <script>
+      (() => {
+        const path = window.location.pathname.replace(/\/+$/, '') || '/'
+        let hero = null
+
+        if (path === '/') hero = '/assets/brutti%20team.jpg'
+        if (path === '/journey') hero = '/assets/our-journey-web.jpg'
+        if (!hero) return
+
+        const preload = document.createElement('link')
+        preload.rel = 'preload'
+        preload.as = 'image'
+        preload.href = hero
+        preload.setAttribute('fetchpriority', 'high')
+        document.head.appendChild(preload)
+      })()
+    </script>
+
     <title>Brutti™ (Benua Brutti Sdn Bhd)</title>
     <meta name="description" content="Brutti by Benua Brutti Sdn Bhd creates upcycled pallet wood furniture, custom pieces and functional spaces in Sabah, Malaysia." />
     <meta name="robots" content="index, follow" />
