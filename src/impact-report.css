@@ -182,6 +182,11 @@
   font-weight: 750;
 }
 
+.impact-report-reader__actions button[aria-pressed='false'] {
+  color: rgba(255, 255, 255, 0.68);
+  background: rgba(255, 255, 255, 0.035);
+}
+
 .impact-report-reader__actions button:hover:not(:disabled),
 .impact-report-reader__controls button:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.12);
@@ -191,7 +196,7 @@
 
 .impact-report-reader__stage {
   position: relative;
-  min-height: clamp(610px, 72vh, 820px);
+  min-height: clamp(630px, 73vh, 830px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -215,13 +220,13 @@
   content: '';
   position: absolute;
   z-index: 0;
-  left: 19%;
-  right: 19%;
-  bottom: 7%;
-  height: 4.5%;
+  left: 21%;
+  right: 21%;
+  bottom: 8.5%;
+  height: 4%;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.28);
-  filter: blur(24px);
+  background: rgba(0, 0, 0, 0.25);
+  filter: blur(23px);
   pointer-events: none;
 }
 
@@ -234,7 +239,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(26px, 3.4vw, 46px) clamp(66px, 6.4vw, 90px);
+  padding: clamp(42px, 4.8vw, 64px) clamp(74px, 7vw, 104px);
   scrollbar-width: none;
   overscroll-behavior: contain;
 }
@@ -260,9 +265,9 @@
 }
 
 .impact-report-reader__book-wrap {
-  width: min(100%, 1000px);
-  height: clamp(500px, 62vw, 700px);
-  max-height: 70vh;
+  width: min(100%, 940px);
+  height: clamp(460px, 56vw, 640px);
+  max-height: 64vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -272,7 +277,7 @@
 
 .impact-html-flipbook {
   margin: 0 auto !important;
-  filter: drop-shadow(0 24px 26px rgba(0, 0, 0, 0.29));
+  filter: drop-shadow(0 22px 24px rgba(0, 0, 0, 0.27));
   transform: translateZ(0);
   will-change: transform;
 }
@@ -460,14 +465,14 @@
 .impact-report-reader:-webkit-full-screen .impact-report-reader__viewport {
   min-height: 0;
   height: 100%;
-  padding-top: 18px;
-  padding-bottom: 18px;
+  padding-top: 34px;
+  padding-bottom: 34px;
 }
 
 .impact-report-reader:fullscreen .impact-report-reader__book-wrap,
 .impact-report-reader:-webkit-full-screen .impact-report-reader__book-wrap {
-  height: min(calc(100vh - 150px), 720px);
-  max-height: calc(100vh - 150px);
+  height: min(calc(100vh - 190px), 690px);
+  max-height: calc(100vh - 190px);
 }
 
 @media (max-width: 900px) {
@@ -486,11 +491,11 @@
   }
 
   .impact-report-reader__viewport {
-    padding-inline: 58px;
+    padding: 34px 58px;
   }
 
   .impact-report-reader__book-wrap {
-    height: clamp(470px, 82vw, 660px);
+    height: clamp(440px, 76vw, 610px);
   }
 }
 
@@ -501,13 +506,13 @@
 
   .impact-report-reader__viewport {
     align-items: center;
-    padding: 20px 48px;
+    padding: 28px 48px;
   }
 
   .impact-report-reader__book-wrap {
-    width: min(100%, 480px);
-    height: min(66vh, 660px);
-    min-height: 450px;
+    width: min(100%, 460px);
+    height: min(62vh, 610px);
+    min-height: 430px;
   }
 
   .impact-report-reader__edge {
@@ -590,11 +595,11 @@
   }
 
   .impact-report-reader__viewport {
-    padding: 16px 42px;
+    padding: 24px 42px;
   }
 
   .impact-report-reader__book-wrap {
-    min-height: 410px;
+    min-height: 390px;
   }
 
   .impact-report-reader__controls {
@@ -619,10 +624,16 @@
     grid-template-rows: 52px minmax(0, 1fr) 54px;
   }
 
+  .impact-report-reader:fullscreen .impact-report-reader__viewport,
+  .impact-report-reader:-webkit-full-screen .impact-report-reader__viewport {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
   .impact-report-reader:fullscreen .impact-report-reader__book-wrap,
   .impact-report-reader:-webkit-full-screen .impact-report-reader__book-wrap {
-    height: min(calc(100vh - 126px), 660px);
-    max-height: calc(100vh - 126px);
+    height: min(calc(100vh - 154px), 610px);
+    max-height: calc(100vh - 154px);
   }
 }
 
