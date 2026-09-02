@@ -170,7 +170,7 @@ function App() {
             <p className="eyebrow">About Brutti</p>
             <h2>Karya <em>anak bangsa.</em></h2>
             <p className="vm-lead">
-              Reka dengan identiti Sabah, dibina dengan tujuan, dan dicipta untuk membawa nama Malaysia lebih jauh.
+              Kami tidak sekadar mencipta. Kami membawa warisan bangsa ke pentas dunia.
             </p>
           </Reveal>
 
