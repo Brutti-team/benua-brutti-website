@@ -121,7 +121,7 @@ function BruttiSite() {
     const applyRealAssets = () => {
       const heroPhoto = document.querySelector('.hero__image')
       if (heroPhoto) {
-        heroPhoto.src = asset('brutti-team-landscape.jpg')
+        heroPhoto.src = asset('brutti team.jpg')
         heroPhoto.alt = 'Benua Brutti team'
         heroPhoto.loading = 'eager'
         heroPhoto.decoding = 'async'
