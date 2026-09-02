@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { forwardRef, useEffect, useRef, useState } from 'react'
+import HTMLFlipBook from 'react-pageflip'
 import {
   ArrowLeft,
   ChevronLeft,
@@ -21,33 +21,24 @@ function pageImage(page) {
   return `${import.meta.env.BASE_URL}assets/impact-report/page-${String(page).padStart(2, '0')}.webp`
 }
 
-function normalizeDesktopPage(page) {
-  if (page <= 1) return 1
-  if (page >= TOTAL_PAGES) return TOTAL_PAGES
-  return page % 2 === 0 ? page : page - 1
-}
+const ReportPage = forwardRef(function ReportPage({ page }, ref) {
+  return (
+    <div className="impact-flip-page" ref={ref} data-density={page === 1 || page === TOTAL_PAGES ? 'hard' : 'soft'}>
+      <img
+        src={pageImage(page)}
+        alt={page === 1 ? 'Brutti Impact Report 2026 cover' : `Brutti Impact Report 2026 page ${page}`}
+        draggable="false"
+      />
+    </div>
+  )
+})
 
 export default function ImpactReportPage() {
   const readerRef = useRef(null)
-  const touchStartX = useRef(null)
+  const bookRef = useRef(null)
   const [isFullscreen, setIsFullscreen] = useState(false)
-  const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 760px)').matches)
   const [currentPage, setCurrentPage] = useState(1)
-  const [direction, setDirection] = useState(1)
   const [zoom, setZoom] = useState(1)
-
-  useEffect(() => {
-    const media = window.matchMedia('(max-width: 760px)')
-    const onChange = (event) => {
-      setIsMobile(event.matches)
-      if (!event.matches) {
-        setCurrentPage((page) => normalizeDesktopPage(page))
-      }
-    }
-
-    media.addEventListener('change', onChange)
-    return () => media.removeEventListener('change', onChange)
-  }, [])
 
   useEffect(() => {
     const onFullscreenChange = () => setIsFullscreen(Boolean(document.fullscreenElement))
@@ -55,44 +46,19 @@ export default function ImpactReportPage() {
     return () => document.removeEventListener('fullscreenchange', onFullscreenChange)
   }, [])
 
-  const nextPage = () => {
-    if (currentPage >= TOTAL_PAGES) return
-    setDirection(1)
-
-    if (isMobile) {
-      setCurrentPage((page) => Math.min(TOTAL_PAGES, page + 1))
-      return
-    }
-
-    if (currentPage === 1) setCurrentPage(2)
-    else if (currentPage >= 38) setCurrentPage(40)
-    else setCurrentPage((page) => page + 2)
-  }
-
-  const previousPage = () => {
-    if (currentPage <= 1) return
-    setDirection(-1)
-
-    if (isMobile) {
-      setCurrentPage((page) => Math.max(1, page - 1))
-      return
-    }
-
-    if (currentPage === 40) setCurrentPage(38)
-    else if (currentPage <= 2) setCurrentPage(1)
-    else setCurrentPage((page) => page - 2)
-  }
-
   useEffect(() => {
     const onKeyDown = (event) => {
-      if (event.key === 'ArrowRight') nextPage()
-      if (event.key === 'ArrowLeft') previousPage()
+      const pageFlip = bookRef.current?.pageFlip?.()
+      if (!pageFlip) return
+
+      if (event.key === 'ArrowRight') pageFlip.flipNext()
+      if (event.key === 'ArrowLeft') pageFlip.flipPrev()
       if (event.key === 'Escape' && document.fullscreenElement) document.exitFullscreen?.()
     }
 
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  })
+  }, [])
 
   useEffect(() => {
     const pagesToPreload = new Set([
@@ -117,25 +83,18 @@ export default function ImpactReportPage() {
         await document.exitFullscreen?.()
       }
     } catch {
-      // Keep the reader usable even if fullscreen is blocked by the browser.
+      // Keep the reader usable even if browser fullscreen is unavailable.
     }
   }
 
+  const previousPage = () => bookRef.current?.pageFlip?.()?.flipPrev()
+  const nextPage = () => bookRef.current?.pageFlip?.()?.flipNext()
+
   const jumpToPage = (page) => {
-    const target = Number(page)
-    setDirection(target >= currentPage ? 1 : -1)
-    setCurrentPage(isMobile ? target : normalizeDesktopPage(target))
+    const target = Math.max(1, Math.min(TOTAL_PAGES, Number(page)))
+    bookRef.current?.pageFlip?.()?.turnToPage(target - 1)
+    setCurrentPage(target)
   }
-
-  const visiblePages = isMobile
-    ? [currentPage]
-    : currentPage === 1 || currentPage === TOTAL_PAGES
-      ? [currentPage]
-      : [currentPage, Math.min(TOTAL_PAGES, currentPage + 1)]
-
-  const pageLabel = visiblePages.length === 1
-    ? `${visiblePages[0]} / ${TOTAL_PAGES}`
-    : `${visiblePages[0]}–${visiblePages[1]} / ${TOTAL_PAGES}`
 
   return (
     <main className="impact-report-page">
@@ -161,7 +120,7 @@ export default function ImpactReportPage() {
               <p>
                 Explore Brutti's story, growth, people, milestones and impact through our complete 40-page digital report.
               </p>
-              <span>Self-hosted digital edition</span>
+              <span>Interactive digital edition</span>
             </div>
           </div>
 
@@ -184,26 +143,11 @@ export default function ImpactReportPage() {
               </div>
             </div>
 
-            <div
-              className="impact-report-reader__stage"
-              onTouchStart={(event) => {
-                touchStartX.current = event.touches[0]?.clientX ?? null
-              }}
-              onTouchEnd={(event) => {
-                if (touchStartX.current == null) return
-                const endX = event.changedTouches[0]?.clientX ?? touchStartX.current
-                const delta = endX - touchStartX.current
-                touchStartX.current = null
-
-                if (Math.abs(delta) < 45) return
-                if (delta < 0) nextPage()
-                else previousPage()
-              }}
-            >
+            <div className="impact-report-reader__stage">
               <button
                 className="impact-report-reader__edge impact-report-reader__edge--left"
                 onClick={previousPage}
-                disabled={currentPage === 1}
+                disabled={currentPage <= 1}
                 aria-label="Previous page"
               >
                 <ChevronLeft size={30} />
@@ -211,38 +155,45 @@ export default function ImpactReportPage() {
 
               <div className="impact-report-reader__viewport">
                 <div className="impact-report-reader__zoom" style={{ '--impact-zoom': zoom }}>
-                  <AnimatePresence mode="wait" initial={false} custom={direction}>
-                    <motion.div
-                      className={`impact-book ${visiblePages.length === 1 ? 'impact-book--single' : ''}`}
-                      key={`${isMobile ? 'mobile' : 'desktop'}-${currentPage}`}
-                      custom={direction}
-                      initial={{ opacity: 0.82, x: direction > 0 ? 34 : -34, rotateY: direction > 0 ? -5 : 5 }}
-                      animate={{ opacity: 1, x: 0, rotateY: 0 }}
-                      exit={{ opacity: 0.78, x: direction > 0 ? -26 : 26, rotateY: direction > 0 ? 4 : -4 }}
-                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  <div className="impact-report-reader__book-wrap">
+                    <HTMLFlipBook
+                      ref={bookRef}
+                      width={447}
+                      height={632}
+                      size="stretch"
+                      minWidth={280}
+                      maxWidth={520}
+                      minHeight={396}
+                      maxHeight={735}
+                      startPage={0}
+                      drawShadow
+                      flippingTime={850}
+                      usePortrait
+                      startZIndex={10}
+                      autoSize
+                      maxShadowOpacity={0.48}
+                      showCover
+                      mobileScrollSupport
+                      clickEventForward
+                      useMouseEvents
+                      swipeDistance={20}
+                      showPageCorners
+                      disableFlipByClick={false}
+                      className="impact-html-flipbook"
+                      onFlip={(event) => setCurrentPage(event.data + 1)}
                     >
-                      {visiblePages.map((page, index) => (
-                        <figure
-                          className={`impact-book__page ${visiblePages.length > 1 && index === 0 ? 'impact-book__page--left' : ''} ${visiblePages.length > 1 && index === 1 ? 'impact-book__page--right' : ''}`}
-                          key={page}
-                        >
-                          <img
-                            src={pageImage(page)}
-                            alt={page === 1 ? 'Brutti Impact Report 2026 cover' : `Brutti Impact Report 2026 page ${page}`}
-                            draggable="false"
-                          />
-                          <figcaption>{page}</figcaption>
-                        </figure>
+                      {Array.from({ length: TOTAL_PAGES }, (_, index) => (
+                        <ReportPage page={index + 1} key={index + 1} />
                       ))}
-                    </motion.div>
-                  </AnimatePresence>
+                    </HTMLFlipBook>
+                  </div>
                 </div>
               </div>
 
               <button
                 className="impact-report-reader__edge impact-report-reader__edge--right"
                 onClick={nextPage}
-                disabled={currentPage === TOTAL_PAGES}
+                disabled={currentPage >= TOTAL_PAGES}
                 aria-label="Next page"
               >
                 <ChevronRight size={30} />
@@ -250,11 +201,11 @@ export default function ImpactReportPage() {
             </div>
 
             <div className="impact-report-reader__controls">
-              <button onClick={previousPage} disabled={currentPage === 1} aria-label="Previous page">
+              <button onClick={previousPage} disabled={currentPage <= 1} aria-label="Previous page">
                 <ChevronLeft size={18} />
               </button>
 
-              <strong>{pageLabel}</strong>
+              <strong>{currentPage} / {TOTAL_PAGES}</strong>
 
               <input
                 aria-label="Jump to page"
@@ -275,22 +226,22 @@ export default function ImpactReportPage() {
                 </button>
                 <span>{Math.round(zoom * 100)}%</span>
                 <button
-                  onClick={() => setZoom((value) => Math.min(1.6, Number((value + 0.15).toFixed(2))))}
-                  disabled={zoom >= 1.6}
+                  onClick={() => setZoom((value) => Math.min(1.5, Number((value + 0.15).toFixed(2))))}
+                  disabled={zoom >= 1.5}
                   aria-label="Zoom in"
                 >
                   <ZoomIn size={17} />
                 </button>
               </div>
 
-              <button onClick={nextPage} disabled={currentPage === TOTAL_PAGES} aria-label="Next page">
+              <button onClick={nextPage} disabled={currentPage >= TOTAL_PAGES} aria-label="Next page">
                 <ChevronRight size={18} />
               </button>
             </div>
           </div>
 
           <p className="impact-report-reader__hint">
-            Use the arrows or keyboard to turn pages. On mobile, swipe left or right. The report is hosted directly on Brutti's website with no third-party watermark.
+            Drag a page corner to turn it like a real book, or tap the page edge. On mobile, swipe left or right. Use the keyboard arrows on desktop.
           </p>
         </div>
       </section>
