@@ -146,6 +146,13 @@ jobs:
           save_web_preview(assets / 'pallet.png', assets / 'pallet-web.jpg', max_size=(900, 900), quality=80)
           save_web_preview(assets / 'our journey.JPG', assets / 'our-journey-web.jpg', max_size=(2200, 1600), quality=85)
 
+          # Use the uploaded Karya Anak Bangsa artwork, but serve a much lighter
+          # transparent WebP version on the landing page.
+          karya = Image.open(assets / 'karya anak bangsa.png')
+          karya = ImageOps.exif_transpose(karya).convert('RGBA')
+          karya.thumbnail((1100, 500), Image.Resampling.LANCZOS)
+          karya.save(assets / 'karya-anak-bangsa-web.webp', 'WEBP', quality=84, method=6)
+
           logo = Image.open(assets / 'logo brutti.jpg').convert('RGBA')
           bg_colour = logo.getpixel((0, 0))[:3]
           threshold = 62
