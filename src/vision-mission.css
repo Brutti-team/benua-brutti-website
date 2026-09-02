@@ -4,11 +4,12 @@
   overflow: hidden;
   padding: 40px 0 44px;
   background:
-    radial-gradient(circle at 84% 5%, rgba(38, 105, 81, .055), transparent 26%),
-    linear-gradient(180deg, #fafaf7 0%, #f3f5f1 100%);
-  color: #10382b;
-  border-top: 1px solid rgba(23, 87, 71, .065);
-  border-bottom: 1px solid rgba(23, 87, 71, .065);
+    radial-gradient(circle at 84% 6%, rgba(216, 229, 220, .11), transparent 27%),
+    radial-gradient(circle at 12% 88%, rgba(181, 204, 191, .07), transparent 28%),
+    linear-gradient(145deg, #0a3429 0%, #0f4334 48%, #175747 100%);
+  color: #f7f4eb;
+  border-top: 1px solid rgba(255,255,255,.055);
+  border-bottom: 1px solid rgba(255,255,255,.055);
 }
 
 .vision-mission::before {
@@ -17,8 +18,8 @@
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(23,87,71,.010) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(23,87,71,.010) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
   background-size: 84px 84px;
   opacity: .34;
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
@@ -47,7 +48,7 @@
 .vm-intro .eyebrow {
   grid-area: eyebrow;
   margin: 0 0 2px;
-  color: #71837b;
+  color: rgba(247,244,235,.58);
   font-family: 'Manrope', system-ui, sans-serif;
   font-size: 8px;
   font-weight: 800;
@@ -67,7 +68,7 @@
   background-repeat: no-repeat;
   background-position: left center;
   background-size: contain;
-  filter: drop-shadow(0 10px 20px rgba(16, 56, 43, .08));
+  filter: drop-shadow(0 10px 22px rgba(0,0,0,.12));
 }
 
 .vm-intro h2 em {
@@ -78,7 +79,7 @@
   grid-area: lead;
   max-width: 720px;
   margin: 0;
-  color: #53675f;
+  color: rgba(247,244,235,.84);
   font-family: 'Manrope', system-ui, sans-serif;
   font-size: clamp(14px, 1.08vw, 16px);
   font-weight: 450;
@@ -86,7 +87,7 @@
   letter-spacing: -.012em;
 }
 
-/* Vision + Mission — smaller editorial statements */
+/* Vision + Mission — compact, premium contrast */
 .vm-pillars {
   display: grid;
   grid-template-columns: .92fr 1.08fr;
@@ -99,8 +100,8 @@
   padding: 20px 23px 19px;
   overflow: hidden;
   border-radius: 18px;
-  border: 1px solid rgba(23,87,71,.09);
-  box-shadow: 0 10px 26px rgba(14, 55, 41, .045);
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 14px 34px rgba(0,0,0,.14);
 }
 
 .vm-card::before {
@@ -112,7 +113,7 @@
   width: 3px;
   border-radius: 0 999px 999px 0;
   background: currentColor;
-  opacity: .20;
+  opacity: .18;
 }
 
 .vm-card::after {
@@ -123,18 +124,19 @@
   right: -76px;
   top: -82px;
   border-radius: 50%;
-  background: rgba(255,255,255,.065);
+  background: rgba(255,255,255,.07);
   pointer-events: none;
 }
 
 .vm-card--vision {
-  background: linear-gradient(135deg, #113f31 0%, #155844 100%);
-  color: #f9f7f1;
+  background: linear-gradient(135deg, #165844 0%, #1b664f 100%);
+  color: #fbf8f1;
 }
 
 .vm-card--mission {
-  background: rgba(255,255,252,.82);
+  background: linear-gradient(135deg, #efe7d7 0%, #fbf7ee 100%);
   color: #123d2f;
+  border-color: rgba(255,255,255,.18);
 }
 
 .vm-card__index {
@@ -146,7 +148,7 @@
   padding: 0 8px;
   border-radius: 999px;
   border: 1px solid currentColor;
-  opacity: .45;
+  opacity: .46;
   font-family: 'Manrope', system-ui, sans-serif;
   font-size: 7px;
   font-weight: 800;
@@ -163,7 +165,7 @@
   line-height: 1 !important;
   letter-spacing: .19em;
   text-transform: uppercase;
-  opacity: .62;
+  opacity: .64;
 }
 
 .vm-card h3 {
@@ -183,19 +185,19 @@
   font-family: 'Manrope', system-ui, sans-serif;
   font-size: 10.5px;
   line-height: 1.48;
-  opacity: .72;
+  opacity: .74;
 }
 
-/* Values — quiet, integrated strip */
+/* Values — translucent panel against brand green */
 .vm-values {
   margin-top: 12px;
   padding: 14px 18px 13px;
-  border: 1px solid rgba(23,87,71,.085);
+  border: 1px solid rgba(255,255,255,.10);
   border-radius: 18px;
-  background: rgba(255,255,255,.70);
-  box-shadow: 0 10px 26px rgba(13,55,40,.035);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255,255,255,.065);
+  box-shadow: 0 14px 32px rgba(0,0,0,.10);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .vm-values__head {
@@ -204,7 +206,7 @@
   justify-content: space-between;
   gap: 20px;
   padding-bottom: 10px;
-  border-bottom: 1px solid rgba(23,87,71,.075);
+  border-bottom: 1px solid rgba(255,255,255,.10);
 }
 
 .vm-values__head > div {
@@ -221,9 +223,9 @@
   min-width: 28px;
   height: 19px;
   margin: 0;
-  border: 1px solid rgba(23,87,71,.20);
+  border: 1px solid rgba(247,244,235,.26);
   border-radius: 999px;
-  color: #72867c;
+  color: rgba(247,244,235,.70);
   font-family: 'Manrope', system-ui, sans-serif;
   font-size: 7px;
   font-weight: 800;
@@ -232,7 +234,7 @@
 
 .vm-values__head > div p {
   margin: 0;
-  color: #174e3b;
+  color: rgba(247,244,235,.82);
   font-family: 'Manrope', system-ui, sans-serif;
   font-size: 9px;
   font-style: normal;
@@ -244,7 +246,7 @@
 
 .vm-values__head h3 {
   margin: 0;
-  color: #173d30;
+  color: #f7f4eb;
   font-family: 'Manrope', system-ui, sans-serif;
   font-size: 13px;
   font-weight: 560;
@@ -261,7 +263,7 @@
 .vm-value {
   min-height: 92px;
   padding: 12px 15px 3px;
-  border-right: 1px solid rgba(23,87,71,.07);
+  border-right: 1px solid rgba(255,255,255,.085);
 }
 
 .vm-value:first-child { padding-left: 0; }
@@ -270,7 +272,7 @@
 .vm-value > span {
   display: block;
   margin-bottom: 8px;
-  color: #95a39c;
+  color: rgba(247,244,235,.46);
   font-family: 'Manrope', system-ui, sans-serif;
   font-size: 7px;
   font-weight: 800;
@@ -279,7 +281,7 @@
 
 .vm-value h4 {
   margin: 0 0 5px;
-  color: #123a2d;
+  color: #f7f4eb;
   font-family: 'Manrope', system-ui, sans-serif;
   font-size: 12px;
   font-weight: 700;
@@ -289,7 +291,7 @@
 
 .vm-value p {
   margin: 0;
-  color: #697970;
+  color: rgba(247,244,235,.68);
   font-family: 'Manrope', system-ui, sans-serif;
   font-size: 10px;
   line-height: 1.44;
@@ -301,7 +303,7 @@
   .vm-intro h2 { width: 142px; height: 96px; }
   .vm-pillars { grid-template-columns: 1fr 1fr; }
   .vm-values__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .vm-value { border-bottom: 1px solid rgba(23,87,71,.07); }
+  .vm-value { border-bottom: 1px solid rgba(255,255,255,.085); }
   .vm-value:nth-child(2) { border-right: 0; }
   .vm-value:nth-last-child(-n+2) { border-bottom: 0; }
 }
@@ -330,7 +332,7 @@
     min-height: 0;
     padding: 12px 0;
     border-right: 0;
-    border-bottom: 1px solid rgba(23,87,71,.07);
+    border-bottom: 1px solid rgba(255,255,255,.085);
   }
   .vm-value:last-child { border-bottom: 0; }
 }
