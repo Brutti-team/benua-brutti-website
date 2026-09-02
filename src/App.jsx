@@ -46,7 +46,8 @@ function App() {
       <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
         <button className="brand" onClick={() => scrollToId('home')} aria-label="Benua Brutti home">
           <img
-            src={asset('logo brutti.jpg')}
+            className="brutti-logo-img"
+            src={asset('logo-brutti-white.png')}
             alt="Benua Brutti"
             decoding="async"
             style={{ width: 92, height: 'auto', display: 'block', borderRadius: 4 }}
@@ -88,8 +89,8 @@ function App() {
         <div className="hero__image-wrap">
           <motion.img
             style={{ y: heroY, scale: heroScale, opacity: heroOpacity }}
-            src={asset('belakang rumah.png')}
-            alt="The early Benua Brutti journey"
+            src={asset('brutti team.jpg')}
+            alt="Benua Brutti team"
             className="hero__image"
             loading="eager"
             decoding="async"
@@ -173,8 +174,8 @@ function App() {
               transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
             >
               <img
-                src={asset('founder & co founder.JPG')}
-                alt="Benua Brutti founders Lukman and Faznur"
+                src={asset('founders.jpg')}
+                alt="Benua Brutti founder and co-founder"
                 loading="lazy"
                 decoding="async"
                 fetchPriority="low"
@@ -252,7 +253,7 @@ function App() {
 
         <div className="page-shell showroom">
           <motion.img
-            src={asset('showroom.png')}
+            src={asset('showroom-web.jpg')}
             alt="Benua Brutti shared showroom"
             loading="lazy"
             decoding="async"
@@ -270,7 +271,8 @@ function App() {
         <div className="page-shell footer__grid">
           <div className="footer__brand">
             <img
-              src={asset('logo brutti.jpg')}
+              className="brutti-logo-img"
+              src={asset('logo-brutti-white.png')}
               alt="Benua Brutti"
               loading="lazy"
               decoding="async"
