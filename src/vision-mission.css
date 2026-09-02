@@ -151,7 +151,8 @@
   background-image:
     linear-gradient(90deg, #165d48 0%, rgba(22,93,72,.55) 16%, rgba(22,93,72,.08) 34%, transparent 52%),
     url('/assets/malaysia.jpg');
-  background-position: center, center 52%;
+  background-size: 100% 100%, 132% auto;
+  background-position: center, 56% 50%;
 }
 
 .vm-card__index,
@@ -411,7 +412,8 @@
     background-image:
       linear-gradient(180deg, rgba(22,93,72,.02) 52%, #165d48 100%),
       url('/assets/malaysia.jpg');
-    background-position: center, center 52%;
+    background-size: 100% 100%, 124% auto;
+    background-position: center, 55% 50%;
   }
 
   .vm-card__label { font-size: 10.5px !important; }
