@@ -1,13 +1,13 @@
-/* About Brutti — clean corporate / SaaS layout */
+/* About Brutti — refined corporate / editorial balance */
 .vision-mission.section-pad {
   position: relative;
   min-height: 100svh;
   display: flex;
   align-items: center;
   overflow: hidden;
-  padding: clamp(30px, 4vh, 42px) 0 !important;
+  padding: clamp(28px, 3.8vh, 40px) 0 !important;
   background:
-    radial-gradient(circle at 88% 8%, rgba(126, 174, 151, .10), transparent 28%),
+    radial-gradient(circle at 88% 8%, rgba(126, 174, 151, .09), transparent 29%),
     linear-gradient(135deg, #082f25 0%, #0b3b2f 52%, #124d3d 100%);
   color: #f7f8f4;
 }
@@ -18,10 +18,10 @@
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
-  background-size: 88px 88px;
-  opacity: .22;
+    linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
+  background-size: 92px 92px;
+  opacity: .18;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
 }
@@ -31,9 +31,9 @@
   position: absolute;
   width: 420px;
   height: 420px;
-  right: -240px;
-  bottom: -300px;
-  border: 1px solid rgba(255,255,255,.055);
+  right: -250px;
+  bottom: -310px;
+  border: 1px solid rgba(255,255,255,.045);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -48,34 +48,35 @@
 /* Intro */
 .vm-intro {
   display: grid;
-  grid-template-columns: 184px minmax(0, 1fr);
+  grid-template-columns: 162px minmax(0, 1fr);
   grid-template-areas:
     'eyebrow eyebrow'
     'brand lead';
   align-items: center;
-  column-gap: clamp(40px, 5vw, 72px);
-  row-gap: 10px;
-  margin-bottom: 18px;
+  column-gap: clamp(44px, 5.8vw, 82px);
+  row-gap: 8px;
+  margin-bottom: 16px;
   padding-bottom: 18px;
-  border-bottom: 1px solid rgba(255,255,255,.095);
+  border-bottom: 1px solid rgba(255,255,255,.09);
 }
 
 .vm-intro .eyebrow {
   grid-area: eyebrow;
   margin: 0;
-  color: rgba(247,248,244,.50);
+  color: rgba(247,248,244,.47);
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 700;
   line-height: 1;
-  letter-spacing: .20em;
+  letter-spacing: .22em;
   text-transform: uppercase;
 }
 
+/* Karya Anak Bangsa mark — smaller, cleaner, more intentional */
 .vm-intro h2 {
   grid-area: brand;
-  width: 168px;
-  height: 106px;
+  width: 145px;
+  height: 96px;
   margin: 0;
   font-size: 0 !important;
   line-height: 0 !important;
@@ -84,21 +85,21 @@
   background-repeat: no-repeat;
   background-position: left center;
   background-size: contain;
-  filter: drop-shadow(0 10px 20px rgba(0,0,0,.12));
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,.10));
 }
 
 .vm-intro h2 em { display: none !important; }
 
 .vm-lead {
   grid-area: lead;
-  max-width: 780px;
+  max-width: 700px;
   margin: 0;
-  color: rgba(247,248,244,.92);
+  color: rgba(247,248,244,.90);
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: clamp(18px, 1.62vw, 23px);
-  font-weight: 500;
-  line-height: 1.42;
-  letter-spacing: -.026em;
+  font-size: clamp(17px, 1.45vw, 21px);
+  font-weight: 400;
+  line-height: 1.48;
+  letter-spacing: -.018em;
   text-wrap: balance;
 }
 
@@ -112,14 +113,14 @@
 .vm-card,
 .vm-values {
   border-radius: 20px;
-  border: 1px solid rgba(255,255,255,.11);
-  box-shadow: 0 14px 34px rgba(0,0,0,.10);
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 14px 34px rgba(0,0,0,.09);
 }
 
 .vm-card {
   position: relative;
   min-height: 180px;
-  padding: 21px 26px 20px;
+  padding: 22px 26px 20px;
   overflow: hidden;
   isolation: isolate;
 }
@@ -127,30 +128,30 @@
 .vm-card::before {
   content: '';
   position: absolute;
-  width: 156px;
-  height: 156px;
-  right: -78px;
-  top: -86px;
+  width: 150px;
+  height: 150px;
+  right: -76px;
+  top: -84px;
   border-radius: 50%;
-  background: rgba(255,255,255,.045);
+  background: rgba(255,255,255,.04);
   pointer-events: none;
   z-index: -1;
 }
 
 .vm-card--vision {
-  background: rgba(27, 101, 78, .72);
+  background: rgba(27, 101, 78, .74);
   color: #f7f8f4;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
 .vm-card--mission {
-  background: #f5f2e9;
+  background: #f4f1e8;
   color: #123f32;
-  border-color: rgba(255,255,255,.26);
+  border-color: rgba(255,255,255,.22);
 }
 
-/* 01 VISI / 02 MISI on the same line */
+/* 01 VISI / 02 MISI */
 .vm-card__index,
 .vm-values__head > div span {
   display: inline-flex;
@@ -162,11 +163,11 @@
   border: 1px solid currentColor;
   border-radius: 999px;
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 8px;
+  font-size: 7.5px;
   font-weight: 700;
   line-height: 1;
   letter-spacing: .12em;
-  opacity: .50;
+  opacity: .48;
   vertical-align: middle;
 }
 
@@ -174,12 +175,12 @@
 .vm-values__head > div p {
   color: inherit !important;
   font-family: 'DM Sans', system-ui, sans-serif !important;
-  font-size: 9px !important;
+  font-size: 8.5px !important;
   font-weight: 700 !important;
   line-height: 1 !important;
   letter-spacing: .18em;
   text-transform: uppercase;
-  opacity: .65;
+  opacity: .62;
 }
 
 .vm-card__label {
@@ -190,24 +191,25 @@
 }
 
 .vm-card h3 {
-  max-width: 640px;
+  max-width: 620px;
   margin: 13px 0 0;
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: clamp(28px, 2.35vw, 36px);
-  font-weight: 500;
-  line-height: 1.06;
-  letter-spacing: -.044em;
+  font-size: clamp(27px, 2.15vw, 33px);
+  font-weight: 450;
+  line-height: 1.08;
+  letter-spacing: -.035em;
   text-wrap: balance;
 }
 
 .vm-card > p:last-child {
   max-width: 520px;
-  margin: 11px 0 0;
+  margin: 12px 0 0;
   color: inherit;
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 400;
-  line-height: 1.52;
+  line-height: 1.55;
+  letter-spacing: -.005em;
   opacity: .72;
 }
 
@@ -217,7 +219,7 @@
   margin-top: 16px;
   padding: 22px 24px 20px;
   overflow: hidden;
-  background: rgba(255,255,255,.055);
+  background: rgba(255,255,255,.052);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -227,8 +229,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 28px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255,255,255,.10);
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255,255,255,.09);
 }
 
 .vm-values__head > div {
@@ -240,24 +242,24 @@
 }
 
 .vm-values__head > div span {
-  border-color: rgba(247,248,244,.24);
-  color: rgba(247,248,244,.82);
+  border-color: rgba(247,248,244,.22);
+  color: rgba(247,248,244,.78);
 }
 
 .vm-values__head > div p {
   margin: 0;
-  color: rgba(247,248,244,.86) !important;
-  font-size: 9.5px !important;
+  color: rgba(247,248,244,.82) !important;
+  font-size: 9px !important;
 }
 
 .vm-values__head h3 {
   margin: 0;
   color: #f7f8f4;
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: -.018em;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -.012em;
   text-align: right;
 }
 
@@ -269,8 +271,8 @@
 
 .vm-value {
   min-height: 154px;
-  padding: 20px 20px 6px;
-  border-right: 1px solid rgba(255,255,255,.085);
+  padding: 19px 20px 6px;
+  border-right: 1px solid rgba(255,255,255,.08);
 }
 
 .vm-value:first-child { padding-left: 0; }
@@ -279,9 +281,9 @@
 .vm-value > span {
   display: block;
   margin-bottom: 10px;
-  color: rgba(247,248,244,.46);
+  color: rgba(247,248,244,.42);
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 8.5px;
+  font-size: 8px;
   font-weight: 700;
   line-height: 1;
   letter-spacing: .14em;
@@ -291,67 +293,68 @@
   margin: 0 0 8px;
   color: #f7f8f4;
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 14.5px;
+  font-size: 13.5px;
   font-weight: 600;
-  line-height: 1.28;
-  letter-spacing: -.014em;
+  line-height: 1.3;
+  letter-spacing: -.008em;
 }
 
 .vm-value p {
   margin: 0;
-  color: rgba(247,248,244,.68);
+  color: rgba(247,248,244,.64);
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 400;
-  line-height: 1.52;
+  line-height: 1.56;
+  letter-spacing: -.003em;
 }
 
 /* Short laptop screens */
 @media (min-width: 1021px) and (max-height: 740px) {
-  .vision-mission.section-pad { padding: 24px 0 !important; }
-  .vm-intro { margin-bottom: 14px; padding-bottom: 14px; }
-  .vm-intro h2 { width: 150px; height: 94px; }
-  .vm-lead { font-size: clamp(16px, 1.42vw, 20px); }
+  .vision-mission.section-pad { padding: 22px 0 !important; }
+  .vm-intro { margin-bottom: 13px; padding-bottom: 14px; }
+  .vm-intro h2 { width: 132px; height: 86px; }
+  .vm-lead { max-width: 670px; font-size: clamp(15px, 1.3vw, 18px); }
 
   .vm-card { min-height: 164px; padding: 19px 24px 18px; }
-  .vm-card h3 { margin-top: 11px; font-size: clamp(24px, 2.05vw, 31px); }
-  .vm-card > p:last-child { margin-top: 8px; font-size: 10.3px; }
+  .vm-card h3 { margin-top: 11px; font-size: clamp(23px, 1.95vw, 29px); }
+  .vm-card > p:last-child { margin-top: 8px; font-size: 10px; }
 
   .vm-values { min-height: 204px; margin-top: 12px; padding: 17px 20px 15px; }
-  .vm-values__head { padding-bottom: 11px; }
-  .vm-values__head h3 { font-size: 14px; }
-  .vm-value { min-height: 122px; padding-top: 15px; }
-  .vm-value h4 { font-size: 13px; }
-  .vm-value p { font-size: 10.3px; }
+  .vm-values__head { padding-bottom: 10px; }
+  .vm-values__head h3 { font-size: 13.5px; }
+  .vm-value { min-height: 122px; padding-top: 14px; }
+  .vm-value h4 { font-size: 12.5px; }
+  .vm-value p { font-size: 10px; }
 }
 
 @media (max-width: 1020px) {
   .vision-mission.section-pad {
     min-height: auto;
     display: block;
-    padding: 58px 0 !important;
+    padding: 56px 0 !important;
   }
 
   .vm-shell { width: min(100% - 42px, 900px) !important; }
-  .vm-intro { grid-template-columns: 154px minmax(0, 1fr); column-gap: 30px; }
-  .vm-intro h2 { width: 144px; height: 96px; }
-  .vm-lead { font-size: clamp(17px, 2.4vw, 21px); }
+  .vm-intro { grid-template-columns: 144px minmax(0, 1fr); column-gap: 30px; }
+  .vm-intro h2 { width: 132px; height: 88px; }
+  .vm-lead { max-width: 620px; font-size: clamp(16px, 2.2vw, 19px); }
 
   .vm-pillars { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .vm-card { min-height: 188px; padding: 22px; }
-  .vm-card h3 { font-size: clamp(25px, 3.2vw, 32px); }
+  .vm-card { min-height: 184px; padding: 21px 22px; }
+  .vm-card h3 { font-size: clamp(24px, 3vw, 30px); }
 
   .vm-values { min-height: auto; }
-  .vm-values__head h3 { font-size: 15px; }
+  .vm-values__head h3 { font-size: 14px; }
   .vm-values__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .vm-value { min-height: 122px; border-bottom: 1px solid rgba(255,255,255,.085); }
+  .vm-value { min-height: 122px; border-bottom: 1px solid rgba(255,255,255,.08); }
   .vm-value:nth-child(2) { border-right: 0; }
   .vm-value:nth-child(3) { padding-left: 0; }
   .vm-value:nth-last-child(-n+2) { border-bottom: 0; }
 }
 
 @media (max-width: 720px) {
-  .vision-mission.section-pad { padding: 48px 0 52px !important; }
+  .vision-mission.section-pad { padding: 46px 0 50px !important; }
   .vm-shell { width: calc(100% - 26px) !important; }
 
   .vm-intro {
@@ -362,8 +365,8 @@
     padding-bottom: 18px;
   }
 
-  .vm-intro h2 { width: 140px; height: 93px; }
-  .vm-lead { max-width: 560px; font-size: 17px; line-height: 1.48; }
+  .vm-intro h2 { width: 126px; height: 84px; }
+  .vm-lead { max-width: 540px; font-size: 16px; line-height: 1.5; }
 
   .vm-pillars { grid-template-columns: 1fr; gap: 10px; }
 
@@ -371,12 +374,12 @@
   .vm-values { min-height: 0; border-radius: 18px; }
 
   .vm-card { padding: 20px 19px 19px; }
-  .vm-card h3 { margin-top: 12px; font-size: 26px; }
-  .vm-card > p:last-child { font-size: 11px; }
+  .vm-card h3 { margin-top: 12px; font-size: 25px; }
+  .vm-card > p:last-child { font-size: 10.8px; }
 
   .vm-values { margin-top: 10px; padding: 18px 16px 11px; }
   .vm-values__head { flex-direction: column; align-items: flex-start; gap: 8px; }
-  .vm-values__head h3 { font-size: 14px; text-align: left; }
+  .vm-values__head h3 { font-size: 13.5px; text-align: left; }
   .vm-values__grid { grid-template-columns: 1fr; }
 
   .vm-value,
@@ -386,7 +389,7 @@
     min-height: 0;
     padding: 14px 0;
     border-right: 0;
-    border-bottom: 1px solid rgba(255,255,255,.085);
+    border-bottom: 1px solid rgba(255,255,255,.08);
   }
 
   .vm-value:last-child { border-bottom: 0; }
