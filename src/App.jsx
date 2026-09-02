@@ -28,7 +28,7 @@ function App() {
   const navItems = [
     { id: 'home', label: 'home' },
     { id: 'about', label: 'about' },
-    { id: 'our-journey', label: 'our journey', page: '/journey/' },
+    { id: 'our-journey', label: 'our journey' },
     { id: 'catalogue', label: 'catalogue' },
     { id: 'impact-report', label: 'impact report', page: '/impact/' },
     { id: 'contact', label: 'contact' },
@@ -80,7 +80,8 @@ function App() {
               onClick={() => { openNavItem(item); setMenuOpen(false) }}
               className="mobile-menu__link"
             >
-              <span>0{index + 1}</span>{item.label}</button>
+              <span>0{index + 1}</span>{item.label}
+            </button>
           ))}
         </motion.div>
       )}
@@ -220,6 +221,61 @@ function App() {
               </article>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      <section id="our-journey" className="story section-pad">
+        <div className="page-shell story__grid">
+          <div className="story__visual">
+            <motion.div
+              className="story__photo-wrap"
+              initial={{ clipPath: 'inset(100% 0 0 0)' }}
+              whileInView={{ clipPath: 'inset(0% 0 0 0)' }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <img
+                src={asset('founders.jpg')}
+                alt="Benua Brutti founder and co-founder"
+                loading="lazy"
+                decoding="async"
+                fetchPriority="low"
+              />
+            </motion.div>
+            <span className="story__vertical">OUR STORY</span>
+          </div>
+
+          <div className="story__content">
+            <Reveal>
+              <p className="eyebrow eyebrow--light">From a backyard idea</p>
+              <h2>Built through<br /><em>resilience.</em></h2>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <p>
+                Lukman and Faznur were already living their DIY dreams when the 2020 pandemic disrupted businesses and livelihoods.
+              </p>
+            </Reveal>
+            <Reveal delay={0.14}>
+              <p>
+                Instead of stopping, they combined woodworking and metalworking skills to create a new revenue path for their crew, turning a hobby into a growing furniture business.
+              </p>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <blockquote>
+                “The first piece was a humble bedside table, crafted in the backyard. It was a gift that became the beginning of something bigger.”
+              </blockquote>
+            </Reveal>
+            <Reveal delay={0.26}>
+              <button
+                className="story__journey-button"
+                onClick={() => {
+                  window.location.href = '/journey/'
+                }}
+              >
+                Explore our journey <ArrowUpRight size={17} />
+              </button>
+            </Reveal>
+          </div>
         </div>
       </section>
 
