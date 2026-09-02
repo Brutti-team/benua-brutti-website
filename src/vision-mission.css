@@ -1,16 +1,15 @@
-/* About Brutti — balanced premium one-screen layout */
+/* About Brutti — clean corporate / SaaS layout */
 .vision-mission.section-pad {
   position: relative;
   min-height: 100svh;
   display: flex;
   align-items: center;
   overflow: hidden;
-  padding: clamp(34px, 4.8vh, 46px) 0 !important;
+  padding: clamp(30px, 4vh, 42px) 0 !important;
   background:
-    radial-gradient(circle at 86% 8%, rgba(212, 226, 215, .10), transparent 30%),
-    radial-gradient(circle at 7% 92%, rgba(129, 172, 148, .08), transparent 29%),
-    linear-gradient(132deg, #092d24 0%, #0d3c30 50%, #155441 100%);
-  color: #f8f5ed;
+    radial-gradient(circle at 88% 8%, rgba(126, 174, 151, .10), transparent 28%),
+    linear-gradient(135deg, #082f25 0%, #0b3b2f 52%, #124d3d 100%);
+  color: #f7f8f4;
 }
 
 .vision-mission::before {
@@ -22,21 +21,20 @@
     linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
   background-size: 88px 88px;
-  opacity: .24;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 15%, #000 85%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, #000 15%, #000 85%, transparent 100%);
+  opacity: .22;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
 }
 
 .vision-mission::after {
   content: '';
   position: absolute;
-  width: 380px;
-  height: 380px;
-  right: -185px;
-  bottom: -255px;
-  border: 1px solid rgba(255,255,255,.07);
+  width: 420px;
+  height: 420px;
+  right: -240px;
+  bottom: -300px;
+  border: 1px solid rgba(255,255,255,.055);
   border-radius: 50%;
-  box-shadow: 0 0 0 54px rgba(255,255,255,.014);
   pointer-events: none;
 }
 
@@ -50,34 +48,34 @@
 /* Intro */
 .vm-intro {
   display: grid;
-  grid-template-columns: 188px minmax(0, 1fr);
+  grid-template-columns: 184px minmax(0, 1fr);
   grid-template-areas:
     'eyebrow eyebrow'
     'brand lead';
   align-items: center;
-  column-gap: clamp(42px, 5.4vw, 76px);
+  column-gap: clamp(40px, 5vw, 72px);
   row-gap: 10px;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid rgba(255,255,255,.10);
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255,255,255,.095);
 }
 
 .vm-intro .eyebrow {
   grid-area: eyebrow;
   margin: 0;
-  color: rgba(248,245,237,.55);
+  color: rgba(247,248,244,.50);
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 8.5px;
-  font-weight: 600;
+  font-size: 9px;
+  font-weight: 700;
   line-height: 1;
-  letter-spacing: .22em;
+  letter-spacing: .20em;
   text-transform: uppercase;
 }
 
 .vm-intro h2 {
   grid-area: brand;
-  width: 176px;
-  height: 112px;
+  width: 168px;
+  height: 106px;
   margin: 0;
   font-size: 0 !important;
   line-height: 0 !important;
@@ -86,71 +84,75 @@
   background-repeat: no-repeat;
   background-position: left center;
   background-size: contain;
-  filter: drop-shadow(0 13px 24px rgba(0,0,0,.15));
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,.12));
 }
 
 .vm-intro h2 em { display: none !important; }
 
 .vm-lead {
   grid-area: lead;
-  max-width: 820px;
+  max-width: 780px;
   margin: 0;
-  color: rgba(248,245,237,.93);
+  color: rgba(247,248,244,.92);
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: clamp(18px, 1.72vw, 24px);
-  font-weight: 400;
+  font-size: clamp(18px, 1.62vw, 23px);
+  font-weight: 500;
   line-height: 1.42;
-  letter-spacing: -.028em;
+  letter-spacing: -.026em;
   text-wrap: balance;
 }
 
-/* Vision + Mission */
+/* Visi + Misi: exact same size */
 .vm-pillars {
   display: grid;
-  grid-template-columns: .94fr 1.06fr;
-  gap: 15px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.vm-card,
+.vm-values {
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.11);
+  box-shadow: 0 14px 34px rgba(0,0,0,.10);
 }
 
 .vm-card {
   position: relative;
-  min-height: 196px;
-  padding: 25px 28px 23px;
+  min-height: 206px;
+  padding: 25px 28px 24px;
   overflow: hidden;
-  border-radius: 22px;
-  border: 1px solid transparent;
-  box-shadow: 0 20px 48px rgba(0,0,0,.14);
   isolation: isolate;
 }
 
 .vm-card::before {
   content: '';
   position: absolute;
-  z-index: -1;
-  width: 166px;
-  height: 166px;
-  right: -82px;
-  top: -92px;
+  width: 156px;
+  height: 156px;
+  right: -78px;
+  top: -86px;
   border-radius: 50%;
-  background: rgba(255,255,255,.065);
+  background: rgba(255,255,255,.045);
   pointer-events: none;
+  z-index: -1;
 }
 
 .vm-card--vision {
-  background: linear-gradient(135deg, #15523f 0%, #1b684f 100%);
-  color: #fbf8f1;
-  border-color: rgba(255,255,255,.11);
+  background: rgba(27, 101, 78, .72);
+  color: #f7f8f4;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .vm-card--mission {
-  background:
-    radial-gradient(circle at 88% 2%, rgba(28,85,66,.07), transparent 31%),
-    linear-gradient(145deg, #f4ecde 0%, #fffaf2 100%);
-  color: #103c2f;
-  border-color: rgba(255,255,255,.28);
-  box-shadow: 0 20px 48px rgba(2,24,17,.17);
+  background: #f5f2e9;
+  color: #123f32;
+  border-color: rgba(255,255,255,.26);
 }
 
-.vm-card__index {
+/* Shared numbering / section labels */
+.vm-card__index,
+.vm-values__head > div span {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -159,69 +161,69 @@
   padding: 0 9px;
   border: 1px solid currentColor;
   border-radius: 999px;
-  opacity: .46;
   font-family: 'DM Sans', system-ui, sans-serif;
   font-size: 8px;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1;
-  letter-spacing: .13em;
+  letter-spacing: .12em;
+  opacity: .50;
 }
 
-.vm-card__label {
-  margin: 14px 0 8px !important;
+.vm-card__label,
+.vm-values__head > div p {
   color: inherit !important;
   font-family: 'DM Sans', system-ui, sans-serif !important;
   font-size: 8.5px !important;
-  font-style: normal !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
   line-height: 1 !important;
-  letter-spacing: .19em;
+  letter-spacing: .18em;
   text-transform: uppercase;
-  opacity: .60;
+  opacity: .62;
+}
+
+.vm-card__label {
+  margin: 14px 0 9px !important;
 }
 
 .vm-card h3 {
-  max-width: 680px;
+  max-width: 640px;
   margin: 0;
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: clamp(27px, 2.45vw, 35px);
+  font-size: clamp(28px, 2.35vw, 36px);
   font-weight: 500;
-  line-height: 1.04;
-  letter-spacing: -.045em;
+  line-height: 1.06;
+  letter-spacing: -.044em;
   text-wrap: balance;
 }
 
 .vm-card > p:last-child {
-  max-width: 530px;
-  margin: 12px 0 0;
+  max-width: 520px;
+  margin: 13px 0 0;
   color: inherit;
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 11.2px;
+  font-size: 11.5px;
   font-weight: 400;
   line-height: 1.52;
-  letter-spacing: -.008em;
   opacity: .72;
 }
 
-/* Values */
+/* Nilai: same visual height as Visi/Misi */
 .vm-values {
-  margin-top: 14px;
-  padding: 17px 22px 16px;
+  min-height: 206px;
+  margin-top: 16px;
+  padding: 20px 24px 18px;
   overflow: hidden;
-  border: 1px solid rgba(255,255,255,.10);
-  border-radius: 21px;
-  background: linear-gradient(140deg, rgba(255,255,255,.075), rgba(255,255,255,.035));
-  box-shadow: 0 17px 40px rgba(0,0,0,.09);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255,255,255,.055);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .vm-values__head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  padding-bottom: 12px;
+  gap: 28px;
+  padding-bottom: 14px;
   border-bottom: 1px solid rgba(255,255,255,.10);
 }
 
@@ -229,55 +231,40 @@
   display: flex;
   align-items: center;
   gap: 9px;
+  color: #f7f8f4;
   flex: 0 0 auto;
 }
 
 .vm-values__head > div span {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 31px;
-  height: 21px;
-  margin: 0;
-  border: 1px solid rgba(248,245,237,.24);
-  border-radius: 999px;
-  color: rgba(248,245,237,.68);
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 7.8px;
-  font-weight: 600;
-  letter-spacing: .13em;
+  border-color: rgba(247,248,244,.24);
+  color: rgba(247,248,244,.78);
 }
 
 .vm-values__head > div p {
   margin: 0;
-  color: rgba(248,245,237,.78);
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 8.5px;
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: .19em;
-  text-transform: uppercase;
+  color: rgba(247,248,244,.80) !important;
 }
 
 .vm-values__head h3 {
   margin: 0;
-  color: #f8f5ed;
+  color: #f7f8f4;
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
   line-height: 1.3;
-  letter-spacing: -.017em;
+  letter-spacing: -.018em;
   text-align: right;
 }
 
 .vm-values__grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
 }
 
 .vm-value {
-  min-height: 105px;
-  padding: 15px 18px 3px;
+  min-height: 130px;
+  padding: 15px 18px 4px;
   border-right: 1px solid rgba(255,255,255,.085);
 }
 
@@ -286,73 +273,83 @@
 
 .vm-value > span {
   display: block;
-  margin-bottom: 8px;
-  color: rgba(248,245,237,.40);
+  margin-bottom: 9px;
+  color: rgba(247,248,244,.40);
   font-family: 'DM Sans', system-ui, sans-serif;
   font-size: 7.5px;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1;
-  letter-spacing: .15em;
+  letter-spacing: .14em;
 }
 
 .vm-value h4 {
-  margin: 0 0 6px;
-  color: #f8f5ed;
+  margin: 0 0 7px;
+  color: #f7f8f4;
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 12.4px;
+  font-size: 13px;
   font-weight: 600;
-  line-height: 1.23;
-  letter-spacing: -.013em;
+  line-height: 1.25;
+  letter-spacing: -.014em;
 }
 
 .vm-value p {
   margin: 0;
-  color: rgba(248,245,237,.64);
+  color: rgba(247,248,244,.63);
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 10.3px;
+  font-size: 10.5px;
   font-weight: 400;
-  line-height: 1.46;
+  line-height: 1.48;
 }
 
-/* Short desktop/laptop screens: preserve one-screen composition without making it tiny */
-@media (min-width: 1021px) and (max-height: 720px) {
-  .vision-mission.section-pad { padding: 26px 0 !important; }
-  .vm-intro { margin-bottom: 15px; padding-bottom: 15px; }
-  .vm-intro h2 { width: 154px; height: 96px; }
-  .vm-lead { font-size: clamp(16px, 1.48vw, 20px); }
-  .vm-card { min-height: 170px; padding: 20px 24px; }
+/* Short laptop screens: keep all three blocks balanced and inside one viewport */
+@media (min-width: 1021px) and (max-height: 740px) {
+  .vision-mission.section-pad { padding: 24px 0 !important; }
+  .vm-intro { margin-bottom: 14px; padding-bottom: 14px; }
+  .vm-intro h2 { width: 150px; height: 94px; }
+  .vm-lead { font-size: clamp(16px, 1.42vw, 20px); }
+
+  .vm-card,
+  .vm-values { min-height: 186px; }
+
+  .vm-card { padding: 21px 24px 20px; }
   .vm-card__label { margin-top: 10px !important; }
-  .vm-card h3 { font-size: clamp(23px, 2.15vw, 30px); }
-  .vm-card > p:last-child { margin-top: 8px; font-size: 10px; }
-  .vm-values { margin-top: 11px; padding: 13px 19px 12px; }
-  .vm-values__head { padding-bottom: 9px; }
-  .vm-value { min-height: 88px; padding-top: 11px; }
-  .vm-value h4 { font-size: 11px; }
-  .vm-value p { font-size: 9.2px; }
+  .vm-card h3 { font-size: clamp(24px, 2.05vw, 31px); }
+  .vm-card > p:last-child { margin-top: 9px; font-size: 10.3px; }
+
+  .vm-values { margin-top: 12px; padding: 15px 20px 13px; }
+  .vm-values__head { padding-bottom: 10px; }
+  .vm-values__head h3 { font-size: 12.5px; }
+  .vm-value { min-height: 106px; padding-top: 12px; }
+  .vm-value h4 { font-size: 11.5px; }
+  .vm-value p { font-size: 9.4px; }
 }
 
 @media (max-width: 1020px) {
   .vision-mission.section-pad {
     min-height: auto;
     display: block;
-    padding: 60px 0 !important;
+    padding: 58px 0 !important;
   }
 
   .vm-shell { width: min(100% - 42px, 900px) !important; }
-  .vm-intro { grid-template-columns: 158px minmax(0, 1fr); column-gap: 30px; }
-  .vm-intro h2 { width: 148px; height: 98px; }
-  .vm-lead { font-size: clamp(17px, 2.5vw, 22px); }
+  .vm-intro { grid-template-columns: 154px minmax(0, 1fr); column-gap: 30px; }
+  .vm-intro h2 { width: 144px; height: 96px; }
+  .vm-lead { font-size: clamp(17px, 2.4vw, 21px); }
+
   .vm-pillars { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .vm-card { min-height: 190px; }
+  .vm-card { min-height: 198px; padding: 23px; }
+  .vm-card h3 { font-size: clamp(25px, 3.2vw, 32px); }
+
+  .vm-values { min-height: auto; }
   .vm-values__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .vm-value { min-height: 104px; border-bottom: 1px solid rgba(255,255,255,.085); }
+  .vm-value { min-height: 112px; border-bottom: 1px solid rgba(255,255,255,.085); }
   .vm-value:nth-child(2) { border-right: 0; }
   .vm-value:nth-child(3) { padding-left: 0; }
   .vm-value:nth-last-child(-n+2) { border-bottom: 0; }
 }
 
 @media (max-width: 720px) {
-  .vision-mission.section-pad { padding: 50px 0 54px !important; }
+  .vision-mission.section-pad { padding: 48px 0 52px !important; }
   .vm-shell { width: calc(100% - 26px) !important; }
 
   .vm-intro {
@@ -360,19 +357,24 @@
     grid-template-areas: 'eyebrow' 'brand' 'lead';
     gap: 10px;
     margin-bottom: 15px;
-    padding-bottom: 19px;
+    padding-bottom: 18px;
   }
 
-  .vm-intro h2 { width: 142px; height: 94px; }
+  .vm-intro h2 { width: 140px; height: 93px; }
   .vm-lead { max-width: 560px; font-size: 17px; line-height: 1.48; }
-  .vm-pillars { grid-template-columns: 1fr; gap: 9px; }
-  .vm-card { min-height: 0; padding: 21px 19px 20px; border-radius: 18px; }
+
+  .vm-pillars { grid-template-columns: 1fr; gap: 10px; }
+
+  .vm-card,
+  .vm-values { min-height: 0; border-radius: 18px; }
+
+  .vm-card { padding: 21px 19px 20px; }
   .vm-card h3 { font-size: 26px; }
   .vm-card > p:last-child { font-size: 11px; }
 
-  .vm-values { margin-top: 9px; padding: 16px 15px 8px; border-radius: 18px; }
-  .vm-values__head { flex-direction: column; align-items: flex-start; gap: 7px; }
-  .vm-values__head h3 { font-size: 12.5px; text-align: left; }
+  .vm-values { margin-top: 10px; padding: 16px 16px 9px; }
+  .vm-values__head { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .vm-values__head h3 { font-size: 13px; text-align: left; }
   .vm-values__grid { grid-template-columns: 1fr; }
 
   .vm-value,
@@ -380,7 +382,7 @@
   .vm-value:last-child,
   .vm-value:nth-child(3) {
     min-height: 0;
-    padding: 11px 0;
+    padding: 12px 0;
     border-right: 0;
     border-bottom: 1px solid rgba(255,255,255,.085);
   }
