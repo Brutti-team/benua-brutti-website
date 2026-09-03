@@ -282,8 +282,15 @@ function DraggableRow({ files, label, onOpen, reverse = false, speed = 30 }) {
 
 function Collaborators() {
   const [selectedLogo, setSelectedLogo] = useState(null)
+  const [slideDirection, setSlideDirection] = useState('next')
+  const previewSwipeRef = useRef({ active: false, pointerId: null, startX: 0, deltaX: 0 })
   const firstRow = collaboratorFiles.filter((_, index) => index % 2 === 0)
   const secondRow = collaboratorFiles.filter((_, index) => index % 2 === 1)
+
+  const moveLogo = (step) => {
+    setSlideDirection(step > 0 ? 'next' : 'prev')
+    setSelectedLogo((current) => adjacentLogo(current, step))
+  }
 
   useEffect(() => {
     if (!selectedLogo) return undefined
@@ -295,10 +302,12 @@ function Collaborators() {
       if (event.key === 'Escape') setSelectedLogo(null)
       if (event.key === 'ArrowLeft') {
         event.preventDefault()
+        setSlideDirection('prev')
         setSelectedLogo((current) => adjacentLogo(current, -1))
       }
       if (event.key === 'ArrowRight') {
         event.preventDefault()
+        setSlideDirection('next')
         setSelectedLogo((current) => adjacentLogo(current, 1))
       }
     }
@@ -311,8 +320,256 @@ function Collaborators() {
     }
   }, [selectedLogo])
 
+  const startPreviewSwipe = (event) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return
+
+    previewSwipeRef.current = {
+      active: true,
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      deltaX: 0,
+    }
+
+    event.currentTarget.classList.add('is-swiping')
+    event.currentTarget.style.setProperty('--preview-drag-x', '0px')
+
+    try {
+      event.currentTarget.setPointerCapture?.(event.pointerId)
+    } catch {
+      // Pointer capture is optional; swipe still works without it.
+    }
+  }
+
+  const movePreviewSwipe = (event) => {
+    const swipe = previewSwipeRef.current
+    if (!swipe.active || swipe.pointerId !== event.pointerId) return
+
+    const deltaX = event.clientX - swipe.startX
+    swipe.deltaX = deltaX
+    event.currentTarget.style.setProperty('--preview-drag-x', `${Math.max(-110, Math.min(110, deltaX))}px`)
+  }
+
+  const finishPreviewSwipe = (event) => {
+    const swipe = previewSwipeRef.current
+    if (!swipe.active || swipe.pointerId !== event.pointerId) return
+
+    const deltaX = swipe.deltaX
+
+    try {
+      if (event.currentTarget.hasPointerCapture?.(event.pointerId)) {
+        event.currentTarget.releasePointerCapture(event.pointerId)
+      }
+    } catch {
+      // Browser may already have released pointer capture.
+    }
+
+    event.currentTarget.classList.remove('is-swiping')
+    event.currentTarget.style.setProperty('--preview-drag-x', '0px')
+    previewSwipeRef.current = { active: false, pointerId: null, startX: 0, deltaX: 0 }
+
+    if (Math.abs(deltaX) < 55) return
+    moveLogo(deltaX < 0 ? 1 : -1)
+  }
+
   return (
     <>
+      <style>{`
+        .collab-lightbox {
+          padding: clamp(16px, 2.8vw, 34px) !important;
+          background:
+            radial-gradient(circle at 50% 38%, rgba(111, 151, 128, .18), transparent 32%),
+            linear-gradient(145deg, rgba(5, 29, 21, .88), rgba(13, 48, 36, .80)) !important;
+          backdrop-filter: blur(20px) saturate(.9) !important;
+          -webkit-backdrop-filter: blur(20px) saturate(.9) !important;
+        }
+
+        .collab-lightbox__panel {
+          width: min(960px, 100%) !important;
+          overflow: hidden !important;
+          border: 1px solid rgba(199, 221, 207, .22) !important;
+          border-radius: 30px !important;
+          background: #123c2f !important;
+          box-shadow:
+            0 48px 130px rgba(1, 17, 11, .42),
+            0 12px 34px rgba(1, 20, 13, .20),
+            inset 0 1px 0 rgba(255,255,255,.09) !important;
+        }
+
+        .collab-lightbox__head {
+          min-height: 106px !important;
+          padding: 24px 30px 22px !important;
+          border-bottom: 1px solid rgba(223, 236, 227, .10) !important;
+          background:
+            radial-gradient(circle at 15% 0%, rgba(255,255,255,.06), transparent 32%),
+            linear-gradient(105deg, #143f32 0%, #0f3529 100%) !important;
+        }
+
+        .collab-lightbox__head span {
+          color: rgba(205, 224, 212, .63) !important;
+          font-size: 10px !important;
+          font-weight: 800 !important;
+          letter-spacing: .21em !important;
+        }
+
+        .collab-lightbox__head strong {
+          color: #f4f7f3 !important;
+          font-size: clamp(28px, 3.1vw, 36px) !important;
+          font-weight: 650 !important;
+          letter-spacing: -.035em !important;
+        }
+
+        .collab-lightbox__close {
+          width: 50px !important;
+          height: 50px !important;
+          border: 1px solid rgba(222, 236, 227, .17) !important;
+          background: rgba(255,255,255,.055) !important;
+          color: #e9f2ec !important;
+          box-shadow: inset 0 1px 0 rgba(255,255,255,.07) !important;
+        }
+
+        .collab-lightbox__close:hover {
+          border-color: rgba(222, 236, 227, .30) !important;
+          background: rgba(255,255,255,.11) !important;
+        }
+
+        .collab-lightbox__visual {
+          --preview-drag-x: 0px;
+          position: relative !important;
+          isolation: isolate !important;
+          min-height: 500px !important;
+          display: grid !important;
+          place-items: center !important;
+          overflow: hidden !important;
+          padding: 48px 104px 56px !important;
+          cursor: grab !important;
+          touch-action: pan-y !important;
+          user-select: none !important;
+          background:
+            radial-gradient(circle at 50% 46%, rgba(239, 229, 199, .50), transparent 29%),
+            radial-gradient(circle at 78% 18%, rgba(70, 113, 91, .16), transparent 35%),
+            linear-gradient(135deg, #ced8d0 0%, #dfe3da 45%, #c8d5cc 100%) !important;
+        }
+
+        .collab-lightbox__visual::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          background:
+            linear-gradient(180deg, rgba(255,255,255,.08), transparent 26%, transparent 74%, rgba(20,55,41,.08)),
+            radial-gradient(ellipse at center, transparent 45%, rgba(21,58,44,.09) 100%);
+        }
+
+        .collab-lightbox__visual.is-swiping {
+          cursor: grabbing !important;
+        }
+
+        .collab-lightbox__logo-wrap {
+          position: relative !important;
+          z-index: 2 !important;
+          width: min(720px, 80vw) !important;
+          min-height: 320px !important;
+          display: grid !important;
+          place-items: center !important;
+          transform: translateX(var(--preview-drag-x)) !important;
+          transition: transform .28s cubic-bezier(.22,1,.36,1), opacity .28s ease !important;
+          will-change: transform;
+        }
+
+        .collab-lightbox__visual.is-swiping .collab-lightbox__logo-wrap {
+          transition: none !important;
+        }
+
+        .collab-lightbox__logo-wrap.slide--next {
+          animation: collab-premium-slide-next .38s cubic-bezier(.22,1,.36,1) both;
+        }
+
+        .collab-lightbox__logo-wrap.slide--prev {
+          animation: collab-premium-slide-prev .38s cubic-bezier(.22,1,.36,1) both;
+        }
+
+        .collab-lightbox__visual img {
+          display: block !important;
+          width: min(680px, 76vw) !important;
+          max-width: 100% !important;
+          max-height: 350px !important;
+          height: auto !important;
+          object-fit: contain !important;
+          pointer-events: none !important;
+          user-select: none !important;
+          -webkit-user-drag: none !important;
+          filter:
+            saturate(1.04)
+            contrast(1.035)
+            drop-shadow(0 18px 34px rgba(17, 57, 42, .12)) !important;
+          animation: none !important;
+        }
+
+        .collab-lightbox__nav {
+          z-index: 5 !important;
+          width: 56px !important;
+          height: 56px !important;
+          border: 1px solid rgba(235, 244, 238, .24) !important;
+          background: rgba(18, 60, 47, .88) !important;
+          color: #f2f7f3 !important;
+          box-shadow: 0 14px 34px rgba(19, 63, 46, .18) !important;
+          backdrop-filter: blur(14px) !important;
+          -webkit-backdrop-filter: blur(14px) !important;
+        }
+
+        .collab-lightbox__nav:hover,
+        .collab-lightbox__nav:focus-visible {
+          border-color: rgba(255,255,255,.40) !important;
+          background: #175747 !important;
+          box-shadow: 0 17px 38px rgba(12, 49, 36, .25) !important;
+        }
+
+        .collab-lightbox__nav--prev { left: 28px !important; }
+        .collab-lightbox__nav--next { right: 28px !important; }
+
+        .collab-lightbox__swipe-hint {
+          position: absolute;
+          z-index: 4;
+          left: 50%;
+          bottom: 18px;
+          transform: translateX(-50%);
+          color: rgba(24, 67, 51, .58);
+          font-size: 9px;
+          font-weight: 750;
+          letter-spacing: .16em;
+          text-transform: uppercase;
+          pointer-events: none;
+        }
+
+        @keyframes collab-premium-slide-next {
+          from { opacity: .35; transform: translateX(54px) scale(.985); }
+          to { opacity: 1; transform: translateX(var(--preview-drag-x)) scale(1); }
+        }
+
+        @keyframes collab-premium-slide-prev {
+          from { opacity: .35; transform: translateX(-54px) scale(.985); }
+          to { opacity: 1; transform: translateX(var(--preview-drag-x)) scale(1); }
+        }
+
+        @media (max-width: 700px) {
+          .collab-lightbox__panel { border-radius: 22px !important; }
+          .collab-lightbox__head { min-height: 86px !important; padding: 18px 18px 16px !important; }
+          .collab-lightbox__head strong { font-size: clamp(23px, 7vw, 30px) !important; }
+          .collab-lightbox__close { width: 42px !important; height: 42px !important; }
+          .collab-lightbox__visual { min-height: 350px !important; padding: 38px 58px 46px !important; }
+          .collab-lightbox__logo-wrap { width: min(520px, 82vw) !important; min-height: 230px !important; }
+          .collab-lightbox__visual img { width: min(500px, 78vw) !important; max-height: 245px !important; }
+          .collab-lightbox__nav { width: 44px !important; height: 44px !important; }
+          .collab-lightbox__nav--prev { left: 10px !important; }
+          .collab-lightbox__nav--next { right: 10px !important; }
+          .collab-lightbox__swipe-hint { bottom: 13px; font-size: 8px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .collab-lightbox__logo-wrap { animation: none !important; transition: none !important; }
+        }
+      `}</style>
+
       <section className="collaborators-section" aria-label="Strategic collaborators">
         <div className="collaborators-head page-shell">
           <div>
@@ -328,13 +585,13 @@ function Collaborators() {
           <DraggableRow
             files={firstRow}
             label="Collaborators row one"
-            onOpen={setSelectedLogo}
+            onOpen={(file) => { setSlideDirection('next'); setSelectedLogo(file) }}
             speed={30}
           />
           <DraggableRow
             files={secondRow}
             label="Collaborators row two"
-            onOpen={setSelectedLogo}
+            onOpen={(file) => { setSlideDirection('next'); setSelectedLogo(file) }}
             reverse
             speed={26}
           />
@@ -367,30 +624,41 @@ function Collaborators() {
               </button>
             </div>
 
-            <div className="collab-lightbox__visual">
+            <div
+              className="collab-lightbox__visual"
+              onPointerDown={startPreviewSwipe}
+              onPointerMove={movePreviewSwipe}
+              onPointerUp={finishPreviewSwipe}
+              onPointerCancel={finishPreviewSwipe}
+            >
               <button
                 type="button"
                 className="collab-lightbox__nav collab-lightbox__nav--prev"
-                onClick={() => setSelectedLogo((current) => adjacentLogo(current, -1))}
+                onPointerDown={(event) => event.stopPropagation()}
+                onClick={() => moveLogo(-1)}
                 aria-label="Previous collaborator"
               >
                 <span aria-hidden="true">←</span>
               </button>
 
-              <img
-                key={selectedLogo}
-                src={asset(`collabolator brutti/${selectedLogo}`)}
-                alt={`${displayName(selectedLogo)} logo enlarged`}
-              />
+              <div key={selectedLogo} className={`collab-lightbox__logo-wrap slide--${slideDirection}`}>
+                <img
+                  src={asset(`collabolator brutti/${selectedLogo}`)}
+                  alt={`${displayName(selectedLogo)} logo enlarged`}
+                />
+              </div>
 
               <button
                 type="button"
                 className="collab-lightbox__nav collab-lightbox__nav--next"
-                onClick={() => setSelectedLogo((current) => adjacentLogo(current, 1))}
+                onPointerDown={(event) => event.stopPropagation()}
+                onClick={() => moveLogo(1)}
                 aria-label="Next collaborator"
               >
                 <span aria-hidden="true">→</span>
               </button>
+
+              <span className="collab-lightbox__swipe-hint">Swipe to explore</span>
             </div>
           </div>
         </div>
