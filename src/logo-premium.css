@@ -107,3 +107,68 @@
     letter-spacing: .09em !important;
   }
 }
+
+/* SDG showcase beside the impact feature card. */
+.impact__grid {
+  margin-bottom: 34px !important;
+}
+
+.impact__grid::after {
+  content: '';
+  display: block;
+  min-height: 150px;
+  border: 1px solid rgba(23, 87, 71, .10);
+  border-radius: 24px;
+  background-color: rgba(255, 255, 255, .74);
+  background-image:
+    url('/assets/sdg/sdg%208.webp'),
+    url('/assets/sdg/sdg%2012.webp'),
+    url('/assets/sdg/sdg%2015.webp');
+  background-repeat: no-repeat;
+  background-size: auto 78%, auto 78%, auto 78%;
+  background-position: 10% 50%, 50% 50%, 90% 50%;
+  box-shadow:
+    0 18px 44px rgba(18, 45, 34, .06),
+    inset 0 1px 0 rgba(255, 255, 255, .9);
+}
+
+@media (min-width: 1180px) {
+  .impact__grid {
+    grid-template-columns: minmax(0, .82fr) minmax(430px, 1.04fr) minmax(170px, .38fr) !important;
+    gap: clamp(26px, 2.7vw, 42px) !important;
+    align-items: stretch !important;
+  }
+
+  .impact__grid::after {
+    min-height: 342px;
+    border-radius: 28px;
+    background-size: 58% auto, 58% auto, 58% auto;
+    background-position: 50% 8%, 50% 50%, 50% 92%;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1179px) {
+  .impact__grid::after {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 900px) {
+  .impact__grid {
+    margin-bottom: 28px !important;
+  }
+
+  .impact__grid::after {
+    min-height: 136px;
+    border-radius: 20px;
+    background-size: auto 74%, auto 74%, auto 74%;
+  }
+}
+
+@media (max-width: 560px) {
+  .impact__grid::after {
+    min-height: 112px;
+    border-radius: 18px;
+    background-size: auto 68%, auto 68%, auto 68%;
+  }
+}
