@@ -66,7 +66,14 @@ html body #strategic-collaborators .collaborators-head h2 em {
   font-family: 'Italiana', Georgia, serif !important;
   font-size: 1.03em !important;
   font-style: italic !important;
-  font-weight: 400 !important;
+  font-weight: 700 !important;
   line-height: inherit !important;
   letter-spacing: -.02em !important;
+}
+
+/* Only thicken the three accent words to match the visual weight of “worth.” */
+html body #what-we-build .wwb-heading h2 em,
+html body main #our-journey.story .story__content h2 em,
+html body #strategic-collaborators .collaborators-head h2 em {
+  font-weight: 700 !important;
 }
