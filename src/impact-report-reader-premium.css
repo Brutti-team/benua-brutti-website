@@ -223,3 +223,68 @@
     right: 10px;
   }
 }
+
+/* Motion override: only the heading text animates.
+   No fade, blur, scale, or entrance animation on the flipbook itself. */
+@keyframes impactTextKickerReveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+    transform: translate3d(-14px, 0, 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes impactTextTitleReveal {
+  from {
+    clip-path: inset(100% 0 0 0);
+    transform: translate3d(0, 16px, 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Explicitly cancel every previous non-text entrance animation. */
+.impact-report-nav,
+.impact-report-reader,
+.impact-report-reader__hint,
+.impact-report-kicker::before,
+.impact-report-reader__dot {
+  animation: none !important;
+}
+
+.impact-report-reader,
+.impact-report-reader__hint {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+.impact-report-kicker {
+  opacity: 1 !important;
+  animation: impactTextKickerReveal 560ms cubic-bezier(0.22, 1, 0.36, 1) 50ms both !important;
+}
+
+.impact-report-heading h1 {
+  opacity: 1 !important;
+  animation: impactTextTitleReveal 680ms cubic-bezier(0.16, 1, 0.3, 1) 120ms both !important;
+}
+
+.impact-report-heading h1 em {
+  opacity: 1 !important;
+  animation: impactTextTitleReveal 620ms cubic-bezier(0.16, 1, 0.3, 1) 230ms both !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .impact-report-kicker,
+  .impact-report-heading h1,
+  .impact-report-heading h1 em {
+    animation: none !important;
+    clip-path: none !important;
+    transform: none !important;
+  }
+}
