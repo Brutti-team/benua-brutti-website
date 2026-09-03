@@ -254,20 +254,20 @@
     0 34px 90px rgba(0,0,0,.40),
     0 9px 28px rgba(0,0,0,.20),
     0 0 0 7px rgba(151,190,173,.07);
-  animation: wwb-gallery-slide-in .42s cubic-bezier(.22,1,.36,1) both;
-  will-change: translate, filter, clip-path;
+  opacity: 1 !important;
+  filter: none !important;
+  animation: wwb-gallery-slide-in .34s cubic-bezier(.22,1,.36,1) both;
+  will-change: translate, clip-path;
 }
 
 @keyframes wwb-gallery-slide-in {
   from {
-    translate: 34px 0;
-    clip-path: inset(0 8% 0 0 round 18px);
-    filter: saturate(.86) brightness(.91) blur(1.5px);
+    translate: 28px 0;
+    clip-path: inset(0 5% 0 0 round 18px);
   }
   to {
     translate: 0 0;
     clip-path: inset(0 0 0 0 round 18px);
-    filter: saturate(1) brightness(1) blur(0);
   }
 }
 
