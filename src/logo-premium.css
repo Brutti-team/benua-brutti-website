@@ -133,8 +133,8 @@
 
 @media (min-width: 1180px) {
   .impact__grid {
-    grid-template-columns: minmax(0, .82fr) minmax(430px, 1.04fr) minmax(170px, .34fr) !important;
-    gap: clamp(26px, 2.5vw, 40px) !important;
+    grid-template-columns: minmax(0, .82fr) minmax(430px, 1.04fr) minmax(142px, .27fr) !important;
+    gap: clamp(24px, 2.2vw, 36px) !important;
     align-items: stretch !important;
   }
 
@@ -151,9 +151,12 @@
   .impact__grid::after {
     grid-column: 3 !important;
     grid-row: 1 !important;
-    min-height: 342px;
-    background-size: 56% auto, 56% auto, 56% auto;
-    background-position: 50% 12%, 50% 50%, 50% 88%;
+    align-self: stretch !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    margin-left: -12px !important;
+    background-size: 132px auto, 132px auto, 132px auto;
+    background-position: 50% 2%, 50% 50%, 50% 98%;
   }
 }
 
