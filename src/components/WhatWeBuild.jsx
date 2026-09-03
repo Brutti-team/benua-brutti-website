@@ -1,41 +1,26 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUpRight, ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react'
-import bedBunkbed from '../../bed & bunkbed.png'
-import builtInCabinet from '../../built in cabinet.png'
-import camper from '../../camper.png'
-import kiosk from '../../kiosk.png'
-import mementoTwo from '../../memento 2.png'
 import '../selesaai-viewer-fix.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 const ease = [0.22, 1, 0.36, 1]
 
 const physicalWorks = [
-  { title: 'Bed & Bunkbed', image: bedBunkbed, tag: 'Furniture' },
-  { title: 'Built-in Cabinet', image: builtInCabinet, tag: 'Furniture' },
-  { title: 'Camper Builds', image: camper, tag: 'Custom Build' },
-  { title: 'Kiosk', image: kiosk, tag: 'Commercial' },
-  { title: 'Mementos', image: mementoTwo, tag: 'Custom Pieces' },
-  { title: 'Racks & Shelves', image: asset('racks  & shelves.png'), tag: 'Furniture' },
-  { title: 'Rental Pieces', image: asset('rental.png'), tag: 'Rental' },
-  { title: 'Signages', image: asset('signatures.png'), tag: 'Brand Display' },
-  { title: 'Tables & Counters', image: asset('table & counters.png'), tag: 'Furniture' },
-  { title: 'Other Custom Builds', image: asset('others.png'), tag: 'Custom Work' },
+  { title: 'Bed & Bunkbed', image: asset('what-we-build/bed & bunkbed.webp'), tag: 'Furniture' },
+  { title: 'Built-in Cabinet', image: asset('what-we-build/built in cabinet.webp'), tag: 'Furniture' },
+  { title: 'Camper Builds', image: asset('what-we-build/our camper.webp'), tag: 'Custom Build' },
+  { title: 'Kiosk', image: asset('what-we-build/kiosk.webp'), tag: 'Commercial' },
+  { title: 'Mementos', image: asset('what-we-build/memento.webp'), tag: 'Custom Pieces' },
+  { title: 'Racks & Shelves', image: asset('what-we-build/racks & shelves.webp'), tag: 'Furniture' },
+  { title: 'Signages', image: asset('what-we-build/Signages.webp'), tag: 'Brand Display' },
+  { title: 'Tables & Counters', image: asset('what-we-build/table & counters.webp'), tag: 'Furniture' },
+  { title: 'Other Custom Builds', image: asset('what-we-build/others.webp'), tag: 'Custom Work' },
+  { title: 'Designs', image: asset('what-we-build/Designs.webp'), tag: 'Creative Work' },
+  { title: 'Builders & Partner Event', image: asset('what-we-build/builders & partner event.webp'), tag: 'Events' },
 ]
 
-const physicalWorkPreviews = [
-  asset('wwb-bed-bunkbed.jpg'),
-  asset('wwb-built-in-cabinet.jpg'),
-  asset('wwb-camper.jpg'),
-  asset('wwb-kiosk.jpg'),
-  asset('wwb-mementos.jpg'),
-  asset('wwb-racks-shelves.jpg'),
-  asset('wwb-rental.jpg'),
-  asset('wwb-signages.jpg'),
-  asset('wwb-tables-counters.jpg'),
-  asset('wwb-other-builds.jpg'),
-]
+const physicalWorkPreviews = physicalWorks.map((item) => item.image)
 
 const selesaSlides = [
   { image: asset('selesaai home page.jpg'), alt: 'SelesaAI homepage' },
