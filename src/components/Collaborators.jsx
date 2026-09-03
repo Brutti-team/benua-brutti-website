@@ -31,6 +31,9 @@ const collaboratorFiles = [
   'the pari.png',
   'yayasan axiata.png',
   'yayasan hasanah',
+  'DIDR.png',
+  'SK Nexilis.png',
+  'rural social enterprise.png',
 ]
 
 const logoScale = {
