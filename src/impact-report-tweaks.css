@@ -55,33 +55,49 @@
   }
 }
 
-/* Impact Report intro — minimal, confident, and intentionally uncluttered. */
+/* Impact Report intro — clean single-column editorial treatment. */
 .impact-report-heading {
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-  gap: clamp(36px, 5vw, 80px);
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: 0;
   margin-bottom: clamp(38px, 4vw, 54px);
 }
 
+/* Reuse the previous edition-badge language here, so the year label carries
+   the visual accent and the separate right-hand badge is no longer needed. */
 .impact-report-kicker {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  width: fit-content;
+  gap: 9px;
   margin: 0 0 20px;
-  color: #657a72;
+  padding: 10px 14px;
+  border: 1px solid rgba(18, 60, 49, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.42);
+  color: #174d40;
   font-family: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
   line-height: 1;
-  letter-spacing: 0.23em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px rgba(22, 68, 54, 0.035);
 }
 
 .impact-report-kicker::before {
   content: '';
-  width: 26px;
-  height: 1px;
-  background: rgba(46, 118, 95, 0.5);
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #d6b27b;
+  box-shadow: 0 0 0 4px rgba(214, 178, 123, 0.10);
+}
+
+.impact-report-kicker::after {
+  content: none;
 }
 
 .impact-report-heading h1 {
@@ -107,60 +123,16 @@
   letter-spacing: -0.042em;
 }
 
-/* Keep only the edition badge on the right. */
+/* Remove the old right-hand Interactive Digital Edition badge entirely. */
 .impact-report-heading__copy {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  align-self: end;
-  max-width: none;
-  padding: 0 0 8px;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-}
-
-.impact-report-heading__copy::before,
-.impact-report-heading__copy::after,
-.impact-report-heading__copy p {
   display: none !important;
-  content: none !important;
-}
-
-.impact-report-heading__copy span {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  margin: 0;
-  padding: 10px 14px;
-  border: 1px solid rgba(18, 60, 49, 0.12);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.42);
-  color: #174d40;
-  font-family: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-  font-size: 9px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.impact-report-heading__copy span::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  flex: 0 0 auto;
-  border-radius: 50%;
-  background: #d6b27b;
-  box-shadow: 0 0 0 4px rgba(214, 178, 123, 0.10);
 }
 
 @media (max-width: 900px) {
   .impact-report-heading {
     grid-template-columns: 1fr;
     align-items: start;
-    gap: 22px;
+    gap: 0;
     margin-bottom: 34px;
   }
 
@@ -168,22 +140,19 @@
     max-width: 700px;
     font-size: clamp(50px, 10.8vw, 70px);
   }
-
-  .impact-report-heading__copy {
-    justify-content: flex-start;
-    padding: 0;
-  }
 }
 
 @media (max-width: 620px) {
   .impact-report-kicker {
     margin-bottom: 14px;
-    font-size: 9px;
-    letter-spacing: 0.19em;
+    padding: 9px 12px;
+    font-size: 8px;
+    letter-spacing: 0.13em;
   }
 
   .impact-report-kicker::before {
-    width: 18px;
+    width: 5px;
+    height: 5px;
   }
 
   .impact-report-heading h1 {
@@ -195,11 +164,5 @@
     margin-top: 0.12em;
     font-size: 0.78em;
     font-weight: 560;
-  }
-
-  .impact-report-heading__copy span {
-    padding: 9px 12px;
-    font-size: 8px;
-    letter-spacing: 0.13em;
   }
 }
