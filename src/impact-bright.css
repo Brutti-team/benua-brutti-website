@@ -1,24 +1,49 @@
 /* Final impact-card visibility tuning. Loaded after impact-visual-cards.css. */
 
-/* Make the pallet photo visibly brighter while keeping the green card treatment. */
-.impact-stat__visual--pallet {
+/* Make the pallet photo brighter and cleaner while keeping the green card treatment. */
+.impact .impact-stat__visual--pallet {
   width: 50% !important;
-  opacity: .74 !important;
-  filter: saturate(.96) contrast(1.05) brightness(1.12) !important;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.62) 20%, #000 52%) !important;
-  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.62) 20%, #000 52%) !important;
+  opacity: .88 !important;
+  filter: saturate(1.02) contrast(1.03) brightness(1.22) !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.70) 18%, #000 50%) !important;
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.70) 18%, #000 50%) !important;
 }
 
-/* Reduce the dark overlay over the image side so the pallet stacks read clearly. */
-.impact-stat:first-child::before {
+/* Let more of the pallet image show through on the image side. */
+.impact .impact-stat:first-child::before {
   background: linear-gradient(
     90deg,
     rgba(11,48,34,.98) 0%,
-    rgba(11,48,34,.84) 34%,
-    rgba(11,48,34,.34) 52%,
-    rgba(11,48,34,.08) 74%,
+    rgba(11,48,34,.82) 32%,
+    rgba(11,48,34,.28) 50%,
+    rgba(11,48,34,.05) 72%,
     transparent 100%
   ) !important;
+}
+
+/* Brighten the tree photo too so both cards feel equally clear. */
+.impact .impact-stat__visual--tree {
+  width: 54% !important;
+  opacity: .94 !important;
+  filter: saturate(1.04) contrast(1.02) brightness(1.16) !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.76) 18%, #000 40%) !important;
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.76) 18%, #000 40%) !important;
+}
+
+.impact .impact-stat:last-child::before {
+  background: linear-gradient(
+    90deg,
+    rgba(11,48,34,.99) 0%,
+    rgba(11,48,34,.88) 31%,
+    rgba(11,48,34,.42) 48%,
+    rgba(11,48,34,.10) 70%,
+    transparent 100%
+  ) !important;
+}
+
+/* Pull the first card copy slightly left so it stays clear of the photo. */
+.impact .impact-stat:first-child > span {
+  transform: translateX(-12px) !important;
 }
 
 /* Make 01 / MATERIAL and 02 / IMPACT easier to see without becoming loud. */
@@ -40,16 +65,37 @@
 }
 
 @media (max-width: 900px) {
-  .impact-stat__visual--pallet {
+  .impact .impact-stat__visual--pallet {
     width: 46% !important;
-    opacity: .72 !important;
+    opacity: .82 !important;
+    filter: saturate(1) contrast(1.03) brightness(1.18) !important;
+  }
+
+  .impact .impact-stat__visual--tree {
+    width: 48% !important;
+    opacity: .90 !important;
+    filter: saturate(1.02) contrast(1.02) brightness(1.12) !important;
+  }
+
+  .impact .impact-stat:first-child > span {
+    transform: translateX(-8px) !important;
   }
 }
 
 @media (max-width: 560px) {
-  .impact-stat__visual--pallet {
+  .impact .impact-stat__visual--pallet {
     width: 46% !important;
-    opacity: .68 !important;
-    filter: saturate(.94) contrast(1.04) brightness(1.10) !important;
+    opacity: .78 !important;
+    filter: saturate(.98) contrast(1.03) brightness(1.14) !important;
+  }
+
+  .impact .impact-stat__visual--tree {
+    width: 46% !important;
+    opacity: .86 !important;
+    filter: saturate(1) contrast(1.02) brightness(1.10) !important;
+  }
+
+  .impact .impact-stat:first-child > span {
+    transform: translateX(0) !important;
   }
 }
