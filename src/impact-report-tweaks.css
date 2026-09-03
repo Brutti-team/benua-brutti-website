@@ -55,11 +55,11 @@
   }
 }
 
-/* Impact Report intro — quiet, premium editorial layout. */
+/* Impact Report intro — minimal, confident, and intentionally uncluttered. */
 .impact-report-heading {
-  grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.62fr);
-  align-items: center;
-  gap: clamp(58px, 7vw, 118px);
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: clamp(36px, 5vw, 80px);
   margin-bottom: clamp(38px, 4vw, 54px);
 }
 
@@ -107,84 +107,60 @@
   letter-spacing: -0.042em;
 }
 
-/* Right-side intro: one cohesive editorial block instead of a floating statistic. */
+/* Keep only the edition badge on the right. */
 .impact-report-heading__copy {
-  position: relative;
-  display: block;
-  max-width: 500px;
-  padding: 22px 0 0;
-  border-top: 1px solid rgba(18, 60, 49, 0.17);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  align-self: end;
+  max-width: none;
+  padding: 0 0 8px;
+  border: 0;
   background: transparent;
   box-shadow: none;
 }
 
-.impact-report-heading__copy::before {
-  content: '40 PAGES  ·  2026 DIGITAL REPORT';
-  display: block;
-  margin: 0 0 15px;
-  color: #2f745f;
-  font-family: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.impact-report-heading__copy::after {
-  content: '';
-  position: absolute;
-  top: -1px;
-  left: 0;
-  width: 54px;
-  height: 2px;
-  background: #d6b27b;
-}
-
+.impact-report-heading__copy::before,
+.impact-report-heading__copy::after,
 .impact-report-heading__copy p {
-  margin: 0;
-  max-width: 455px;
-  color: #405c53;
-  font-family: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-  font-size: clamp(16px, 1.12vw, 18px);
-  font-weight: 400;
-  line-height: 1.62;
-  letter-spacing: -0.012em;
+  display: none !important;
+  content: none !important;
 }
 
 .impact-report-heading__copy span {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 20px;
-  padding: 8px 12px;
-  border: 1px solid rgba(18, 60, 49, 0.11);
+  gap: 9px;
+  margin: 0;
+  padding: 10px 14px;
+  border: 1px solid rgba(18, 60, 49, 0.12);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.38);
+  background: rgba(255, 255, 255, 0.42);
   color: #174d40;
   font-family: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
   font-size: 9px;
   font-weight: 700;
   line-height: 1;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  box-shadow: none;
+  white-space: nowrap;
 }
 
 .impact-report-heading__copy span::before {
   content: '';
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   flex: 0 0 auto;
   border-radius: 50%;
   background: #d6b27b;
+  box-shadow: 0 0 0 4px rgba(214, 178, 123, 0.10);
 }
 
 @media (max-width: 900px) {
   .impact-report-heading {
     grid-template-columns: 1fr;
     align-items: start;
-    gap: 30px;
+    gap: 22px;
     margin-bottom: 34px;
   }
 
@@ -194,7 +170,8 @@
   }
 
   .impact-report-heading__copy {
-    width: min(100%, 560px);
+    justify-content: flex-start;
+    padding: 0;
   }
 }
 
@@ -220,23 +197,9 @@
     font-weight: 560;
   }
 
-  .impact-report-heading__copy {
-    padding-top: 18px;
-  }
-
-  .impact-report-heading__copy::before {
-    margin-bottom: 13px;
-    font-size: 8px;
-    letter-spacing: 0.15em;
-  }
-
-  .impact-report-heading__copy p {
-    font-size: 14px;
-    line-height: 1.58;
-  }
-
   .impact-report-heading__copy span {
-    margin-top: 16px;
+    padding: 9px 12px;
     font-size: 8px;
+    letter-spacing: 0.13em;
   }
 }
