@@ -41,9 +41,14 @@
   ) !important;
 }
 
-/* Pull the first card copy slightly left so it stays clear of the photo. */
+/* Keep the first card copy clear of the photo. */
 .impact .impact-stat:first-child > span {
   transform: translateX(-12px) !important;
+}
+
+/* Align the RESCUED text with the left edge of Tonnes of pallet wood. */
+.impact .impact-stat:first-child > b {
+  transform: translateX(-26px) !important;
 }
 
 /* Make 01 / MATERIAL and 02 / IMPACT easier to see without becoming loud. */
@@ -80,6 +85,10 @@
   .impact .impact-stat:first-child > span {
     transform: translateX(-8px) !important;
   }
+
+  .impact .impact-stat:first-child > b {
+    transform: translateX(-22px) !important;
+  }
 }
 
 @media (max-width: 560px) {
@@ -97,5 +106,9 @@
 
   .impact .impact-stat:first-child > span {
     transform: translateX(0) !important;
+  }
+
+  .impact .impact-stat:first-child > b {
+    transform: translateX(-14px) !important;
   }
 }
