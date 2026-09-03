@@ -117,3 +117,49 @@ html body main .contact .location-card > span {
     letter-spacing: .12em !important;
   }
 }
+
+/* Collaborator logos: cleaner crop and crisper display in the premium lightbox. */
+html body #strategic-collaborators .collab-lightbox__logo-wrap {
+  overflow: hidden !important;
+  padding: 3px !important;
+}
+
+html body #strategic-collaborators .collab-lightbox__visual img {
+  width: auto !important;
+  max-width: min(720px, 76vw) !important;
+  max-height: 360px !important;
+  height: auto !important;
+  object-fit: contain !important;
+  image-rendering: auto !important;
+  backface-visibility: hidden !important;
+  -webkit-font-smoothing: antialiased !important;
+  filter:
+    saturate(1.045)
+    contrast(1.07)
+    drop-shadow(0 16px 30px rgba(17, 57, 42, .10)) !important;
+}
+
+/* SK Nexilis source has a thin coloured line at the very top; crop it cleanly. */
+html body #strategic-collaborators .collab-lightbox__visual img[alt^="Sk Nexilis"] {
+  clip-path: inset(4px 1px 2px 1px) !important;
+  transform: scale(1.012) translateY(-1px) !important;
+  transform-origin: center !important;
+}
+
+/* Apply the same clean edge treatment to the small SK Nexilis marquee logo. */
+html body #strategic-collaborators .collab-card img[alt^="Sk Nexilis"] {
+  clip-path: inset(2px 1px 1px 1px) !important;
+  transform: scale(calc(var(--logo-scale, 1) * 1.02)) !important;
+}
+
+@media (max-width: 700px) {
+  html body #strategic-collaborators .collab-lightbox__visual img {
+    width: auto !important;
+    max-width: min(520px, 78vw) !important;
+    max-height: 250px !important;
+  }
+
+  html body #strategic-collaborators .collab-lightbox__visual img[alt^="Sk Nexilis"] {
+    clip-path: inset(3px 1px 2px 1px) !important;
+  }
+}
