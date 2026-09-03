@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Brutti">
+  <circle cx="256" cy="256" r="252" fill="#183d2d"/>
+  <circle cx="256" cy="256" r="225" fill="none" stroke="#f5f1e8" stroke-width="10"/>
+  <text x="256" y="284" text-anchor="middle" fill="#f5f1e8" font-family="Georgia, 'Times New Roman', serif" font-size="118" font-style="italic" letter-spacing="-7">Brutti</text>
+</svg>
