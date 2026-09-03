@@ -34,6 +34,7 @@
   width: 68px !important;
   height: 31px !important;
   max-width: none !important;
+  max-height: none !important;
   margin: 0 !important;
   padding: 0 !important;
   object-fit: contain !important;
@@ -67,5 +68,6 @@
   .nav.nav--scrolled .brand .brutti-logo-img {
     width: 62px !important;
     height: 28px !important;
+    max-height: none !important;
   }
 }
