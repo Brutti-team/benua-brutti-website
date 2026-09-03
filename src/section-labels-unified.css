@@ -1,0 +1,95 @@
+/* Unified capsule labels across the landing page.
+   Matches the visual language used by What We Build and About Brutti. */
+
+.hero .eyebrow,
+.hero .eyebrow--light,
+.impact .eyebrow,
+.story__content .eyebrow,
+.story__content .eyebrow--light,
+.catalogue-coming__eyebrow,
+.collaborators-eyebrow,
+.contact .eyebrow,
+.contact .eyebrow--light {
+  width: fit-content !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0 !important;
+  margin: 0 0 14px !important;
+  padding: 9px 14px 8px !important;
+  border-radius: 999px !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  letter-spacing: .17em !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 7px 20px rgba(18, 45, 34, .045) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* Light-background sections. */
+.impact .eyebrow,
+.catalogue-coming__eyebrow,
+.collaborators-eyebrow {
+  border: 1px solid rgba(23, 87, 71, .13) !important;
+  background: rgba(255, 255, 255, .72) !important;
+  color: #587268 !important;
+}
+
+/* Dark / photographic sections. */
+.hero .eyebrow,
+.hero .eyebrow--light,
+.story__content .eyebrow,
+.story__content .eyebrow--light,
+.contact .eyebrow,
+.contact .eyebrow--light {
+  border: 1px solid rgba(255, 255, 255, .17) !important;
+  background: rgba(8, 38, 27, .38) !important;
+  color: rgba(255, 255, 255, .86) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .075) !important;
+}
+
+/* Remove legacy lines, dots and decorative markers. */
+.hero .eyebrow::before,
+.hero .eyebrow::after,
+.hero .eyebrow--light::before,
+.hero .eyebrow--light::after,
+.impact .eyebrow::before,
+.impact .eyebrow::after,
+.story__content .eyebrow::before,
+.story__content .eyebrow::after,
+.story__content .eyebrow--light::before,
+.story__content .eyebrow--light::after,
+.catalogue-coming__eyebrow::before,
+.catalogue-coming__eyebrow::after,
+.collaborators-eyebrow::before,
+.collaborators-eyebrow::after,
+.contact .eyebrow::before,
+.contact .eyebrow::after,
+.contact .eyebrow--light::before,
+.contact .eyebrow--light::after {
+  display: none !important;
+  content: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 700px) {
+  .hero .eyebrow,
+  .hero .eyebrow--light,
+  .impact .eyebrow,
+  .story__content .eyebrow,
+  .story__content .eyebrow--light,
+  .catalogue-coming__eyebrow,
+  .collaborators-eyebrow,
+  .contact .eyebrow,
+  .contact .eyebrow--light {
+    padding: 8px 12px 7px !important;
+    font-size: 9px !important;
+    letter-spacing: .15em !important;
+  }
+}
