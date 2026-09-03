@@ -93,61 +93,83 @@
   font-family: inherit;
   font-size: 0.79em;
   font-style: normal;
-  font-weight: 560;
+  font-weight: 580;
   line-height: 1;
   letter-spacing: -0.05em;
 }
 
-/* Right-hand introduction card */
+/* Minimal editorial note on the right — deliberately lighter than a card. */
 .impact-report-heading__copy {
   position: relative;
-  max-width: 500px;
-  padding: clamp(24px, 2.2vw, 30px);
-  border: 1px solid rgba(18, 60, 49, 0.11);
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.58);
-  box-shadow: 0 18px 42px rgba(24, 67, 55, 0.075);
-  backdrop-filter: blur(10px);
-  overflow: hidden;
+  max-width: 490px;
+  padding: 8px 0 8px 30px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  overflow: visible;
 }
 
 .impact-report-heading__copy::before {
   content: '';
   position: absolute;
-  top: 0;
+  top: 7px;
   left: 0;
-  bottom: 0;
-  width: 4px;
+  width: 2px;
+  height: calc(100% - 14px);
+  border-radius: 999px;
   background: linear-gradient(180deg, #2e765f 0%, #d6b27b 100%);
+}
+
+.impact-report-heading__copy::after {
+  content: '';
+  position: absolute;
+  top: 7px;
+  left: 0;
+  width: 52px;
+  height: 1px;
+  background: rgba(46, 118, 95, 0.2);
 }
 
 .impact-report-heading__copy p {
   margin: 0;
   max-width: 440px;
-  color: #405c53;
+  color: #466158;
   font-family: Inter, "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: clamp(16px, 1.18vw, 18px);
+  font-size: clamp(16px, 1.15vw, 18px);
   font-weight: 430;
-  line-height: 1.65;
+  line-height: 1.66;
   letter-spacing: -0.016em;
 }
 
 .impact-report-heading__copy span {
   display: inline-flex;
   align-items: center;
-  margin-top: 20px;
-  padding: 9px 14px;
-  border: 1px solid rgba(18, 60, 49, 0.12);
-  border-radius: 999px;
-  background: #f6f3ea;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   color: #174d40;
   font-family: Inter, "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 10px;
-  font-weight: 780;
+  font-weight: 800;
   line-height: 1;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   box-shadow: none;
+}
+
+.impact-report-heading__copy span::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #d6b27b;
+  box-shadow: 0 0 0 4px rgba(214, 178, 123, 0.12);
 }
 
 @media (max-width: 900px) {
@@ -180,12 +202,11 @@
   .impact-report-heading h1 em {
     margin-top: 0.12em;
     font-size: 0.8em;
-    font-weight: 560;
+    font-weight: 580;
   }
 
   .impact-report-heading__copy {
-    padding: 20px 20px 20px 23px;
-    border-radius: 18px;
+    padding: 4px 0 4px 20px;
   }
 
   .impact-report-heading__copy p {
@@ -194,6 +215,6 @@
   }
 
   .impact-report-heading__copy span {
-    margin-top: 17px;
+    margin-top: 15px;
   }
 }
