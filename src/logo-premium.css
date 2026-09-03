@@ -108,7 +108,7 @@
   }
 }
 
-/* Refined SDG showcase: a slim editorial strip rather than a tall stacked block. */
+/* SDG showcase beside the impact feature card. */
 .impact__grid {
   margin-bottom: 36px !important;
 }
@@ -136,16 +136,28 @@
 
 @media (min-width: 1180px) {
   .impact__grid {
-    grid-template-columns: minmax(0, .84fr) minmax(470px, 1.16fr) !important;
-    gap: 30px 42px !important;
-    align-items: center !important;
+    grid-template-columns: minmax(0, .82fr) minmax(430px, 1.04fr) minmax(170px, .34fr) !important;
+    gap: clamp(26px, 2.5vw, 40px) !important;
+    align-items: stretch !important;
+  }
+
+  .impact__grid > div:first-child {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+
+  .impact__grid > .impact__copy {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
   }
 
   .impact__grid::after {
-    min-height: 118px;
-    border-radius: 22px;
-    background-size: 76px auto, 76px auto, 76px auto, 100% 100%;
-    background-position: 23% 50%, 50% 50%, 77% 50%, center;
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+    min-height: 342px;
+    border-radius: 28px;
+    background-size: 56% auto, 56% auto, 56% auto, 100% 100%;
+    background-position: 50% 12%, 50% 50%, 50% 88%, center;
   }
 }
 
