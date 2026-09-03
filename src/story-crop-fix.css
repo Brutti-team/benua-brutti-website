@@ -33,3 +33,13 @@
     transform: translateX(-8%) scale(1.105) !important;
   }
 }
+
+/* The story section is light, so keep its capsule in the same light treatment as What We Build. */
+html body .story .story__content .eyebrow.eyebrow--light {
+  border-color: rgba(23, 87, 71, .12) !important;
+  background: rgba(255, 255, 255, .78) !important;
+  color: #587268 !important;
+  box-shadow: 0 6px 18px rgba(18, 45, 34, .035) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
