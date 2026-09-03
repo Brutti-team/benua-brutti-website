@@ -6,7 +6,7 @@
     'brand lead';
   align-items: center;
   column-gap: 34px;
-  row-gap: 12px;
+  row-gap: 18px;
   margin-bottom: 18px;
   padding: 2px 0 24px;
 }
@@ -18,7 +18,7 @@
   display: inline-flex !important;
   align-items: center !important;
   gap: 0 !important;
-  margin: 0 0 4px !important;
+  margin: 0 0 8px !important;
   padding: 9px 14px 8px !important;
   border: 1px solid rgba(255,255,255,.18) !important;
   border-radius: 999px !important;
@@ -68,11 +68,12 @@
   .vm-intro {
     grid-template-columns: 150px minmax(0, 1fr);
     column-gap: 26px;
-    row-gap: 9px;
+    row-gap: 14px;
     padding-bottom: 18px;
   }
 
   .vm-intro .eyebrow {
+    margin-bottom: 6px !important;
     padding: 8px 13px 7px !important;
     font-size: 10px !important;
   }
@@ -93,6 +94,7 @@
   .vm-intro {
     grid-template-columns: 148px minmax(0, 1fr);
     column-gap: 24px;
+    row-gap: 16px;
   }
 
   .vm-intro h2 {
@@ -114,11 +116,12 @@
       'eyebrow'
       'brand'
       'lead';
-    gap: 12px;
+    gap: 16px;
     padding: 0 0 20px;
   }
 
   .vm-intro .eyebrow {
+    margin-bottom: 5px !important;
     padding: 8px 12px 7px !important;
     font-size: 9.5px !important;
   }
