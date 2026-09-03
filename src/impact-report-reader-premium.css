@@ -341,3 +341,11 @@
     height: 34px !important;
   }
 }
+
+/* Homepage impact label — Brutti brand green. */
+.impact .eyebrow {
+  background: #175747 !important;
+  border-color: #175747 !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 22px rgba(23, 87, 71, .18) !important;
+}
