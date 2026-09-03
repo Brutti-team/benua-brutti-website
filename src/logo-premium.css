@@ -8,10 +8,10 @@
   justify-content: center !important;
   flex: 0 0 auto !important;
   width: auto !important;
-  min-width: 104px !important;
+  min-width: 132px !important;
   height: 100% !important;
   min-height: 0 !important;
-  padding: 0 10px !important;
+  padding: 0 14px !important;
   margin: 0 !important;
   background: transparent !important;
   border-radius: 0 !important;
@@ -25,12 +25,15 @@
   content: none !important;
 }
 
-.brand img,
-.brand .brutti-logo-img {
+/* Stronger selector so older hero/nav overrides cannot shrink the logo again. */
+.nav .brand img,
+.nav .brand .brutti-logo-img,
+.nav.nav--scrolled .brand img,
+.nav.nav--scrolled .brand .brutti-logo-img {
   display: block !important;
   position: relative !important;
   z-index: 1 !important;
-  width: 88px !important;
+  width: 112px !important;
   height: auto !important;
   max-width: none !important;
   margin: 0 auto !important;
@@ -38,16 +41,16 @@
   object-fit: contain !important;
   object-position: center center !important;
   opacity: 1 !important;
-  filter: brightness(1.12) contrast(1.08) drop-shadow(0 1px 5px rgba(0,0,0,.16)) !important;
+  filter: brightness(1.14) contrast(1.09) drop-shadow(0 1px 5px rgba(0,0,0,.16)) !important;
   transform: translateY(0) !important;
   transform-origin: center center !important;
   transition: transform .28s ease, filter .28s ease !important;
 }
 
-.brand:hover img,
-.brand:hover .brutti-logo-img {
+.nav .brand:hover img,
+.nav .brand:hover .brutti-logo-img {
   transform: scale(1.025) !important;
-  filter: brightness(1.17) contrast(1.10) drop-shadow(0 2px 7px rgba(0,0,0,.18)) !important;
+  filter: brightness(1.18) contrast(1.11) drop-shadow(0 2px 7px rgba(0,0,0,.18)) !important;
 }
 
 .nav,
@@ -56,38 +59,37 @@
   align-items: center !important;
 }
 
-.nav.nav--scrolled .brand img,
-.nav.nav--scrolled .brand .brutti-logo-img {
-  filter: brightness(1.14) contrast(1.09) drop-shadow(0 1px 5px rgba(0,0,0,.14)) !important;
-}
-
 @media (max-width: 900px) {
   .brand {
-    min-width: 90px !important;
-    padding: 0 8px !important;
+    min-width: 106px !important;
+    padding: 0 10px !important;
   }
 
-  .brand img,
-  .brand .brutti-logo-img {
-    width: 78px !important;
+  .nav .brand img,
+  .nav .brand .brutti-logo-img,
+  .nav.nav--scrolled .brand img,
+  .nav.nav--scrolled .brand .brutti-logo-img {
+    width: 90px !important;
   }
 }
 
 @media (max-width: 520px) {
   .brand {
-    min-width: 82px !important;
-    padding: 0 6px !important;
+    min-width: 94px !important;
+    padding: 0 8px !important;
   }
 
-  .brand img,
-  .brand .brutti-logo-img {
-    width: 72px !important;
+  .nav .brand img,
+  .nav .brand .brutti-logo-img,
+  .nav.nav--scrolled .brand img,
+  .nav.nav--scrolled .brand .brutti-logo-img {
+    width: 82px !important;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .brand img,
-  .brand .brutti-logo-img {
+  .nav .brand img,
+  .nav .brand .brutti-logo-img {
     transition: none !important;
   }
 }
