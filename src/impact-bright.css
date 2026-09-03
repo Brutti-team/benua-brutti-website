@@ -121,7 +121,16 @@ html body main .contact .location-card > span {
 /* Collaborator logos: cleaner crop and crisper display in the premium lightbox. */
 html body #strategic-collaborators .collab-lightbox__logo-wrap {
   overflow: hidden !important;
-  padding: 3px !important;
+  padding: 4px !important;
+}
+
+/* Normalize every collaborator logo: trim tiny source-edge artefacts and keep raster rendering clean. */
+html body #strategic-collaborators .collab-card img {
+  clip-path: inset(1px) !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  image-rendering: auto !important;
+  filter: saturate(1.02) contrast(1.045) !important;
 }
 
 html body #strategic-collaborators .collab-lightbox__visual img {
@@ -130,26 +139,34 @@ html body #strategic-collaborators .collab-lightbox__visual img {
   max-height: 360px !important;
   height: auto !important;
   object-fit: contain !important;
+  object-position: center !important;
   image-rendering: auto !important;
   backface-visibility: hidden !important;
   -webkit-font-smoothing: antialiased !important;
+  clip-path: inset(2px) !important;
   filter:
-    saturate(1.045)
-    contrast(1.07)
+    saturate(1.035)
+    contrast(1.06)
     drop-shadow(0 16px 30px rgba(17, 57, 42, .10)) !important;
 }
 
-/* SK Nexilis source has a thin coloured line at the very top; crop it cleanly. */
-html body #strategic-collaborators .collab-lightbox__visual img[alt^="Sk Nexilis"] {
-  clip-path: inset(4px 1px 2px 1px) !important;
-  transform: scale(1.012) translateY(-1px) !important;
+/* SK Nexilis source has a visible coloured line at the top; give it a slightly deeper crop. */
+html body #strategic-collaborators .collab-lightbox__visual img[alt^="SK Nexilis"],
+html body #strategic-collaborators .collab-lightbox__visual img[src*="SK Nexilis"] {
+  clip-path: inset(6px 2px 3px 2px) !important;
+  transform: scale(1.015) translateY(-1px) !important;
   transform-origin: center !important;
 }
 
-/* Apply the same clean edge treatment to the small SK Nexilis marquee logo. */
-html body #strategic-collaborators .collab-card img[alt^="Sk Nexilis"] {
-  clip-path: inset(2px 1px 1px 1px) !important;
-  transform: scale(calc(var(--logo-scale, 1) * 1.02)) !important;
+html body #strategic-collaborators .collab-card img[alt^="SK Nexilis"],
+html body #strategic-collaborators .collab-card img[src*="SK Nexilis"] {
+  clip-path: inset(3px 1px 1px 1px) !important;
+  transform: scale(calc(var(--logo-scale, 1) * 1.025)) !important;
+}
+
+/* Avoid browser over-stretching low-resolution source logos in the enlarged preview. */
+html body #strategic-collaborators .collab-lightbox__logo-wrap {
+  max-width: calc(100% - 20px) !important;
 }
 
 @media (max-width: 700px) {
@@ -157,9 +174,11 @@ html body #strategic-collaborators .collab-card img[alt^="Sk Nexilis"] {
     width: auto !important;
     max-width: min(520px, 78vw) !important;
     max-height: 250px !important;
+    clip-path: inset(1.5px) !important;
   }
 
-  html body #strategic-collaborators .collab-lightbox__visual img[alt^="Sk Nexilis"] {
-    clip-path: inset(3px 1px 2px 1px) !important;
+  html body #strategic-collaborators .collab-lightbox__visual img[alt^="SK Nexilis"],
+  html body #strategic-collaborators .collab-lightbox__visual img[src*="SK Nexilis"] {
+    clip-path: inset(5px 1px 2px 1px) !important;
   }
 }
