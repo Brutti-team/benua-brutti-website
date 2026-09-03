@@ -14,7 +14,7 @@ const collaboratorFiles = [
   'kolej komuniti.png',
   'light in the sea.png',
   'mara.png',
-  'mror.png',
+  'My Creative Ventures.png',
   'mtib.png',
   'muaythai.png',
   'ntw.png',
