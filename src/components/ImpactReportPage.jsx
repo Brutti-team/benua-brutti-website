@@ -67,8 +67,8 @@ export default function ImpactReportPage() {
   useEffect(() => {
     const audio = new Audio(PAPER_SOUND_URL)
     audio.preload = 'auto'
-    audio.volume = 0.58
-    audio.playbackRate = 3.35
+    audio.volume = 1
+    audio.playbackRate = 2.55
 
     if ('preservesPitch' in audio) {
       audio.preservesPitch = true
@@ -103,8 +103,8 @@ export default function ImpactReportPage() {
 
     audio.pause()
     audio.currentTime = 0
-    audio.volume = 0.58
-    audio.playbackRate = 3.35
+    audio.volume = 1
+    audio.playbackRate = 2.55
 
     if ('preservesPitch' in audio) {
       audio.preservesPitch = true
@@ -116,7 +116,7 @@ export default function ImpactReportPage() {
     paperAudioStopTimerRef.current = window.setTimeout(() => {
       audio.pause()
       audio.currentTime = 0
-    }, 1050)
+    }, 1350)
   }
 
   const toggleSound = () => {
