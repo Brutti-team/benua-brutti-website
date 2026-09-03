@@ -52,6 +52,7 @@ export default function ImpactReportPage() {
   const paperAudioRef = useRef(null)
   const paperAudioStopTimerRef = useRef(null)
   const lastPaperSoundAt = useRef(0)
+  const paperGestureSoundPlayedRef = useRef(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [isFlipping, setIsFlipping] = useState(false)
   const [soundEnabled, setSoundEnabled] = useState(true)
@@ -297,9 +298,19 @@ export default function ImpactReportPage() {
                       className="impact-html-flipbook"
                       onFlip={(event) => setCurrentPage(event.data + 1)}
                       onChangeState={(event) => {
-                        const flipping = event.data === 'flipping'
-                        if (flipping) playPaperSound()
-                        setIsFlipping(flipping)
+                        const state = event.data
+                        const userTurningPage = state === 'user_fold' || state === 'flipping'
+
+                        if (userTurningPage && !paperGestureSoundPlayedRef.current) {
+                          playPaperSound()
+                          paperGestureSoundPlayedRef.current = true
+                        }
+
+                        if (state === 'read') {
+                          paperGestureSoundPlayedRef.current = false
+                        }
+
+                        setIsFlipping(state === 'flipping')
                       }}
                     >
                       {Array.from({ length: TOTAL_PAGES }, (_, index) => (
