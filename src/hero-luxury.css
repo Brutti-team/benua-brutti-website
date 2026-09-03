@@ -125,7 +125,7 @@
   max-width: 545px !important;
   margin: 27px 0 30px !important;
   padding-left: 17px !important;
-  border-left: 1px solid rgba(255,255,255,.28) !important;
+  border-left: 0 !important;
   color: rgba(255,255,255,.82) !important;
   font-family: 'DM Sans', system-ui, sans-serif !important;
   font-size: 14px !important;
