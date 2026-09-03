@@ -267,3 +267,40 @@
     padding-top: 18px !important;
   }
 }
+
+/* Homepage hero company name. */
+.hero__content h1 {
+  font-size: 0 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+}
+
+.hero__content h1 br,
+.hero__content h1 em {
+  display: none !important;
+}
+
+.hero__content h1::before {
+  content: 'BENUA BRUTTI\A SDN BHD';
+  display: block;
+  white-space: pre-line;
+  color: #fff;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(60px, 5.7vw, 88px);
+  font-weight: 650;
+  line-height: .94;
+  letter-spacing: -.055em;
+  text-shadow: 0 7px 34px rgba(0,0,0,.12);
+}
+
+@media (max-width: 900px) {
+  .hero__content h1::before {
+    font-size: clamp(50px, 10.5vw, 70px);
+  }
+}
+
+@media (max-width: 520px) {
+  .hero__content h1::before {
+    font-size: clamp(43px, 13vw, 57px);
+  }
+}
