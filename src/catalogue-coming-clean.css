@@ -97,9 +97,9 @@
   gap: 20px;
   margin-top: 18px;
   color: #6f756f;
-  font-size: 7.8px;
-  font-weight: 700;
-  letter-spacing: .15em;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .14em;
   text-transform: uppercase;
 }
 
@@ -113,7 +113,7 @@
   top: 50%;
   right: -11px;
   width: 1px;
-  height: 9px;
+  height: 10px;
   background: rgba(24, 61, 45, .14);
   transform: translateY(-50%);
 }
@@ -275,7 +275,7 @@
   .catalogue-coming__categories {
     gap: 13px;
     margin-top: 15px;
-    font-size: 7.3px;
+    font-size: 9px;
   }
 
   .catalogue-coming__categories span:not(:last-child)::after {
