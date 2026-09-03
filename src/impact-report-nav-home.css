@@ -166,3 +166,16 @@
     padding-top: 96px !important;
   }
 }
+
+/* Keep descenders such as the "g" in "page" outside the reveal mask.
+   The title animation used clip-path on a tight line-height, which trimmed the glyph. */
+.impact-report-heading h1,
+.impact-report-heading h1 em {
+  clip-path: none !important;
+  overflow: visible !important;
+}
+
+.impact-report-heading h1 em {
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
