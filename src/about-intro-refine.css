@@ -11,22 +11,38 @@
   padding: 2px 0 24px;
 }
 
+/* Match the What We Build capsule treatment on the dark About section. */
 .vm-intro .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  width: max-content;
-  color: rgba(247,248,244,.58);
-  font-size: 9px;
-  letter-spacing: .18em;
+  grid-area: eyebrow;
+  width: fit-content !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0 !important;
+  margin: 0 0 4px !important;
+  padding: 9px 14px 8px !important;
+  border: 1px solid rgba(255,255,255,.18) !important;
+  border-radius: 999px !important;
+  background: rgba(255,255,255,.09) !important;
+  color: rgba(247,248,244,.86) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.07) !important;
+  font-family: 'Manrope', system-ui, sans-serif !important;
+  font-size: 10.5px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  letter-spacing: .18em !important;
+  text-transform: uppercase !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
 }
 
-.vm-intro .eyebrow::before {
-  content: '';
-  width: 20px;
-  height: 1px;
-  flex: 0 0 20px;
-  background: rgba(247,248,244,.26);
+.vm-intro .eyebrow::before,
+.vm-intro .eyebrow::after {
+  display: none !important;
+  content: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  background: none !important;
 }
 
 .vm-intro h2 {
@@ -54,6 +70,11 @@
     column-gap: 26px;
     row-gap: 9px;
     padding-bottom: 18px;
+  }
+
+  .vm-intro .eyebrow {
+    padding: 8px 13px 7px !important;
+    font-size: 10px !important;
   }
 
   .vm-intro h2 {
@@ -95,6 +116,11 @@
       'lead';
     gap: 12px;
     padding: 0 0 20px;
+  }
+
+  .vm-intro .eyebrow {
+    padding: 8px 12px 7px !important;
+    font-size: 9.5px !important;
   }
 
   .vm-intro h2 {
