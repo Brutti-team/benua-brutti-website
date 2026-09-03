@@ -1,5 +1,6 @@
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import HTMLFlipBook from 'react-pageflip'
+import '../impact-report-tweaks.css'
 import {
   ArrowLeft,
   ChevronLeft,
@@ -14,6 +15,9 @@ import {
 } from 'lucide-react'
 
 const TOTAL_PAGES = 40
+
+// Public-domain recording: "Turning a page.ogg" by planish, hosted on Wikimedia Commons.
+const PAPER_SOUND_URL = 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Turning_a_page.ogg'
 
 function backHome() {
   window.location.href = '/'
@@ -45,7 +49,8 @@ const ReportPage = forwardRef(function ReportPage({ page }, ref) {
 export default function ImpactReportPage() {
   const readerRef = useRef(null)
   const bookRef = useRef(null)
-  const audioContextRef = useRef(null)
+  const paperAudioRef = useRef(null)
+  const paperAudioStopTimerRef = useRef(null)
   const lastPaperSoundAt = useRef(0)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [isFlipping, setIsFlipping] = useState(false)
@@ -60,10 +65,25 @@ export default function ImpactReportPage() {
   }, [])
 
   useEffect(() => {
+    const audio = new Audio(PAPER_SOUND_URL)
+    audio.preload = 'auto'
+    audio.volume = 0.58
+    audio.playbackRate = 3.35
+
+    if ('preservesPitch' in audio) {
+      audio.preservesPitch = true
+    }
+
+    paperAudioRef.current = audio
+
     return () => {
-      if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
-        audioContextRef.current.close?.()
+      if (paperAudioStopTimerRef.current) {
+        window.clearTimeout(paperAudioStopTimerRef.current)
       }
+
+      audio.pause()
+      audio.currentTime = 0
+      paperAudioRef.current = null
     }
   }, [])
 
@@ -71,70 +91,45 @@ export default function ImpactReportPage() {
     if (!soundEnabled) return
 
     const timestamp = performance.now()
-    if (timestamp - lastPaperSoundAt.current < 260) return
+    if (timestamp - lastPaperSoundAt.current < 300) return
     lastPaperSoundAt.current = timestamp
 
-    const AudioContextClass = window.AudioContext || window.webkitAudioContext
-    if (!AudioContextClass) return
+    const audio = paperAudioRef.current
+    if (!audio) return
 
-    let context = audioContextRef.current
-    if (!context || context.state === 'closed') {
-      context = new AudioContextClass()
-      audioContextRef.current = context
+    if (paperAudioStopTimerRef.current) {
+      window.clearTimeout(paperAudioStopTimerRef.current)
     }
 
-    const noiseBurst = ({ start, duration, gainValue, highpass, lowpass, attack = 0.018 }) => {
-      const frameCount = Math.max(1, Math.floor(context.sampleRate * duration))
-      const buffer = context.createBuffer(1, frameCount, context.sampleRate)
-      const data = buffer.getChannelData(0)
+    audio.pause()
+    audio.currentTime = 0
+    audio.volume = 0.58
+    audio.playbackRate = 3.35
 
-      let previous = 0
-      for (let index = 0; index < frameCount; index += 1) {
-        const progress = index / frameCount
-        const white = Math.random() * 2 - 1
-        previous = previous * 0.35 + white * 0.65
-        const texture = 0.78 + Math.sin(progress * Math.PI * 14) * 0.08 + Math.sin(progress * Math.PI * 5) * 0.06
-        data[index] = previous * texture
+    if ('preservesPitch' in audio) {
+      audio.preservesPitch = true
+    }
+
+    const playback = audio.play()
+    playback?.catch(() => {})
+
+    paperAudioStopTimerRef.current = window.setTimeout(() => {
+      audio.pause()
+      audio.currentTime = 0
+    }, 1050)
+  }
+
+  const toggleSound = () => {
+    setSoundEnabled((enabled) => {
+      const next = !enabled
+
+      if (!next && paperAudioRef.current) {
+        paperAudioRef.current.pause()
+        paperAudioRef.current.currentTime = 0
       }
 
-      const source = context.createBufferSource()
-      const hp = context.createBiquadFilter()
-      const lp = context.createBiquadFilter()
-      const gain = context.createGain()
-
-      source.buffer = buffer
-      hp.type = 'highpass'
-      hp.frequency.value = highpass
-      lp.type = 'lowpass'
-      lp.frequency.value = lowpass
-
-      gain.gain.setValueAtTime(0.0001, start)
-      gain.gain.exponentialRampToValueAtTime(gainValue, start + attack)
-      gain.gain.exponentialRampToValueAtTime(Math.max(0.00012, gainValue * 0.45), start + duration * 0.68)
-      gain.gain.exponentialRampToValueAtTime(0.0001, start + duration)
-
-      source.connect(hp)
-      hp.connect(lp)
-      lp.connect(gain)
-      gain.connect(context.destination)
-      source.start(start)
-      source.stop(start + duration + 0.025)
-    }
-
-    const play = () => {
-      const start = context.currentTime + 0.006
-
-      noiseBurst({ start, duration: 0.075, gainValue: 0.052, highpass: 1150, lowpass: 7600, attack: 0.008 })
-      noiseBurst({ start: start + 0.025, duration: 0.43, gainValue: 0.038, highpass: 620, lowpass: 6900, attack: 0.05 })
-      noiseBurst({ start: start + 0.315, duration: 0.105, gainValue: 0.12, highpass: 1050, lowpass: 6200, attack: 0.009 })
-      noiseBurst({ start: start + 0.34, duration: 0.07, gainValue: 0.052, highpass: 1900, lowpass: 8200, attack: 0.006 })
-    }
-
-    if (context.state === 'suspended') {
-      context.resume().then(play).catch(() => {})
-    } else {
-      play()
-    }
+      return next
+    })
   }
 
   useEffect(() => {
@@ -248,7 +243,7 @@ export default function ImpactReportPage() {
                   </button>
                 )}
                 <button
-                  onClick={() => setSoundEnabled((enabled) => !enabled)}
+                  onClick={toggleSound}
                   aria-label={soundEnabled ? 'Mute page sound' : 'Enable page sound'}
                   title={soundEnabled ? 'Page sound on' : 'Page sound off'}
                   aria-pressed={soundEnabled}
@@ -281,13 +276,13 @@ export default function ImpactReportPage() {
                       width={447}
                       height={632}
                       size="stretch"
-                      minWidth={275}
-                      maxWidth={470}
-                      minHeight={389}
-                      maxHeight={665}
+                      minWidth={300}
+                      maxWidth={540}
+                      minHeight={424}
+                      maxHeight={764}
                       startPage={0}
                       drawShadow
-                      flippingTime={780}
+                      flippingTime={860}
                       usePortrait
                       startZIndex={10}
                       autoSize
