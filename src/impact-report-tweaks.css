@@ -1,0 +1,38 @@
+/* Desktop sizing refinements for the Impact Report reader.
+   Keep the existing Brutti chrome/background, but let the book itself
+   occupy more of the stage while preserving a comfortable margin. */
+
+@media (min-width: 901px) {
+  .impact-report-reader__stage {
+    min-height: clamp(680px, 78vh, 900px);
+  }
+
+  .impact-report-reader__viewport {
+    padding: clamp(28px, 3vw, 42px) clamp(54px, 5vw, 76px);
+  }
+
+  .impact-report-reader__book-wrap {
+    width: min(100%, 1120px);
+    height: clamp(560px, 66vw, 760px);
+    max-height: 74vh;
+  }
+
+  .impact-report-reader:fullscreen .impact-report-reader__viewport,
+  .impact-report-reader:-webkit-full-screen .impact-report-reader__viewport {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .impact-report-reader:fullscreen .impact-report-reader__book-wrap,
+  .impact-report-reader:-webkit-full-screen .impact-report-reader__book-wrap {
+    width: min(100%, 1160px);
+    height: min(calc(100vh - 142px), 770px);
+    max-height: calc(100vh - 142px);
+  }
+}
+
+@media (min-width: 1440px) {
+  .impact-report-reader__book-wrap {
+    width: min(100%, 1160px);
+  }
+}
