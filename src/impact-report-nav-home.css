@@ -105,6 +105,36 @@
   padding-top: clamp(112px, 8vw, 128px) !important;
 }
 
+/* Keep the physical page fully inside the reading stage.
+   The previous 74vh book cap plus viewport padding could exceed the stage height,
+   which clipped the top/bottom of the spread on some desktop viewport sizes. */
+.impact-flip-page img {
+  object-fit: contain !important;
+}
+
+@media (min-width: 901px) {
+  .impact-report-reader__stage {
+    min-height: clamp(700px, 80vh, 920px) !important;
+  }
+
+  .impact-report-reader__viewport {
+    box-sizing: border-box !important;
+    padding-top: clamp(42px, 4vw, 56px) !important;
+    padding-bottom: clamp(42px, 4vw, 56px) !important;
+  }
+
+  .impact-report-reader__book-wrap {
+    height: min(680px, calc(80vh - 112px)) !important;
+    max-height: calc(80vh - 112px) !important;
+  }
+
+  .impact-report-reader:fullscreen .impact-report-reader__book-wrap,
+  .impact-report-reader:-webkit-full-screen .impact-report-reader__book-wrap {
+    height: min(720px, calc(100vh - 164px)) !important;
+    max-height: calc(100vh - 164px) !important;
+  }
+}
+
 @media (max-width: 900px) {
   .impact-report-nav {
     top: 8px !important;
