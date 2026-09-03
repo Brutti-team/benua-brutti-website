@@ -1,17 +1,17 @@
-/* Clean centered logo styling for the navbar.
-   Keep the Brutti signature simple, balanced and optically centered. */
+/* Clean left-aligned logo styling for the navbar.
+   Keep the Brutti signature simple, balanced and optically aligned to the left. */
 
 .brand {
   position: relative !important;
   display: flex !important;
   align-items: center !important;
-  justify-content: center !important;
+  justify-content: flex-start !important;
   flex: 0 0 auto !important;
   width: auto !important;
-  min-width: 132px !important;
+  min-width: 116px !important;
   height: 100% !important;
   min-height: 0 !important;
-  padding: 0 14px !important;
+  padding: 0 2px !important;
   margin: 0 !important;
   background: transparent !important;
   border-radius: 0 !important;
@@ -33,17 +33,17 @@
   display: block !important;
   position: relative !important;
   z-index: 1 !important;
-  width: 112px !important;
+  width: 124px !important;
   height: auto !important;
   max-width: none !important;
-  margin: 0 auto !important;
+  margin: 0 !important;
   padding: 0 !important;
   object-fit: contain !important;
-  object-position: center center !important;
+  object-position: left center !important;
   opacity: 1 !important;
   filter: brightness(1.14) contrast(1.09) drop-shadow(0 1px 5px rgba(0,0,0,.16)) !important;
   transform: translateY(0) !important;
-  transform-origin: center center !important;
+  transform-origin: left center !important;
   transition: transform .28s ease, filter .28s ease !important;
 }
 
@@ -61,29 +61,29 @@
 
 @media (max-width: 900px) {
   .brand {
-    min-width: 106px !important;
-    padding: 0 10px !important;
+    min-width: 100px !important;
+    padding: 0 2px !important;
   }
 
   .nav .brand img,
   .nav .brand .brutti-logo-img,
   .nav.nav--scrolled .brand img,
   .nav.nav--scrolled .brand .brutti-logo-img {
-    width: 90px !important;
+    width: 96px !important;
   }
 }
 
 @media (max-width: 520px) {
   .brand {
-    min-width: 94px !important;
-    padding: 0 8px !important;
+    min-width: 90px !important;
+    padding: 0 !important;
   }
 
   .nav .brand img,
   .nav .brand .brutti-logo-img,
   .nav.nav--scrolled .brand img,
   .nav.nav--scrolled .brand .brutti-logo-img {
-    width: 82px !important;
+    width: 88px !important;
   }
 }
 
