@@ -77,7 +77,14 @@
     <link rel="stylesheet" href="/src/footer-compact.css" />
     <link rel="stylesheet" href="/src/footer-social-fix.css" />
     <style>
-      html body main #impact.impact.section-pad .impact__grid .eyebrow {
+      html body main #impact.impact.section-pad .impact__grid .eyebrow,
+      html body #what-we-build .wwb-eyebrow,
+      html body #what-we-build .wwb-section-label,
+      html body #what-we-build .wwb-section-label--digital,
+      html body main .story .story__content .eyebrow,
+      html body main .story .story__content .eyebrow--light,
+      html body #catalogue-coming-soon .catalogue-coming__eyebrow,
+      html body #strategic-collaborators .collaborators-eyebrow {
         background: #175747 !important;
         background-color: #175747 !important;
         background-image: none !important;
@@ -88,6 +95,29 @@
         opacity: 1 !important;
         filter: none !important;
         mix-blend-mode: normal !important;
+      }
+
+      html body #what-we-build .wwb-section-label span,
+      html body #what-we-build .wwb-section-label strong,
+      html body #what-we-build .wwb-section-label--digital span,
+      html body #what-we-build .wwb-section-label--digital strong {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        opacity: 1 !important;
+      }
+
+      html body #what-we-build .wwb-eyebrow::before,
+      html body #what-we-build .wwb-eyebrow::after,
+      html body #what-we-build .wwb-eyebrow span,
+      html body #what-we-build .wwb-section-label i,
+      html body main .story .story__content .eyebrow::before,
+      html body main .story .story__content .eyebrow::after,
+      html body #catalogue-coming-soon .catalogue-coming__eyebrow::before,
+      html body #catalogue-coming-soon .catalogue-coming__eyebrow::after,
+      html body #strategic-collaborators .collaborators-eyebrow::before,
+      html body #strategic-collaborators .collaborators-eyebrow::after {
+        display: none !important;
+        content: none !important;
       }
     </style>
     <script>
