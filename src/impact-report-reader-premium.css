@@ -1,0 +1,225 @@
+/* Premium polish for the Impact Report reader chrome and stage.
+   Keeps the existing Brutti palette while making the reader feel more
+   editorial, restrained and intentionally designed. */
+
+.impact-report-reader {
+  border: 1px solid rgba(9, 55, 42, 0.12);
+  border-radius: 24px;
+  background: #082f25;
+  box-shadow:
+    0 34px 84px rgba(17, 48, 39, 0.16),
+    0 10px 28px rgba(17, 48, 39, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+/* Top chrome */
+.impact-report-reader__toolbar {
+  min-height: 66px;
+  padding: 10px 14px 10px 22px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.022), transparent 52%),
+    linear-gradient(90deg, #083a2d 0%, #073529 52%, #082f27 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 10px 30px rgba(2, 23, 17, 0.08);
+}
+
+.impact-report-reader__title {
+  gap: 11px;
+}
+
+.impact-report-reader__toolbar strong {
+  color: rgba(255, 255, 255, 0.96);
+  font-family: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: -0.005em;
+}
+
+.impact-report-reader__dot {
+  width: 7px;
+  height: 7px;
+  background: #d8b36f;
+  box-shadow:
+    0 0 0 5px rgba(216, 179, 111, 0.09),
+    0 0 18px rgba(216, 179, 111, 0.14);
+}
+
+.impact-report-reader__actions {
+  gap: 9px;
+}
+
+.impact-report-reader__actions button {
+  min-height: 40px;
+  padding: 9px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.105);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
+  color: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.055),
+    0 8px 22px rgba(0, 0, 0, 0.055);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-family: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms ease,
+    background 220ms ease,
+    color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.impact-report-reader__actions button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: rgba(216, 179, 111, 0.28);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.045));
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 10px 26px rgba(0, 0, 0, 0.08);
+}
+
+.impact-report-reader__actions button svg {
+  opacity: 0.88;
+}
+
+/* Reading stage — deep charcoal green instead of a flat grey box. */
+.impact-report-reader__stage {
+  background:
+    radial-gradient(ellipse at 50% 34%, rgba(255, 255, 255, 0.065), transparent 42%),
+    radial-gradient(ellipse at 50% 96%, rgba(216, 179, 111, 0.035), transparent 43%),
+    linear-gradient(135deg, #353b39 0%, #2b312f 45%, #222826 74%, #1d2422 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    inset 0 -38px 70px rgba(0, 0, 0, 0.08);
+}
+
+.impact-report-reader__stage::before {
+  opacity: 1;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.014), transparent 20%, transparent 80%, rgba(0, 0, 0, 0.025)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.016), transparent 22%, transparent 74%, rgba(0, 0, 0, 0.055));
+}
+
+.impact-report-reader__stage::after {
+  left: 24%;
+  right: 24%;
+  bottom: 7.5%;
+  height: 4.5%;
+  background: rgba(0, 0, 0, 0.22);
+  filter: blur(28px);
+  opacity: 0.78;
+}
+
+.impact-html-flipbook {
+  filter:
+    drop-shadow(0 26px 34px rgba(0, 0, 0, 0.26))
+    drop-shadow(0 7px 12px rgba(0, 0, 0, 0.12));
+}
+
+/* Side navigation — quiet by default, elegant on hover. */
+.impact-report-reader__edge {
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  background: rgba(7, 40, 31, 0.52);
+  color: rgba(255, 255, 255, 0.88);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 10px 28px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 220ms ease,
+    border-color 220ms ease,
+    color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.impact-report-reader__edge--left {
+  left: 20px;
+}
+
+.impact-report-reader__edge--right {
+  right: 20px;
+}
+
+.impact-report-reader__edge:hover:not(:disabled) {
+  transform: translateY(-50%) scale(1.045);
+  border-color: rgba(216, 179, 111, 0.34);
+  background: rgba(7, 48, 37, 0.82);
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 13px 32px rgba(0, 0, 0, 0.12),
+    0 0 0 4px rgba(216, 179, 111, 0.035);
+}
+
+.impact-report-reader__edge:disabled {
+  opacity: 0.16;
+}
+
+/* Fullscreen keeps the same premium chrome rather than switching styles. */
+.impact-report-reader:fullscreen .impact-report-reader__toolbar,
+.impact-report-reader:-webkit-full-screen .impact-report-reader__toolbar {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.022), transparent 52%),
+    linear-gradient(90deg, #083a2d 0%, #073529 52%, #082f27 100%);
+}
+
+.impact-report-reader:fullscreen .impact-report-reader__stage,
+.impact-report-reader:-webkit-full-screen .impact-report-reader__stage {
+  background:
+    radial-gradient(ellipse at 50% 34%, rgba(255, 255, 255, 0.06), transparent 42%),
+    radial-gradient(ellipse at 50% 96%, rgba(216, 179, 111, 0.03), transparent 43%),
+    linear-gradient(135deg, #353b39 0%, #2b312f 45%, #222826 74%, #1d2422 100%);
+}
+
+@media (max-width: 700px) {
+  .impact-report-reader {
+    border-radius: 18px;
+  }
+
+  .impact-report-reader__toolbar {
+    min-height: 58px;
+    padding: 8px 9px 8px 14px;
+  }
+
+  .impact-report-reader__toolbar strong {
+    font-size: 11px;
+  }
+
+  .impact-report-reader__actions {
+    gap: 6px;
+  }
+
+  .impact-report-reader__actions button {
+    min-height: 36px;
+    padding: 8px 10px;
+  }
+
+  .impact-report-reader__actions button span {
+    display: none;
+  }
+
+  .impact-report-reader__edge {
+    width: 42px;
+    height: 42px;
+  }
+
+  .impact-report-reader__edge--left {
+    left: 10px;
+  }
+
+  .impact-report-reader__edge--right {
+    right: 10px;
+  }
+}
