@@ -233,3 +233,32 @@
     background-size: 76% 76% !important;
   }
 }
+
+/* Impact proof cards: match the Vision / Mission green exactly. */
+html body .impact .impact-stat:first-child,
+html body .impact .impact-stat:last-child {
+  background: #165d48 !important;
+  border-color: rgba(255, 255, 255, .11) !important;
+  box-shadow: 0 20px 54px rgba(13, 68, 49, .14) !important;
+}
+
+html body .impact .impact-stat:first-child::before,
+html body .impact .impact-stat:last-child::before {
+  background: linear-gradient(
+    90deg,
+    #165d48 0%,
+    rgba(22, 93, 72, .96) 34%,
+    rgba(22, 93, 72, .58) 52%,
+    rgba(22, 93, 72, .12) 74%,
+    transparent 100%
+  ) !important;
+}
+
+html body .impact .impact-stat:first-child > strong,
+html body .impact .impact-stat:first-child > strong > span,
+html body .impact .impact-stat:first-child > span,
+html body .impact .impact-stat:last-child > strong,
+html body .impact .impact-stat:last-child > strong > span,
+html body .impact .impact-stat:last-child > span {
+  color: #fff !important;
+}
