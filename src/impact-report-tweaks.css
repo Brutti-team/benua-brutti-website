@@ -17,6 +17,17 @@
     max-height: 74vh;
   }
 
+  /* Closed covers are intentionally a touch smaller than an open spread.
+     This keeps visible breathing room above and below the cover instead of
+     letting it visually touch the green toolbar / controls. */
+  .impact-report-reader__book-wrap.is-front-cover {
+    transform: translateX(-25%) scale(0.94) translateZ(0);
+  }
+
+  .impact-report-reader__book-wrap.is-back-cover {
+    transform: translateX(25%) scale(0.94) translateZ(0);
+  }
+
   .impact-report-reader:fullscreen .impact-report-reader__viewport,
   .impact-report-reader:-webkit-full-screen .impact-report-reader__viewport {
     padding-top: 18px;
@@ -28,6 +39,16 @@
     width: min(100%, 1160px);
     height: min(calc(100vh - 142px), 770px);
     max-height: calc(100vh - 142px);
+  }
+
+  .impact-report-reader:fullscreen .impact-report-reader__book-wrap.is-front-cover,
+  .impact-report-reader:-webkit-full-screen .impact-report-reader__book-wrap.is-front-cover {
+    transform: translateX(-25%) scale(0.95) translateZ(0);
+  }
+
+  .impact-report-reader:fullscreen .impact-report-reader__book-wrap.is-back-cover,
+  .impact-report-reader:-webkit-full-screen .impact-report-reader__book-wrap.is-back-cover {
+    transform: translateX(25%) scale(0.95) translateZ(0);
   }
 }
 
