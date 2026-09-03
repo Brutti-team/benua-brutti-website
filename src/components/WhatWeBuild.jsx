@@ -102,6 +102,20 @@ function GalleryLightbox({ index, onClose, onChange }) {
   const previous = () => onChange((index - 1 + physicalWorks.length) % physicalWorks.length)
   const next = () => onChange((index + 1) % physicalWorks.length)
 
+  const handleGallerySwipe = (_, info) => {
+    const swipe = info.offset.x
+    const velocity = info.velocity.x
+
+    if (swipe < -48 || velocity < -480) {
+      next()
+      return
+    }
+
+    if (swipe > 48 || velocity > 480) {
+      previous()
+    }
+  }
+
   return (
     <motion.div
       className="wwb-lightbox"
@@ -148,6 +162,14 @@ function GalleryLightbox({ index, onClose, onChange }) {
               loading="eager"
               decoding="async"
               fetchPriority="high"
+              draggable={false}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.16}
+              dragMomentum={false}
+              onDragEnd={handleGallerySwipe}
+              style={{ touchAction: 'pan-y', cursor: 'grab', userSelect: 'none' }}
+              whileTap={{ cursor: 'grabbing' }}
               initial={{ opacity: 0, scale: 0.985 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.99 }}
@@ -161,7 +183,7 @@ function GalleryLightbox({ index, onClose, onChange }) {
         </div>
 
         <div className="wwb-lightbox__footer">
-          <span>Use ← → to browse</span>
+          <span>Swipe or use ← → to browse</span>
           <span>Press Esc to close</span>
         </div>
       </motion.div>
