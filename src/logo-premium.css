@@ -332,3 +332,30 @@
     font-size: clamp(43px, 13vw, 57px);
   }
 }
+
+/* Subtle, professional motion for the SDG stack. */
+@keyframes brutti-sdg-float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+    filter: drop-shadow(0 10px 20px rgba(18, 45, 34, .05));
+  }
+  50% {
+    transform: translate3d(0, -4px, 0);
+    filter: drop-shadow(0 16px 28px rgba(18, 45, 34, .09));
+  }
+}
+
+@media (min-width: 1180px) {
+  .impact__grid::after {
+    animation: brutti-sdg-float 5.2s cubic-bezier(.45, 0, .55, 1) infinite;
+    transform-origin: center center;
+    will-change: transform, filter;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .impact__grid::after {
+    animation: none !important;
+    transform: none !important;
+  }
+}
