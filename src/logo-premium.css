@@ -287,7 +287,7 @@
 }
 
 .hero__content h1::before {
-  content: 'BENUA BRUTTI\A SDN BHD';
+  content: 'Benua Brutti\A Sdn Bhd';
   display: block;
   white-space: pre-line;
   color: #fff;
@@ -299,9 +299,24 @@
   text-shadow: 0 7px 34px rgba(0,0,0,.12);
 }
 
+/* Slightly larger hero category capsule for better visual balance. */
+.hero .eyebrow,
+.hero .eyebrow--light {
+  padding: 10px 15px 9px !important;
+  font-size: 10.5px !important;
+  font-weight: 780 !important;
+  letter-spacing: .14em !important;
+}
+
 @media (max-width: 900px) {
   .hero__content h1::before {
     font-size: clamp(50px, 10.5vw, 70px);
+  }
+
+  .hero .eyebrow,
+  .hero .eyebrow--light {
+    font-size: 10px !important;
+    padding: 9px 13px 8px !important;
   }
 }
 
