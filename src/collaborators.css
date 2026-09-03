@@ -408,3 +408,265 @@
     animation: none !important;
   }
 }
+
+/* Premium collaborator lightbox refresh. */
+.collab-lightbox {
+  padding: clamp(18px, 3vw, 38px) !important;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(89, 125, 106, .16), transparent 34%),
+    rgba(5, 24, 17, .72) !important;
+  backdrop-filter: blur(18px) saturate(.88) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(.88) !important;
+}
+
+.collab-lightbox__panel {
+  width: min(860px, 100%) !important;
+  border: 1px solid rgba(255,255,255,.62) !important;
+  border-radius: 30px !important;
+  background: #f8faf7 !important;
+  box-shadow:
+    0 44px 120px rgba(2, 21, 14, .34),
+    0 10px 30px rgba(2, 21, 14, .12),
+    inset 0 1px 0 rgba(255,255,255,.82) !important;
+}
+
+.collab-lightbox__head {
+  min-height: 104px !important;
+  padding: 24px 28px 22px !important;
+  border-bottom: 1px solid rgba(20, 63, 46, .09) !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.96), rgba(250,252,249,.91)) !important;
+}
+
+.collab-lightbox__head > div {
+  gap: 6px !important;
+}
+
+.collab-lightbox__head span {
+  color: #6f877c !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: .20em !important;
+}
+
+.collab-lightbox__head strong {
+  color: #123f2f !important;
+  font-size: clamp(25px, 3vw, 32px) !important;
+  font-weight: 650 !important;
+  letter-spacing: -.035em !important;
+}
+
+.collab-lightbox__close {
+  width: 50px !important;
+  height: 50px !important;
+  border-color: rgba(20, 63, 46, .12) !important;
+  background: rgba(247, 250, 247, .92) !important;
+  box-shadow: 0 8px 24px rgba(17, 62, 44, .06) !important;
+}
+
+.collab-lightbox__close:hover {
+  transform: rotate(3deg) scale(1.045) !important;
+  border-color: rgba(20, 63, 46, .22) !important;
+  background: #fff !important;
+}
+
+.collab-lightbox__visual {
+  position: relative !important;
+  isolation: isolate !important;
+  min-height: 430px !important;
+  overflow: hidden !important;
+  padding: 46px 96px !important;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(46, 112, 84, .095), transparent 33%),
+    linear-gradient(135deg, #fbfcfa 0%, #f3f7f2 52%, #eef4ef 100%) !important;
+}
+
+.collab-lightbox__visual::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(23,87,71,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23,87,71,.025) 1px, transparent 1px);
+  background-size: 38px 38px;
+  mask-image: radial-gradient(circle at center, #000 0%, rgba(0,0,0,.64) 38%, transparent 76%);
+  -webkit-mask-image: radial-gradient(circle at center, #000 0%, rgba(0,0,0,.64) 38%, transparent 76%);
+}
+
+.collab-lightbox__visual img {
+  position: relative !important;
+  z-index: 2 !important;
+  max-width: min(560px, 78%) !important;
+  max-height: 285px !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  filter:
+    saturate(1.03)
+    contrast(1.025)
+    drop-shadow(0 16px 28px rgba(22, 65, 48, .08)) !important;
+  animation: collab-logo-change .34s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+.collab-lightbox__nav {
+  position: absolute !important;
+  z-index: 4 !important;
+  top: 50% !important;
+  width: 52px !important;
+  height: 52px !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 0 !important;
+  border: 1px solid rgba(20, 63, 46, .13) !important;
+  border-radius: 50% !important;
+  background: rgba(255,255,255,.76) !important;
+  color: #175747 !important;
+  box-shadow:
+    0 12px 30px rgba(19, 63, 46, .09),
+    inset 0 1px 0 rgba(255,255,255,.9) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  cursor: pointer !important;
+  transform: translateY(-50%) !important;
+  transition: transform .22s cubic-bezier(.22, 1, .36, 1), background .22s ease, border-color .22s ease, box-shadow .22s ease !important;
+}
+
+.collab-lightbox__nav span {
+  display: block;
+  font-family: Arial, sans-serif;
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+.collab-lightbox__nav--prev {
+  left: 26px !important;
+}
+
+.collab-lightbox__nav--next {
+  right: 26px !important;
+}
+
+.collab-lightbox__nav:hover,
+.collab-lightbox__nav:focus-visible {
+  border-color: rgba(23, 87, 71, .28) !important;
+  background: #fff !important;
+  box-shadow:
+    0 16px 34px rgba(19, 63, 46, .13),
+    0 0 0 5px rgba(23,87,71,.045) !important;
+  outline: none !important;
+}
+
+.collab-lightbox__nav--prev:hover,
+.collab-lightbox__nav--prev:focus-visible {
+  transform: translateY(-50%) translateX(-3px) !important;
+}
+
+.collab-lightbox__nav--next:hover,
+.collab-lightbox__nav--next:focus-visible {
+  transform: translateY(-50%) translateX(3px) !important;
+}
+
+@keyframes collab-logo-change {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 900px) {
+  .collab-lightbox__panel {
+    width: min(760px, 100%) !important;
+  }
+
+  .collab-lightbox__head {
+    min-height: 94px !important;
+    padding: 21px 24px 19px !important;
+  }
+
+  .collab-lightbox__visual {
+    min-height: 390px !important;
+    padding: 42px 82px !important;
+  }
+
+  .collab-lightbox__visual img {
+    max-width: min(500px, 78%) !important;
+    max-height: 255px !important;
+  }
+
+  .collab-lightbox__nav--prev {
+    left: 20px !important;
+  }
+
+  .collab-lightbox__nav--next {
+    right: 20px !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .collab-lightbox {
+    padding: 14px !important;
+  }
+
+  .collab-lightbox__panel {
+    border-radius: 22px !important;
+  }
+
+  .collab-lightbox__head {
+    min-height: 82px !important;
+    padding: 17px 18px 15px !important;
+  }
+
+  .collab-lightbox__head span {
+    font-size: 8.5px !important;
+  }
+
+  .collab-lightbox__head strong {
+    font-size: clamp(21px, 7vw, 27px) !important;
+  }
+
+  .collab-lightbox__close {
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .collab-lightbox__visual {
+    min-height: 310px !important;
+    padding: 38px 58px !important;
+  }
+
+  .collab-lightbox__visual img {
+    max-width: 82% !important;
+    max-height: 200px !important;
+  }
+
+  .collab-lightbox__nav {
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .collab-lightbox__nav span {
+    font-size: 19px;
+  }
+
+  .collab-lightbox__nav--prev {
+    left: 10px !important;
+  }
+
+  .collab-lightbox__nav--next {
+    right: 10px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collab-lightbox__visual img {
+    animation: none !important;
+  }
+}
