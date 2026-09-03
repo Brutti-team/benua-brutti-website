@@ -288,3 +288,56 @@
     transform: none !important;
   }
 }
+
+/* Final home navbar logo sizing. This stylesheet is loaded last, so these
+   rules cannot be shrunk again by the older hero/navigation overrides. */
+.nav .brand {
+  min-width: 156px !important;
+  padding-left: 18px !important;
+  padding-right: 18px !important;
+  overflow: visible !important;
+}
+
+.nav .brand img.brutti-logo-img,
+.nav.nav--scrolled .brand img.brutti-logo-img {
+  width: 140px !important;
+  height: 44px !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: scale(1.04) !important;
+  transform-origin: center center !important;
+}
+
+.nav .brand:hover img.brutti-logo-img,
+.nav.nav--scrolled .brand:hover img.brutti-logo-img {
+  transform: scale(1.08) !important;
+}
+
+@media (max-width: 900px) {
+  .nav .brand {
+    min-width: 126px !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .nav .brand img.brutti-logo-img,
+  .nav.nav--scrolled .brand img.brutti-logo-img {
+    width: 112px !important;
+    height: 38px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .nav .brand {
+    min-width: 108px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  .nav .brand img.brutti-logo-img,
+  .nav.nav--scrolled .brand img.brutti-logo-img {
+    width: 96px !important;
+    height: 34px !important;
+  }
+}
