@@ -1,6 +1,7 @@
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import HTMLFlipBook from 'react-pageflip'
 import '../impact-report-tweaks.css'
+import '../impact-report-nav-home.css'
 import {
   ArrowLeft,
   ChevronLeft,
