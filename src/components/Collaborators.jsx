@@ -60,6 +60,12 @@ const displayName = (file) =>
     .trim()
     .replace(/\b\w/g, (letter) => letter.toUpperCase())
 
+const adjacentLogo = (file, step) => {
+  const currentIndex = collaboratorFiles.indexOf(file)
+  if (currentIndex < 0) return file
+  return collaboratorFiles[(currentIndex + step + collaboratorFiles.length) % collaboratorFiles.length]
+}
+
 function LogoCard({ file, onOpen }) {
   return (
     <button
@@ -287,6 +293,14 @@ function Collaborators() {
 
     const onKeyDown = (event) => {
       if (event.key === 'Escape') setSelectedLogo(null)
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault()
+        setSelectedLogo((current) => adjacentLogo(current, -1))
+      }
+      if (event.key === 'ArrowRight') {
+        event.preventDefault()
+        setSelectedLogo((current) => adjacentLogo(current, 1))
+      }
     }
 
     window.addEventListener('keydown', onKeyDown)
@@ -354,10 +368,29 @@ function Collaborators() {
             </div>
 
             <div className="collab-lightbox__visual">
+              <button
+                type="button"
+                className="collab-lightbox__nav collab-lightbox__nav--prev"
+                onClick={() => setSelectedLogo((current) => adjacentLogo(current, -1))}
+                aria-label="Previous collaborator"
+              >
+                <span aria-hidden="true">←</span>
+              </button>
+
               <img
+                key={selectedLogo}
                 src={asset(`collabolator brutti/${selectedLogo}`)}
                 alt={`${displayName(selectedLogo)} logo enlarged`}
               />
+
+              <button
+                type="button"
+                className="collab-lightbox__nav collab-lightbox__nav--next"
+                onClick={() => setSelectedLogo((current) => adjacentLogo(current, 1))}
+                aria-label="Next collaborator"
+              >
+                <span aria-hidden="true">→</span>
+              </button>
             </div>
           </div>
         </div>
