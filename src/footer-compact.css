@@ -1,3 +1,5 @@
+@import './section-labels-unified.css';
+
 /* Final compact footer layout. This file intentionally overrides footer-tune.css. */
 .footer {
   padding: 42px 0 18px !important;
