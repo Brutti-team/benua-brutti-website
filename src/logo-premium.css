@@ -72,3 +72,38 @@
     max-height: none !important;
   }
 }
+
+/* Homepage impact typography final tune. */
+.impact .eyebrow {
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: .18em !important;
+}
+
+.impact h2 em {
+  color: #175747 !important;
+  font-family: Georgia, 'Times New Roman', serif !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  letter-spacing: -.04em !important;
+  text-shadow: none !important;
+}
+
+.impact__grid > div:first-child::after {
+  font-size: 10px !important;
+  font-weight: 750 !important;
+  letter-spacing: .12em !important;
+  color: #1b2a24 !important;
+  border-top: 1.5px solid rgba(11, 33, 24, .30) !important;
+}
+
+@media (max-width: 560px) {
+  .impact .eyebrow {
+    font-size: 10px !important;
+  }
+
+  .impact__grid > div:first-child::after {
+    font-size: 8.5px !important;
+    letter-spacing: .09em !important;
+  }
+}
