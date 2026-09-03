@@ -1,7 +1,8 @@
-/* Homepage Brutti logo aligned exactly with the Impact Report navigation. */
+/* Homepage Brutti logo aligned with the Impact Report navigation. */
 
 .brand {
   position: relative !important;
+  left: -18px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: flex-start !important;
@@ -10,7 +11,7 @@
   min-width: 74px !important;
   height: 100% !important;
   min-height: 0 !important;
-  margin: 0 0 0 8px !important;
+  margin: 0 !important;
   padding: 0 !important;
   background: transparent !important;
   border-radius: 0 !important;
@@ -58,8 +59,8 @@
 
 @media (max-width: 900px) {
   .brand {
+    left: -8px !important;
     min-width: 66px !important;
-    margin-left: 4px !important;
   }
 
   .nav .brand img,
