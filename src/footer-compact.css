@@ -397,3 +397,17 @@
     font-size: 14px !important;
   }
 }
+
+/* Larger email category labels only. */
+.footer__email-copy small {
+  font-size: 8.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: .12em !important;
+  color: rgba(255,255,255,.48) !important;
+}
+
+@media (max-width: 700px) {
+  .footer__email-copy small {
+    font-size: 8px !important;
+  }
+}
