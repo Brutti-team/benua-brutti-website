@@ -198,8 +198,9 @@
           if (!socialLinks || socialLinks.querySelector('.footer__social-whatsapp')) return
 
           const whatsapp = document.createElement('a')
+          const message = encodeURIComponent('Hi! I’m interested in your products and would like to know more.')
           whatsapp.className = 'footer__social-whatsapp'
-          whatsapp.href = 'https://wa.me/601136043432'
+          whatsapp.href = `https://wa.me/601136043432?text=${message}`
           whatsapp.target = '_blank'
           whatsapp.rel = 'noreferrer'
           whatsapp.setAttribute('aria-label', 'Benua Brutti on WhatsApp')
