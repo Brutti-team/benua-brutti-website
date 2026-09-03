@@ -118,20 +118,17 @@
   display: block;
   grid-column: 2 / -1;
   min-height: 126px;
-  border: 1px solid rgba(23, 87, 71, .11);
-  border-radius: 24px;
-  background-color: rgba(239, 246, 241, .88);
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
   background-image:
     url('/assets/sdg/sdg%208.webp'),
     url('/assets/sdg/sdg%2012.webp'),
-    url('/assets/sdg/sdg%2015.webp'),
-    linear-gradient(135deg, rgba(255,255,255,.96), rgba(229,240,233,.88));
+    url('/assets/sdg/sdg%2015.webp');
   background-repeat: no-repeat;
-  background-size: 82px auto, 82px auto, 82px auto, 100% 100%;
-  background-position: 22% 50%, 50% 50%, 78% 50%, center;
-  box-shadow:
-    0 18px 44px rgba(18, 45, 34, .055),
-    inset 0 1px 0 rgba(255, 255, 255, .92);
+  background-size: 82px auto, 82px auto, 82px auto;
+  background-position: 22% 50%, 50% 50%, 78% 50%;
+  box-shadow: none;
 }
 
 @media (min-width: 1180px) {
@@ -155,9 +152,8 @@
     grid-column: 3 !important;
     grid-row: 1 !important;
     min-height: 342px;
-    border-radius: 28px;
-    background-size: 56% auto, 56% auto, 56% auto, 100% 100%;
-    background-position: 50% 12%, 50% 50%, 50% 88%, center;
+    background-size: 56% auto, 56% auto, 56% auto;
+    background-position: 50% 12%, 50% 50%, 50% 88%;
   }
 }
 
@@ -176,18 +172,16 @@
   .impact__grid::after {
     grid-column: 1 / -1;
     min-height: 124px;
-    border-radius: 20px;
-    background-size: 74px auto, 74px auto, 74px auto, 100% 100%;
-    background-position: 20% 50%, 50% 50%, 80% 50%, center;
+    background-size: 74px auto, 74px auto, 74px auto;
+    background-position: 20% 50%, 50% 50%, 80% 50%;
   }
 }
 
 @media (max-width: 560px) {
   .impact__grid::after {
     min-height: 106px;
-    border-radius: 18px;
-    background-size: 62px auto, 62px auto, 62px auto, 100% 100%;
-    background-position: 18% 50%, 50% 50%, 82% 50%, center;
+    background-size: 62px auto, 62px auto, 62px auto;
+    background-position: 18% 50%, 50% 50%, 82% 50%;
   }
 }
 
