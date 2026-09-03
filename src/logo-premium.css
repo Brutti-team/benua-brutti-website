@@ -108,67 +108,162 @@
   }
 }
 
-/* SDG showcase beside the impact feature card. */
+/* Refined SDG showcase: a slim editorial strip rather than a tall stacked block. */
 .impact__grid {
-  margin-bottom: 34px !important;
+  margin-bottom: 36px !important;
 }
 
 .impact__grid::after {
   content: '';
   display: block;
-  min-height: 150px;
-  border: 1px solid rgba(23, 87, 71, .10);
+  grid-column: 2 / -1;
+  min-height: 126px;
+  border: 1px solid rgba(23, 87, 71, .11);
   border-radius: 24px;
-  background-color: rgba(255, 255, 255, .74);
+  background-color: rgba(239, 246, 241, .88);
   background-image:
     url('/assets/sdg/sdg%208.webp'),
     url('/assets/sdg/sdg%2012.webp'),
-    url('/assets/sdg/sdg%2015.webp');
+    url('/assets/sdg/sdg%2015.webp'),
+    linear-gradient(135deg, rgba(255,255,255,.96), rgba(229,240,233,.88));
   background-repeat: no-repeat;
-  background-size: auto 78%, auto 78%, auto 78%;
-  background-position: 10% 50%, 50% 50%, 90% 50%;
+  background-size: 82px auto, 82px auto, 82px auto, 100% 100%;
+  background-position: 22% 50%, 50% 50%, 78% 50%, center;
   box-shadow:
-    0 18px 44px rgba(18, 45, 34, .06),
-    inset 0 1px 0 rgba(255, 255, 255, .9);
+    0 18px 44px rgba(18, 45, 34, .055),
+    inset 0 1px 0 rgba(255, 255, 255, .92);
 }
 
 @media (min-width: 1180px) {
   .impact__grid {
-    grid-template-columns: minmax(0, .82fr) minmax(430px, 1.04fr) minmax(170px, .38fr) !important;
-    gap: clamp(26px, 2.7vw, 42px) !important;
-    align-items: stretch !important;
+    grid-template-columns: minmax(0, .84fr) minmax(470px, 1.16fr) !important;
+    gap: 30px 42px !important;
+    align-items: center !important;
   }
 
   .impact__grid::after {
-    min-height: 342px;
-    border-radius: 28px;
-    background-size: 58% auto, 58% auto, 58% auto;
-    background-position: 50% 8%, 50% 50%, 50% 92%;
+    min-height: 118px;
+    border-radius: 22px;
+    background-size: 76px auto, 76px auto, 76px auto, 100% 100%;
+    background-position: 23% 50%, 50% 50%, 77% 50%, center;
   }
 }
 
 @media (min-width: 901px) and (max-width: 1179px) {
   .impact__grid::after {
     grid-column: 1 / -1;
+    min-height: 132px;
   }
 }
 
 @media (max-width: 900px) {
   .impact__grid {
-    margin-bottom: 28px !important;
+    margin-bottom: 30px !important;
   }
 
   .impact__grid::after {
-    min-height: 136px;
+    grid-column: 1 / -1;
+    min-height: 124px;
     border-radius: 20px;
-    background-size: auto 74%, auto 74%, auto 74%;
+    background-size: 74px auto, 74px auto, 74px auto, 100% 100%;
+    background-position: 20% 50%, 50% 50%, 80% 50%, center;
   }
 }
 
 @media (max-width: 560px) {
   .impact__grid::after {
-    min-height: 112px;
+    min-height: 106px;
     border-radius: 18px;
-    background-size: auto 68%, auto 68%, auto 68%;
+    background-size: 62px auto, 62px auto, 62px auto, 100% 100%;
+    background-position: 18% 50%, 50% 50%, 82% 50%, center;
+  }
+}
+
+/* Make both proof cards share the same green visual language. */
+.impact-stat:last-child {
+  border-color: rgba(255, 255, 255, .10) !important;
+  background:
+    radial-gradient(circle at 84% 18%, rgba(255,255,255,.08), transparent 28%),
+    linear-gradient(135deg, #0b3022 0%, #154f39 100%) !important;
+  box-shadow: 0 20px 54px rgba(10, 43, 30, .17) !important;
+}
+
+.impact-stat:last-child::before {
+  background: linear-gradient(
+    90deg,
+    rgba(11,48,34,.99) 0%,
+    rgba(11,48,34,.92) 34%,
+    rgba(11,48,34,.54) 52%,
+    rgba(11,48,34,.16) 74%,
+    transparent 100%
+  ) !important;
+}
+
+.impact-stat:last-child > strong,
+.impact-stat:last-child > strong > span {
+  color: #fff !important;
+  text-shadow: 0 10px 28px rgba(0,0,0,.14) !important;
+}
+
+.impact-stat:last-child > span {
+  color: rgba(255,255,255,.86) !important;
+}
+
+.impact-stat:last-child > b {
+  border-color: rgba(255,255,255,.13) !important;
+  background: rgba(255,255,255,.10) !important;
+  color: rgba(255,255,255,.88) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+.impact-stat__visual--tree {
+  width: 54% !important;
+  opacity: .78 !important;
+  filter: saturate(.88) contrast(1.06) brightness(.88) !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.70) 18%, #000 43%) !important;
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.70) 18%, #000 43%) !important;
+}
+
+/* Put 01 / MATERIAL and 02 / IMPACT clearly at the top-left of each card. */
+.impact-stat:first-child::after,
+.impact-stat:last-child::after {
+  top: 16px !important;
+  left: 18px !important;
+  right: auto !important;
+  z-index: 4 !important;
+  min-height: 24px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 0 9px !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  border-radius: 999px !important;
+  background: rgba(255,255,255,.09) !important;
+  color: rgba(255,255,255,.88) !important;
+  font-size: 8px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  letter-spacing: .14em !important;
+  text-shadow: none !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+.impact-stat > strong {
+  padding-top: 22px !important;
+}
+
+@media (max-width: 560px) {
+  .impact-stat:first-child::after,
+  .impact-stat:last-child::after {
+    top: 13px !important;
+    left: 15px !important;
+    min-height: 22px !important;
+    padding: 0 7px !important;
+    font-size: 7px !important;
+  }
+
+  .impact-stat > strong {
+    padding-top: 18px !important;
   }
 }
