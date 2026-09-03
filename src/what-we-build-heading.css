@@ -86,17 +86,18 @@
   text-wrap: balance !important;
 }
 
+/* Match the Impact "worth." accent exactly: strong upright Italiana in Brutti green. */
 .wwb-heading h2 em {
   display: inline !important;
   width: auto !important;
   margin: 0 !important;
-  color: #2b7059 !important;
-  font-family: 'Manrope', system-ui, sans-serif !important;
-  font-size: 1em !important;
+  color: #175747 !important;
+  font-family: 'Italiana', Georgia, serif !important;
+  font-size: 1.03em !important;
   font-style: normal !important;
-  font-weight: 390 !important;
+  font-weight: 700 !important;
   line-height: inherit !important;
-  letter-spacing: -.05em !important;
+  letter-spacing: -.02em !important;
 }
 
 .wwb-intro {
