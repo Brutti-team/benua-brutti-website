@@ -65,15 +65,16 @@ html body #strategic-collaborators .collaborators-head h2 em {
   color: #175747 !important;
   font-family: 'Italiana', Georgia, serif !important;
   font-size: 1.03em !important;
-  font-style: italic !important;
+  font-style: normal !important;
   font-weight: 700 !important;
   line-height: inherit !important;
   letter-spacing: -.02em !important;
 }
 
-/* Only thicken the three accent words to match the visual weight of “worth.” */
+/* Keep the three accent words bold, but upright for a cleaner consistent look. */
 html body #what-we-build .wwb-heading h2 em,
 html body main #our-journey.story .story__content h2 em,
 html body #strategic-collaborators .collaborators-head h2 em {
+  font-style: normal !important;
   font-weight: 700 !important;
 }
