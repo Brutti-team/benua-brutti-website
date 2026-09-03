@@ -78,3 +78,14 @@ html body #strategic-collaborators .collaborators-head h2 em {
   font-style: normal !important;
   font-weight: 700 !important;
 }
+
+/* Resilience uses Italiana at its native weight, matching the actual “worth.” rendering. */
+html body main #our-journey.story .story__content h2 em {
+  color: #175747 !important;
+  font-family: 'Italiana', Georgia, serif !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: 1.03em !important;
+  line-height: inherit !important;
+  letter-spacing: -.02em !important;
+}
