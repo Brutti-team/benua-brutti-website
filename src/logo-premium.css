@@ -134,7 +134,7 @@
 @media (min-width: 1180px) {
   .impact__grid {
     grid-template-columns: minmax(0, .82fr) minmax(430px, 1.04fr) 136px !important;
-    gap: 10px !important;
+    gap: 18px !important;
     align-items: stretch !important;
   }
 
@@ -156,9 +156,11 @@
     min-height: 0 !important;
     height: 100% !important;
     width: 136px !important;
-    margin-left: -18px !important;
-    background-size: auto 31.6%, auto 31.6%, auto 31.6%;
-    background-position: 50% 1.5%, 50% 50%, 50% 98.5%;
+    margin-left: -6px !important;
+    border-radius: 26px !important;
+    background-size: auto 31.2%, auto 31.2%, auto 31.2%;
+    background-position: 50% 0%, 50% 50%, 50% 100%;
+    background-clip: padding-box;
   }
 }
 
