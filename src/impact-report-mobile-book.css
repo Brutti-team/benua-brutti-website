@@ -1,177 +1,254 @@
 /* Mobile-only Impact Report book presentation.
-   Keep the existing Brutti page/header/chrome; only make the flipbook itself
-   read more clearly as a physical book on phones. */
+   Keep the existing Brutti page/header/chrome. The mobile reader itself is
+   staged like a real physical flipbook: a single centred cover, then a
+   two-page spread with visible depth, gutter and page-turn perspective. */
 
 @media (max-width: 700px) {
   .impact-report-reader__stage {
-    min-height: clamp(560px, 78svh, 720px) !important;
+    min-height: clamp(430px, 58svh, 560px) !important;
+    overflow: hidden !important;
     background:
-      radial-gradient(ellipse at 50% 34%, rgba(255,255,255,.10), transparent 42%),
-      linear-gradient(145deg, #656b68 0%, #5a605d 52%, #505653 100%) !important;
+      radial-gradient(ellipse at 50% 38%, rgba(255,255,255,.10), transparent 46%),
+      linear-gradient(180deg, #666b69 0%, #5b605e 48%, #505553 100%) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.04),
+      inset 0 -26px 54px rgba(0,0,0,.08) !important;
+  }
+
+  .impact-report-reader__stage::before {
+    opacity: .5 !important;
+    background:
+      linear-gradient(90deg, rgba(255,255,255,.025), transparent 22%, transparent 78%, rgba(0,0,0,.035)),
+      linear-gradient(180deg, rgba(255,255,255,.02), transparent 30%, rgba(0,0,0,.055)) !important;
   }
 
   .impact-report-reader__stage::after {
-    left: 15% !important;
-    right: 15% !important;
-    bottom: 8.5% !important;
-    height: 5% !important;
-    background: rgba(0,0,0,.28) !important;
-    filter: blur(22px) !important;
-    opacity: .78 !important;
+    left: 12% !important;
+    right: 12% !important;
+    bottom: 8% !important;
+    height: 5.5% !important;
+    border-radius: 50% !important;
+    background: rgba(0,0,0,.30) !important;
+    filter: blur(20px) !important;
+    opacity: .68 !important;
   }
 
   .impact-report-reader__viewport {
     min-height: inherit !important;
-    padding: 26px 30px 34px !important;
+    width: 100% !important;
+    padding: 22px 0 30px !important;
     overflow: visible !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
+  .impact-report-reader__zoom {
+    width: 100% !important;
+    overflow: visible !important;
+    perspective: 2600px !important;
+  }
+
+  /* The canvas stays landscape on phones. With showCover enabled the first
+     page occupies one half, so the -25%/+25% shift centres the closed cover.
+     Once opened, the wrapper returns to 0 and reads as a two-page book. */
   .impact-report-reader__book-wrap {
     position: relative !important;
     isolation: isolate !important;
-    width: min(82vw, 390px) !important;
-    height: auto !important;
+    width: min(104vw, 440px) !important;
+    height: min(73.5vw, 312px) !important;
     min-height: 0 !important;
     max-height: none !important;
-    aspect-ratio: 447 / 632 !important;
     overflow: visible !important;
-    perspective: 2200px !important;
-    transform: none !important;
+    perspective: 2800px !important;
+    transform: translateX(0) translateZ(0) !important;
+    transform-origin: center center !important;
+    transition: transform 720ms cubic-bezier(.2,.76,.2,1) !important;
   }
 
-  .impact-report-reader__book-wrap.is-front-cover,
+  .impact-report-reader__book-wrap.is-front-cover {
+    transform: translateX(-25%) scale(1.04) translateZ(0) !important;
+  }
+
   .impact-report-reader__book-wrap.is-back-cover {
-    transform: none !important;
+    transform: translateX(25%) scale(1.04) translateZ(0) !important;
   }
 
-  /* A subtle page block behind the live flipbook makes the closed/single-page
-     mobile view read as a real book instead of a flat image. */
-  .impact-report-reader__book-wrap::before,
-  .impact-report-reader__book-wrap::after {
+  /* Page-block depth behind the closed front cover. */
+  .impact-report-reader__book-wrap.is-front-cover::before,
+  .impact-report-reader__book-wrap.is-front-cover::after,
+  .impact-report-reader__book-wrap.is-back-cover::before,
+  .impact-report-reader__book-wrap.is-back-cover::after {
     content: '' !important;
     position: absolute !important;
-    inset: 0 !important;
+    top: 1px !important;
+    bottom: 1px !important;
+    width: 50% !important;
     pointer-events: none !important;
     border-radius: 2px !important;
     transform-origin: center !important;
   }
 
-  .impact-report-reader__book-wrap::before {
-    z-index: -2 !important;
-    transform: translate(8px, 7px) scale(.995) !important;
-    background: #ecebe6 !important;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,.72) inset,
-      0 0 0 1px rgba(0,0,0,.07),
-      0 18px 34px rgba(0,0,0,.18) !important;
+  .impact-report-reader__book-wrap.is-front-cover::before,
+  .impact-report-reader__book-wrap.is-front-cover::after {
+    left: 50% !important;
   }
 
-  .impact-report-reader__book-wrap::after {
-    z-index: -1 !important;
-    transform: translate(4px, 4px) scale(.998) !important;
+  .impact-report-reader__book-wrap.is-back-cover::before,
+  .impact-report-reader__book-wrap.is-back-cover::after {
+    left: 0 !important;
+  }
+
+  .impact-report-reader__book-wrap.is-front-cover::before,
+  .impact-report-reader__book-wrap.is-back-cover::before {
+    z-index: -3 !important;
+    transform: translate(8px, 7px) scale(.992) !important;
+    background: #e5e2da !important;
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,.09),
+      0 18px 30px rgba(0,0,0,.20) !important;
+  }
+
+  .impact-report-reader__book-wrap.is-front-cover::after,
+  .impact-report-reader__book-wrap.is-back-cover::after {
+    z-index: -2 !important;
+    transform: translate(4px, 4px) scale(.997) !important;
     background:
       repeating-linear-gradient(
         180deg,
-        #faf9f5 0,
-        #faf9f5 2px,
-        #e8e6df 2px,
-        #e8e6df 3px
+        #fbfaf6 0,
+        #fbfaf6 2px,
+        #e6e3dc 2px,
+        #e6e3dc 3px
       ) !important;
-    box-shadow: 0 0 0 1px rgba(0,0,0,.06) !important;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.07) !important;
+  }
+
+  /* When the book is open, replace the closed-book page stack with a quiet
+     centre gutter so the two pages read as one bound spread. */
+  .impact-report-reader__book-wrap:not(.is-front-cover):not(.is-back-cover)::before {
+    content: '' !important;
+    position: absolute !important;
+    z-index: 8 !important;
+    top: 1.5% !important;
+    bottom: 1.5% !important;
+    left: 50% !important;
+    width: 12px !important;
+    pointer-events: none !important;
+    transform: translateX(-50%) !important;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,.16), rgba(255,255,255,.09), transparent) !important;
+    filter: blur(.15px) !important;
+    opacity: .78 !important;
+  }
+
+  .impact-report-reader__book-wrap:not(.is-front-cover):not(.is-back-cover)::after {
+    content: '' !important;
+    position: absolute !important;
+    z-index: -3 !important;
+    left: 4% !important;
+    right: 4% !important;
+    bottom: -13px !important;
+    height: 18px !important;
+    border-radius: 50% !important;
+    background: rgba(0,0,0,.25) !important;
+    filter: blur(12px) !important;
+    pointer-events: none !important;
   }
 
   .impact-html-flipbook {
     position: relative !important;
     z-index: 2 !important;
-    width: 100% !important;
-    height: 100% !important;
     margin: 0 auto !important;
     overflow: visible !important;
+    transform-style: preserve-3d !important;
     filter:
-      drop-shadow(0 24px 28px rgba(0,0,0,.24))
-      drop-shadow(0 5px 8px rgba(0,0,0,.14)) !important;
+      drop-shadow(0 18px 24px rgba(0,0,0,.25))
+      drop-shadow(0 5px 8px rgba(0,0,0,.13)) !important;
   }
 
   .impact-html-flipbook .stf__parent,
   .impact-html-flipbook .stf__wrapper,
-  .impact-html-flipbook .stf__block {
-    width: 100% !important;
-    height: 100% !important;
+  .impact-html-flipbook .stf__block,
+  .impact-html-flipbook .stf__item,
+  .impact-html-flipbook .stf__outerShadow,
+  .impact-html-flipbook .stf__innerShadow,
+  .impact-html-flipbook .stf__hardShadow {
     overflow: visible !important;
+    backface-visibility: hidden !important;
+    transform-style: preserve-3d !important;
   }
 
   .impact-flip-page {
     background: #fff !important;
+    transform-style: preserve-3d !important;
     box-shadow:
       inset 0 0 0 1px rgba(0,0,0,.045),
-      inset -10px 0 16px -16px rgba(0,0,0,.18) !important;
+      inset -8px 0 14px -14px rgba(0,0,0,.20) !important;
   }
 
-  .impact-flip-page::before {
-    content: '' !important;
-    position: absolute !important;
-    z-index: 2 !important;
-    top: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    width: 10px !important;
-    pointer-events: none !important;
-    background: linear-gradient(90deg, transparent, rgba(0,0,0,.055)) !important;
-    opacity: .55 !important;
+  .impact-flip-page::after {
+    opacity: .9 !important;
+    background:
+      linear-gradient(90deg, rgba(0,0,0,.045), transparent 7%, transparent 92%, rgba(0,0,0,.06)) !important;
   }
 
   .impact-flip-page img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain !important;
+    object-fit: cover !important;
     background: #fff !important;
   }
 
-  /* Keep navigation visible but let the book dominate the phone viewport. */
+  /* Arrows sit outside the page area, similar to the reference viewer. */
   .impact-report-reader__edge {
     top: 50% !important;
     width: 38px !important;
     height: 38px !important;
-    background: rgba(7, 47, 36, .88) !important;
-    border-color: rgba(255,255,255,.16) !important;
-    box-shadow: 0 10px 24px rgba(0,0,0,.16) !important;
+    background: rgba(7, 53, 41, .90) !important;
+    border-color: rgba(255,255,255,.17) !important;
+    box-shadow: 0 9px 22px rgba(0,0,0,.18) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
   }
 
   .impact-report-reader__edge--left {
-    left: 7px !important;
+    left: 6px !important;
   }
 
   .impact-report-reader__edge--right {
-    right: 7px !important;
+    right: 6px !important;
+  }
+
+  .impact-report-reader.is-flipping .impact-report-reader__edge {
+    opacity: .38 !important;
   }
 }
 
 @media (max-width: 430px) {
   .impact-report-reader__stage {
-    min-height: clamp(540px, 76svh, 660px) !important;
-  }
-
-  .impact-report-reader__viewport {
-    padding: 24px 28px 30px !important;
+    min-height: clamp(410px, 55svh, 500px) !important;
   }
 
   .impact-report-reader__book-wrap {
-    width: min(84vw, 360px) !important;
+    width: 106vw !important;
+    height: 75vw !important;
   }
 }
 
 @media (max-width: 360px) {
-  .impact-report-reader__viewport {
-    padding-left: 24px !important;
-    padding-right: 24px !important;
-  }
-
   .impact-report-reader__book-wrap {
-    width: 84vw !important;
+    width: 108vw !important;
+    height: 76.5vw !important;
   }
 
   .impact-report-reader__edge {
     width: 34px !important;
     height: 34px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .impact-report-reader__book-wrap {
+    transition: none !important;
   }
 }
