@@ -59,11 +59,20 @@ export default function ImpactReportPage() {
   const [soundEnabled, setSoundEnabled] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [zoom, setZoom] = useState(1)
+  const [isMobileReader, setIsMobileReader] = useState(false)
 
   useEffect(() => {
     const onFullscreenChange = () => setIsFullscreen(Boolean(document.fullscreenElement))
     document.addEventListener('fullscreenchange', onFullscreenChange)
     return () => document.removeEventListener('fullscreenchange', onFullscreenChange)
+  }, [])
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 700px)')
+    const sync = () => setIsMobileReader(media.matches)
+    sync()
+    media.addEventListener?.('change', sync)
+    return () => media.removeEventListener?.('change', sync)
   }, [])
 
   useEffect(() => {
@@ -189,12 +198,13 @@ export default function ImpactReportPage() {
   }
 
   const pageLabel = useMemo(() => {
+    if (isMobileReader) return `${currentPage} / ${TOTAL_PAGES}`
     if (currentPage <= 1 || currentPage >= TOTAL_PAGES) return `${currentPage} / ${TOTAL_PAGES}`
 
     const left = currentPage % 2 === 0 ? currentPage : currentPage - 1
     const right = Math.min(TOTAL_PAGES, left + 1)
     return `${left}–${right} / ${TOTAL_PAGES}`
-  }, [currentPage])
+  }, [currentPage, isMobileReader])
 
   const bookPositionClass = !isFlipping && currentPage === 1
     ? ' is-front-cover'
@@ -278,22 +288,22 @@ export default function ImpactReportPage() {
                       width={447}
                       height={632}
                       size="stretch"
-                      minWidth={130}
+                      minWidth={260}
                       maxWidth={540}
-                      minHeight={184}
+                      minHeight={368}
                       maxHeight={764}
                       startPage={0}
                       drawShadow
-                      flippingTime={1050}
-                      usePortrait={false}
+                      flippingTime={900}
+                      usePortrait
                       startZIndex={10}
                       autoSize
-                      maxShadowOpacity={0.55}
+                      maxShadowOpacity={0.46}
                       showCover
                       mobileScrollSupport
                       clickEventForward={false}
                       useMouseEvents
-                      swipeDistance={12}
+                      swipeDistance={18}
                       showPageCorners
                       disableFlipByClick={false}
                       className="impact-html-flipbook"
