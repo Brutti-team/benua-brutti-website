@@ -204,3 +204,138 @@ html body main .contact .contact__phone svg {
     max-height: 41px !important;
   }
 }
+
+/* =========================================================
+   Mobile navigation — compact, premium, and phone-only.
+   Keeps the desktop navigation completely unchanged.
+   ========================================================= */
+@media (max-width: 700px) {
+  html body .mobile-menu {
+    top: max(10px, env(safe-area-inset-top)) !important;
+    right: 10px !important;
+    bottom: max(10px, env(safe-area-inset-bottom)) !important;
+    left: 10px !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 72px 20px 18px !important;
+    border: 1px solid rgba(24, 61, 45, .10) !important;
+    border-radius: 22px !important;
+    background: #f5f1e9 !important;
+    box-shadow:
+      0 22px 60px rgba(7, 24, 17, .24),
+      0 0 0 100vmax rgba(13, 36, 26, .78) !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+  }
+
+  html body .mobile-menu::before {
+    content: 'MENU';
+    position: absolute;
+    top: 27px;
+    left: 22px;
+    color: rgba(24, 61, 45, .55);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .22em;
+  }
+
+  html body .mobile-menu__close {
+    top: 17px !important;
+    right: 17px !important;
+    width: 38px !important;
+    height: 38px !important;
+    display: grid !important;
+    place-items: center !important;
+    padding: 0 !important;
+    border: 1px solid rgba(24, 61, 45, .12) !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, .46) !important;
+    color: #14251d !important;
+  }
+
+  html body .mobile-menu__close svg {
+    width: 19px !important;
+    height: 19px !important;
+    stroke-width: 1.8 !important;
+  }
+
+  html body .mobile-menu__link {
+    min-height: 68px !important;
+    gap: 14px !important;
+    padding: 14px 8px !important;
+    border-top: 1px solid rgba(24, 61, 45, .13) !important;
+    background: transparent !important;
+    color: #14251d !important;
+    font-size: clamp(24px, 6.7vw, 29px) !important;
+    font-weight: 450 !important;
+    line-height: 1.08 !important;
+    letter-spacing: -.03em !important;
+    text-align: left !important;
+    transition: background-color .18s ease, padding-left .18s ease !important;
+  }
+
+  html body .mobile-menu__link:last-child {
+    border-bottom: 1px solid rgba(24, 61, 45, .13) !important;
+  }
+
+  html body .mobile-menu__link span {
+    flex: 0 0 28px !important;
+    width: 28px !important;
+    color: rgba(24, 61, 45, .48) !important;
+    font-size: 8.5px !important;
+    font-weight: 650 !important;
+    letter-spacing: .14em !important;
+  }
+
+  html body .mobile-menu__link:active,
+  html body .mobile-menu__link:focus-visible {
+    padding-left: 12px !important;
+    background: rgba(23, 87, 71, .055) !important;
+    outline: none !important;
+  }
+
+  html body .nav__menu {
+    width: 40px !important;
+    height: 40px !important;
+    display: grid !important;
+    place-items: center !important;
+    padding: 0 !important;
+    border: 1px solid rgba(255, 255, 255, .16) !important;
+    border-radius: 12px !important;
+    background: rgba(255, 255, 255, .08) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+  }
+
+  html body .nav--scrolled .nav__menu {
+    border-color: rgba(24, 61, 45, .12) !important;
+    background: rgba(24, 61, 45, .055) !important;
+  }
+}
+
+@media (max-width: 380px) {
+  html body .mobile-menu {
+    padding: 66px 16px 14px !important;
+    border-radius: 18px !important;
+  }
+
+  html body .mobile-menu::before {
+    top: 24px;
+    left: 18px;
+  }
+
+  html body .mobile-menu__close {
+    top: 14px !important;
+    right: 14px !important;
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  html body .mobile-menu__link {
+    min-height: 62px !important;
+    padding: 12px 6px !important;
+    font-size: clamp(22px, 7vw, 26px) !important;
+  }
+}
