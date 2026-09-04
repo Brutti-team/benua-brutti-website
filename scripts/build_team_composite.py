@@ -23,8 +23,8 @@ def cutout(filename: str, max_side: int = 1050) -> Image.Image:
         result = Image.open(BytesIO(result))
     result = result.convert("RGBA")
 
-    # Clean only the nearly invisible fringe. Keep semi-transparent hair,
-    # fabric and bicycle spokes intact.
+    # Keep hair, fabric edges, tools and bicycle spokes while removing only
+    # the nearly invisible fringe left by the background-removal model.
     alpha = result.getchannel("A").point(
         lambda value: 0 if value < 7 else (255 if value > 250 else value)
     )
@@ -56,7 +56,6 @@ def place(canvas: Image.Image, image: Image.Image, center_x: int, bottom: int, h
     x = round(center_x - image.width / 2)
     y = round(bottom - image.height)
 
-    # Clip safely when a tool or limb extends outside the composition.
     src_left = max(0, -x)
     src_top = max(0, -y)
     src_right = min(image.width, canvas.width - x)
@@ -69,38 +68,38 @@ def place(canvas: Image.Image, image: Image.Image, center_x: int, bottom: int, h
     canvas.alpha_composite(clipped, (max(0, x), max(0, y)))
 
 
-# The stage follows the approved composition: women above, bicycle as the
-# central focal point, men below. The slight overlaps make it read as one
-# editorial team portrait instead of a grid of individual photos.
-canvas = Image.new("RGBA", (1900, 1120), (0, 0, 0, 0))
+# Compact editorial group: the previous version was too wide and read like
+# two separate rows. This canvas deliberately pulls everyone toward the
+# bicycle so the section feels like one team portrait instead of a roster.
+canvas = Image.new("RGBA", (1500, 1040), (0, 0, 0, 0))
 
+# Upper group — slightly staggered and overlapping.
 women = [
-    ("DSCF8078(1).webp", 230, 505, 505),
-    ("DSCF8091(1).webp", 560, 485, 430),
-    ("DSCF8135(1).webp", 900, 500, 455),
-    ("DSCF8122(1).webp", 1250, 500, 445),
-    ("WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp", 1580, 510, 475),
+    ("DSCF8078(1).webp", 235, 455, 440),
+    ("DSCF8091(1).webp", 470, 445, 375),
+    ("DSCF8135(1).webp", 720, 465, 405),
+    ("DSCF8122(1).webp", 990, 455, 395),
+    ("WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp", 1250, 460, 420),
 ]
 
+# Lower group — brought inward so the edges no longer feel empty.
 men = [
-    ("DSCF8211(1).webp", 220, 1105, 445),
-    ("DSCF8202(1).webp", 540, 1105, 440),
-    ("DSCF8186(1).webp", 860, 1105, 455),
-    ("DSCF8173(1).webp", 1325, 1105, 455),
-    ("DSCF8148(1).webp", 1655, 1105, 455),
+    ("DSCF8211(1).webp", 285, 1025, 400),
+    ("DSCF8202(1).webp", 500, 1025, 395),
+    ("DSCF8186(1).webp", 700, 1025, 410),
+    ("DSCF8173(1).webp", 1045, 1025, 410),
+    ("DSCF8148(1).webp", 1270, 1025, 410),
 ]
 
-# Back layer.
 for filename, center_x, bottom, height in women:
     place(canvas, cutout(filename), center_x, bottom, height)
+
 for filename, center_x, bottom, height in men:
     place(canvas, cutout(filename), center_x, bottom, height)
 
-# Bicycle pair sits in front and bridges the two rows, matching the chosen
-# reference composition while keeping the bicycle visually centred.
-place(canvas, cutout("DSCF8116(1).webp", max_side=1400), 1010, 930, 700)
+# Bicycle pair bridges both groups and remains the focal point, but is kept
+# contained so it does not overpower the copy beside it.
+place(canvas, cutout("DSCF8116(1).webp", max_side=1400), 790, 880, 640)
 
-# Preserve transparency in WebP so the site background and glow can show
-# naturally around every person with no visible photo rectangles.
 canvas.save(OUTPUT, "WEBP", quality=91, method=6, exact=True)
 print(f"Built {OUTPUT}")
