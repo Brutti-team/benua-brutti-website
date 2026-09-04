@@ -307,3 +307,102 @@
     height: 42px !important;
   }
 }
+
+/* ---------- Final optical size tuning ---------- */
+#strategic-collaborators .collab-card img[src*="light in the sea.png"] {
+  --logo-scale: 1.38 !important;
+}
+
+#strategic-collaborators .collab-card img[src*="art gallery.png"] {
+  --logo-scale: 1.26 !important;
+}
+
+#strategic-collaborators .collab-card img[src*="risda.png"] {
+  --logo-scale: 1.24 !important;
+}
+
+#strategic-collaborators .collab-card img[src*="glamping .png"] {
+  --logo-scale: 1.36 !important;
+}
+
+#strategic-collaborators .collab-card img[src*="yayasan hasanah"] {
+  --logo-scale: 1.62 !important;
+}
+
+#strategic-collaborators .collab-card img[src*="mara.png"] {
+  --logo-scale: 1.24 !important;
+}
+
+#strategic-collaborators .collab-lightbox__visual img[src*="light in the sea.png"] {
+  transform: scale(1.42) !important;
+}
+
+#strategic-collaborators .collab-lightbox__visual img[src*="art gallery.png"] {
+  transform: scale(1.28) !important;
+}
+
+#strategic-collaborators .collab-lightbox__visual img[src*="risda.png"] {
+  transform: scale(1.30) !important;
+}
+
+#strategic-collaborators .collab-lightbox__visual img[src*="glamping .png"] {
+  transform: scale(1.40) !important;
+}
+
+#strategic-collaborators .collab-lightbox__visual img[src*="yayasan hasanah"] {
+  transform: scale(1.42) !important;
+}
+
+#strategic-collaborators .collab-lightbox__visual img[src*="mara.png"] {
+  transform: scale(1.28) !important;
+}
+
+@media (max-width: 620px) {
+  #strategic-collaborators .collab-card img[src*="light in the sea.png"] {
+    --logo-scale: 1.28 !important;
+  }
+
+  #strategic-collaborators .collab-card img[src*="art gallery.png"] {
+    --logo-scale: 1.18 !important;
+  }
+
+  #strategic-collaborators .collab-card img[src*="risda.png"] {
+    --logo-scale: 1.18 !important;
+  }
+
+  #strategic-collaborators .collab-card img[src*="glamping .png"] {
+    --logo-scale: 1.26 !important;
+  }
+
+  #strategic-collaborators .collab-card img[src*="yayasan hasanah"] {
+    --logo-scale: 1.46 !important;
+  }
+
+  #strategic-collaborators .collab-card img[src*="mara.png"] {
+    --logo-scale: 1.18 !important;
+  }
+
+  #strategic-collaborators .collab-lightbox__visual img[src*="light in the sea.png"] {
+    transform: scale(1.30) !important;
+  }
+
+  #strategic-collaborators .collab-lightbox__visual img[src*="art gallery.png"] {
+    transform: scale(1.18) !important;
+  }
+
+  #strategic-collaborators .collab-lightbox__visual img[src*="risda.png"] {
+    transform: scale(1.20) !important;
+  }
+
+  #strategic-collaborators .collab-lightbox__visual img[src*="glamping .png"] {
+    transform: scale(1.28) !important;
+  }
+
+  #strategic-collaborators .collab-lightbox__visual img[src*="yayasan hasanah"] {
+    transform: scale(1.30) !important;
+  }
+
+  #strategic-collaborators .collab-lightbox__visual img[src*="mara.png"] {
+    transform: scale(1.18) !important;
+  }
+}
