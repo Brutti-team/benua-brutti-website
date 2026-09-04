@@ -24,3 +24,47 @@ html body main .contact .contact__phone svg {
     flex-basis: 20px !important;
   }
 }
+
+/* Collaborator front-card optical fine tuning. */
+#strategic-collaborators .collab-card img[src*="appgm.png"] {
+  --logo-scale: 1.34 !important;
+}
+
+#strategic-collaborators .collab-card img[src*="artisan market.png"] {
+  --logo-scale: 1.30 !important;
+}
+
+#strategic-collaborators .collab-card img[src*="mtib.png"] {
+  --logo-scale: 1.30 !important;
+}
+
+/* DIDR was reading too large compared with the rest. */
+#strategic-collaborators .collab-card img[src*="DIDR.png"] {
+  --logo-scale: 1.20 !important;
+}
+
+#strategic-collaborators .collab-lightbox__visual img[src*="DIDR.png"] {
+  transform: scale(1.50) !important;
+}
+
+@media (max-width: 620px) {
+  #strategic-collaborators .collab-card img[src*="appgm.png"] {
+    --logo-scale: 1.26 !important;
+  }
+
+  #strategic-collaborators .collab-card img[src*="artisan market.png"] {
+    --logo-scale: 1.22 !important;
+  }
+
+  #strategic-collaborators .collab-card img[src*="mtib.png"] {
+    --logo-scale: 1.22 !important;
+  }
+
+  #strategic-collaborators .collab-card img[src*="DIDR.png"] {
+    --logo-scale: 1.14 !important;
+  }
+
+  #strategic-collaborators .collab-lightbox__visual img[src*="DIDR.png"] {
+    transform: scale(1.34) !important;
+  }
+}
