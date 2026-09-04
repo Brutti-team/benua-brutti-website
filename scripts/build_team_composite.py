@@ -8,7 +8,7 @@ ASSETS = Path("public/assets")
 TEAM = ASSETS / "brutti-team"
 OUTPUT = ASSETS / "brutti-team-composite.webp"
 
-# Reuse one lightweight background-removal session for every team cut-out.
+# Reuse one lightweight background-removal session for all staff photos.
 SESSION = new_session("u2netp")
 
 
@@ -22,8 +22,7 @@ def cutout(filename: str, max_side: int = 1150) -> Image.Image:
         result = Image.open(BytesIO(result))
     result = result.convert("RGBA")
 
-    # Keep fine hair, fabric edges, tools and bicycle spokes while removing
-    # only the nearly invisible fringe left by the background-removal model.
+    # Remove only the faint fringe so hair, bicycle spokes and tools stay intact.
     alpha = result.getchannel("A").point(
         lambda value: 0 if value < 7 else (255 if value > 250 else value)
     )
@@ -32,7 +31,7 @@ def cutout(filename: str, max_side: int = 1150) -> Image.Image:
     bbox = alpha.getbbox()
     if bbox:
         left, top, right, bottom = bbox
-        pad = 12
+        pad = 10
         result = result.crop(
             (
                 max(0, left - pad),
@@ -50,7 +49,13 @@ def resize_height(image: Image.Image, height: int) -> Image.Image:
     return image.resize((width, height), Image.Resampling.LANCZOS)
 
 
-def place(canvas: Image.Image, image: Image.Image, center_x: int, bottom: int, height: int) -> None:
+def place(
+    canvas: Image.Image,
+    image: Image.Image,
+    center_x: int,
+    bottom: int,
+    height: int,
+) -> None:
     image = resize_height(image, height)
     x = round(center_x - image.width / 2)
     y = round(bottom - image.height)
@@ -67,55 +72,61 @@ def place(canvas: Image.Image, image: Image.Image, center_x: int, bottom: int, h
     canvas.alpha_composite(clipped, (max(0, x), max(0, y)))
 
 
-# Version 2 reference layout:
-# - laptop woman anchors the upper-left
-# - blue-tool man sits just to her right and slightly higher
-# - phone/board woman bridges into the centre
-# - bicycle pair remains the main focal point
-# - drill woman + standing woman balance the upper-right
-# - book woman overlaps the right foreground
-# - four men form a clean, tight foreground row
-canvas = Image.new("RGBA", (1400, 1010), (0, 0, 0, 0))
+# VERSION 2 REFERENCE
+# -------------------
+# The supplied version 2 is a wide, compact team portrait rather than two rows.
+# This 1368 x 774 working canvas follows the same visual proportions and keeps
+# the bicycle pair in the centre, with the remaining staff wrapping around it.
+canvas = Image.new("RGBA", (1368, 774), (0, 0, 0, 0))
 
-# Back / upper layer. These are deliberately staggered rather than laid out
-# as a straight row, matching the compact editorial silhouette of Version 2.
-back_layer = [
-    ("DSCF8135(1).webp", 185, 505, 455),   # laptop, upper-left
-    ("DSCF8148(1).webp", 360, 430, 430),   # blue tool, raised behind left foreground
-    ("DSCF8091(1).webp", 575, 455, 445),   # phone / board, upper-middle
-    ("DSCF8078(1).webp", 920, 500, 475),   # drill, upper-right of focal pair
-    ("WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp", 1180, 555, 500),
-]
+# File mapping confirmed from the existing GitHub team photos:
+# 8078 = drill woman
+# 8091 = phone / board woman
+# 8135 = black-hijab laptop woman
+# 8122 = beige-hijab book woman
+# WhatsApp = standing woman with glasses
+# 8148 = man holding blue tool
+# 8211 = sunglasses + cane
+# 8186 = front man with cane
+# 8202 = front man holding tool
+# 8173 = front man with mallet / orange cane
+# 8116 = bicycle pair
 
-for filename, center_x, bottom, height in back_layer:
-    place(canvas, cutout(filename), center_x, bottom, height)
+# BACK / UPPER LAYER — matching version 2 from left to right.
+# Blue-tool man sits behind the laptop woman, then phone/board woman,
+# drill woman and standing woman form the upper arc.
+place(canvas, cutout("DSCF8148(1).webp"), 405, 421, 390)
+place(canvas, cutout("DSCF8135(1).webp"), 213, 520, 435)
+place(canvas, cutout("DSCF8091(1).webp"), 621, 372, 348)
+place(canvas, cutout("DSCF8078(1).webp"), 932, 489, 420)
+place(
+    canvas,
+    cutout("WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp"),
+    1145,
+    627,
+    558,
+)
 
-# Bicycle pair is the visual anchor and bridges upper + lower groups.
-place(canvas, cutout("DSCF8116(1).webp", max_side=1550), 725, 805, 690)
+# MAIN ANCHOR — bicycle pair in the centre, bridging upper and lower layers.
+place(canvas, cutout("DSCF8116(1).webp", max_side=1550), 738, 696, 570)
 
-# Right foreground: keep the book figure close to the bicycle and under the
-# standing figure, just like the supplied Version 2 arrangement.
-place(canvas, cutout("DSCF8122(1).webp"), 1065, 955, 540)
+# RIGHT FOREGROUND — book woman overlaps the drill / standing group just like
+# the supplied version 2 reference.
+place(canvas, cutout("DSCF8122(1).webp"), 1062, 726, 508)
 
-# Foreground row. Bottoms are aligned closely, while x positions overlap the
-# focal pair enough to read as one portrait instead of isolated cut-outs.
-foreground = [
-    ("DSCF8211(1).webp", 245, 1000, 505),  # sunglasses / cane
-    ("DSCF8202(1).webp", 465, 1002, 510),  # centre-left
-    ("DSCF8186(1).webp", 685, 1005, 515),  # tool, centre foreground
-    ("DSCF8173(1).webp", 895, 1000, 525),  # hammer, centre-right
-]
+# FRONT ROW — four men form one clean baseline across the lower half.
+place(canvas, cutout("DSCF8211(1).webp"), 278, 774, 550)
+place(canvas, cutout("DSCF8186(1).webp"), 492, 774, 464)
+place(canvas, cutout("DSCF8202(1).webp"), 696, 774, 452)
+place(canvas, cutout("DSCF8173(1).webp"), 915, 774, 485)
 
-for filename, center_x, bottom, height in foreground:
-    place(canvas, cutout(filename), center_x, bottom, height)
-
-# Crop transparent dead space so CSS scales the people themselves, not an
-# oversized empty canvas. Keep only a small breathing margin around the group.
+# Crop transparent dead space only. The resulting aspect ratio stays wide so
+# the website can display the whole group without cutting heads or feet.
 bbox = canvas.getchannel("A").getbbox()
 if bbox:
     left, top, right, bottom = bbox
     pad_x = 14
-    pad_y = 10
+    pad_y = 8
     canvas = canvas.crop(
         (
             max(0, left - pad_x),
@@ -126,4 +137,4 @@ if bbox:
     )
 
 canvas.save(OUTPUT, "WEBP", quality=92, method=6, exact=True)
-print(f"Built Version 2 team composite: {OUTPUT} at {canvas.width}x{canvas.height}")
+print(f"Built {OUTPUT} at {canvas.width}x{canvas.height}")
