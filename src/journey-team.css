@@ -1,13 +1,13 @@
-/* Journey finale — editorial team composition with genuine transparent cut-outs */
+/* Journey finale — compact editorial team portrait */
 
 .journey-section--team {
   position: relative;
   overflow: hidden;
-  padding: 108px 0 94px;
+  padding: 104px 0 92px;
   background:
-    radial-gradient(circle at 75% 30%, rgba(211, 165, 86, .18), transparent 29%),
-    radial-gradient(circle at 72% 77%, rgba(201, 155, 78, .10), transparent 28%),
-    linear-gradient(135deg, #052d20 0%, #073d2b 52%, #052f22 100%);
+    radial-gradient(circle at 76% 42%, rgba(211, 165, 86, .16), transparent 30%),
+    radial-gradient(circle at 68% 76%, rgba(201, 155, 78, .08), transparent 30%),
+    linear-gradient(135deg, #052f21 0%, #073d2b 55%, #052f22 100%);
   color: #fff;
 }
 
@@ -16,47 +16,46 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: .7;
+  opacity: .55;
   background:
-    radial-gradient(circle at 88% 18%, rgba(224, 178, 91, .14) 0 1px, transparent 1.8px),
-    radial-gradient(circle at 68% 24%, rgba(224, 178, 91, .09) 0 1px, transparent 1.7px),
-    radial-gradient(circle at 79% 52%, rgba(255, 255, 255, .05) 0 1px, transparent 1.6px),
-    radial-gradient(circle at 61% 68%, rgba(224, 178, 91, .08) 0 1px, transparent 1.8px);
-  background-size: 145px 145px, 190px 190px, 165px 165px, 215px 215px;
+    radial-gradient(circle at 88% 18%, rgba(224, 178, 91, .12) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 72% 29%, rgba(224, 178, 91, .08) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 82% 60%, rgba(255, 255, 255, .04) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 62% 72%, rgba(224, 178, 91, .07) 0 1px, transparent 1.8px);
+  background-size: 150px 150px, 195px 195px, 170px 170px, 220px 220px;
 }
 
 .journey-section--team::after {
   content: '';
   position: absolute;
   z-index: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 31%;
+  inset: auto 0 0;
+  height: 29%;
   pointer-events: none;
-  background: linear-gradient(to top, rgba(1, 20, 13, .42), transparent);
+  background: linear-gradient(to top, rgba(1, 20, 13, .34), transparent);
 }
 
 .journey-team {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(320px, .72fr) minmax(700px, 1.65fr);
-  gap: clamp(34px, 4vw, 72px);
+  grid-template-columns: minmax(0, .86fr) minmax(0, 1.28fr);
+  gap: clamp(28px, 3.3vw, 54px);
   align-items: center;
 }
 
 .journey-team__copy {
   position: relative;
   z-index: 4;
-  max-width: 485px;
+  min-width: 0;
+  max-width: 450px;
 }
 
 .journey-team__copy .journey-kicker {
   display: flex;
   align-items: center;
   gap: 13px;
-  margin-bottom: 27px;
+  margin-bottom: 25px;
   color: #d7aa5d;
   font-size: 11px;
   letter-spacing: .17em;
@@ -65,20 +64,20 @@
 
 .journey-team__copy .journey-kicker::before {
   content: '';
-  width: 38px;
+  width: 36px;
   height: 1px;
-  flex: 0 0 38px;
+  flex: 0 0 36px;
   background: #d7aa5d;
 }
 
 .journey-team__copy h2 {
-  max-width: 500px;
+  max-width: 450px;
   margin: 0;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(58px, 5.25vw, 86px);
+  font-size: clamp(54px, 4.8vw, 76px);
   font-weight: 400;
-  line-height: .94;
-  letter-spacing: -.045em;
+  line-height: .95;
+  letter-spacing: -.043em;
   text-wrap: balance;
 }
 
@@ -89,20 +88,20 @@
 }
 
 .journey-team__copy > p:not(.journey-kicker) {
-  max-width: 430px;
-  margin: 30px 0 0;
+  max-width: 420px;
+  margin: 27px 0 0;
   color: rgba(242, 246, 243, .73);
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 16px;
-  line-height: 1.76;
+  font-size: 15px;
+  line-height: 1.75;
 }
 
 .journey-team__values {
-  margin-top: 31px;
+  margin-top: 28px;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 20px;
-  color: rgba(255, 255, 255, .69);
+  gap: 10px 18px;
+  color: rgba(255, 255, 255, .68);
   font-family: 'Manrope', system-ui, sans-serif;
   font-size: 9px;
   font-weight: 760;
@@ -127,7 +126,7 @@
 }
 
 .journey-team__copy .journey-primary {
-  margin-top: 35px;
+  margin-top: 33px;
 }
 
 .journey-team__stage {
@@ -135,7 +134,7 @@
   z-index: 2;
   min-width: 0;
   width: 100%;
-  min-height: clamp(690px, 47vw, 780px);
+  min-height: 650px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,18 +144,18 @@
   content: '';
   position: absolute;
   z-index: 0;
-  width: 88%;
-  aspect-ratio: 1.12;
-  left: 6%;
-  top: 8%;
+  width: 82%;
+  aspect-ratio: 1.08;
+  left: 9%;
+  top: 9%;
   border-radius: 50%;
   pointer-events: none;
   background: radial-gradient(
     ellipse at center,
-    rgba(222, 178, 96, .21) 0%,
-    rgba(175, 139, 77, .09) 34%,
-    rgba(255, 255, 255, .025) 51%,
-    transparent 70%
+    rgba(222, 178, 96, .18) 0%,
+    rgba(175, 139, 77, .08) 35%,
+    rgba(255, 255, 255, .02) 53%,
+    transparent 71%
   );
   filter: blur(22px);
 }
@@ -165,25 +164,24 @@
   content: 'THE PEOPLE BEHIND THE JOURNEY';
   position: absolute;
   z-index: 0;
-  right: -8px;
+  right: 4px;
   top: 49%;
   transform: rotate(90deg) translateY(-50%);
   transform-origin: right top;
-  color: rgba(255, 255, 255, .045);
+  color: rgba(255, 255, 255, .04);
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 800;
-  letter-spacing: .3em;
+  letter-spacing: .28em;
   white-space: nowrap;
 }
 
 .journey-team__composite {
   position: relative;
   z-index: 2;
-  width: clamp(820px, 62vw, 1140px);
-  max-width: none;
-  margin: 0;
-  transform: translateX(-1.5%);
+  width: min(100%, 760px);
+  max-width: 760px;
+  margin: 0 auto;
   pointer-events: none;
 }
 
@@ -193,98 +191,96 @@
   display: block;
   object-fit: contain;
   filter:
-    drop-shadow(0 26px 28px rgba(0, 0, 0, .22))
-    drop-shadow(0 3px 5px rgba(0, 0, 0, .11));
+    drop-shadow(0 24px 26px rgba(0, 0, 0, .20))
+    drop-shadow(0 3px 5px rgba(0, 0, 0, .10));
 }
 
 @media (max-width: 1240px) {
   .journey-team {
-    grid-template-columns: minmax(290px, .72fr) minmax(600px, 1.5fr);
-    gap: 26px;
-  }
-
-  .journey-team__stage {
-    min-height: 650px;
-  }
-
-  .journey-team__composite {
-    width: clamp(720px, 65vw, 980px);
+    grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+    gap: 24px;
   }
 
   .journey-team__copy h2 {
-    font-size: clamp(54px, 5.9vw, 74px);
+    font-size: clamp(50px, 5.3vw, 68px);
+  }
+
+  .journey-team__stage {
+    min-height: 600px;
+  }
+
+  .journey-team__composite {
+    width: min(100%, 700px);
   }
 }
 
 @media (max-width: 980px) {
   .journey-section--team {
-    padding: 82px 0 70px;
+    padding: 82px 0 68px;
   }
 
   .journey-team {
     grid-template-columns: 1fr;
-    gap: 26px;
+    gap: 22px;
   }
 
   .journey-team__copy {
-    max-width: 680px;
+    max-width: 650px;
   }
 
   .journey-team__copy h2 {
-    max-width: 620px;
-  }
-
-  .journey-team__copy > p:not(.journey-kicker) {
     max-width: 590px;
   }
 
+  .journey-team__copy > p:not(.journey-kicker) {
+    max-width: 570px;
+  }
+
   .journey-team__stage {
-    width: min(100%, 900px);
-    min-height: 610px;
+    width: min(100%, 800px);
+    min-height: 570px;
     margin: 0 auto;
   }
 
   .journey-team__composite {
-    width: min(112%, 980px);
-    transform: none;
+    width: min(100%, 720px);
   }
 }
 
 @media (max-width: 720px) {
   .journey-section--team {
-    padding: 66px 0 54px;
+    padding: 64px 0 50px;
   }
 
   .journey-team {
-    gap: 16px;
+    gap: 12px;
   }
 
   .journey-team__copy .journey-kicker {
-    margin-bottom: 22px;
+    margin-bottom: 21px;
   }
 
   .journey-team__copy h2 {
-    max-width: 355px;
-    font-size: clamp(47px, 13.5vw, 64px);
+    max-width: 350px;
+    font-size: clamp(46px, 13vw, 61px);
     line-height: .96;
   }
 
   .journey-team__copy > p:not(.journey-kicker) {
-    margin-top: 23px;
+    margin-top: 22px;
     font-size: 15px;
-    line-height: 1.7;
+    line-height: 1.68;
   }
 
   .journey-team__values {
-    margin-top: 24px;
+    margin-top: 23px;
     gap: 9px 14px;
     font-size: 8px;
   }
 
   .journey-team__stage {
-    min-height: 445px;
-    margin-top: 4px;
-    overflow: visible;
+    min-height: 430px;
+    margin-top: 2px;
   }
 
   .journey-team__stage::after {
@@ -292,28 +288,27 @@
   }
 
   .journey-team__composite {
-    width: 140%;
-    margin-left: -20%;
+    width: min(108%, 620px);
   }
 }
 
 @media (max-width: 500px) {
   .journey-section--team {
-    padding-bottom: 46px;
+    padding-bottom: 44px;
   }
 
   .journey-team__copy h2 {
-    max-width: 330px;
-    font-size: clamp(45px, 14.2vw, 59px);
+    max-width: 325px;
+    font-size: clamp(44px, 14vw, 57px);
   }
 
   .journey-team__stage {
-    min-height: 365px;
+    min-height: 350px;
   }
 
   .journey-team__composite {
-    width: 154%;
-    margin-left: -27%;
+    width: 110%;
+    margin-left: -5%;
   }
 }
 
