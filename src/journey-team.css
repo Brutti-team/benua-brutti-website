@@ -1,13 +1,12 @@
-/* Borderless team collage for the final Journey section */
+/* Final Journey section: clean stacked team portrait composition */
 
 .journey-section--team {
   position: relative;
   overflow: hidden;
   padding: 96px 0 82px;
-  background:
-    radial-gradient(circle at 75% 42%, rgba(201, 164, 93, .13), transparent 34%),
-    radial-gradient(circle at 58% 88%, rgba(255, 255, 255, .055), transparent 30%),
-    linear-gradient(135deg, #073826 0%, #0b4934 52%, #073526 100%);
+  /* Keep this solid so the white studio backgrounds disappear cleanly
+     when the portraits use multiply over the same green. */
+  background: #0b4934;
   color: #fff;
 }
 
@@ -17,12 +16,9 @@
   inset: 0;
   pointer-events: none;
   opacity: .12;
-  background-image:
-    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.016) 1px, transparent 1px);
-  background-size: 54px 54px;
-  mask-image: linear-gradient(90deg, #000 0%, transparent 56%);
-  -webkit-mask-image: linear-gradient(90deg, #000 0%, transparent 56%);
+  background:
+    radial-gradient(circle at 79% 36%, rgba(216, 176, 98, .18), transparent 30%),
+    radial-gradient(circle at 64% 76%, rgba(255, 255, 255, .06), transparent 35%);
 }
 
 .journey-team {
@@ -36,7 +32,7 @@
 
 .journey-team__copy {
   position: relative;
-  z-index: 12;
+  z-index: 20;
   max-width: 470px;
 }
 
@@ -105,11 +101,7 @@
 .journey-team__stage {
   position: relative;
   min-width: 0;
-  height: clamp(630px, 48vw, 760px);
-  /* Important: do not isolate this layer. The portraits use multiply so
-     their pale studio backgrounds blend into the green page instead of
-     showing as rectangles. */
-  isolation: auto;
+  height: clamp(650px, 49vw, 770px);
   background: transparent;
 }
 
@@ -117,45 +109,45 @@
   content: '';
   position: absolute;
   z-index: 0;
-  width: 76%;
-  aspect-ratio: 1;
-  left: 16%;
-  top: 8%;
+  left: 10%;
+  right: 10%;
+  top: 17%;
+  bottom: 11%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(229, 217, 190, .13) 0%, rgba(173, 190, 169, .045) 40%, transparent 69%);
-  filter: blur(14px);
+  background: radial-gradient(circle, rgba(217, 185, 122, .12), rgba(255,255,255,.025) 43%, transparent 72%);
+  filter: blur(15px);
   pointer-events: none;
 }
 
 .journey-team__stage::after {
-  content: 'BUILT TOGETHER';
+  content: 'THE PEOPLE BEHIND THE JOURNEY';
   position: absolute;
   z-index: 0;
-  right: 1%;
-  top: 48%;
+  right: -2px;
+  top: 47%;
   transform: rotate(90deg) translateY(-50%);
   transform-origin: right top;
-  color: rgba(255,255,255,.05);
+  color: rgba(255,255,255,.045);
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 800;
-  letter-spacing: .34em;
+  letter-spacing: .28em;
   white-space: nowrap;
 }
 
 .journey-team__person {
-  --mask-softness: 82%;
   position: absolute;
-  z-index: 2;
   margin: 0;
   display: grid;
   place-items: end center;
   pointer-events: none;
   transform-origin: center bottom;
-  background: transparent;
-  overflow: visible;
-  mask-image: radial-gradient(ellipse at 50% 48%, #000 0%, #000 58%, rgba(0,0,0,.98) 68%, rgba(0,0,0,.54) var(--mask-softness), transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse at 50% 48%, #000 0%, #000 58%, rgba(0,0,0,.98) 68%, rgba(0,0,0,.54) var(--mask-softness), transparent 100%);
+  overflow: hidden;
+  /* Same green as the section. The pale studio wall therefore blends away
+     inside each image instead of showing rectangular photo cards. */
+  background: #0b4934;
+  mask-image: radial-gradient(ellipse at 50% 50%, #000 0%, #000 63%, rgba(0,0,0,.94) 75%, rgba(0,0,0,.38) 91%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 0%, #000 63%, rgba(0,0,0,.94) 75%, rgba(0,0,0,.38) 91%, transparent 100%);
 }
 
 .journey-team__person img {
@@ -165,112 +157,40 @@
   object-fit: contain;
   object-position: center bottom;
   background: transparent;
-  /* The original portraits were shot against a pale wall. Multiply makes
-     those pale pixels visually disappear into the forest-green section,
-     giving the stacked cut-out look without visible photo cards. */
-  mix-blend-mode: multiply !important;
-  filter: brightness(1.30) contrast(1.12) saturate(1.08) drop-shadow(0 24px 28px rgba(0,0,0,.16));
+  mix-blend-mode: multiply;
+  filter: brightness(1.30) contrast(1.08) saturate(1.08) drop-shadow(0 20px 24px rgba(0,0,0,.15));
   transform: translateZ(0);
   transition: transform .55s cubic-bezier(.22,1,.36,1), filter .55s ease;
 }
 
+/* Centre focal point: bicycle stays in the middle. */
 .journey-team__person--hero {
-  z-index: 6;
-  left: 22%;
-  top: 23%;
-  width: 56%;
-  height: 56%;
-  --mask-softness: 86%;
-}
-
-.journey-team__person--01 {
-  z-index: 4;
-  left: -1%;
-  top: 1%;
-  width: 26%;
-  height: 42%;
-}
-
-.journey-team__person--02 {
-  z-index: 2;
+  z-index: 8;
   left: 20%;
-  top: -1%;
-  width: 24%;
-  height: 39%;
+  top: 25%;
+  width: 60%;
+  height: 56%;
+  mask-image: radial-gradient(ellipse at 50% 52%, #000 0%, #000 69%, rgba(0,0,0,.9) 82%, rgba(0,0,0,.35) 93%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 52%, #000 0%, #000 69%, rgba(0,0,0,.9) 82%, rgba(0,0,0,.35) 93%, transparent 100%);
 }
 
-.journey-team__person--03 {
-  z-index: 3;
-  left: 40%;
-  top: 0;
-  width: 24%;
-  height: 39%;
-}
+/* Women: one clean row across the top. */
+.journey-team__person--01 { z-index: 4; left: -2%; top: 1%; width: 24%; height: 40%; }
+.journey-team__person--02 { z-index: 5; left: 18%; top: -2%; width: 24%; height: 41%; }
+.journey-team__person--03 { z-index: 4; left: 39%; top: 0%; width: 23%; height: 39%; }
+.journey-team__person--04 { z-index: 5; left: 59%; top: -1%; width: 24%; height: 41%; }
+.journey-team__person--05 { z-index: 4; left: 80%; top: 2%; width: 22%; height: 40%; }
 
-.journey-team__person--04 {
-  z-index: 2;
-  left: 61%;
-  top: 1%;
-  width: 23%;
-  height: 41%;
-}
-
-.journey-team__person--05 {
-  z-index: 3;
-  left: 79%;
-  top: 5%;
-  width: 22%;
-  height: 40%;
-}
-
-.journey-team__person--06 {
-  z-index: 8;
-  left: -2%;
-  top: 53%;
-  width: 27%;
-  height: 43%;
-}
-
-.journey-team__person--07 {
-  z-index: 7;
-  left: 67%;
-  top: 48%;
-  width: 27%;
-  height: 44%;
-}
-
-.journey-team__person--08 {
-  z-index: 7;
-  left: 17%;
-  top: 63%;
-  width: 24%;
-  height: 37%;
-}
-
-.journey-team__person--09 {
-  z-index: 8;
-  left: 40%;
-  top: 65%;
-  width: 25%;
-  height: 35%;
-}
-
-.journey-team__person--10 {
-  z-index: 7;
-  left: 80%;
-  top: 61%;
-  width: 22%;
-  height: 38%;
-}
+/* Men: one clean row across the bottom. */
+.journey-team__person--06 { z-index: 10; left: -2%; top: 58%; width: 24%; height: 42%; }
+.journey-team__person--07 { z-index: 10; left: 18%; top: 60%; width: 24%; height: 40%; }
+.journey-team__person--08 { z-index: 11; left: 39%; top: 61%; width: 23%; height: 39%; }
+.journey-team__person--09 { z-index: 10; left: 60%; top: 59%; width: 24%; height: 41%; }
+.journey-team__person--10 { z-index: 10; left: 80%; top: 58%; width: 22%; height: 42%; }
 
 @media (hover: hover) and (pointer: fine) {
   .journey-team__stage:hover .journey-team__person img {
-    filter: brightness(1.25) contrast(1.10) saturate(1.02) drop-shadow(0 20px 24px rgba(0,0,0,.13));
-  }
-
-  .journey-team__stage .journey-team__person:hover img {
-    transform: scale(1.025) translateY(-3px);
-    filter: brightness(1.34) contrast(1.13) saturate(1.10) drop-shadow(0 28px 34px rgba(0,0,0,.20));
+    filter: brightness(1.26) contrast(1.07) saturate(1.03) drop-shadow(0 18px 22px rgba(0,0,0,.13));
   }
 }
 
@@ -296,7 +216,7 @@
 
   .journey-team {
     grid-template-columns: 1fr;
-    gap: 44px;
+    gap: 42px;
   }
 
   .journey-team__copy {
@@ -310,7 +230,7 @@
 
   .journey-team__stage {
     width: min(100%, 820px);
-    height: 610px;
+    height: 630px;
     margin: 0 auto;
   }
 }
@@ -321,11 +241,11 @@
   }
 
   .journey-team {
-    gap: 26px;
+    gap: 24px;
   }
 
   .journey-team__copy h2 {
-    max-width: 330px;
+    max-width: 350px;
     font-size: clamp(44px, 13vw, 62px);
   }
 
@@ -350,12 +270,6 @@
     overflow: visible;
   }
 
-  .journey-team__stage::before {
-    width: 92%;
-    left: 4%;
-    top: 11%;
-  }
-
   .journey-team__stage::after {
     display: none;
   }
@@ -375,41 +289,29 @@
     position: relative;
     inset: auto;
     width: auto;
-    height: 225px;
-    margin: -18px -14px;
-    z-index: 2;
+    height: 220px;
+    margin: -20px -16px;
   }
+
+  .journey-team__person--01 { grid-column: 1; grid-row: 1; }
+  .journey-team__person--02 { grid-column: 2; grid-row: 1; }
+  .journey-team__person--03 { grid-column: 3; grid-row: 1; }
+  .journey-team__person--04 { grid-column: 1; grid-row: 2; }
+  .journey-team__person--05 { grid-column: 3; grid-row: 2; }
 
   .journey-team__person--hero {
     grid-column: 1 / -1;
-    grid-row: 2;
-    height: 310px;
-    margin: -36px 0 -52px;
-    z-index: 6;
-  }
-
-  .journey-team__person--01,
-  .journey-team__person--02,
-  .journey-team__person--03 {
-    grid-row: 1;
-  }
-
-  .journey-team__person--04,
-  .journey-team__person--05,
-  .journey-team__person--06 {
     grid-row: 3;
+    height: 320px;
+    margin: -54px 0 -58px;
+    z-index: 8;
   }
 
-  .journey-team__person--07,
-  .journey-team__person--08,
-  .journey-team__person--09 {
-    grid-row: 4;
-  }
-
-  .journey-team__person--10 {
-    grid-column: 2;
-    grid-row: 5;
-  }
+  .journey-team__person--06 { grid-column: 1; grid-row: 4; }
+  .journey-team__person--07 { grid-column: 2; grid-row: 4; }
+  .journey-team__person--08 { grid-column: 3; grid-row: 4; }
+  .journey-team__person--09 { grid-column: 1; grid-row: 5; }
+  .journey-team__person--10 { grid-column: 3; grid-row: 5; }
 }
 
 @media (max-width: 500px) {
@@ -429,29 +331,32 @@
   .journey-team__person--08,
   .journey-team__person--09,
   .journey-team__person--10 {
-    grid-row: auto;
-    grid-column: auto;
-    height: 220px;
-    margin: -20px -18px;
+    height: 215px;
+    margin: -22px -18px;
   }
 
-  .journey-team__person--hero {
-    grid-column: 1 / -1;
-    grid-row: 3;
-    height: 290px;
-    margin: -48px -4px -60px;
-  }
-
+  /* Women first */
   .journey-team__person--01 { grid-column: 1; grid-row: 1; }
   .journey-team__person--02 { grid-column: 2; grid-row: 1; }
   .journey-team__person--03 { grid-column: 1; grid-row: 2; }
   .journey-team__person--04 { grid-column: 2; grid-row: 2; }
-  .journey-team__person--05 { grid-column: 1; grid-row: 4; }
-  .journey-team__person--06 { grid-column: 2; grid-row: 4; }
-  .journey-team__person--07 { grid-column: 1; grid-row: 5; }
-  .journey-team__person--08 { grid-column: 2; grid-row: 5; }
-  .journey-team__person--09 { grid-column: 1; grid-row: 6; }
-  .journey-team__person--10 { grid-column: 2; grid-row: 6; }
+  .journey-team__person--05 { grid-column: 1 / -1; grid-row: 3; width: 50%; justify-self: center; }
+
+  /* Bicycle in the middle */
+  .journey-team__person--hero {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    width: auto;
+    height: 300px;
+    margin: -48px -2px -58px;
+  }
+
+  /* Men underneath */
+  .journey-team__person--06 { grid-column: 1; grid-row: 5; }
+  .journey-team__person--07 { grid-column: 2; grid-row: 5; }
+  .journey-team__person--08 { grid-column: 1; grid-row: 6; }
+  .journey-team__person--09 { grid-column: 2; grid-row: 6; }
+  .journey-team__person--10 { grid-column: 1 / -1; grid-row: 7; width: 50%; justify-self: center; }
 }
 
 @media (prefers-reduced-motion: reduce) {
