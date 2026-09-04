@@ -298,20 +298,20 @@ function App() {
               <span>01 · Workshop</span>
               <h3>Benua Brutti</h3>
               <p>Kilang 5,<br />Taman Industri Perabot<br />Kota Kinabalu Industrial Park (KKIP),<br />88450 Kota Kinabalu, Sabah.</p>
-              <a href="https://www.google.com/maps/search/?api=1&query=Kilang+5+Taman+Industri+Perabot+KKIP+Kota+Kinabalu+Sabah" target="_blank" rel="noreferrer">
+              <a href="https://www.google.com/maps/dir/?api=1&destination=Brutti%E2%84%A2%20(Benua%20Brutti%20Sdn%20Bhd)%2C%20Kilang%205%2C%20Taman%20Industri%20Perabot%2C%20KKIP%2C%2088450%20Kota%20Kinabalu%2C%20Sabah" target="_blank" rel="noreferrer">
                 Get directions <ArrowUpRight size={17} />
               </a>
             </div>
             <div className="location-card__map">
               <iframe
                 title="Map location of Benua Brutti workshop"
-                src="https://www.google.com/maps?q=Kilang+5+Taman+Industri+Perabot+KKIP+Kota+Kinabalu+Sabah&z=15&output=embed"
+                src="https://www.google.com/maps?q=Brutti%E2%84%A2+(Benua+Brutti+Sdn+Bhd)+Kilang+5+Taman+Industri+Perabot+KKIP+Kota+Kinabalu+Sabah&z=16&output=embed"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
               <a
                 className="location-card__map-link"
-                href="https://www.google.com/maps/search/?api=1&query=Kilang+5+Taman+Industri+Perabot+KKIP+Kota+Kinabalu+Sabah"
+                href="https://www.google.com/maps/place/Brutti%E2%84%A2+(Benua+Brutti+Sdn+Bhd)/@6.104089,116.1788551,15z"
                 target="_blank"
                 rel="noreferrer"
               >
