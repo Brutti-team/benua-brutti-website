@@ -4,6 +4,7 @@ import '../impact-report-nav-home.css'
 import '../journey-origin-refine.css'
 import '../journey-purpose-refine.css'
 import '../journey-team.css'
+import '../journey-team-reference.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
