@@ -1,8 +1,73 @@
-/* Keep collaborator logos visually balanced inside the lightbox.
-   Some source PNGs have much more internal whitespace than others, so they
-   need a little extra optical scaling to avoid the gallery jumping between
-   very large and very small marks. */
+/* Keep collaborator logos visually balanced in both the marquee cards and lightbox.
+   Some source PNGs contain much more internal whitespace than others, so optical
+   scaling is used to keep the visible logo sizes consistent without changing the assets. */
 
+/* ---------- Front marquee cards ---------- */
+#strategic-collaborators .collab-card {
+  flex: 0 0 176px !important;
+  height: 96px !important;
+  padding: 16px 18px !important;
+}
+
+#strategic-collaborators .collab-card img {
+  max-width: 138px !important;
+  max-height: 62px !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  transform-origin: center !important;
+}
+
+/* Optical corrections for smaller / whitespace-heavy source logos. */
+#strategic-collaborators .collab-card img[src*="yayasan axiata.png"] {
+  --logo-scale: 1.78 !important;
+}
+
+#strategic-collaborators .collab-card img[src*="yayasan hasanah"] {
+  --logo-scale: 1.52 !important;
+}
+
+#strategic-collaborators .collab-card img[src*="DIDR.png"] {
+  --logo-scale: 1.38 !important;
+}
+
+#strategic-collaborators .collab-card img[src*="rural social enterprise.png"] {
+  --logo-scale: 1.34 !important;
+}
+
+#strategic-collaborators .collab-card img[src*="light in the sea.png"] {
+  --logo-scale: 1.28 !important;
+}
+
+#strategic-collaborators .collab-card img[src*="ekuinas.png"] {
+  --logo-scale: 1.22 !important;
+}
+
+#strategic-collaborators .collab-card img[src*="insken.png"] {
+  --logo-scale: 1.20 !important;
+}
+
+#strategic-collaborators .collab-card img[src*="SK Nexilis.png"] {
+  --logo-scale: 1.22 !important;
+}
+
+#strategic-collaborators .collab-card img[src*="sosea.png"] {
+  --logo-scale: 1.20 !important;
+}
+
+#strategic-collaborators .collab-card img[src*="sicc.png"] {
+  --logo-scale: 1.16 !important;
+}
+
+#strategic-collaborators .collab-card img[src*="bakemates.png"] {
+  --logo-scale: 1.18 !important;
+}
+
+#strategic-collaborators .collab-card img[src*="kolej komuniti.png"] {
+  --logo-scale: 1.18 !important;
+}
+
+/* ---------- Enlarged lightbox ---------- */
 #strategic-collaborators .collab-lightbox__logo-wrap {
   width: min(700px, 80vw) !important;
   min-height: 320px !important;
@@ -19,7 +84,6 @@
   transform-origin: center !important;
 }
 
-/* Optical corrections for source files with generous built-in whitespace. */
 #strategic-collaborators .collab-lightbox__visual img[src*="DIDR.png"] {
   transform: scale(1.72) !important;
 }
@@ -44,7 +108,47 @@
   transform: scale(1.22) !important;
 }
 
+#strategic-collaborators .collab-lightbox__visual img[src*="yayasan axiata.png"] {
+  transform: scale(1.55) !important;
+}
+
+#strategic-collaborators .collab-lightbox__visual img[src*="yayasan hasanah"] {
+  transform: scale(1.34) !important;
+}
+
+@media (max-width: 900px) {
+  #strategic-collaborators .collab-card {
+    flex-basis: 158px !important;
+    height: 84px !important;
+    padding: 15px 16px !important;
+  }
+
+  #strategic-collaborators .collab-card img {
+    max-width: 120px !important;
+    max-height: 54px !important;
+  }
+}
+
 @media (max-width: 620px) {
+  #strategic-collaborators .collab-card {
+    flex-basis: 140px !important;
+    height: 76px !important;
+    padding: 13px 14px !important;
+  }
+
+  #strategic-collaborators .collab-card img {
+    max-width: 108px !important;
+    max-height: 46px !important;
+  }
+
+  #strategic-collaborators .collab-card img[src*="yayasan axiata.png"] {
+    --logo-scale: 1.58 !important;
+  }
+
+  #strategic-collaborators .collab-card img[src*="yayasan hasanah"] {
+    --logo-scale: 1.38 !important;
+  }
+
   #strategic-collaborators .collab-lightbox__logo-wrap {
     width: min(520px, 82vw) !important;
     min-height: 230px !important;
@@ -65,5 +169,9 @@
 
   #strategic-collaborators .collab-lightbox__visual img[src*="light in the sea.png"] {
     transform: scale(1.24) !important;
+  }
+
+  #strategic-collaborators .collab-lightbox__visual img[src*="yayasan axiata.png"] {
+    transform: scale(1.38) !important;
   }
 }
