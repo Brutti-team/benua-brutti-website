@@ -80,7 +80,6 @@
     inset 0 1px 0 rgba(255,255,255,.04),
     0 12px 28px rgba(2, 19, 13, .12) !important;
   isolation: isolate !important;
-  cursor: pointer !important;
 }
 
 .location-card__map iframe {
@@ -90,7 +89,6 @@
   height: 100% !important;
   border: 0 !important;
   display: block !important;
-  pointer-events: none !important;
   filter: saturate(.72) contrast(.97) brightness(.92) sepia(.03) !important;
   transform: scale(1.015) !important;
   transform-origin: center !important;
@@ -107,36 +105,19 @@
     linear-gradient(90deg, rgba(12, 56, 41, .05), transparent 28%) !important;
 }
 
-/* The existing Open map link covers the full preview so tapping anywhere opens Google Maps. */
 .location-card__map-link {
   position: absolute !important;
-  inset: 0 !important;
-  z-index: 3 !important;
-  display: flex !important;
-  align-items: flex-end !important;
-  justify-content: flex-start !important;
-  padding: 10px !important;
-  border: 0 !important;
-  border-radius: inherit !important;
-  background: transparent !important;
-  color: transparent !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  font-size: 0 !important;
-  text-decoration: none !important;
-  cursor: pointer !important;
-}
-
-.location-card__map-link::after {
-  content: 'Open in Google Maps ↗' !important;
+  left: 10px !important;
+  bottom: 10px !important;
+  z-index: 2 !important;
   display: inline-flex !important;
   align-items: center !important;
+  gap: 6px !important;
   min-height: 30px !important;
   padding: 0 11px !important;
   border: 1px solid rgba(255,255,255,.17) !important;
   border-radius: 999px !important;
-  background: rgba(8, 42, 30, .84) !important;
+  background: rgba(8, 42, 30, .80) !important;
   color: #fff !important;
   box-shadow:
     0 8px 20px rgba(0,0,0,.16),
@@ -145,15 +126,16 @@
   -webkit-backdrop-filter: blur(10px) !important;
   font-size: 8px !important;
   font-weight: 700 !important;
-  letter-spacing: .08em !important;
+  letter-spacing: .09em !important;
+  text-decoration: none !important;
   text-transform: uppercase !important;
   transition: transform .22s ease, background .22s ease, border-color .22s ease !important;
 }
 
-.location-card__map-link:hover::after {
+.location-card__map-link:hover {
   transform: translateY(-2px) !important;
   border-color: rgba(255,255,255,.26) !important;
-  background: rgba(23, 87, 71, .96) !important;
+  background: rgba(23, 87, 71, .94) !important;
 }
 
 @media (max-width: 1120px) {
@@ -196,10 +178,8 @@
   }
 
   .location-card__map-link {
-    padding: 9px !important;
-  }
-
-  .location-card__map-link::after {
+    left: 9px !important;
+    bottom: 9px !important;
     min-height: 28px !important;
     padding: 0 10px !important;
     font-size: 7.5px !important;
