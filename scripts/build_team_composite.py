@@ -8,36 +8,31 @@ ASSETS = Path("public/assets")
 TEAM = ASSETS / "brutti-team"
 OUTPUT = ASSETS / "brutti-team-composite.webp"
 
-# Reuse one lightweight background-removal session for all staff photos.
 SESSION = new_session("u2netp")
 
-# Per-photo tone balancing. The source photos were shot under different light,
-# so these small corrections bring skin tones and green shirts closer together
-# without making the collage look filtered or artificial.
+# Stronger per-photo correction so the final collage reads as one photoshoot.
+# Darker photos are lifted; washed / very bright photos are pulled back.
 TONE = {
-    # darker sources -> lift brightness / contrast slightly
-    "DSCF8135(1).webp": {"brightness": 1.08, "contrast": 1.03, "color": 1.03},
-    "DSCF8091(1).webp": {"brightness": 1.10, "contrast": 1.03, "color": 1.02},
-    "DSCF8116(1).webp": {"brightness": 1.04, "contrast": 1.02, "color": 1.02},
-    "DSCF8211(1).webp": {"brightness": 1.04, "contrast": 1.02, "color": 1.02},
-    "DSCF8186(1).webp": {"brightness": 1.07, "contrast": 1.03, "color": 1.02},
-    "DSCF8202(1).webp": {"brightness": 1.06, "contrast": 1.03, "color": 1.02},
+    "DSCF8135(1).webp": {"brightness": 1.13, "contrast": 1.04, "color": 1.04},
+    "DSCF8091(1).webp": {"brightness": 1.16, "contrast": 1.04, "color": 1.03},
+    "DSCF8116(1).webp": {"brightness": 1.11, "contrast": 1.03, "color": 1.03},
+    "DSCF8211(1).webp": {"brightness": 1.08, "contrast": 1.03, "color": 1.03},
+    "DSCF8186(1).webp": {"brightness": 1.10, "contrast": 1.04, "color": 1.03},
+    "DSCF8202(1).webp": {"brightness": 1.10, "contrast": 1.04, "color": 1.03},
 
-    # brighter / washed sources -> bring highlights back down and restore colour
-    "DSCF8078(1).webp": {"brightness": 0.96, "contrast": 1.04, "color": 1.04},
-    "DSCF8148(1).webp": {"brightness": 0.97, "contrast": 1.03, "color": 1.03},
-    "DSCF8122(1).webp": {"brightness": 0.95, "contrast": 1.04, "color": 1.04},
-    "DSCF8173(1).webp": {"brightness": 0.88, "contrast": 1.08, "color": 1.08},
+    "DSCF8078(1).webp": {"brightness": 0.90, "contrast": 1.08, "color": 1.06},
+    "DSCF8148(1).webp": {"brightness": 0.92, "contrast": 1.07, "color": 1.05},
+    "DSCF8122(1).webp": {"brightness": 0.90, "contrast": 1.07, "color": 1.05},
+    "DSCF8173(1).webp": {"brightness": 0.80, "contrast": 1.12, "color": 1.08},
     "WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp": {
-        "brightness": 0.98,
-        "contrast": 1.03,
-        "color": 1.03,
+        "brightness": 0.93,
+        "contrast": 1.06,
+        "color": 1.05,
     },
 }
 
 
 def balance_tone(image: Image.Image, filename: str) -> Image.Image:
-    """Apply gentle RGB corrections while preserving the cut-out alpha."""
     settings = TONE.get(filename)
     if not settings:
         return image
@@ -63,7 +58,6 @@ def cutout(filename: str, max_side: int = 1150) -> Image.Image:
         result = Image.open(BytesIO(result))
     result = result.convert("RGBA")
 
-    # Remove only the faint fringe so hair, bicycle spokes and tools stay intact.
     alpha = result.getchannel("A").point(
         lambda value: 0 if value < 7 else (255 if value > 250 else value)
     )
@@ -91,13 +85,7 @@ def resize_height(image: Image.Image, height: int) -> Image.Image:
     return image.resize((width, height), Image.Resampling.LANCZOS)
 
 
-def place(
-    canvas: Image.Image,
-    image: Image.Image,
-    center_x: int,
-    bottom: int,
-    height: int,
-) -> None:
+def place(canvas: Image.Image, image: Image.Image, center_x: int, bottom: int, height: int) -> None:
     image = resize_height(image, height)
     x = round(center_x - image.width / 2)
     y = round(bottom - image.height)
@@ -114,47 +102,34 @@ def place(
     canvas.alpha_composite(clipped, (max(0, x), max(0, y)))
 
 
-# VERSION 2 — compact layered portrait with a consistent visual human scale.
-# Seated / cropped poses naturally have different total pixel heights, so the
-# values below are tuned by perceived head-and-torso size rather than forcing
-# every cut-out to the exact same bounding-box height.
+# VERSION 2 — tighter, more uniform visual human scale.
 canvas = Image.new("RGBA", (1320, 820), (0, 0, 0, 0))
 
-# BACK / UPPER LAYER — similar face / torso scale, tightly grouped.
-# 8135 = black-hijab laptop woman
-# 8148 = man holding blue tool
-# 8091 = phone / board woman
-# 8078 = drill woman
-# WhatsApp = standing woman with glasses
-place(canvas, cutout("DSCF8135(1).webp"), 175, 535, 400)
-place(canvas, cutout("DSCF8148(1).webp"), 355, 500, 395)
-place(canvas, cutout("DSCF8091(1).webp"), 525, 490, 385)
-place(canvas, cutout("DSCF8078(1).webp"), 865, 540, 390)
+# Back / upper layer. Deliberately smaller than before for a consistent head scale.
+place(canvas, cutout("DSCF8135(1).webp"), 185, 540, 370)  # laptop woman
+place(canvas, cutout("DSCF8148(1).webp"), 350, 505, 355)  # blue-tool man
+place(canvas, cutout("DSCF8091(1).webp"), 510, 500, 350)  # phone / board woman
+place(canvas, cutout("DSCF8078(1).webp"), 855, 545, 355)  # drill woman
 place(
     canvas,
     cutout("WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp"),
-    1065,
-    585,
-    430,
-)
+    1050,
+    590,
+    390,
+)  # standing woman
 
-# MAIN ANCHOR — still the centre focal point, but no longer oversized against
-# the surrounding staff.
-place(canvas, cutout("DSCF8116(1).webp", max_side=1550), 690, 720, 545)
+# Bicycle pair: reduced so they no longer look much larger than everyone else.
+place(canvas, cutout("DSCF8116(1).webp", max_side=1550), 685, 720, 500)
 
-# RIGHT FOREGROUND — kept at the same perceived body scale as the other women.
-place(canvas, cutout("DSCF8122(1).webp"), 1005, 815, 430)
+# Book woman at the same perceived scale as the upper women.
+place(canvas, cutout("DSCF8122(1).webp"), 995, 815, 405)
 
-# FRONT ROW — normalized so heads / shoulders read at one consistent scale.
-# They still overlap the upper layer to hide cropped legs and keep the compact
-# Version 2 poster shape.
-place(canvas, cutout("DSCF8211(1).webp"), 270, 820, 455)
-place(canvas, cutout("DSCF8186(1).webp"), 445, 820, 445)
-place(canvas, cutout("DSCF8202(1).webp"), 625, 820, 445)
-place(canvas, cutout("DSCF8173(1).webp"), 815, 820, 455)
+# Front row: narrow range only, so the men read as the same scale.
+place(canvas, cutout("DSCF8211(1).webp"), 275, 820, 420)
+place(canvas, cutout("DSCF8186(1).webp"), 445, 820, 415)
+place(canvas, cutout("DSCF8202(1).webp"), 615, 820, 420)
+place(canvas, cutout("DSCF8173(1).webp"), 795, 820, 420)
 
-# Crop only genuinely empty transparent space. Keep breathing room for raised
-# tools / heads so the web layout never clips them after scaling.
 bbox = canvas.getchannel("A").getbbox()
 if bbox:
     left, top, right, bottom = bbox
