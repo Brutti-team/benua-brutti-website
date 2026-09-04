@@ -182,3 +182,32 @@ html body #strategic-collaborators .collab-lightbox__logo-wrap {
     clip-path: inset(5px 1px 2px 1px) !important;
   }
 }
+
+/* Footer utility text: make Back to top and copyright easier to read. */
+html body .footer .footer__backtop {
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: .01em !important;
+}
+
+html body .footer .footer__backtop span {
+  font-size: 16px !important;
+}
+
+html body .footer .footer__bottom {
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+  line-height: 1.45 !important;
+  letter-spacing: .025em !important;
+  color: rgba(255,255,255,.58) !important;
+}
+
+@media (max-width: 620px) {
+  html body .footer .footer__backtop {
+    font-size: 12.5px !important;
+  }
+
+  html body .footer .footer__bottom {
+    font-size: 11.5px !important;
+  }
+}
