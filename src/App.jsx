@@ -298,9 +298,6 @@ function App() {
               <span>01 · Workshop</span>
               <h3>Benua Brutti</h3>
               <p>Kilang 5,<br />Taman Industri Perabot<br />Kota Kinabalu Industrial Park (KKIP),<br />88450 Kota Kinabalu, Sabah.</p>
-              <a href="https://www.google.com/maps/dir/?api=1&destination=Brutti%E2%84%A2%20(Benua%20Brutti%20Sdn%20Bhd)%2C%20Kilang%205%2C%20Taman%20Industri%20Perabot%2C%20KKIP%2C%2088450%20Kota%20Kinabalu%2C%20Sabah" target="_blank" rel="noreferrer">
-                Get directions <ArrowUpRight size={17} />
-              </a>
             </div>
             <div className="location-card__map">
               <iframe
@@ -311,11 +308,11 @@ function App() {
               />
               <a
                 className="location-card__map-link"
-                href="https://www.google.com/maps/place/Brutti%E2%84%A2+(Benua+Brutti+Sdn+Bhd)/@6.104089,116.1788551,15z"
+                href="https://www.google.com/maps/dir/?api=1&destination=Brutti%E2%84%A2%20(Benua%20Brutti%20Sdn%20Bhd)%2C%20Kilang%205%2C%20Taman%20Industri%20Perabot%2C%20KKIP%2C%2088450%20Kota%20Kinabalu%2C%20Sabah"
                 target="_blank"
                 rel="noreferrer"
               >
-                Open map <ArrowUpRight size={14} />
+                Get directions <ArrowUpRight size={14} />
               </a>
             </div>
           </Reveal>
@@ -325,9 +322,6 @@ function App() {
               <span>02 · Shared showroom</span>
               <h3>The Art Attic</h3>
               <p>7, Lorong Dewan,<br />Pusat Bandar Kota Kinabalu,<br />88000 Kota Kinabalu, Sabah.</p>
-              <a href="https://www.google.com/maps/search/?api=1&query=The+Art+Attic+7+Lorong+Dewan+Kota+Kinabalu+Sabah" target="_blank" rel="noreferrer">
-                Get directions <ArrowUpRight size={17} />
-              </a>
             </div>
             <div className="location-card__map">
               <iframe
@@ -338,11 +332,11 @@ function App() {
               />
               <a
                 className="location-card__map-link"
-                href="https://www.google.com/maps/search/?api=1&query=The+Art+Attic+7+Lorong+Dewan+Kota+Kinabalu+Sabah"
+                href="https://www.google.com/maps/dir/?api=1&destination=The+Art+Attic%2C+7+Lorong+Dewan%2C+Pusat+Bandar+Kota+Kinabalu%2C+88000+Kota+Kinabalu%2C+Sabah"
                 target="_blank"
                 rel="noreferrer"
               >
-                Open map <ArrowUpRight size={14} />
+                Get directions <ArrowUpRight size={14} />
               </a>
             </div>
           </Reveal>
