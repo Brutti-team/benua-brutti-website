@@ -14,17 +14,19 @@ const reveal = {
   transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
 }
 
+// Keep the visual hierarchy intentional: women on the top row,
+// bicycle in the centre, men on the bottom row.
 const teamPortraits = [
   ['brutti-team/DSCF8078(1).webp', 'Benua Brutti team member holding a workshop tool'],
+  ['brutti-team/DSCF8122(1).webp', 'Benua Brutti team member with the Brutti Impact Report'],
+  ['brutti-team/DSCF8091(1).webp', 'Benua Brutti team member'],
+  ['brutti-team/DSCF8135(1).webp', 'Benua Brutti team member working with a laptop'],
+  ['brutti-team/WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp', 'Benua Brutti team member'],
   ['brutti-team/DSCF8211(1).webp', 'Benua Brutti team member'],
   ['brutti-team/DSCF8202(1).webp', 'Benua Brutti team member holding a drill'],
   ['brutti-team/DSCF8186(1).webp', 'Benua Brutti team member'],
   ['brutti-team/DSCF8173(1).webp', 'Benua Brutti team member holding workshop tools'],
   ['brutti-team/DSCF8148(1).webp', 'Benua Brutti team member holding a nail gun'],
-  ['brutti-team/DSCF8122(1).webp', 'Benua Brutti team member with the Brutti Impact Report'],
-  ['brutti-team/DSCF8091(1).webp', 'Benua Brutti team member'],
-  ['brutti-team/DSCF8135(1).webp', 'Benua Brutti team member working with a laptop'],
-  ['brutti-team/WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp', 'Benua Brutti team member'],
 ]
 
 function backHome() {
