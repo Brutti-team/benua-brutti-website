@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { ArrowLeft, ArrowUpRight } from 'lucide-react'
 import '../impact-report-nav-home.css'
+import '../journey-origin-refine.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
@@ -65,7 +66,7 @@ export default function JourneyPage() {
         </div>
       </section>
 
-      <section className="journey-section journey-section--light">
+      <section className="journey-section journey-section--light journey-section--origin">
         <div className="journey-shell journey-origin">
           <motion.div className="journey-origin__copy" {...reveal}>
             <p className="journey-kicker">01 · The beginning</p>
