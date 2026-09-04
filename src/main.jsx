@@ -42,6 +42,7 @@ import './footer-social-fix.css'
 import './catalogue-coming-soon.css'
 import './impact-report-reader-premium.css'
 import './collaborators-logo-balance.css'
+import './contact-phone-size.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
