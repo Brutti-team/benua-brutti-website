@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowUpRight } from 'lucide-react'
 import '../impact-report-nav-home.css'
 import '../journey-origin-refine.css'
 import '../journey-purpose-refine.css'
+import '../journey-team.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
@@ -12,6 +13,19 @@ const reveal = {
   viewport: { once: false, amount: 0.18 },
   transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
 }
+
+const teamPortraits = [
+  ['brutti-team/DSCF8078(1).webp', 'Benua Brutti team member holding a workshop tool'],
+  ['brutti-team/DSCF8211(1).webp', 'Benua Brutti team member'],
+  ['brutti-team/DSCF8202(1).webp', 'Benua Brutti team member holding a drill'],
+  ['brutti-team/DSCF8186(1).webp', 'Benua Brutti team member'],
+  ['brutti-team/DSCF8173(1).webp', 'Benua Brutti team member holding workshop tools'],
+  ['brutti-team/DSCF8148(1).webp', 'Benua Brutti team member holding a nail gun'],
+  ['brutti-team/DSCF8122(1).webp', 'Benua Brutti team member with the Brutti Impact Report'],
+  ['brutti-team/DSCF8091(1).webp', 'Benua Brutti team member'],
+  ['brutti-team/DSCF8135(1).webp', 'Benua Brutti team member working with a laptop'],
+  ['brutti-team/WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp', 'Benua Brutti team member'],
+]
 
 function backHome() {
   window.location.href = '/'
@@ -132,22 +146,62 @@ export default function JourneyPage() {
         </div>
       </section>
 
-      <section className="journey-section journey-section--today">
-        <div className="journey-shell journey-today">
-          <motion.div className="journey-today__copy" {...reveal}>
+      <section className="journey-section journey-section--team">
+        <div className="journey-shell journey-team">
+          <motion.div className="journey-team__copy" {...reveal}>
             <p className="journey-kicker journey-kicker--light">04 · Today</p>
-            <h2>The journey is still being built.</h2>
+            <h2>The People <span>Behind the Journey.</span></h2>
             <p>
-              Benua Brutti continues to grow around the same principles that shaped the beginning: resourcefulness, practical design, responsible material use and a team willing to keep learning by doing.
+              Behind every custom piece is a team that designs, builds, coordinates and keeps improving how things are made. From workshop to operations, Brutti grows through practical skills, collaboration and hands-on craftsmanship.
             </p>
+
+            <div className="journey-team__values" aria-label="Benua Brutti team values">
+              <span>Built together</span>
+              <span>Growing together</span>
+              <span>Going further</span>
+            </div>
+
             <button className="journey-primary" onClick={backHome}>
               Return to Benua Brutti <ArrowUpRight size={17} />
             </button>
           </motion.div>
 
-          <motion.figure className="journey-today__image" {...reveal} transition={{ ...reveal.transition, delay: 0.08 }}>
-            <img src={asset('our shared showroom.png')} alt="Benua Brutti shared showroom" />
-          </motion.figure>
+          <motion.div
+            className="journey-team__stage"
+            aria-label="The Benua Brutti team"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.12 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <motion.figure
+              className="journey-team__person journey-team__person--hero"
+              initial={{ opacity: 0, scale: .96 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: false, amount: 0.12 }}
+              transition={{ duration: .9, delay: .12, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <img
+                src={asset('brutti-team/DSCF8116(1).webp')}
+                alt="Two Benua Brutti team members with a bicycle"
+                loading="lazy"
+                decoding="async"
+              />
+            </motion.figure>
+
+            {teamPortraits.map(([image, alt], index) => (
+              <motion.figure
+                className={`journey-team__person journey-team__person--${String(index + 1).padStart(2, '0')}`}
+                key={image}
+                initial={{ opacity: 0, y: 26, scale: .97 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.1 }}
+                transition={{ duration: .72, delay: .05 + index * .035, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <img src={asset(image)} alt={alt} loading="lazy" decoding="async" />
+              </motion.figure>
+            ))}
+          </motion.div>
         </div>
       </section>
     </main>
