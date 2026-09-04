@@ -16,10 +16,10 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: .18;
+  opacity: .12;
   background-image:
-    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.016) 1px, transparent 1px);
   background-size: 54px 54px;
   mask-image: linear-gradient(90deg, #000 0%, transparent 56%);
   -webkit-mask-image: linear-gradient(90deg, #000 0%, transparent 56%);
@@ -106,7 +106,11 @@
   position: relative;
   min-width: 0;
   height: clamp(630px, 48vw, 760px);
-  isolation: isolate;
+  /* Important: do not isolate this layer. The portraits use multiply so
+     their pale studio backgrounds blend into the green page instead of
+     showing as rectangles. */
+  isolation: auto;
+  background: transparent;
 }
 
 .journey-team__stage::before {
@@ -118,8 +122,8 @@
   left: 16%;
   top: 8%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(229, 217, 190, .22) 0%, rgba(173, 190, 169, .09) 40%, transparent 69%);
-  filter: blur(12px);
+  background: radial-gradient(circle, rgba(229, 217, 190, .13) 0%, rgba(173, 190, 169, .045) 40%, transparent 69%);
+  filter: blur(14px);
   pointer-events: none;
 }
 
@@ -131,7 +135,7 @@
   top: 48%;
   transform: rotate(90deg) translateY(-50%);
   transform-origin: right top;
-  color: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.05);
   font-family: 'Manrope', system-ui, sans-serif;
   font-size: 10px;
   font-weight: 800;
@@ -140,7 +144,7 @@
 }
 
 .journey-team__person {
-  --mask-softness: 77%;
+  --mask-softness: 82%;
   position: absolute;
   z-index: 2;
   margin: 0;
@@ -148,8 +152,10 @@
   place-items: end center;
   pointer-events: none;
   transform-origin: center bottom;
-  mask-image: radial-gradient(ellipse at 50% 48%, #000 0%, #000 56%, rgba(0,0,0,.96) 66%, rgba(0,0,0,.62) var(--mask-softness), transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse at 50% 48%, #000 0%, #000 56%, rgba(0,0,0,.96) 66%, rgba(0,0,0,.62) var(--mask-softness), transparent 100%);
+  background: transparent;
+  overflow: visible;
+  mask-image: radial-gradient(ellipse at 50% 48%, #000 0%, #000 58%, rgba(0,0,0,.98) 68%, rgba(0,0,0,.54) var(--mask-softness), transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 48%, #000 0%, #000 58%, rgba(0,0,0,.98) 68%, rgba(0,0,0,.54) var(--mask-softness), transparent 100%);
 }
 
 .journey-team__person img {
@@ -158,8 +164,12 @@
   display: block;
   object-fit: contain;
   object-position: center bottom;
-  mix-blend-mode: multiply;
-  filter: brightness(1.2) contrast(1.07) saturate(1.02) drop-shadow(0 24px 28px rgba(0,0,0,.16));
+  background: transparent;
+  /* The original portraits were shot against a pale wall. Multiply makes
+     those pale pixels visually disappear into the forest-green section,
+     giving the stacked cut-out look without visible photo cards. */
+  mix-blend-mode: multiply !important;
+  filter: brightness(1.30) contrast(1.12) saturate(1.08) drop-shadow(0 24px 28px rgba(0,0,0,.16));
   transform: translateZ(0);
   transition: transform .55s cubic-bezier(.22,1,.36,1), filter .55s ease;
 }
@@ -170,7 +180,7 @@
   top: 23%;
   width: 56%;
   height: 56%;
-  --mask-softness: 82%;
+  --mask-softness: 86%;
 }
 
 .journey-team__person--01 {
@@ -255,12 +265,12 @@
 
 @media (hover: hover) and (pointer: fine) {
   .journey-team__stage:hover .journey-team__person img {
-    filter: brightness(1.16) contrast(1.05) saturate(.94) drop-shadow(0 20px 24px rgba(0,0,0,.13));
+    filter: brightness(1.25) contrast(1.10) saturate(1.02) drop-shadow(0 20px 24px rgba(0,0,0,.13));
   }
 
   .journey-team__stage .journey-team__person:hover img {
     transform: scale(1.025) translateY(-3px);
-    filter: brightness(1.24) contrast(1.08) saturate(1.04) drop-shadow(0 28px 34px rgba(0,0,0,.2));
+    filter: brightness(1.34) contrast(1.13) saturate(1.10) drop-shadow(0 28px 34px rgba(0,0,0,.20));
   }
 }
 
