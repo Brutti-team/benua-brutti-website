@@ -70,7 +70,7 @@ export default function JourneyPage() {
         <div className="journey-shell journey-origin">
           <motion.div className="journey-origin__copy" {...reveal}>
             <p className="journey-kicker">01 · The beginning</p>
-            <h2>From a backyard idea.</h2>
+            <h2>From a <span>backyard idea.</span></h2>
             <p>
               During the disruption of 2020, Lukman and Faznur combined their woodworking and metalworking skills to create a new path for their crew. A humble bedside table made in the backyard became the beginning of something bigger.
             </p>
