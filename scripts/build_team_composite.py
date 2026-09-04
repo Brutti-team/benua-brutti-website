@@ -72,67 +72,60 @@ def place(
     canvas.alpha_composite(clipped, (max(0, x), max(0, y)))
 
 
-# VERSION 2 REFERENCE
-# -------------------
-# The supplied version 2 is a wide, compact team portrait rather than two rows.
-# This 1368 x 774 working canvas follows the same visual proportions and keeps
-# the bicycle pair in the centre, with the remaining staff wrapping around it.
-canvas = Image.new("RGBA", (1368, 774), (0, 0, 0, 0))
+# VERSION 2 — compact layered portrait.
+# The important change here is that the upper staff sit LOWER and CLOSER to the
+# centre. The foreground men deliberately overlap / cover the cropped legs of
+# the upper portraits, matching the supplied reference instead of looking like
+# two separated rows.
+canvas = Image.new("RGBA", (1320, 820), (0, 0, 0, 0))
 
-# File mapping confirmed from the existing GitHub team photos:
-# 8078 = drill woman
-# 8091 = phone / board woman
+# BACK / UPPER LAYER — tight arc, lowered into the foreground group.
 # 8135 = black-hijab laptop woman
-# 8122 = beige-hijab book woman
-# WhatsApp = standing woman with glasses
 # 8148 = man holding blue tool
-# 8211 = sunglasses + cane
-# 8186 = front man with cane
-# 8202 = front man holding tool
-# 8173 = front man with mallet / orange cane
-# 8116 = bicycle pair
-
-# BACK / UPPER LAYER — matching version 2 from left to right.
-# Blue-tool man sits behind the laptop woman, then phone/board woman,
-# drill woman and standing woman form the upper arc.
-place(canvas, cutout("DSCF8148(1).webp"), 405, 421, 390)
-place(canvas, cutout("DSCF8135(1).webp"), 213, 520, 435)
-place(canvas, cutout("DSCF8091(1).webp"), 621, 372, 348)
-place(canvas, cutout("DSCF8078(1).webp"), 932, 489, 420)
+# 8091 = phone / board woman
+# 8078 = drill woman
+# WhatsApp = standing woman with glasses
+place(canvas, cutout("DSCF8135(1).webp"), 175, 535, 410)
+place(canvas, cutout("DSCF8148(1).webp"), 355, 485, 365)
+place(canvas, cutout("DSCF8091(1).webp"), 525, 470, 340)
+place(canvas, cutout("DSCF8078(1).webp"), 875, 540, 420)
 place(
     canvas,
     cutout("WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp"),
-    1145,
-    627,
-    558,
+    1080,
+    590,
+    475,
 )
 
-# MAIN ANCHOR — bicycle pair in the centre, bridging upper and lower layers.
-place(canvas, cutout("DSCF8116(1).webp", max_side=1550), 738, 696, 570)
+# MAIN ANCHOR — bicycle pair remains central but is kept inside the group so
+# the surrounding staff can overlap it naturally.
+place(canvas, cutout("DSCF8116(1).webp", max_side=1550), 690, 720, 575)
 
-# RIGHT FOREGROUND — book woman overlaps the drill / standing group just like
-# the supplied version 2 reference.
-place(canvas, cutout("DSCF8122(1).webp"), 1062, 726, 508)
+# RIGHT FOREGROUND — lowered so the book portrait closes the gap beneath the
+# drill / standing portraits rather than floating on its own.
+place(canvas, cutout("DSCF8122(1).webp"), 1015, 815, 470)
 
-# FRONT ROW — four men form one clean baseline across the lower half.
-place(canvas, cutout("DSCF8211(1).webp"), 278, 774, 550)
-place(canvas, cutout("DSCF8186(1).webp"), 492, 774, 464)
-place(canvas, cutout("DSCF8202(1).webp"), 696, 774, 452)
-place(canvas, cutout("DSCF8173(1).webp"), 915, 774, 485)
+# FRONT ROW — these four are intentionally drawn last so they cover the cut
+# legs / lower edges of the upper portraits, exactly like the Version 2 layout.
+place(canvas, cutout("DSCF8211(1).webp"), 270, 820, 510)
+place(canvas, cutout("DSCF8186(1).webp"), 455, 820, 465)
+place(canvas, cutout("DSCF8202(1).webp"), 640, 820, 465)
+place(canvas, cutout("DSCF8173(1).webp"), 830, 820, 500)
 
-# Crop transparent dead space only. The resulting aspect ratio stays wide so
-# the website can display the whole group without cutting heads or feet.
+# Crop only genuinely empty transparent space. Keep a little breathing room so
+# heads and raised tools never touch the website edge after scaling.
 bbox = canvas.getchannel("A").getbbox()
 if bbox:
     left, top, right, bottom = bbox
-    pad_x = 14
-    pad_y = 8
+    pad_x = 18
+    pad_top = 18
+    pad_bottom = 6
     canvas = canvas.crop(
         (
             max(0, left - pad_x),
-            max(0, top - pad_y),
+            max(0, top - pad_top),
             min(canvas.width, right + pad_x),
-            min(canvas.height, bottom + pad_y),
+            min(canvas.height, bottom + pad_bottom),
         )
     )
 
