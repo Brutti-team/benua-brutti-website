@@ -42,6 +42,11 @@
   font-weight: 560;
   line-height: .96;
   letter-spacing: -.052em;
+  color: #123f31;
+}
+
+.journey-section--origin .journey-origin h2 span {
+  color: #0f7258;
 }
 
 .journey-section--origin .journey-origin__copy > p:not(.journey-kicker) {
