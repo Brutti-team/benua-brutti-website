@@ -1,0 +1,69 @@
+/* Keep collaborator logos visually balanced inside the lightbox.
+   Some source PNGs have much more internal whitespace than others, so they
+   need a little extra optical scaling to avoid the gallery jumping between
+   very large and very small marks. */
+
+#strategic-collaborators .collab-lightbox__logo-wrap {
+  width: min(700px, 80vw) !important;
+  min-height: 320px !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+#strategic-collaborators .collab-lightbox__visual img {
+  width: min(650px, 74vw) !important;
+  max-width: 100% !important;
+  max-height: 330px !important;
+  height: auto !important;
+  object-fit: contain !important;
+  transform-origin: center !important;
+}
+
+/* Optical corrections for source files with generous built-in whitespace. */
+#strategic-collaborators .collab-lightbox__visual img[src*="DIDR.png"] {
+  transform: scale(1.72) !important;
+}
+
+#strategic-collaborators .collab-lightbox__visual img[src*="rural social enterprise.png"] {
+  transform: scale(1.52) !important;
+}
+
+#strategic-collaborators .collab-lightbox__visual img[src*="light in the sea.png"] {
+  transform: scale(1.34) !important;
+}
+
+#strategic-collaborators .collab-lightbox__visual img[src*="ekuinas.png"] {
+  transform: scale(1.20) !important;
+}
+
+#strategic-collaborators .collab-lightbox__visual img[src*="insken.png"] {
+  transform: scale(1.20) !important;
+}
+
+#strategic-collaborators .collab-lightbox__visual img[src*="SK Nexilis.png"] {
+  transform: scale(1.22) !important;
+}
+
+@media (max-width: 620px) {
+  #strategic-collaborators .collab-lightbox__logo-wrap {
+    width: min(520px, 82vw) !important;
+    min-height: 230px !important;
+  }
+
+  #strategic-collaborators .collab-lightbox__visual img {
+    width: min(500px, 78vw) !important;
+    max-height: 245px !important;
+  }
+
+  #strategic-collaborators .collab-lightbox__visual img[src*="DIDR.png"] {
+    transform: scale(1.48) !important;
+  }
+
+  #strategic-collaborators .collab-lightbox__visual img[src*="rural social enterprise.png"] {
+    transform: scale(1.38) !important;
+  }
+
+  #strategic-collaborators .collab-lightbox__visual img[src*="light in the sea.png"] {
+    transform: scale(1.24) !important;
+  }
+}
