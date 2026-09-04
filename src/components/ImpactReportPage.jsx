@@ -1,5 +1,6 @@
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import HTMLFlipBook from 'react-pageflip'
+import MobileImpactSlider from './MobileImpactSlider.jsx'
 import '../impact-report-tweaks.css'
 import '../impact-report-nav-home.css'
 import {
@@ -50,6 +51,7 @@ const ReportPage = forwardRef(function ReportPage({ page }, ref) {
 export default function ImpactReportPage() {
   const readerRef = useRef(null)
   const bookRef = useRef(null)
+  const mobileBookRef = useRef(null)
   const paperAudioRef = useRef(null)
   const paperAudioStopTimerRef = useRef(null)
   const lastPaperSoundAt = useRef(0)
@@ -145,6 +147,13 @@ export default function ImpactReportPage() {
 
   useEffect(() => {
     const onKeyDown = (event) => {
+      if (isMobileReader) {
+        if (event.key === 'ArrowRight') mobileBookRef.current?.next()
+        if (event.key === 'ArrowLeft') mobileBookRef.current?.previous()
+        if (event.key === 'Escape' && document.fullscreenElement) document.exitFullscreen?.()
+        return
+      }
+
       const pageFlip = bookRef.current?.pageFlip?.()
       if (!pageFlip || isFlipping) return
 
@@ -155,7 +164,7 @@ export default function ImpactReportPage() {
 
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [isFlipping])
+  }, [isFlipping, isMobileReader])
 
   useEffect(() => {
     const preload = (page) => {
@@ -181,18 +190,35 @@ export default function ImpactReportPage() {
   }
 
   const previousPage = () => {
+    if (isMobileReader) {
+      mobileBookRef.current?.previous()
+      return
+    }
+
     if (isFlipping) return
     bookRef.current?.pageFlip?.()?.flipPrev('top')
   }
 
   const nextPage = () => {
+    if (isMobileReader) {
+      mobileBookRef.current?.next()
+      return
+    }
+
     if (isFlipping) return
     bookRef.current?.pageFlip?.()?.flipNext('top')
   }
 
   const jumpToPage = (page) => {
-    if (isFlipping) return
     const target = Math.max(1, Math.min(TOTAL_PAGES, Number(page)))
+
+    if (isMobileReader) {
+      mobileBookRef.current?.goTo(target)
+      setCurrentPage(target)
+      return
+    }
+
+    if (isFlipping) return
     bookRef.current?.pageFlip?.()?.turnToPage(target - 1)
     setCurrentPage(target)
   }
@@ -274,7 +300,7 @@ export default function ImpactReportPage() {
               <button
                 className="impact-report-reader__edge impact-report-reader__edge--left"
                 onClick={previousPage}
-                disabled={currentPage <= 1 || isFlipping}
+                disabled={currentPage <= 1 || (!isMobileReader && isFlipping)}
                 aria-label="Previous page"
               >
                 <ChevronLeft size={28} />
@@ -283,51 +309,61 @@ export default function ImpactReportPage() {
               <div className={`impact-report-reader__viewport${zoom > 1 ? ' is-zoomed' : ''}`}>
                 <div className="impact-report-reader__zoom" style={{ '--impact-zoom': zoom }}>
                   <div className={`impact-report-reader__book-wrap${bookPositionClass}`}>
-                    <HTMLFlipBook
-                      ref={bookRef}
-                      width={447}
-                      height={632}
-                      size="stretch"
-                      minWidth={260}
-                      maxWidth={540}
-                      minHeight={368}
-                      maxHeight={764}
-                      startPage={0}
-                      drawShadow
-                      flippingTime={900}
-                      usePortrait
-                      startZIndex={10}
-                      autoSize
-                      maxShadowOpacity={0.46}
-                      showCover
-                      mobileScrollSupport
-                      clickEventForward={false}
-                      useMouseEvents
-                      swipeDistance={18}
-                      showPageCorners
-                      disableFlipByClick={false}
-                      className="impact-html-flipbook"
-                      onFlip={(event) => setCurrentPage(event.data + 1)}
-                      onChangeState={(event) => {
-                        const state = event.data
-                        const userTurningPage = state === 'user_fold' || state === 'flipping'
+                    {isMobileReader ? (
+                      <MobileImpactSlider
+                        ref={mobileBookRef}
+                        totalPages={TOTAL_PAGES}
+                        currentPage={currentPage}
+                        onPageChange={setCurrentPage}
+                        onPageTurn={playPaperSound}
+                      />
+                    ) : (
+                      <HTMLFlipBook
+                        ref={bookRef}
+                        width={447}
+                        height={632}
+                        size="stretch"
+                        minWidth={300}
+                        maxWidth={540}
+                        minHeight={424}
+                        maxHeight={764}
+                        startPage={0}
+                        drawShadow
+                        flippingTime={860}
+                        usePortrait
+                        startZIndex={10}
+                        autoSize
+                        maxShadowOpacity={0.34}
+                        showCover
+                        mobileScrollSupport
+                        clickEventForward={false}
+                        useMouseEvents
+                        swipeDistance={28}
+                        showPageCorners
+                        disableFlipByClick={false}
+                        className="impact-html-flipbook"
+                        onFlip={(event) => setCurrentPage(event.data + 1)}
+                        onChangeState={(event) => {
+                          const state = event.data
+                          const userTurningPage = state === 'user_fold' || state === 'flipping'
 
-                        if (userTurningPage && !paperGestureSoundPlayedRef.current) {
-                          playPaperSound()
-                          paperGestureSoundPlayedRef.current = true
-                        }
+                          if (userTurningPage && !paperGestureSoundPlayedRef.current) {
+                            playPaperSound()
+                            paperGestureSoundPlayedRef.current = true
+                          }
 
-                        if (state === 'read') {
-                          paperGestureSoundPlayedRef.current = false
-                        }
+                          if (state === 'read') {
+                            paperGestureSoundPlayedRef.current = false
+                          }
 
-                        setIsFlipping(state === 'flipping')
-                      }}
-                    >
-                      {Array.from({ length: TOTAL_PAGES }, (_, index) => (
-                        <ReportPage page={index + 1} key={index + 1} />
-                      ))}
-                    </HTMLFlipBook>
+                          setIsFlipping(state === 'flipping')
+                        }}
+                      >
+                        {Array.from({ length: TOTAL_PAGES }, (_, index) => (
+                          <ReportPage page={index + 1} key={index + 1} />
+                        ))}
+                      </HTMLFlipBook>
+                    )}
                   </div>
                 </div>
               </div>
@@ -335,7 +371,7 @@ export default function ImpactReportPage() {
               <button
                 className="impact-report-reader__edge impact-report-reader__edge--right"
                 onClick={nextPage}
-                disabled={currentPage >= TOTAL_PAGES || isFlipping}
+                disabled={currentPage >= TOTAL_PAGES || (!isMobileReader && isFlipping)}
                 aria-label="Next page"
               >
                 <ChevronRight size={28} />
@@ -343,7 +379,7 @@ export default function ImpactReportPage() {
             </div>
 
             <div className="impact-report-reader__controls">
-              <button onClick={previousPage} disabled={currentPage <= 1 || isFlipping} aria-label="Previous page">
+              <button onClick={previousPage} disabled={currentPage <= 1 || (!isMobileReader && isFlipping)} aria-label="Previous page">
                 <ChevronLeft size={18} />
               </button>
 
@@ -376,7 +412,7 @@ export default function ImpactReportPage() {
                 </button>
               </div>
 
-              <button onClick={nextPage} disabled={currentPage >= TOTAL_PAGES || isFlipping} aria-label="Next page">
+              <button onClick={nextPage} disabled={currentPage >= TOTAL_PAGES || (!isMobileReader && isFlipping)} aria-label="Next page">
                 <ChevronRight size={18} />
               </button>
             </div>
