@@ -106,17 +106,33 @@
 }
 
 .journey-kicker {
-  margin: 0 0 14px;
-  color: #326c58;
+  width: fit-content;
+  min-height: 38px;
+  margin: 0 0 20px;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: #0f604b;
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(15, 96, 75, .12);
   font-family: 'Manrope', system-ui, sans-serif;
   font-size: 10px;
   font-weight: 800;
-  letter-spacing: .18em;
+  line-height: 1;
+  letter-spacing: .17em;
   text-transform: uppercase;
 }
 
 .journey-kicker--light {
-  color: rgba(255,255,255,.68);
+  border-color: rgba(255,255,255,.25);
+  background: rgba(5, 35, 25, .28);
+  color: rgba(255,255,255,.94);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .journey-hero h1 {
@@ -423,6 +439,14 @@
   .journey-hero__intro {
     margin-top: 22px;
     font-size: 15px;
+  }
+
+  .journey-kicker {
+    min-height: 34px;
+    margin-bottom: 17px;
+    padding: 0 14px;
+    font-size: 9px;
+    letter-spacing: .145em;
   }
 
   .journey-section {
