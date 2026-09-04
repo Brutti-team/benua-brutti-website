@@ -46,9 +46,9 @@
 
 .location-card__content h3 {
   width: 100% !important;
-  margin: 25px 0 12px !important;
+  margin: 34px 0 15px !important;
   color: rgba(255,255,255,.98) !important;
-  font-size: 25px !important;
+  font-size: 29px !important;
   font-weight: 650 !important;
   line-height: 1.05 !important;
   letter-spacing: -.035em !important;
@@ -57,12 +57,12 @@
 
 .location-card__content p {
   width: 100% !important;
-  max-width: 330px !important;
+  max-width: 350px !important;
   margin: 0 !important;
-  color: rgba(255,255,255,.80) !important;
-  font-size: 14.5px !important;
+  color: rgba(255,255,255,.82) !important;
+  font-size: 16px !important;
   font-weight: 450 !important;
-  line-height: 1.62 !important;
+  line-height: 1.58 !important;
   letter-spacing: -.01em !important;
   text-align: left !important;
 }
@@ -164,12 +164,12 @@
   }
 
   .location-card__content h3 {
-    margin-top: 22px !important;
-    font-size: 23px !important;
+    margin-top: 30px !important;
+    font-size: 26px !important;
   }
 
   .location-card__content p {
-    font-size: 13.5px !important;
+    font-size: 14.5px !important;
   }
 }
 
@@ -210,14 +210,14 @@
   }
 
   .location-card__content h3 {
-    margin-top: 19px !important;
-    font-size: 22px !important;
+    margin-top: 24px !important;
+    font-size: 24px !important;
   }
 
   .location-card__content p {
     max-width: none !important;
-    font-size: 13.5px !important;
-    line-height: 1.58 !important;
+    font-size: 14px !important;
+    line-height: 1.56 !important;
   }
 
   .location-card__map {
