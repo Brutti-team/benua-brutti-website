@@ -29,7 +29,7 @@
   align-items: flex-start !important;
   padding: 6px 14px !important;
   text-align: left !important;
-  transform: translateY(10px) !important;
+  transform: translateY(20px) !important;
 }
 
 .location-card__content > span {
@@ -160,7 +160,7 @@
 
   .location-card__content {
     padding-inline: 10px !important;
-    transform: translateY(7px) !important;
+    transform: translateY(12px) !important;
   }
 
   .location-card__content h3 {
