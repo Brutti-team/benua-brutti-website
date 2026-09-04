@@ -1,0 +1,177 @@
+/* Mobile-only Impact Report book presentation.
+   Keep the existing Brutti page/header/chrome; only make the flipbook itself
+   read more clearly as a physical book on phones. */
+
+@media (max-width: 700px) {
+  .impact-report-reader__stage {
+    min-height: clamp(560px, 78svh, 720px) !important;
+    background:
+      radial-gradient(ellipse at 50% 34%, rgba(255,255,255,.10), transparent 42%),
+      linear-gradient(145deg, #656b68 0%, #5a605d 52%, #505653 100%) !important;
+  }
+
+  .impact-report-reader__stage::after {
+    left: 15% !important;
+    right: 15% !important;
+    bottom: 8.5% !important;
+    height: 5% !important;
+    background: rgba(0,0,0,.28) !important;
+    filter: blur(22px) !important;
+    opacity: .78 !important;
+  }
+
+  .impact-report-reader__viewport {
+    min-height: inherit !important;
+    padding: 26px 30px 34px !important;
+    overflow: visible !important;
+  }
+
+  .impact-report-reader__book-wrap {
+    position: relative !important;
+    isolation: isolate !important;
+    width: min(82vw, 390px) !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: 447 / 632 !important;
+    overflow: visible !important;
+    perspective: 2200px !important;
+    transform: none !important;
+  }
+
+  .impact-report-reader__book-wrap.is-front-cover,
+  .impact-report-reader__book-wrap.is-back-cover {
+    transform: none !important;
+  }
+
+  /* A subtle page block behind the live flipbook makes the closed/single-page
+     mobile view read as a real book instead of a flat image. */
+  .impact-report-reader__book-wrap::before,
+  .impact-report-reader__book-wrap::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    border-radius: 2px !important;
+    transform-origin: center !important;
+  }
+
+  .impact-report-reader__book-wrap::before {
+    z-index: -2 !important;
+    transform: translate(8px, 7px) scale(.995) !important;
+    background: #ecebe6 !important;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.72) inset,
+      0 0 0 1px rgba(0,0,0,.07),
+      0 18px 34px rgba(0,0,0,.18) !important;
+  }
+
+  .impact-report-reader__book-wrap::after {
+    z-index: -1 !important;
+    transform: translate(4px, 4px) scale(.998) !important;
+    background:
+      repeating-linear-gradient(
+        180deg,
+        #faf9f5 0,
+        #faf9f5 2px,
+        #e8e6df 2px,
+        #e8e6df 3px
+      ) !important;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.06) !important;
+  }
+
+  .impact-html-flipbook {
+    position: relative !important;
+    z-index: 2 !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 auto !important;
+    overflow: visible !important;
+    filter:
+      drop-shadow(0 24px 28px rgba(0,0,0,.24))
+      drop-shadow(0 5px 8px rgba(0,0,0,.14)) !important;
+  }
+
+  .impact-html-flipbook .stf__parent,
+  .impact-html-flipbook .stf__wrapper,
+  .impact-html-flipbook .stf__block {
+    width: 100% !important;
+    height: 100% !important;
+    overflow: visible !important;
+  }
+
+  .impact-flip-page {
+    background: #fff !important;
+    box-shadow:
+      inset 0 0 0 1px rgba(0,0,0,.045),
+      inset -10px 0 16px -16px rgba(0,0,0,.18) !important;
+  }
+
+  .impact-flip-page::before {
+    content: '' !important;
+    position: absolute !important;
+    z-index: 2 !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 10px !important;
+    pointer-events: none !important;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,.055)) !important;
+    opacity: .55 !important;
+  }
+
+  .impact-flip-page img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    background: #fff !important;
+  }
+
+  /* Keep navigation visible but let the book dominate the phone viewport. */
+  .impact-report-reader__edge {
+    top: 50% !important;
+    width: 38px !important;
+    height: 38px !important;
+    background: rgba(7, 47, 36, .88) !important;
+    border-color: rgba(255,255,255,.16) !important;
+    box-shadow: 0 10px 24px rgba(0,0,0,.16) !important;
+  }
+
+  .impact-report-reader__edge--left {
+    left: 7px !important;
+  }
+
+  .impact-report-reader__edge--right {
+    right: 7px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .impact-report-reader__stage {
+    min-height: clamp(540px, 76svh, 660px) !important;
+  }
+
+  .impact-report-reader__viewport {
+    padding: 24px 28px 30px !important;
+  }
+
+  .impact-report-reader__book-wrap {
+    width: min(84vw, 360px) !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .impact-report-reader__viewport {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  .impact-report-reader__book-wrap {
+    width: 84vw !important;
+  }
+
+  .impact-report-reader__edge {
+    width: 34px !important;
+    height: 34px !important;
+  }
+}
