@@ -1,6 +1,6 @@
-/* Keep collaborator logos visually balanced in both the marquee cards and lightbox.
-   Some source PNGs contain much more internal whitespace than others, so optical
-   scaling is used to keep the visible logo sizes consistent without changing the assets. */
+/* =========================================================
+   Collaborators logo balance + compact premium lightbox
+   ========================================================= */
 
 /* ---------- Front marquee cards ---------- */
 #strategic-collaborators .collab-card {
@@ -19,179 +19,52 @@
 }
 
 /* Optical corrections for smaller / whitespace-heavy source logos. */
-#strategic-collaborators .collab-card img[src*="yayasan axiata.png"] {
-  --logo-scale: 1.78 !important;
+#strategic-collaborators .collab-card img[src*="appgm.png"] { --logo-scale: 1.28 !important; }
+#strategic-collaborators .collab-card img[src*="artisan market.png"] { --logo-scale: 1.24 !important; }
+#strategic-collaborators .collab-card img[src*="art gallery.png"] { --logo-scale: 1.26 !important; }
+#strategic-collaborators .collab-card img[src*="mtib.png"] { --logo-scale: 1.24 !important; }
+#strategic-collaborators .collab-card img[src*="risda.png"] { --logo-scale: 1.24 !important; }
+#strategic-collaborators .collab-card img[src*="glamping .png"] { --logo-scale: 1.36 !important; }
+#strategic-collaborators .collab-card img[src*="mara.png"] { --logo-scale: 1.24 !important; }
+#strategic-collaborators .collab-card img[src*="yayasan axiata.png"] { --logo-scale: 1.78 !important; }
+#strategic-collaborators .collab-card img[src*="yayasan hasanah"] { --logo-scale: 1.62 !important; }
+#strategic-collaborators .collab-card img[src*="DIDR.png"] { --logo-scale: 1.22 !important; }
+#strategic-collaborators .collab-card img[src*="rural social enterprise.png"] { --logo-scale: 1.34 !important; }
+#strategic-collaborators .collab-card img[src*="light in the sea.png"] { --logo-scale: 1.38 !important; }
+#strategic-collaborators .collab-card img[src*="ekuinas.png"] { --logo-scale: 1.22 !important; }
+#strategic-collaborators .collab-card img[src*="insken.png"] { --logo-scale: 1.20 !important; }
+#strategic-collaborators .collab-card img[src*="SK Nexilis.png"] { --logo-scale: 1.22 !important; }
+#strategic-collaborators .collab-card img[src*="sosea.png"] { --logo-scale: 1.20 !important; }
+#strategic-collaborators .collab-card img[src*="sicc.png"] { --logo-scale: 1.16 !important; }
+#strategic-collaborators .collab-card img[src*="bakemates.png"] { --logo-scale: 1.18 !important; }
+#strategic-collaborators .collab-card img[src*="kolej komuniti.png"] { --logo-scale: 1.18 !important; }
+#strategic-collaborators .collab-card img[src*="My Creative Ventures.png"] { --logo-scale: 1.20 !important; }
+
+/* ---------- Compact premium lightbox ---------- */
+#strategic-collaborators .collab-lightbox {
+  padding: clamp(22px, 3vw, 40px) !important;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(58, 101, 81, .16), transparent 34%),
+    rgba(4, 28, 20, .76) !important;
+  backdrop-filter: blur(18px) saturate(.92) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(.92) !important;
 }
 
-#strategic-collaborators .collab-card img[src*="yayasan hasanah"] {
-  --logo-scale: 1.52 !important;
-}
-
-#strategic-collaborators .collab-card img[src*="DIDR.png"] {
-  --logo-scale: 1.38 !important;
-}
-
-#strategic-collaborators .collab-card img[src*="rural social enterprise.png"] {
-  --logo-scale: 1.34 !important;
-}
-
-#strategic-collaborators .collab-card img[src*="light in the sea.png"] {
-  --logo-scale: 1.28 !important;
-}
-
-#strategic-collaborators .collab-card img[src*="ekuinas.png"] {
-  --logo-scale: 1.22 !important;
-}
-
-#strategic-collaborators .collab-card img[src*="insken.png"] {
-  --logo-scale: 1.20 !important;
-}
-
-#strategic-collaborators .collab-card img[src*="SK Nexilis.png"] {
-  --logo-scale: 1.22 !important;
-}
-
-#strategic-collaborators .collab-card img[src*="sosea.png"] {
-  --logo-scale: 1.20 !important;
-}
-
-#strategic-collaborators .collab-card img[src*="sicc.png"] {
-  --logo-scale: 1.16 !important;
-}
-
-#strategic-collaborators .collab-card img[src*="bakemates.png"] {
-  --logo-scale: 1.18 !important;
-}
-
-#strategic-collaborators .collab-card img[src*="kolej komuniti.png"] {
-  --logo-scale: 1.18 !important;
-}
-
-/* ---------- Enlarged lightbox ---------- */
-#strategic-collaborators .collab-lightbox__logo-wrap {
-  width: min(700px, 80vw) !important;
-  min-height: 320px !important;
-  display: grid !important;
-  place-items: center !important;
-}
-
-#strategic-collaborators .collab-lightbox__visual img {
-  width: min(650px, 74vw) !important;
-  max-width: 100% !important;
-  max-height: 330px !important;
-  height: auto !important;
-  object-fit: contain !important;
-  transform-origin: center !important;
-}
-
-#strategic-collaborators .collab-lightbox__visual img[src*="DIDR.png"] {
-  transform: scale(1.72) !important;
-}
-
-#strategic-collaborators .collab-lightbox__visual img[src*="rural social enterprise.png"] {
-  transform: scale(1.52) !important;
-}
-
-#strategic-collaborators .collab-lightbox__visual img[src*="light in the sea.png"] {
-  transform: scale(1.34) !important;
-}
-
-#strategic-collaborators .collab-lightbox__visual img[src*="ekuinas.png"] {
-  transform: scale(1.20) !important;
-}
-
-#strategic-collaborators .collab-lightbox__visual img[src*="insken.png"] {
-  transform: scale(1.20) !important;
-}
-
-#strategic-collaborators .collab-lightbox__visual img[src*="SK Nexilis.png"] {
-  transform: scale(1.22) !important;
-}
-
-#strategic-collaborators .collab-lightbox__visual img[src*="yayasan axiata.png"] {
-  transform: scale(1.55) !important;
-}
-
-#strategic-collaborators .collab-lightbox__visual img[src*="yayasan hasanah"] {
-  transform: scale(1.34) !important;
-}
-
-@media (max-width: 900px) {
-  #strategic-collaborators .collab-card {
-    flex-basis: 158px !important;
-    height: 84px !important;
-    padding: 15px 16px !important;
-  }
-
-  #strategic-collaborators .collab-card img {
-    max-width: 120px !important;
-    max-height: 54px !important;
-  }
-}
-
-@media (max-width: 620px) {
-  #strategic-collaborators .collab-card {
-    flex-basis: 140px !important;
-    height: 76px !important;
-    padding: 13px 14px !important;
-  }
-
-  #strategic-collaborators .collab-card img {
-    max-width: 108px !important;
-    max-height: 46px !important;
-  }
-
-  #strategic-collaborators .collab-card img[src*="yayasan axiata.png"] {
-    --logo-scale: 1.58 !important;
-  }
-
-  #strategic-collaborators .collab-card img[src*="yayasan hasanah"] {
-    --logo-scale: 1.38 !important;
-  }
-
-  #strategic-collaborators .collab-lightbox__logo-wrap {
-    width: min(520px, 82vw) !important;
-    min-height: 230px !important;
-  }
-
-  #strategic-collaborators .collab-lightbox__visual img {
-    width: min(500px, 78vw) !important;
-    max-height: 245px !important;
-  }
-
-  #strategic-collaborators .collab-lightbox__visual img[src*="DIDR.png"] {
-    transform: scale(1.48) !important;
-  }
-
-  #strategic-collaborators .collab-lightbox__visual img[src*="rural social enterprise.png"] {
-    transform: scale(1.38) !important;
-  }
-
-  #strategic-collaborators .collab-lightbox__visual img[src*="light in the sea.png"] {
-    transform: scale(1.24) !important;
-  }
-
-  #strategic-collaborators .collab-lightbox__visual img[src*="yayasan axiata.png"] {
-    transform: scale(1.38) !important;
-  }
-}
-
-/* ---------- Premium SaaS lightbox treatment ---------- */
 #strategic-collaborators .collab-lightbox .collab-lightbox__panel {
-  width: min(980px, 92vw) !important;
+  width: min(860px, 90vw) !important;
   overflow: hidden !important;
-  border: 1px solid rgba(24, 73, 57, .16) !important;
-  border-radius: 28px !important;
+  border: 1px solid rgba(24, 73, 57, .14) !important;
+  border-radius: 24px !important;
   background: #ffffff !important;
   box-shadow:
-    0 34px 90px rgba(5, 31, 22, .24),
-    0 8px 28px rgba(5, 31, 22, .12),
-    0 0 0 1px rgba(255,255,255,.60) inset !important;
+    0 28px 72px rgba(5, 31, 22, .22),
+    0 10px 26px rgba(5, 31, 22, .10),
+    0 0 0 1px rgba(255,255,255,.68) inset !important;
 }
 
 #strategic-collaborators .collab-lightbox .collab-lightbox__head {
-  min-height: 98px !important;
-  padding: 21px 28px 20px !important;
+  min-height: 84px !important;
+  padding: 18px 22px 16px !important;
   border-bottom: 1px solid rgba(255,255,255,.08) !important;
   background:
     radial-gradient(circle at 12% -20%, rgba(255,255,255,.08), transparent 34%),
@@ -199,23 +72,28 @@
   box-shadow: inset 0 1px 0 rgba(255,255,255,.06) !important;
 }
 
+#strategic-collaborators .collab-lightbox .collab-lightbox__head > div {
+  gap: 4px !important;
+}
+
 #strategic-collaborators .collab-lightbox .collab-lightbox__head span {
-  color: rgba(218, 232, 225, .63) !important;
-  font-size: 9px !important;
+  color: rgba(218, 232, 225, .62) !important;
+  font-size: 8px !important;
   font-weight: 800 !important;
-  letter-spacing: .19em !important;
+  letter-spacing: .20em !important;
 }
 
 #strategic-collaborators .collab-lightbox .collab-lightbox__head strong {
   color: #ffffff !important;
-  font-size: clamp(27px, 3vw, 34px) !important;
+  font-size: clamp(24px, 2.3vw, 30px) !important;
   font-weight: 650 !important;
+  line-height: 1.06 !important;
   letter-spacing: -.035em !important;
 }
 
 #strategic-collaborators .collab-lightbox .collab-lightbox__close {
-  width: 46px !important;
-  height: 46px !important;
+  width: 42px !important;
+  height: 42px !important;
   border: 1px solid rgba(226, 239, 232, .18) !important;
   background: rgba(255,255,255,.055) !important;
   color: #f2f8f4 !important;
@@ -223,15 +101,15 @@
 }
 
 #strategic-collaborators .collab-lightbox .collab-lightbox__close:hover {
-  transform: rotate(3deg) scale(1.04) !important;
+  transform: scale(1.04) !important;
   border-color: rgba(226, 239, 232, .30) !important;
   background: rgba(255,255,255,.10) !important;
 }
 
-/* Pure white stage makes white-background logo files blend cleanly into the viewer. */
+/* White stage with tighter proportions so the logo does not feel lost. */
 #strategic-collaborators .collab-lightbox .collab-lightbox__visual {
-  min-height: 500px !important;
-  padding: 52px 102px 62px !important;
+  min-height: 380px !important;
+  padding: 30px 82px 40px !important;
   background: #ffffff !important;
   box-shadow:
     inset 0 1px 0 rgba(20, 63, 46, .045),
@@ -244,21 +122,60 @@
   opacity: 0 !important;
 }
 
-#strategic-collaborators .collab-lightbox .collab-lightbox__logo-wrap {
-  filter: drop-shadow(0 12px 28px rgba(13, 54, 40, .06));
+#strategic-collaborators .collab-lightbox__logo-wrap {
+  width: min(520px, 60vw) !important;
+  min-height: 220px !important;
+  display: grid !important;
+  place-items: center !important;
+  filter: drop-shadow(0 10px 24px rgba(13, 54, 40, .05));
 }
 
+#strategic-collaborators .collab-lightbox__visual img {
+  width: min(460px, 52vw) !important;
+  max-width: 100% !important;
+  max-height: 220px !important;
+  height: auto !important;
+  object-fit: contain !important;
+  transform-origin: center !important;
+}
+
+/* Lightbox optical corrections. */
+#strategic-collaborators .collab-lightbox__visual img[src*="appgm.png"] { transform: scale(1.34) !important; }
+#strategic-collaborators .collab-lightbox__visual img[src*="artisan market.png"] { transform: scale(1.28) !important; }
+#strategic-collaborators .collab-lightbox__visual img[src*="art gallery.png"] { transform: scale(1.28) !important; }
+#strategic-collaborators .collab-lightbox__visual img[src*="mtib.png"] { transform: scale(1.30) !important; }
+#strategic-collaborators .collab-lightbox__visual img[src*="risda.png"] { transform: scale(1.30) !important; }
+#strategic-collaborators .collab-lightbox__visual img[src*="glamping .png"] { transform: scale(1.40) !important; }
+#strategic-collaborators .collab-lightbox__visual img[src*="mara.png"] { transform: scale(1.28) !important; }
+#strategic-collaborators .collab-lightbox__visual img[src*="DIDR.png"] { transform: scale(1.56) !important; }
+#strategic-collaborators .collab-lightbox__visual img[src*="rural social enterprise.png"] { transform: scale(1.52) !important; }
+#strategic-collaborators .collab-lightbox__visual img[src*="light in the sea.png"] { transform: scale(1.42) !important; }
+#strategic-collaborators .collab-lightbox__visual img[src*="ekuinas.png"] { transform: scale(1.20) !important; }
+#strategic-collaborators .collab-lightbox__visual img[src*="insken.png"] { transform: scale(1.20) !important; }
+#strategic-collaborators .collab-lightbox__visual img[src*="SK Nexilis.png"] { transform: scale(1.22) !important; }
+#strategic-collaborators .collab-lightbox__visual img[src*="yayasan axiata.png"] { transform: scale(1.55) !important; }
+#strategic-collaborators .collab-lightbox__visual img[src*="yayasan hasanah"] { transform: scale(1.42) !important; }
+#strategic-collaborators .collab-lightbox__visual img[src*="My Creative Ventures.png"] { transform: scale(1.40) !important; }
+
 #strategic-collaborators .collab-lightbox .collab-lightbox__nav {
-  width: 48px !important;
-  height: 48px !important;
+  width: 44px !important;
+  height: 44px !important;
   border: 1px solid rgba(20, 72, 54, .14) !important;
-  background: rgba(248, 251, 249, .96) !important;
+  background: rgba(248, 251, 249, .97) !important;
   color: #164f3c !important;
   box-shadow:
-    0 10px 28px rgba(13, 54, 40, .10),
-    inset 0 1px 0 rgba(255,255,255,.9) !important;
+    0 8px 20px rgba(13, 54, 40, .08),
+    inset 0 1px 0 rgba(255,255,255,.90) !important;
   backdrop-filter: blur(10px) !important;
   -webkit-backdrop-filter: blur(10px) !important;
+}
+
+#strategic-collaborators .collab-lightbox .collab-lightbox__nav--prev {
+  left: 24px !important;
+}
+
+#strategic-collaborators .collab-lightbox .collab-lightbox__nav--next {
+  right: 24px !important;
 }
 
 #strategic-collaborators .collab-lightbox .collab-lightbox__nav:hover {
@@ -266,143 +183,133 @@
   background: #eef5f1 !important;
   color: #0c3e2e !important;
   box-shadow:
-    0 13px 32px rgba(13, 54, 40, .14),
+    0 12px 26px rgba(13, 54, 40, .12),
     0 0 0 4px rgba(23, 87, 71, .055) !important;
 }
 
 #strategic-collaborators .collab-lightbox .collab-lightbox__swipe-hint {
+  bottom: 15px !important;
   color: rgba(42, 84, 69, .58) !important;
   font-size: 8px !important;
   font-weight: 800 !important;
-  letter-spacing: .20em !important;
+  letter-spacing: .18em !important;
 }
 
-@media (max-width: 620px) {
+/* ---------- Tablet ---------- */
+@media (max-width: 900px) {
+  #strategic-collaborators .collab-card {
+    flex-basis: 158px !important;
+    height: 84px !important;
+    padding: 15px 16px !important;
+  }
+
+  #strategic-collaborators .collab-card img {
+    max-width: 120px !important;
+    max-height: 54px !important;
+  }
+
   #strategic-collaborators .collab-lightbox .collab-lightbox__panel {
-    width: min(94vw, 980px) !important;
-    border-radius: 22px !important;
-  }
-
-  #strategic-collaborators .collab-lightbox .collab-lightbox__head {
-    min-height: 84px !important;
-    padding: 17px 17px 15px !important;
-  }
-
-  #strategic-collaborators .collab-lightbox .collab-lightbox__head strong {
-    font-size: clamp(23px, 7vw, 29px) !important;
-  }
-
-  #strategic-collaborators .collab-lightbox .collab-lightbox__close {
-    width: 41px !important;
-    height: 41px !important;
+    width: min(92vw, 860px) !important;
   }
 
   #strategic-collaborators .collab-lightbox .collab-lightbox__visual {
-    min-height: 350px !important;
-    padding: 38px 56px 46px !important;
+    min-height: 340px !important;
+    padding: 28px 64px 36px !important;
+  }
+
+  #strategic-collaborators .collab-lightbox__logo-wrap {
+    width: min(460px, 64vw) !important;
+    min-height: 200px !important;
+  }
+
+  #strategic-collaborators .collab-lightbox__visual img {
+    width: min(400px, 56vw) !important;
+    max-height: 200px !important;
+  }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 620px) {
+  #strategic-collaborators .collab-card {
+    flex-basis: 140px !important;
+    height: 76px !important;
+    padding: 13px 14px !important;
+  }
+
+  #strategic-collaborators .collab-card img {
+    max-width: 108px !important;
+    max-height: 46px !important;
+  }
+
+  #strategic-collaborators .collab-card img[src*="appgm.png"] { --logo-scale: 1.22 !important; }
+  #strategic-collaborators .collab-card img[src*="artisan market.png"] { --logo-scale: 1.18 !important; }
+  #strategic-collaborators .collab-card img[src*="art gallery.png"] { --logo-scale: 1.18 !important; }
+  #strategic-collaborators .collab-card img[src*="mtib.png"] { --logo-scale: 1.18 !important; }
+  #strategic-collaborators .collab-card img[src*="risda.png"] { --logo-scale: 1.18 !important; }
+  #strategic-collaborators .collab-card img[src*="glamping .png"] { --logo-scale: 1.26 !important; }
+  #strategic-collaborators .collab-card img[src*="mara.png"] { --logo-scale: 1.18 !important; }
+  #strategic-collaborators .collab-card img[src*="yayasan axiata.png"] { --logo-scale: 1.58 !important; }
+  #strategic-collaborators .collab-card img[src*="yayasan hasanah"] { --logo-scale: 1.46 !important; }
+  #strategic-collaborators .collab-card img[src*="DIDR.png"] { --logo-scale: 1.16 !important; }
+  #strategic-collaborators .collab-card img[src*="light in the sea.png"] { --logo-scale: 1.28 !important; }
+
+  #strategic-collaborators .collab-lightbox {
+    padding: 14px !important;
+  }
+
+  #strategic-collaborators .collab-lightbox .collab-lightbox__panel {
+    width: min(94vw, 860px) !important;
+    border-radius: 20px !important;
+  }
+
+  #strategic-collaborators .collab-lightbox .collab-lightbox__head {
+    min-height: 76px !important;
+    padding: 15px 16px 13px !important;
+  }
+
+  #strategic-collaborators .collab-lightbox .collab-lightbox__head strong {
+    font-size: clamp(21px, 6.3vw, 27px) !important;
+  }
+
+  #strategic-collaborators .collab-lightbox .collab-lightbox__close {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  #strategic-collaborators .collab-lightbox .collab-lightbox__visual {
+    min-height: 300px !important;
+    padding: 24px 44px 32px !important;
+  }
+
+  #strategic-collaborators .collab-lightbox__logo-wrap {
+    width: min(320px, 72vw) !important;
+    min-height: 160px !important;
+  }
+
+  #strategic-collaborators .collab-lightbox__visual img {
+    width: min(280px, 62vw) !important;
+    max-height: 160px !important;
   }
 
   #strategic-collaborators .collab-lightbox .collab-lightbox__nav {
-    width: 42px !important;
-    height: 42px !important;
-  }
-}
-
-/* ---------- Final optical size tuning ---------- */
-#strategic-collaborators .collab-card img[src*="light in the sea.png"] {
-  --logo-scale: 1.38 !important;
-}
-
-#strategic-collaborators .collab-card img[src*="art gallery.png"] {
-  --logo-scale: 1.26 !important;
-}
-
-#strategic-collaborators .collab-card img[src*="risda.png"] {
-  --logo-scale: 1.24 !important;
-}
-
-#strategic-collaborators .collab-card img[src*="glamping .png"] {
-  --logo-scale: 1.36 !important;
-}
-
-#strategic-collaborators .collab-card img[src*="yayasan hasanah"] {
-  --logo-scale: 1.62 !important;
-}
-
-#strategic-collaborators .collab-card img[src*="mara.png"] {
-  --logo-scale: 1.24 !important;
-}
-
-#strategic-collaborators .collab-lightbox__visual img[src*="light in the sea.png"] {
-  transform: scale(1.42) !important;
-}
-
-#strategic-collaborators .collab-lightbox__visual img[src*="art gallery.png"] {
-  transform: scale(1.28) !important;
-}
-
-#strategic-collaborators .collab-lightbox__visual img[src*="risda.png"] {
-  transform: scale(1.30) !important;
-}
-
-#strategic-collaborators .collab-lightbox__visual img[src*="glamping .png"] {
-  transform: scale(1.40) !important;
-}
-
-#strategic-collaborators .collab-lightbox__visual img[src*="yayasan hasanah"] {
-  transform: scale(1.42) !important;
-}
-
-#strategic-collaborators .collab-lightbox__visual img[src*="mara.png"] {
-  transform: scale(1.28) !important;
-}
-
-@media (max-width: 620px) {
-  #strategic-collaborators .collab-card img[src*="light in the sea.png"] {
-    --logo-scale: 1.28 !important;
+    width: 40px !important;
+    height: 40px !important;
   }
 
-  #strategic-collaborators .collab-card img[src*="art gallery.png"] {
-    --logo-scale: 1.18 !important;
-  }
+  #strategic-collaborators .collab-lightbox .collab-lightbox__nav--prev { left: 8px !important; }
+  #strategic-collaborators .collab-lightbox .collab-lightbox__nav--next { right: 8px !important; }
 
-  #strategic-collaborators .collab-card img[src*="risda.png"] {
-    --logo-scale: 1.18 !important;
-  }
-
-  #strategic-collaborators .collab-card img[src*="glamping .png"] {
-    --logo-scale: 1.26 !important;
-  }
-
-  #strategic-collaborators .collab-card img[src*="yayasan hasanah"] {
-    --logo-scale: 1.46 !important;
-  }
-
-  #strategic-collaborators .collab-card img[src*="mara.png"] {
-    --logo-scale: 1.18 !important;
-  }
-
-  #strategic-collaborators .collab-lightbox__visual img[src*="light in the sea.png"] {
-    transform: scale(1.30) !important;
-  }
-
-  #strategic-collaborators .collab-lightbox__visual img[src*="art gallery.png"] {
-    transform: scale(1.18) !important;
-  }
-
-  #strategic-collaborators .collab-lightbox__visual img[src*="risda.png"] {
-    transform: scale(1.20) !important;
-  }
-
-  #strategic-collaborators .collab-lightbox__visual img[src*="glamping .png"] {
-    transform: scale(1.28) !important;
-  }
-
-  #strategic-collaborators .collab-lightbox__visual img[src*="yayasan hasanah"] {
-    transform: scale(1.30) !important;
-  }
-
-  #strategic-collaborators .collab-lightbox__visual img[src*="mara.png"] {
-    transform: scale(1.18) !important;
-  }
+  #strategic-collaborators .collab-lightbox__visual img[src*="appgm.png"] { transform: scale(1.24) !important; }
+  #strategic-collaborators .collab-lightbox__visual img[src*="artisan market.png"] { transform: scale(1.18) !important; }
+  #strategic-collaborators .collab-lightbox__visual img[src*="art gallery.png"] { transform: scale(1.18) !important; }
+  #strategic-collaborators .collab-lightbox__visual img[src*="mtib.png"] { transform: scale(1.20) !important; }
+  #strategic-collaborators .collab-lightbox__visual img[src*="risda.png"] { transform: scale(1.20) !important; }
+  #strategic-collaborators .collab-lightbox__visual img[src*="glamping .png"] { transform: scale(1.28) !important; }
+  #strategic-collaborators .collab-lightbox__visual img[src*="mara.png"] { transform: scale(1.18) !important; }
+  #strategic-collaborators .collab-lightbox__visual img[src*="DIDR.png"] { transform: scale(1.34) !important; }
+  #strategic-collaborators .collab-lightbox__visual img[src*="rural social enterprise.png"] { transform: scale(1.38) !important; }
+  #strategic-collaborators .collab-lightbox__visual img[src*="light in the sea.png"] { transform: scale(1.30) !important; }
+  #strategic-collaborators .collab-lightbox__visual img[src*="yayasan axiata.png"] { transform: scale(1.38) !important; }
+  #strategic-collaborators .collab-lightbox__visual img[src*="yayasan hasanah"] { transform: scale(1.30) !important; }
+  #strategic-collaborators .collab-lightbox__visual img[src*="My Creative Ventures.png"] { transform: scale(1.28) !important; }
 }
