@@ -23,7 +23,7 @@
   position: relative;
   z-index: 1;
   width: min(1360px, calc(100% - 72px));
-  grid-template-columns: minmax(0, 1.04fr) minmax(0, .96fr);
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
   gap: clamp(64px, 5.4vw, 94px);
   align-items: center;
 }
@@ -76,6 +76,7 @@
 
   .journey-section--purpose .journey-purpose {
     width: min(100% - 52px, 1120px);
+    grid-template-columns: minmax(0, .96fr) minmax(0, 1.04fr);
     gap: 48px;
   }
 
