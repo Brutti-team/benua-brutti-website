@@ -20,14 +20,15 @@
     0 16px 34px rgba(4, 28, 20, .10) !important;
 }
 
+/* Keep copy in the left column, vertically centred, with left-aligned text */
 .location-card__content {
   min-width: 0 !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
-  align-items: center !important;
-  padding: 6px 8px !important;
-  text-align: center !important;
+  align-items: flex-start !important;
+  padding: 6px 14px !important;
+  text-align: left !important;
 }
 
 .location-card__content > span {
@@ -38,29 +39,31 @@
   font-weight: 750 !important;
   line-height: 1.1 !important;
   letter-spacing: .16em !important;
-  text-align: center !important;
+  text-align: left !important;
   text-transform: uppercase !important;
 }
 
 .location-card__content h3 {
   width: 100% !important;
-  margin: 16px 0 11px !important;
+  margin: 16px 0 12px !important;
   color: rgba(255,255,255,.98) !important;
   font-size: 25px !important;
   font-weight: 650 !important;
   line-height: 1.05 !important;
   letter-spacing: -.035em !important;
-  text-align: center !important;
+  text-align: left !important;
 }
 
 .location-card__content p {
   width: 100% !important;
-  max-width: 310px !important;
-  margin: 0 auto !important;
-  color: rgba(255,255,255,.76) !important;
-  font-size: 13.5px !important;
-  line-height: 1.58 !important;
-  text-align: center !important;
+  max-width: 330px !important;
+  margin: 0 !important;
+  color: rgba(255,255,255,.80) !important;
+  font-size: 14.5px !important;
+  font-weight: 450 !important;
+  line-height: 1.62 !important;
+  letter-spacing: -.01em !important;
+  text-align: left !important;
 }
 
 .location-card__content > a {
@@ -154,12 +157,16 @@
     gap: 14px !important;
   }
 
+  .location-card__content {
+    padding-inline: 10px !important;
+  }
+
   .location-card__content h3 {
     font-size: 23px !important;
   }
 
   .location-card__content p {
-    font-size: 12.5px !important;
+    font-size: 13.5px !important;
   }
 }
 
@@ -171,13 +178,15 @@
   }
 
   .location-card__content {
+    align-items: flex-start !important;
     padding: 8px 4px !important;
+    text-align: left !important;
   }
 
   .location-card__content > span,
   .location-card__content h3,
   .location-card__content p {
-    text-align: center !important;
+    text-align: left !important;
   }
 
   .location-card__map {
@@ -202,8 +211,9 @@
   }
 
   .location-card__content p {
-    font-size: 12.5px !important;
-    line-height: 1.55 !important;
+    max-width: none !important;
+    font-size: 13.5px !important;
+    line-height: 1.58 !important;
   }
 
   .location-card__map {
