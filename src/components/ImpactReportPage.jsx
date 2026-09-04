@@ -278,22 +278,22 @@ export default function ImpactReportPage() {
                       width={447}
                       height={632}
                       size="stretch"
-                      minWidth={300}
+                      minWidth={130}
                       maxWidth={540}
-                      minHeight={424}
+                      minHeight={184}
                       maxHeight={764}
                       startPage={0}
                       drawShadow
-                      flippingTime={860}
-                      usePortrait
+                      flippingTime={1050}
+                      usePortrait={false}
                       startZIndex={10}
                       autoSize
-                      maxShadowOpacity={0.34}
+                      maxShadowOpacity={0.55}
                       showCover
                       mobileScrollSupport
                       clickEventForward={false}
                       useMouseEvents
-                      swipeDistance={28}
+                      swipeDistance={12}
                       showPageCorners
                       disableFlipByClick={false}
                       className="impact-html-flipbook"
