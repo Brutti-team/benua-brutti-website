@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowDown, ArrowUpRight, MapPin, Menu, Phone, X } from 'lucide-react'
 import Counter from './components/Counter.jsx'
 import Reveal from './components/Reveal.jsx'
+import './contact-map.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
@@ -293,21 +294,57 @@ function App() {
 
         <div className="page-shell contact__grid">
           <Reveal className="location-card">
-            <span>01 · Workshop</span>
-            <h3>Benua Brutti</h3>
-            <p>Kilang 5,<br />Taman Industri Perabot<br />Kota Kinabalu Industrial Park (KKIP),<br />88450 Kota Kinabalu, Sabah.</p>
-            <a href="https://www.google.com/maps/search/?api=1&query=Kilang+5+Taman+Industri+Perabot+KKIP+Kota+Kinabalu+Sabah" target="_blank" rel="noreferrer">
-              Get directions <ArrowUpRight size={17} />
-            </a>
+            <div className="location-card__content">
+              <span>01 · Workshop</span>
+              <h3>Benua Brutti</h3>
+              <p>Kilang 5,<br />Taman Industri Perabot<br />Kota Kinabalu Industrial Park (KKIP),<br />88450 Kota Kinabalu, Sabah.</p>
+              <a href="https://www.google.com/maps/search/?api=1&query=Kilang+5+Taman+Industri+Perabot+KKIP+Kota+Kinabalu+Sabah" target="_blank" rel="noreferrer">
+                Get directions <ArrowUpRight size={17} />
+              </a>
+            </div>
+            <div className="location-card__map">
+              <iframe
+                title="Map location of Benua Brutti workshop"
+                src="https://www.google.com/maps?q=Kilang+5+Taman+Industri+Perabot+KKIP+Kota+Kinabalu+Sabah&z=15&output=embed"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+              <a
+                className="location-card__map-link"
+                href="https://www.google.com/maps/search/?api=1&query=Kilang+5+Taman+Industri+Perabot+KKIP+Kota+Kinabalu+Sabah"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open map <ArrowUpRight size={14} />
+              </a>
+            </div>
           </Reveal>
 
           <Reveal delay={0.1} className="location-card">
-            <span>02 · Shared showroom</span>
-            <h3>The Art Attic</h3>
-            <p>7, Lorong Dewan,<br />Pusat Bandar Kota Kinabalu,<br />88000 Kota Kinabalu, Sabah.</p>
-            <a href="https://www.google.com/maps/search/?api=1&query=The+Art+Attic+7+Lorong+Dewan+Kota+Kinabalu+Sabah" target="_blank" rel="noreferrer">
-              Get directions <ArrowUpRight size={17} />
-            </a>
+            <div className="location-card__content">
+              <span>02 · Shared showroom</span>
+              <h3>The Art Attic</h3>
+              <p>7, Lorong Dewan,<br />Pusat Bandar Kota Kinabalu,<br />88000 Kota Kinabalu, Sabah.</p>
+              <a href="https://www.google.com/maps/search/?api=1&query=The+Art+Attic+7+Lorong+Dewan+Kota+Kinabalu+Sabah" target="_blank" rel="noreferrer">
+                Get directions <ArrowUpRight size={17} />
+              </a>
+            </div>
+            <div className="location-card__map">
+              <iframe
+                title="Map location of The Art Attic showroom"
+                src="https://www.google.com/maps?q=The+Art+Attic+7+Lorong+Dewan+Kota+Kinabalu+Sabah&z=16&output=embed"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+              <a
+                className="location-card__map-link"
+                href="https://www.google.com/maps/search/?api=1&query=The+Art+Attic+7+Lorong+Dewan+Kota+Kinabalu+Sabah"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open map <ArrowUpRight size={14} />
+              </a>
+            </div>
           </Reveal>
         </div>
 
