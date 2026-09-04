@@ -1,12 +1,13 @@
-/* Final Journey section: clean stacked team portrait composition */
+/* Journey finale — editorial team composition with genuine transparent cut-outs */
 
 .journey-section--team {
   position: relative;
   overflow: hidden;
-  padding: 96px 0 82px;
-  /* Keep this solid so the white studio backgrounds disappear cleanly
-     when the portraits use multiply over the same green. */
-  background: #0b4934;
+  padding: 108px 0 94px;
+  background:
+    radial-gradient(circle at 75% 30%, rgba(211, 165, 86, .18), transparent 29%),
+    radial-gradient(circle at 72% 77%, rgba(201, 155, 78, .10), transparent 28%),
+    linear-gradient(135deg, #052d20 0%, #073d2b 52%, #052f22 100%);
   color: #fff;
 }
 
@@ -15,66 +16,97 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: .12;
+  opacity: .7;
   background:
-    radial-gradient(circle at 79% 36%, rgba(216, 176, 98, .18), transparent 30%),
-    radial-gradient(circle at 64% 76%, rgba(255, 255, 255, .06), transparent 35%);
+    radial-gradient(circle at 88% 18%, rgba(224, 178, 91, .14) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 68% 24%, rgba(224, 178, 91, .09) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 79% 52%, rgba(255, 255, 255, .05) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 61% 68%, rgba(224, 178, 91, .08) 0 1px, transparent 1.8px);
+  background-size: 145px 145px, 190px 190px, 165px 165px, 215px 215px;
+}
+
+.journey-section--team::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 31%;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(1, 20, 13, .42), transparent);
 }
 
 .journey-team {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(300px, .78fr) minmax(650px, 1.62fr);
-  gap: clamp(34px, 4vw, 70px);
+  grid-template-columns: minmax(320px, .72fr) minmax(700px, 1.65fr);
+  gap: clamp(34px, 4vw, 72px);
   align-items: center;
 }
 
 .journey-team__copy {
   position: relative;
-  z-index: 20;
-  max-width: 470px;
+  z-index: 4;
+  max-width: 485px;
 }
 
 .journey-team__copy .journey-kicker {
-  margin-bottom: 26px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 27px;
+  color: #d7aa5d;
+  font-size: 11px;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+
+.journey-team__copy .journey-kicker::before {
+  content: '';
+  width: 38px;
+  height: 1px;
+  flex: 0 0 38px;
+  background: #d7aa5d;
 }
 
 .journey-team__copy h2 {
-  max-width: 470px;
+  max-width: 500px;
   margin: 0;
-  font-family: 'Manrope', system-ui, sans-serif;
-  font-size: clamp(52px, 5.25vw, 82px);
-  font-weight: 520;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(58px, 5.25vw, 86px);
+  font-weight: 400;
   line-height: .94;
-  letter-spacing: -.065em;
+  letter-spacing: -.045em;
   text-wrap: balance;
 }
 
 .journey-team__copy h2 span {
   display: block;
-  color: #d5aa62;
+  margin-top: .08em;
+  color: #c99342;
 }
 
 .journey-team__copy > p:not(.journey-kicker) {
-  max-width: 445px;
-  margin: 28px 0 0;
-  color: rgba(244, 248, 245, .72);
+  max-width: 430px;
+  margin: 30px 0 0;
+  color: rgba(242, 246, 243, .73);
   font-family: 'Manrope', system-ui, sans-serif;
   font-size: 16px;
   line-height: 1.76;
 }
 
 .journey-team__values {
-  margin-top: 30px;
+  margin-top: 31px;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 18px;
-  color: rgba(255,255,255,.66);
+  gap: 10px 20px;
+  color: rgba(255, 255, 255, .69);
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 750;
-  letter-spacing: .12em;
+  font-size: 9px;
+  font-weight: 760;
+  letter-spacing: .13em;
   text-transform: uppercase;
 }
 
@@ -90,167 +122,155 @@
   height: 5px;
   flex: 0 0 5px;
   border-radius: 50%;
-  background: #d5aa62;
-  box-shadow: 0 0 0 4px rgba(213,170,98,.08);
+  background: #d6a454;
+  box-shadow: 0 0 0 4px rgba(214, 164, 84, .08);
 }
 
 .journey-team__copy .journey-primary {
-  margin-top: 34px;
+  margin-top: 35px;
 }
 
 .journey-team__stage {
   position: relative;
+  z-index: 2;
   min-width: 0;
-  height: clamp(650px, 49vw, 770px);
-  background: transparent;
+  width: 100%;
+  min-height: clamp(690px, 47vw, 780px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .journey-team__stage::before {
   content: '';
   position: absolute;
   z-index: 0;
-  left: 10%;
-  right: 10%;
-  top: 17%;
-  bottom: 11%;
+  width: 88%;
+  aspect-ratio: 1.12;
+  left: 6%;
+  top: 8%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(217, 185, 122, .12), rgba(255,255,255,.025) 43%, transparent 72%);
-  filter: blur(15px);
   pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(222, 178, 96, .21) 0%,
+    rgba(175, 139, 77, .09) 34%,
+    rgba(255, 255, 255, .025) 51%,
+    transparent 70%
+  );
+  filter: blur(22px);
 }
 
 .journey-team__stage::after {
   content: 'THE PEOPLE BEHIND THE JOURNEY';
   position: absolute;
   z-index: 0;
-  right: -2px;
-  top: 47%;
+  right: -8px;
+  top: 49%;
   transform: rotate(90deg) translateY(-50%);
   transform-origin: right top;
-  color: rgba(255,255,255,.045);
+  color: rgba(255, 255, 255, .045);
   font-family: 'Manrope', system-ui, sans-serif;
   font-size: 9px;
   font-weight: 800;
-  letter-spacing: .28em;
+  letter-spacing: .3em;
   white-space: nowrap;
 }
 
-.journey-team__person {
-  position: absolute;
+.journey-team__composite {
+  position: relative;
+  z-index: 2;
+  width: clamp(820px, 62vw, 1140px);
+  max-width: none;
   margin: 0;
-  display: grid;
-  place-items: end center;
+  transform: translateX(-1.5%);
   pointer-events: none;
-  transform-origin: center bottom;
-  overflow: hidden;
-  /* Same green as the section. The pale studio wall therefore blends away
-     inside each image instead of showing rectangular photo cards. */
-  background: #0b4934;
-  mask-image: radial-gradient(ellipse at 50% 50%, #000 0%, #000 63%, rgba(0,0,0,.94) 75%, rgba(0,0,0,.38) 91%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 0%, #000 63%, rgba(0,0,0,.94) 75%, rgba(0,0,0,.38) 91%, transparent 100%);
 }
 
-.journey-team__person img {
+.journey-team__composite img {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: block;
   object-fit: contain;
-  object-position: center bottom;
-  background: transparent;
-  mix-blend-mode: multiply;
-  filter: brightness(1.30) contrast(1.08) saturate(1.08) drop-shadow(0 20px 24px rgba(0,0,0,.15));
-  transform: translateZ(0);
-  transition: transform .55s cubic-bezier(.22,1,.36,1), filter .55s ease;
+  filter:
+    drop-shadow(0 26px 28px rgba(0, 0, 0, .22))
+    drop-shadow(0 3px 5px rgba(0, 0, 0, .11));
 }
 
-/* Centre focal point: bicycle stays in the middle. */
-.journey-team__person--hero {
-  z-index: 8;
-  left: 20%;
-  top: 25%;
-  width: 60%;
-  height: 56%;
-  mask-image: radial-gradient(ellipse at 50% 52%, #000 0%, #000 69%, rgba(0,0,0,.9) 82%, rgba(0,0,0,.35) 93%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse at 50% 52%, #000 0%, #000 69%, rgba(0,0,0,.9) 82%, rgba(0,0,0,.35) 93%, transparent 100%);
-}
-
-/* Women: one clean row across the top. */
-.journey-team__person--01 { z-index: 4; left: -2%; top: 1%; width: 24%; height: 40%; }
-.journey-team__person--02 { z-index: 5; left: 18%; top: -2%; width: 24%; height: 41%; }
-.journey-team__person--03 { z-index: 4; left: 39%; top: 0%; width: 23%; height: 39%; }
-.journey-team__person--04 { z-index: 5; left: 59%; top: -1%; width: 24%; height: 41%; }
-.journey-team__person--05 { z-index: 4; left: 80%; top: 2%; width: 22%; height: 40%; }
-
-/* Men: one clean row across the bottom. */
-.journey-team__person--06 { z-index: 10; left: -2%; top: 58%; width: 24%; height: 42%; }
-.journey-team__person--07 { z-index: 10; left: 18%; top: 60%; width: 24%; height: 40%; }
-.journey-team__person--08 { z-index: 11; left: 39%; top: 61%; width: 23%; height: 39%; }
-.journey-team__person--09 { z-index: 10; left: 60%; top: 59%; width: 24%; height: 41%; }
-.journey-team__person--10 { z-index: 10; left: 80%; top: 58%; width: 22%; height: 42%; }
-
-@media (hover: hover) and (pointer: fine) {
-  .journey-team__stage:hover .journey-team__person img {
-    filter: brightness(1.26) contrast(1.07) saturate(1.03) drop-shadow(0 18px 22px rgba(0,0,0,.13));
-  }
-}
-
-@media (max-width: 1180px) {
+@media (max-width: 1240px) {
   .journey-team {
-    grid-template-columns: minmax(280px, .75fr) minmax(560px, 1.45fr);
-    gap: 24px;
+    grid-template-columns: minmax(290px, .72fr) minmax(600px, 1.5fr);
+    gap: 26px;
   }
 
   .journey-team__stage {
-    height: 650px;
+    min-height: 650px;
+  }
+
+  .journey-team__composite {
+    width: clamp(720px, 65vw, 980px);
   }
 
   .journey-team__copy h2 {
-    font-size: clamp(50px, 6vw, 70px);
+    font-size: clamp(54px, 5.9vw, 74px);
   }
 }
 
 @media (max-width: 980px) {
   .journey-section--team {
-    padding: 78px 0 68px;
+    padding: 82px 0 70px;
   }
 
   .journey-team {
     grid-template-columns: 1fr;
-    gap: 42px;
+    gap: 26px;
   }
 
   .journey-team__copy {
     max-width: 680px;
   }
 
-  .journey-team__copy h2,
+  .journey-team__copy h2 {
+    max-width: 620px;
+  }
+
   .journey-team__copy > p:not(.journey-kicker) {
-    max-width: 650px;
+    max-width: 590px;
   }
 
   .journey-team__stage {
-    width: min(100%, 820px);
-    height: 630px;
+    width: min(100%, 900px);
+    min-height: 610px;
     margin: 0 auto;
+  }
+
+  .journey-team__composite {
+    width: min(112%, 980px);
+    transform: none;
   }
 }
 
 @media (max-width: 720px) {
   .journey-section--team {
-    padding: 62px 0 52px;
+    padding: 66px 0 54px;
   }
 
   .journey-team {
-    gap: 24px;
+    gap: 16px;
+  }
+
+  .journey-team__copy .journey-kicker {
+    margin-bottom: 22px;
   }
 
   .journey-team__copy h2 {
-    max-width: 350px;
-    font-size: clamp(44px, 13vw, 62px);
+    max-width: 355px;
+    font-size: clamp(47px, 13.5vw, 64px);
+    line-height: .96;
   }
 
   .journey-team__copy > p:not(.journey-kicker) {
-    margin-top: 22px;
+    margin-top: 23px;
     font-size: 15px;
     line-height: 1.7;
   }
@@ -258,15 +278,12 @@
   .journey-team__values {
     margin-top: 24px;
     gap: 9px 14px;
-    font-size: 9px;
+    font-size: 8px;
   }
 
   .journey-team__stage {
-    height: auto;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-items: end;
-    gap: 0;
+    min-height: 445px;
+    margin-top: 4px;
     overflow: visible;
   }
 
@@ -274,93 +291,34 @@
     display: none;
   }
 
-  .journey-team__person,
-  .journey-team__person--hero,
-  .journey-team__person--01,
-  .journey-team__person--02,
-  .journey-team__person--03,
-  .journey-team__person--04,
-  .journey-team__person--05,
-  .journey-team__person--06,
-  .journey-team__person--07,
-  .journey-team__person--08,
-  .journey-team__person--09,
-  .journey-team__person--10 {
-    position: relative;
-    inset: auto;
-    width: auto;
-    height: 220px;
-    margin: -20px -16px;
+  .journey-team__composite {
+    width: 140%;
+    margin-left: -20%;
   }
-
-  .journey-team__person--01 { grid-column: 1; grid-row: 1; }
-  .journey-team__person--02 { grid-column: 2; grid-row: 1; }
-  .journey-team__person--03 { grid-column: 3; grid-row: 1; }
-  .journey-team__person--04 { grid-column: 1; grid-row: 2; }
-  .journey-team__person--05 { grid-column: 3; grid-row: 2; }
-
-  .journey-team__person--hero {
-    grid-column: 1 / -1;
-    grid-row: 3;
-    height: 320px;
-    margin: -54px 0 -58px;
-    z-index: 8;
-  }
-
-  .journey-team__person--06 { grid-column: 1; grid-row: 4; }
-  .journey-team__person--07 { grid-column: 2; grid-row: 4; }
-  .journey-team__person--08 { grid-column: 3; grid-row: 4; }
-  .journey-team__person--09 { grid-column: 1; grid-row: 5; }
-  .journey-team__person--10 { grid-column: 3; grid-row: 5; }
 }
 
 @media (max-width: 500px) {
+  .journey-section--team {
+    padding-bottom: 46px;
+  }
+
+  .journey-team__copy h2 {
+    max-width: 330px;
+    font-size: clamp(45px, 14.2vw, 59px);
+  }
+
   .journey-team__stage {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-height: 365px;
   }
 
-  .journey-team__person,
-  .journey-team__person--hero,
-  .journey-team__person--01,
-  .journey-team__person--02,
-  .journey-team__person--03,
-  .journey-team__person--04,
-  .journey-team__person--05,
-  .journey-team__person--06,
-  .journey-team__person--07,
-  .journey-team__person--08,
-  .journey-team__person--09,
-  .journey-team__person--10 {
-    height: 215px;
-    margin: -22px -18px;
+  .journey-team__composite {
+    width: 154%;
+    margin-left: -27%;
   }
-
-  /* Women first */
-  .journey-team__person--01 { grid-column: 1; grid-row: 1; }
-  .journey-team__person--02 { grid-column: 2; grid-row: 1; }
-  .journey-team__person--03 { grid-column: 1; grid-row: 2; }
-  .journey-team__person--04 { grid-column: 2; grid-row: 2; }
-  .journey-team__person--05 { grid-column: 1 / -1; grid-row: 3; width: 50%; justify-self: center; }
-
-  /* Bicycle in the middle */
-  .journey-team__person--hero {
-    grid-column: 1 / -1;
-    grid-row: 4;
-    width: auto;
-    height: 300px;
-    margin: -48px -2px -58px;
-  }
-
-  /* Men underneath */
-  .journey-team__person--06 { grid-column: 1; grid-row: 5; }
-  .journey-team__person--07 { grid-column: 2; grid-row: 5; }
-  .journey-team__person--08 { grid-column: 1; grid-row: 6; }
-  .journey-team__person--09 { grid-column: 2; grid-row: 6; }
-  .journey-team__person--10 { grid-column: 1 / -1; grid-row: 7; width: 50%; justify-self: center; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .journey-team__person img {
+  .journey-team__composite img {
     transition: none;
   }
 }
