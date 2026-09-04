@@ -8,12 +8,11 @@ ASSETS = Path("public/assets")
 TEAM = ASSETS / "brutti-team"
 OUTPUT = ASSETS / "brutti-team-composite.webp"
 
-# u2netp is the lightweight rembg model. Reusing one session keeps the
-# deployment build fast while producing genuine transparent cut-outs.
+# Reuse one lightweight background-removal session for every team cut-out.
 SESSION = new_session("u2netp")
 
 
-def cutout(filename: str, max_side: int = 1050) -> Image.Image:
+def cutout(filename: str, max_side: int = 1150) -> Image.Image:
     image = Image.open(TEAM / filename)
     image = ImageOps.exif_transpose(image).convert("RGBA")
     image.thumbnail((max_side, max_side), Image.Resampling.LANCZOS)
@@ -23,8 +22,8 @@ def cutout(filename: str, max_side: int = 1050) -> Image.Image:
         result = Image.open(BytesIO(result))
     result = result.convert("RGBA")
 
-    # Keep hair, fabric edges, tools and bicycle spokes while removing only
-    # the nearly invisible fringe left by the background-removal model.
+    # Keep fine hair, fabric edges, tools and bicycle spokes while removing
+    # only the nearly invisible fringe left by the background-removal model.
     alpha = result.getchannel("A").point(
         lambda value: 0 if value < 7 else (255 if value > 250 else value)
     )
@@ -68,54 +67,63 @@ def place(canvas: Image.Image, image: Image.Image, center_x: int, bottom: int, h
     canvas.alpha_composite(clipped, (max(0, x), max(0, y)))
 
 
-# Dense poster-style composition based on the supplied reference. Everyone
-# is intentionally pulled toward the bicycle so the collage reads as one
-# layered team portrait instead of two separate rows of people.
-canvas = Image.new("RGBA", (1320, 1060), (0, 0, 0, 0))
+# Version 2 reference layout:
+# - laptop woman anchors the upper-left
+# - blue-tool man sits just to her right and slightly higher
+# - phone/board woman bridges into the centre
+# - bicycle pair remains the main focal point
+# - drill woman + standing woman balance the upper-right
+# - book woman overlaps the right foreground
+# - four men form a clean, tight foreground row
+canvas = Image.new("RGBA", (1400, 1010), (0, 0, 0, 0))
 
-# Upper group: form a shallow arc and let shoulders / silhouettes overlap.
-women = [
-    ("DSCF8078(1).webp", 190, 500, 490),
-    ("DSCF8091(1).webp", 405, 430, 390),
-    ("DSCF8135(1).webp", 615, 420, 425),
-    ("DSCF8122(1).webp", 830, 435, 420),
-    ("WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp", 1105, 500, 465),
+# Back / upper layer. These are deliberately staggered rather than laid out
+# as a straight row, matching the compact editorial silhouette of Version 2.
+back_layer = [
+    ("DSCF8135(1).webp", 185, 505, 455),   # laptop, upper-left
+    ("DSCF8148(1).webp", 360, 430, 430),   # blue tool, raised behind left foreground
+    ("DSCF8091(1).webp", 575, 455, 445),   # phone / board, upper-middle
+    ("DSCF8078(1).webp", 920, 500, 475),   # drill, upper-right of focal pair
+    ("WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp", 1180, 555, 500),
 ]
 
-# Lower group: keep the men close enough to read as a single foreground row.
-men = [
-    ("DSCF8211(1).webp", 205, 1050, 450),
-    ("DSCF8202(1).webp", 425, 1055, 455),
-    ("DSCF8186(1).webp", 645, 1058, 470),
-    ("DSCF8173(1).webp", 875, 1055, 460),
-    ("DSCF8148(1).webp", 1100, 1050, 455),
+for filename, center_x, bottom, height in back_layer:
+    place(canvas, cutout(filename), center_x, bottom, height)
+
+# Bicycle pair is the visual anchor and bridges upper + lower groups.
+place(canvas, cutout("DSCF8116(1).webp", max_side=1550), 725, 805, 690)
+
+# Right foreground: keep the book figure close to the bicycle and under the
+# standing figure, just like the supplied Version 2 arrangement.
+place(canvas, cutout("DSCF8122(1).webp"), 1065, 955, 540)
+
+# Foreground row. Bottoms are aligned closely, while x positions overlap the
+# focal pair enough to read as one portrait instead of isolated cut-outs.
+foreground = [
+    ("DSCF8211(1).webp", 245, 1000, 505),  # sunglasses / cane
+    ("DSCF8202(1).webp", 465, 1002, 510),  # centre-left
+    ("DSCF8186(1).webp", 685, 1005, 515),  # tool, centre foreground
+    ("DSCF8173(1).webp", 895, 1000, 525),  # hammer, centre-right
 ]
 
-for filename, center_x, bottom, height in women:
+for filename, center_x, bottom, height in foreground:
     place(canvas, cutout(filename), center_x, bottom, height)
 
-for filename, center_x, bottom, height in men:
-    place(canvas, cutout(filename), center_x, bottom, height)
-
-# The bicycle pair is the visual anchor. It overlaps both rows, matching the
-# tighter stacked hierarchy of the reference artwork.
-place(canvas, cutout("DSCF8116(1).webp", max_side=1500), 675, 865, 720)
-
-# Remove transparent dead space around the finished group. This is important
-# because the website can then scale the actual people rather than scaling an
-# oversized empty canvas.
+# Crop transparent dead space so CSS scales the people themselves, not an
+# oversized empty canvas. Keep only a small breathing margin around the group.
 bbox = canvas.getchannel("A").getbbox()
 if bbox:
     left, top, right, bottom = bbox
-    pad = 10
+    pad_x = 14
+    pad_y = 10
     canvas = canvas.crop(
         (
-            max(0, left - pad),
-            max(0, top - pad),
-            min(canvas.width, right + pad),
-            min(canvas.height, bottom + pad),
+            max(0, left - pad_x),
+            max(0, top - pad_y),
+            min(canvas.width, right + pad_x),
+            min(canvas.height, bottom + pad_y),
         )
     )
 
 canvas.save(OUTPUT, "WEBP", quality=92, method=6, exact=True)
-print(f"Built {OUTPUT} at {canvas.width}x{canvas.height}")
+print(f"Built Version 2 team composite: {OUTPUT} at {canvas.width}x{canvas.height}")
