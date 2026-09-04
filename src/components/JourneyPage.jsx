@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { ArrowLeft, ArrowUpRight } from 'lucide-react'
 import '../impact-report-nav-home.css'
 import '../journey-origin-refine.css'
+import '../journey-purpose-refine.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
@@ -115,7 +116,7 @@ export default function JourneyPage() {
         </div>
       </section>
 
-      <section className="journey-section journey-section--light">
+      <section className="journey-section journey-section--light journey-section--purpose">
         <div className="journey-shell journey-purpose">
           <motion.figure className="journey-purpose__image" {...reveal}>
             <img src={asset('karya anak bangsa.png')} alt="Benua Brutti custom work" />
@@ -123,7 +124,7 @@ export default function JourneyPage() {
 
           <motion.div className="journey-purpose__copy" {...reveal} transition={{ ...reveal.transition, delay: 0.08 }}>
             <p className="journey-kicker">03 · Made with purpose</p>
-            <h2>Craft that gives materials another life.</h2>
+            <h2>Craft that gives materials <span>another life.</span></h2>
             <p>
               Pallet wood remains central to the way Benua Brutti thinks about making — transforming recovered material into functional pieces designed to be used, kept and appreciated.
             </p>
