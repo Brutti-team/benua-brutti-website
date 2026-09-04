@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { ArrowLeft, ArrowUpRight } from 'lucide-react'
+import '../impact-report-nav-home.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
@@ -17,11 +18,11 @@ function backHome() {
 export default function JourneyPage() {
   return (
     <main className="journey-page">
-      <header className="journey-nav">
-        <button className="journey-nav__brand" onClick={backHome} aria-label="Back to Benua Brutti home">
+      <header className="journey-nav impact-report-nav">
+        <button className="journey-nav__brand impact-report-nav__brand" onClick={backHome} aria-label="Back to Benua Brutti home">
           <img src={asset('logo-brutti-white.png')} alt="Benua Brutti" />
         </button>
-        <button className="journey-nav__back" onClick={backHome}>
+        <button className="journey-nav__back impact-report-nav__back" onClick={backHome}>
           <ArrowLeft size={16} /> Back to home
         </button>
       </header>
