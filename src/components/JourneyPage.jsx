@@ -14,21 +14,6 @@ const reveal = {
   transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
 }
 
-// Keep the visual hierarchy intentional: women on the top row,
-// bicycle in the centre, men on the bottom row.
-const teamPortraits = [
-  ['brutti-team/DSCF8078(1).webp', 'Benua Brutti team member holding a workshop tool'],
-  ['brutti-team/DSCF8122(1).webp', 'Benua Brutti team member with the Brutti Impact Report'],
-  ['brutti-team/DSCF8091(1).webp', 'Benua Brutti team member'],
-  ['brutti-team/DSCF8135(1).webp', 'Benua Brutti team member working with a laptop'],
-  ['brutti-team/WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp', 'Benua Brutti team member'],
-  ['brutti-team/DSCF8211(1).webp', 'Benua Brutti team member'],
-  ['brutti-team/DSCF8202(1).webp', 'Benua Brutti team member holding a drill'],
-  ['brutti-team/DSCF8186(1).webp', 'Benua Brutti team member'],
-  ['brutti-team/DSCF8173(1).webp', 'Benua Brutti team member holding workshop tools'],
-  ['brutti-team/DSCF8148(1).webp', 'Benua Brutti team member holding a nail gun'],
-]
-
 function backHome() {
   window.location.href = '/'
 }
@@ -171,38 +156,19 @@ export default function JourneyPage() {
           <motion.div
             className="journey-team__stage"
             aria-label="The Benua Brutti team"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 30, scale: .985 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: false, amount: 0.12 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           >
-            <motion.figure
-              className="journey-team__person journey-team__person--hero"
-              initial={{ opacity: 0, scale: .96 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: false, amount: 0.12 }}
-              transition={{ duration: .9, delay: .12, ease: [0.22, 1, 0.36, 1] }}
-            >
+            <figure className="journey-team__composite">
               <img
-                src={asset('brutti-team/DSCF8116(1).webp')}
-                alt="Two Benua Brutti team members with a bicycle"
+                src={asset('brutti-team-composite.webp')}
+                alt="The Benua Brutti team, with women above, the bicycle in the centre and men below"
                 loading="lazy"
                 decoding="async"
               />
-            </motion.figure>
-
-            {teamPortraits.map(([image, alt], index) => (
-              <motion.figure
-                className={`journey-team__person journey-team__person--${String(index + 1).padStart(2, '0')}`}
-                key={image}
-                initial={{ opacity: 0, y: 26, scale: .97 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: false, amount: 0.1 }}
-                transition={{ duration: .72, delay: .05 + index * .035, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <img src={asset(image)} alt={alt} loading="lazy" decoding="async" />
-              </motion.figure>
-            ))}
+            </figure>
           </motion.div>
         </div>
       </section>
