@@ -68,27 +68,27 @@ def place(canvas: Image.Image, image: Image.Image, center_x: int, bottom: int, h
     canvas.alpha_composite(clipped, (max(0, x), max(0, y)))
 
 
-# Compact editorial group: the previous version was too wide and read like
-# two separate rows. This canvas deliberately pulls everyone toward the
-# bicycle so the section feels like one team portrait instead of a roster.
-canvas = Image.new("RGBA", (1500, 1040), (0, 0, 0, 0))
+# Dense poster-style composition based on the supplied reference. Everyone
+# is intentionally pulled toward the bicycle so the collage reads as one
+# layered team portrait instead of two separate rows of people.
+canvas = Image.new("RGBA", (1320, 1060), (0, 0, 0, 0))
 
-# Upper group — slightly staggered and overlapping.
+# Upper group: form a shallow arc and let shoulders / silhouettes overlap.
 women = [
-    ("DSCF8078(1).webp", 235, 455, 440),
-    ("DSCF8091(1).webp", 470, 445, 375),
-    ("DSCF8135(1).webp", 720, 465, 405),
-    ("DSCF8122(1).webp", 990, 455, 395),
-    ("WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp", 1250, 460, 420),
+    ("DSCF8078(1).webp", 190, 500, 490),
+    ("DSCF8091(1).webp", 405, 430, 390),
+    ("DSCF8135(1).webp", 615, 420, 425),
+    ("DSCF8122(1).webp", 830, 435, 420),
+    ("WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp", 1105, 500, 465),
 ]
 
-# Lower group — brought inward so the edges no longer feel empty.
+# Lower group: keep the men close enough to read as a single foreground row.
 men = [
-    ("DSCF8211(1).webp", 285, 1025, 400),
-    ("DSCF8202(1).webp", 500, 1025, 395),
-    ("DSCF8186(1).webp", 700, 1025, 410),
-    ("DSCF8173(1).webp", 1045, 1025, 410),
-    ("DSCF8148(1).webp", 1270, 1025, 410),
+    ("DSCF8211(1).webp", 205, 1050, 450),
+    ("DSCF8202(1).webp", 425, 1055, 455),
+    ("DSCF8186(1).webp", 645, 1058, 470),
+    ("DSCF8173(1).webp", 875, 1055, 460),
+    ("DSCF8148(1).webp", 1100, 1050, 455),
 ]
 
 for filename, center_x, bottom, height in women:
@@ -97,9 +97,25 @@ for filename, center_x, bottom, height in women:
 for filename, center_x, bottom, height in men:
     place(canvas, cutout(filename), center_x, bottom, height)
 
-# Bicycle pair bridges both groups and remains the focal point, but is kept
-# contained so it does not overpower the copy beside it.
-place(canvas, cutout("DSCF8116(1).webp", max_side=1400), 790, 880, 640)
+# The bicycle pair is the visual anchor. It overlaps both rows, matching the
+# tighter stacked hierarchy of the reference artwork.
+place(canvas, cutout("DSCF8116(1).webp", max_side=1500), 675, 865, 720)
 
-canvas.save(OUTPUT, "WEBP", quality=91, method=6, exact=True)
-print(f"Built {OUTPUT}")
+# Remove transparent dead space around the finished group. This is important
+# because the website can then scale the actual people rather than scaling an
+# oversized empty canvas.
+bbox = canvas.getchannel("A").getbbox()
+if bbox:
+    left, top, right, bottom = bbox
+    pad = 10
+    canvas = canvas.crop(
+        (
+            max(0, left - pad),
+            max(0, top - pad),
+            min(canvas.width, right + pad),
+            min(canvas.height, bottom + pad),
+        )
+    )
+
+canvas.save(OUTPUT, "WEBP", quality=92, method=6, exact=True)
+print(f"Built {OUTPUT} at {canvas.width}x{canvas.height}")
