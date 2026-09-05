@@ -18,8 +18,6 @@ TONE = {
     "DSCF8211(1).webp": {"brightness": 1.06, "contrast": 1.03, "color": 1.03},
     "DSCF8186(1).webp": {"brightness": 1.08, "contrast": 1.04, "color": 1.03},
     "DSCF8202(1).webp": {"brightness": 1.08, "contrast": 1.04, "color": 1.03},
-
-    # These sources read brighter / flatter in the final collage.
     "DSCF8078(1).webp": {"brightness": 0.85, "contrast": 1.10, "color": 1.06},
     "DSCF8148(1).webp": {"brightness": 0.86, "contrast": 1.09, "color": 1.05},
     "DSCF8122(1).webp": {"brightness": 0.88, "contrast": 1.08, "color": 1.05},
@@ -102,44 +100,43 @@ def place(canvas: Image.Image, image: Image.Image, center_x: int, bottom: int, h
     canvas.alpha_composite(clipped, (max(0, x), max(0, y)))
 
 
-# VERSION 2 — sized by perceived head / shoulder scale, not raw cut-out height.
-# Seated and cropped poses need different pixel heights to look like the same
-# real-world human scale. The values below are intentionally not equal because
-# the goal is equal-looking people in the finished portrait.
-canvas = Image.new("RGBA", (1320, 820), (0, 0, 0, 0))
+# VERSION 2 — compact poster composition.
+# The back row is pushed down and inward, while the foreground row is lifted
+# so cropped legs are hidden by the people in front instead of floating apart.
+canvas = Image.new("RGBA", (1160, 820), (0, 0, 0, 0))
 
-# BACK / UPPER LAYER
-# Shrink the people that looked oversized; enlarge the ones whose faces read small.
-place(canvas, cutout("DSCF8135(1).webp"), 185, 540, 335)  # laptop woman
-place(canvas, cutout("DSCF8148(1).webp"), 350, 505, 320)  # blue-tool man
-place(canvas, cutout("DSCF8091(1).webp"), 515, 510, 410)  # phone / board woman
-place(canvas, cutout("DSCF8078(1).webp"), 855, 545, 315)  # drill woman
+# BACK / UPPER LAYER — much tighter and lower than before.
+place(canvas, cutout("DSCF8135(1).webp"), 165, 600, 345)   # laptop woman
+place(canvas, cutout("DSCF8148(1).webp"), 315, 570, 325)   # blue-tool man
+place(canvas, cutout("DSCF8091(1).webp"), 465, 585, 400)   # phone / board woman
+place(canvas, cutout("DSCF8078(1).webp"), 760, 610, 325)   # drill woman
 place(
     canvas,
     cutout("WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp"),
-    1050,
-    600,
-    445,
+    920,
+    650,
+    430,
 )  # standing woman
 
-# MAIN ANCHOR — keep the bicycle pair around the same face scale as the front row.
-place(canvas, cutout("DSCF8116(1).webp", max_side=1550), 685, 720, 495)
+# MAIN ANCHOR — pulled slightly lower so foreground people overlap the bicycle.
+place(canvas, cutout("DSCF8116(1).webp", max_side=1550), 610, 760, 500)
 
-# RIGHT FOREGROUND — seated pose needs more total height to match face scale.
-place(canvas, cutout("DSCF8122(1).webp"), 995, 815, 480)
+# RIGHT FOREGROUND — overlaps drill + standing woman and closes the open gap.
+place(canvas, cutout("DSCF8122(1).webp"), 875, 820, 475)
 
-# FRONT ROW — these already read close to one another, so keep a very tight range.
-place(canvas, cutout("DSCF8211(1).webp"), 275, 820, 420)
-place(canvas, cutout("DSCF8186(1).webp"), 445, 820, 420)
-place(canvas, cutout("DSCF8202(1).webp"), 615, 820, 420)
-place(canvas, cutout("DSCF8173(1).webp"), 795, 820, 420)
+# FRONT ROW — drawn last and moved UP so they cover cropped legs of the back row.
+place(canvas, cutout("DSCF8211(1).webp"), 300, 800, 430)
+place(canvas, cutout("DSCF8186(1).webp"), 445, 800, 425)
+place(canvas, cutout("DSCF8202(1).webp"), 590, 800, 425)
+place(canvas, cutout("DSCF8173(1).webp"), 735, 800, 430)
 
+# Tight crop so the finished collage itself stays compact on the website.
 bbox = canvas.getchannel("A").getbbox()
 if bbox:
     left, top, right, bottom = bbox
-    pad_x = 18
-    pad_top = 18
-    pad_bottom = 6
+    pad_x = 10
+    pad_top = 12
+    pad_bottom = 4
     canvas = canvas.crop(
         (
             max(0, left - pad_x),
