@@ -1,7 +1,7 @@
 from pathlib import Path
 from io import BytesIO
 
-from PIL import Image, ImageEnhance, ImageOps
+from PIL import Image, ImageEnhance, ImageOps, ImageStat
 from rembg import new_session, remove
 
 ASSETS = Path("public/assets")
@@ -10,36 +10,41 @@ OUTPUT = ASSETS / "brutti-team-composite.webp"
 
 SESSION = new_session("u2netp")
 
-# Balance the different source lighting so the collage reads more like one shoot.
-TONE = {
-    "DSCF8135(1).webp": {"brightness": 1.10, "contrast": 1.04, "color": 1.04},
-    "DSCF8091(1).webp": {"brightness": 1.14, "contrast": 1.04, "color": 1.03},
-    "DSCF8116(1).webp": {"brightness": 1.08, "contrast": 1.03, "color": 1.03},
-    "DSCF8211(1).webp": {"brightness": 1.06, "contrast": 1.03, "color": 1.03},
-    "DSCF8186(1).webp": {"brightness": 1.08, "contrast": 1.04, "color": 1.03},
-    "DSCF8202(1).webp": {"brightness": 1.08, "contrast": 1.04, "color": 1.03},
-    "DSCF8078(1).webp": {"brightness": 0.85, "contrast": 1.10, "color": 1.06},
-    "DSCF8148(1).webp": {"brightness": 0.86, "contrast": 1.09, "color": 1.05},
-    "DSCF8122(1).webp": {"brightness": 0.88, "contrast": 1.08, "color": 1.05},
-    "DSCF8173(1).webp": {"brightness": 0.76, "contrast": 1.14, "color": 1.08},
-    "WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp": {
-        "brightness": 0.88,
-        "contrast": 1.09,
-        "color": 1.05,
-    },
+# Small final nudges after automatic exposure matching.  The automatic pass does
+# most of the work; these only compensate for sources whose shirts / skin still
+# read unusually bright or dark after background removal.
+TONE_NUDGE = {
+    "DSCF8135(1).webp": 1.04,
+    "DSCF8091(1).webp": 1.05,
+    "DSCF8116(1).webp": 1.04,
+    "DSCF8211(1).webp": 1.02,
+    "DSCF8186(1).webp": 1.02,
+    "DSCF8202(1).webp": 1.02,
+    "DSCF8078(1).webp": 0.97,
+    "DSCF8148(1).webp": 0.95,
+    "DSCF8122(1).webp": 0.94,
+    "DSCF8173(1).webp": 0.91,
+    "WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp": 0.93,
 }
 
 
-def balance_tone(image: Image.Image, filename: str) -> Image.Image:
-    settings = TONE.get(filename)
-    if not settings:
-        return image
-
+def match_exposure(image: Image.Image, filename: str) -> Image.Image:
+    """Match every cut-out to one shared luminance range, then apply one grade."""
     alpha = image.getchannel("A")
+    mask = alpha.point(lambda value: 255 if value > 48 else 0)
+
     rgb = image.convert("RGB")
-    rgb = ImageEnhance.Brightness(rgb).enhance(settings.get("brightness", 1.0))
-    rgb = ImageEnhance.Contrast(rgb).enhance(settings.get("contrast", 1.0))
-    rgb = ImageEnhance.Color(rgb).enhance(settings.get("color", 1.0))
+    gray = ImageOps.grayscale(rgb)
+    mean_luma = ImageStat.Stat(gray, mask=mask).mean[0] if mask.getbbox() else 112
+
+    target_luma = 112.0
+    exposure = target_luma / max(1.0, mean_luma)
+    exposure = max(0.82, min(1.18, exposure))
+    exposure *= TONE_NUDGE.get(filename, 1.0)
+
+    rgb = ImageEnhance.Brightness(rgb).enhance(exposure)
+    rgb = ImageEnhance.Contrast(rgb).enhance(1.035)
+    rgb = ImageEnhance.Color(rgb).enhance(1.025)
 
     corrected = rgb.convert("RGBA")
     corrected.putalpha(alpha)
@@ -56,6 +61,7 @@ def cutout(filename: str, max_side: int = 1150) -> Image.Image:
         result = Image.open(BytesIO(result))
     result = result.convert("RGBA")
 
+    # Keep hair / bicycle spokes / tools, but clean the faint matte fringe.
     alpha = result.getchannel("A").point(
         lambda value: 0 if value < 7 else (255 if value > 250 else value)
     )
@@ -64,7 +70,7 @@ def cutout(filename: str, max_side: int = 1150) -> Image.Image:
     bbox = alpha.getbbox()
     if bbox:
         left, top, right, bottom = bbox
-        pad = 10
+        pad = 8
         result = result.crop(
             (
                 max(0, left - pad),
@@ -74,7 +80,7 @@ def cutout(filename: str, max_side: int = 1150) -> Image.Image:
             )
         )
 
-    return balance_tone(result, filename)
+    return match_exposure(result, filename)
 
 
 def resize_height(image: Image.Image, height: int) -> Image.Image:
@@ -100,43 +106,48 @@ def place(canvas: Image.Image, image: Image.Image, center_x: int, bottom: int, h
     canvas.alpha_composite(clipped, (max(0, x), max(0, y)))
 
 
-# VERSION 2 — compact poster composition.
-# The back row is pushed down and inward, while the foreground row is lifted
-# so cropped legs are hidden by the people in front instead of floating apart.
-canvas = Image.new("RGBA", (1160, 820), (0, 0, 0, 0))
+# FINAL COMPACT VERSION
+# ---------------------
+# The canvas is intentionally narrow.  Back portraits are pushed inward and
+# down, then the foreground row is lifted so it physically covers cropped legs
+# and lower edges.  The result reads as one team portrait rather than two rows.
+canvas = Image.new("RGBA", (1020, 720), (0, 0, 0, 0))
 
-# BACK / UPPER LAYER — much tighter and lower than before.
-place(canvas, cutout("DSCF8135(1).webp"), 165, 600, 345)   # laptop woman
-place(canvas, cutout("DSCF8148(1).webp"), 315, 570, 325)   # blue-tool man
-place(canvas, cutout("DSCF8091(1).webp"), 465, 585, 400)   # phone / board woman
-place(canvas, cutout("DSCF8078(1).webp"), 760, 610, 325)   # drill woman
+# BACK / UPPER ARC — closer together and lower.
+place(canvas, cutout("DSCF8135(1).webp"), 108, 490, 310)   # laptop woman
+place(canvas, cutout("DSCF8148(1).webp"), 245, 470, 302)   # blue-tool man
+place(canvas, cutout("DSCF8091(1).webp"), 382, 492, 350)   # phone / board woman
+place(canvas, cutout("DSCF8078(1).webp"), 700, 500, 305)   # drill woman
 place(
     canvas,
     cutout("WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp"),
-    920,
-    650,
-    430,
+    850,
+    545,
+    350,
 )  # standing woman
 
-# MAIN ANCHOR — pulled slightly lower so foreground people overlap the bicycle.
-place(canvas, cutout("DSCF8116(1).webp", max_side=1550), 610, 760, 500)
+# CENTRAL ANCHOR — behind the foreground so lower bicycle / legs disappear
+# naturally into the front group.
+place(canvas, cutout("DSCF8116(1).webp", max_side=1500), 535, 650, 440)
 
-# RIGHT FOREGROUND — overlaps drill + standing woman and closes the open gap.
-place(canvas, cutout("DSCF8122(1).webp"), 875, 820, 475)
+# FOREGROUND — drawn last and raised aggressively to hide cropped back-row legs.
+place(canvas, cutout("DSCF8211(1).webp"), 250, 715, 400)   # sunglasses man
+place(canvas, cutout("DSCF8202(1).webp"), 382, 715, 398)   # plain standing man
+place(canvas, cutout("DSCF8186(1).webp"), 515, 715, 405)   # front tool man
+place(canvas, cutout("DSCF8173(1).webp"), 650, 715, 400)   # front-right man
 
-# FRONT ROW — drawn last and moved UP so they cover cropped legs of the back row.
-place(canvas, cutout("DSCF8211(1).webp"), 300, 800, 430)
-place(canvas, cutout("DSCF8186(1).webp"), 445, 800, 425)
-place(canvas, cutout("DSCF8202(1).webp"), 590, 800, 425)
-place(canvas, cutout("DSCF8173(1).webp"), 735, 800, 430)
+# Right foreground closes the final gap and covers the lower edge of the drill /
+# standing portraits.
+place(canvas, cutout("DSCF8122(1).webp"), 835, 716, 420)   # book woman
 
-# Tight crop so the finished collage itself stays compact on the website.
+# Crop almost all transparent breathing room so the website receives a genuinely
+# compact image, not a compact group sitting inside a wide empty canvas.
 bbox = canvas.getchannel("A").getbbox()
 if bbox:
     left, top, right, bottom = bbox
-    pad_x = 10
-    pad_top = 12
-    pad_bottom = 4
+    pad_x = 6
+    pad_top = 8
+    pad_bottom = 2
     canvas = canvas.crop(
         (
             max(0, left - pad_x),
@@ -146,5 +157,5 @@ if bbox:
         )
     )
 
-canvas.save(OUTPUT, "WEBP", quality=93, method=6, exact=True)
+canvas.save(OUTPUT, "WEBP", quality=94, method=6, exact=True)
 print(f"Built {OUTPUT} at {canvas.width}x{canvas.height}")
