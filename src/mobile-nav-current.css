@@ -1,3 +1,5 @@
+@import './mobile-impact-spacing.css';
+
 /* Persistent current-section state for the phone navigation only. */
 @media (max-width: 700px) {
   /* Cleaner SaaS number badges: circular instead of boxy. */
