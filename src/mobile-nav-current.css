@@ -1,5 +1,19 @@
 /* Persistent current-section state for the phone navigation only. */
 @media (max-width: 700px) {
+  /* Cleaner SaaS number badges: circular instead of boxy. */
+  html body main .mobile-menu .mobile-menu__link span {
+    flex: 0 0 34px !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+    line-height: 1 !important;
+  }
+
   html body main .mobile-menu .mobile-menu__link.is-current {
     border-bottom-color: transparent !important;
     background:
@@ -24,5 +38,15 @@
     background-color: #175747 !important;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34' fill='none'%3E%3Cpath d='M14 11.5L19.5 17L14 22.5' stroke='%23ffffff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
     box-shadow: 0 7px 18px rgba(23, 87, 71, .18) !important;
+  }
+}
+
+@media (max-width: 380px) {
+  html body main .mobile-menu .mobile-menu__link span {
+    flex-basis: 32px !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
   }
 }
