@@ -22,59 +22,6 @@ function backHome() {
 export default function JourneyPage() {
   return (
     <main className="journey-page">
-      <svg className="journey-team__filter-defs" width="0" height="0" aria-hidden="true" focusable="false">
-        <defs>
-          <filter
-            id="journey-team-cutout"
-            x="-12%"
-            y="-12%"
-            width="124%"
-            height="130%"
-            colorInterpolationFilters="sRGB"
-          >
-            <feColorMatrix
-              in="SourceGraphic"
-              result="teamRed"
-              values="1 0 0 0 0
-                      1 0 0 0 0
-                      1 0 0 0 0
-                      0 0 0 1 0"
-            />
-            <feColorMatrix
-              in="SourceGraphic"
-              result="teamGreen"
-              values="0 1 0 0 0
-                      0 1 0 0 0
-                      0 1 0 0 0
-                      0 0 0 1 0"
-            />
-            <feColorMatrix
-              in="SourceGraphic"
-              result="teamBlue"
-              values="0 0 1 0 0
-                      0 0 1 0 0
-                      0 0 1 0 0
-                      0 0 0 1 0"
-            />
-            <feBlend in="teamRed" in2="teamGreen" mode="darken" result="teamRG" />
-            <feBlend in="teamRG" in2="teamBlue" mode="darken" result="teamMin" />
-            <feColorMatrix
-              in="teamMin"
-              result="teamNotWhite"
-              values="0 0 0 0 1
-                      0 0 0 0 1
-                      0 0 0 0 1
-                      -1 0 0 0 1"
-            />
-            <feComponentTransfer in="teamNotWhite" result="teamMask">
-              <feFuncA type="linear" slope="100" intercept="-1.5" />
-            </feComponentTransfer>
-            <feGaussianBlur in="teamMask" stdDeviation="0.35" result="teamSoftMask" />
-            <feComposite in="SourceGraphic" in2="teamSoftMask" operator="in" />
-          </filter>
-        </defs>
-      </svg>
-
       <header className="journey-nav impact-report-nav">
         <button className="journey-nav__brand impact-report-nav__brand" onClick={backHome} aria-label="Back to Benua Brutti home">
           <img src={asset('logo-brutti-white.png')} alt="Benua Brutti" />
@@ -217,7 +164,7 @@ export default function JourneyPage() {
           >
             <figure className="journey-team__composite">
               <img
-                src={`${asset('brutti-hd.webp')}?v=20260905-cutout-xl`}
+                src={`${asset('brutti-team-composite.webp')}?v=20260905-transparent-xl`}
                 alt="The Benua Brutti team"
                 loading="lazy"
                 decoding="async"
