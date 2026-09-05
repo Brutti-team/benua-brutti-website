@@ -167,7 +167,8 @@
   }
 
   .wwb-intro {
-    padding-left: 14px !important;
+    border-left: none !important;
+    padding-left: 0 !important;
     font-size: 13px !important;
     line-height: 1.62 !important;
   }
