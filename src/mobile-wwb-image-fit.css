@@ -1,0 +1,29 @@
+/* Phone-only image fit correction for What We Build.
+   Keep desktop/tablet untouched and preserve the full Bed & Bunkbed artwork. */
+@media (max-width: 700px) {
+  #what-we-build .wwb-service-card:first-child {
+    min-height: 0 !important;
+  }
+
+  #what-we-build .wwb-service-card:first-child .wwb-service-media {
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: auto !important;
+    padding: 8px !important;
+    align-items: start !important;
+  }
+
+  #what-we-build .wwb-service-card:first-child .wwb-service-media img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    object-position: center top !important;
+    transform: none !important;
+  }
+
+  #what-we-build .wwb-service-card:first-child:hover .wwb-service-media img {
+    transform: none !important;
+  }
+}
