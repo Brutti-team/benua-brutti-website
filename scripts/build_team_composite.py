@@ -113,11 +113,52 @@ def place(canvas: Image.Image, image: Image.Image, center_x: int, bottom: int, h
     canvas.alpha_composite(clipped, (max(0, x), max(0, y)))
 
 
+def strip_brutti_hd_background() -> None:
+    """Remove only the background from the existing brutti-hd.webp artwork.
+
+    This intentionally keeps the original team arrangement, faces, proportions,
+    props and spacing exactly as supplied.  The build only adds transparency and
+    trims empty outer pixels so the portrait can sit directly on the green page.
+    """
+    source = ASSETS / "brutti-hd.webp"
+    image = Image.open(source)
+    image = ImageOps.exif_transpose(image).convert("RGBA")
+
+    result = remove(image, session=SESSION)
+    if not isinstance(result, Image.Image):
+        result = Image.open(BytesIO(result))
+    result = result.convert("RGBA")
+
+    # Retain soft hair/tool edges and fine details while removing faint residue.
+    alpha = result.getchannel("A").point(
+        lambda value: 0 if value < 5 else (255 if value > 252 else value)
+    )
+    result.putalpha(alpha)
+
+    bbox = alpha.getbbox()
+    if bbox:
+        left, top, right, bottom = bbox
+        pad = 10
+        result = result.crop(
+            (
+                max(0, left - pad),
+                max(0, top - pad),
+                min(result.width, right + pad),
+                min(result.height, bottom + pad),
+            )
+        )
+
+    result.save(source, "WEBP", quality=96, method=6, exact=True)
+    print(f"Removed background from {source} at {result.width}x{result.height}")
+
+
+# Use the existing Brutti HD artwork itself on the journey page.  Do not rebuild
+# or re-space that artwork; only remove its background during deployment.
+strip_brutti_hd_background()
+
 # FINAL COMPACT VERSION
 # ---------------------
-# The canvas is intentionally narrow.  Back portraits are pushed inward and
-# down, then the foreground row is lifted so it physically covers cropped legs
-# and lower edges.  The result reads as one team portrait rather than two rows.
+# Kept for other uses that may still reference the generated composite.
 canvas = Image.new(
     "RGBA",
     (round(1020 * RENDER_SCALE), round(720 * RENDER_SCALE)),
