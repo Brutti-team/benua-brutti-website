@@ -164,7 +164,7 @@ export default function JourneyPage() {
           >
             <figure className="journey-team__composite">
               <img
-                src={`${asset('brutti-team-composite.webp')}?v=20260904-1648`}
+                src={`${asset('brutti-team-composite.webp')}?v=20260905-1012`}
                 alt="The Benua Brutti team, with women above, the bicycle in the centre and men below"
                 loading="lazy"
                 decoding="async"
