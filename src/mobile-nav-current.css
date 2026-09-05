@@ -10,19 +10,6 @@
       0 10px 28px rgba(23, 87, 71, .08) !important;
   }
 
-  html body main .mobile-menu .mobile-menu__link.is-current::before {
-    content: '' !important;
-    position: absolute !important;
-    left: 0 !important;
-    top: 15px !important;
-    bottom: 15px !important;
-    width: 3px !important;
-    border-radius: 999px !important;
-    background: #175747 !important;
-    box-shadow: 0 0 0 4px rgba(23, 87, 71, .07) !important;
-    animation: brutti-current-marker-in .5s .34s cubic-bezier(.22, 1, .36, 1) both;
-  }
-
   html body main .mobile-menu .mobile-menu__link.is-current span {
     background: linear-gradient(180deg, #28775f 0%, #175747 100%) !important;
     color: #fff !important;
@@ -37,22 +24,5 @@
     background-color: #175747 !important;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34' fill='none'%3E%3Cpath d='M14 11.5L19.5 17L14 22.5' stroke='%23ffffff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
     box-shadow: 0 7px 18px rgba(23, 87, 71, .18) !important;
-  }
-
-  @keyframes brutti-current-marker-in {
-    0% {
-      opacity: 0;
-      transform: scaleY(.35);
-    }
-    100% {
-      opacity: 1;
-      transform: scaleY(1);
-    }
-  }
-}
-
-@media (prefers-reduced-motion: reduce) and (max-width: 700px) {
-  html body main .mobile-menu .mobile-menu__link.is-current::before {
-    animation: none !important;
   }
 }
