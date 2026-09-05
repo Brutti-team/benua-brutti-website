@@ -1,14 +1,28 @@
-/* Phone-only spacing correction for the home Impact section.
-   Removes the accidental tall empty area caused by the desktop min-height. */
+/* Phone-only spacing + content order for the home Impact section.
+   Desktop/tablet layouts remain untouched. */
 @media (max-width: 700px) {
   html body main #impact.impact.section-pad {
+    display: flex !important;
+    flex-direction: column !important;
     padding-top: 36px !important;
     padding-bottom: 58px !important;
   }
 
+  /* Flatten only the mobile Impact grid so its pieces can be reordered
+     without changing the approved desktop DOM/layout. */
+  html body main #impact.impact .impact__grid {
+    display: contents !important;
+  }
+
+  /* 1 — Impact heading / material-flow intro */
   html body main #impact.impact .impact__grid > div:first-child {
+    order: 1 !important;
+    width: calc(100% - 28px) !important;
+    max-width: none !important;
     min-height: 0 !important;
     height: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
     justify-content: flex-start !important;
     padding-top: 0 !important;
     padding-bottom: 12px !important;
@@ -17,10 +31,69 @@
   html body main #impact.impact .impact__grid > div:first-child::after {
     margin-top: 18px !important;
   }
+
+  /* 2 — Material + Impact proof cards first */
+  html body main #impact.impact .impact__numbers {
+    order: 2 !important;
+    width: calc(100% - 28px) !important;
+    max-width: none !important;
+    margin: 12px auto 20px !important;
+    gap: 16px !important;
+  }
+
+  /* 3 — Pallet wood / purpose feature card */
+  html body main #impact.impact .impact__copy {
+    order: 3 !important;
+    width: calc(100% - 28px) !important;
+    max-width: none !important;
+    margin: 0 auto 14px !important;
+    justify-self: auto !important;
+  }
+
+  /* 4 — SDG icons last. This is the same SDG strip already used by
+     the desktop Impact grid, only repositioned for phone view. */
+  html body main #impact.impact .impact__grid::after {
+    order: 4 !important;
+    display: block !important;
+    width: calc(100% - 28px) !important;
+    min-height: 104px !important;
+    height: 104px !important;
+    margin: 2px auto 0 !important;
+    grid-column: auto !important;
+    align-self: auto !important;
+    justify-self: auto !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background-color: transparent !important;
+    background-image:
+      url('/assets/sdg/sdg%208.webp'),
+      url('/assets/sdg/sdg%2012.webp'),
+      url('/assets/sdg/sdg%2015.webp') !important;
+    background-repeat: no-repeat !important;
+    background-size: 62px auto, 62px auto, 62px auto !important;
+    background-position: 18% 50%, 50% 50%, 82% 50% !important;
+    box-shadow: none !important;
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
 }
 
 @media (max-width: 390px) {
   html body main #impact.impact.section-pad {
     padding-top: 30px !important;
+  }
+
+  html body main #impact.impact .impact__grid > div:first-child,
+  html body main #impact.impact .impact__numbers,
+  html body main #impact.impact .impact__copy,
+  html body main #impact.impact .impact__grid::after {
+    width: calc(100% - 24px) !important;
+  }
+
+  html body main #impact.impact .impact__grid::after {
+    min-height: 96px !important;
+    height: 96px !important;
+    background-size: 58px auto, 58px auto, 58px auto !important;
   }
 }
