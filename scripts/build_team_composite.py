@@ -10,23 +10,23 @@ OUTPUT = ASSETS / "brutti-team-composite.webp"
 
 SESSION = new_session("u2netp")
 
-# Stronger per-photo correction so the final collage reads as one photoshoot.
-# Darker photos are lifted; washed / very bright photos are pulled back.
+# Balance the different source lighting so the collage reads more like one shoot.
 TONE = {
-    "DSCF8135(1).webp": {"brightness": 1.13, "contrast": 1.04, "color": 1.04},
-    "DSCF8091(1).webp": {"brightness": 1.16, "contrast": 1.04, "color": 1.03},
-    "DSCF8116(1).webp": {"brightness": 1.11, "contrast": 1.03, "color": 1.03},
-    "DSCF8211(1).webp": {"brightness": 1.08, "contrast": 1.03, "color": 1.03},
-    "DSCF8186(1).webp": {"brightness": 1.10, "contrast": 1.04, "color": 1.03},
-    "DSCF8202(1).webp": {"brightness": 1.10, "contrast": 1.04, "color": 1.03},
+    "DSCF8135(1).webp": {"brightness": 1.10, "contrast": 1.04, "color": 1.04},
+    "DSCF8091(1).webp": {"brightness": 1.14, "contrast": 1.04, "color": 1.03},
+    "DSCF8116(1).webp": {"brightness": 1.08, "contrast": 1.03, "color": 1.03},
+    "DSCF8211(1).webp": {"brightness": 1.06, "contrast": 1.03, "color": 1.03},
+    "DSCF8186(1).webp": {"brightness": 1.08, "contrast": 1.04, "color": 1.03},
+    "DSCF8202(1).webp": {"brightness": 1.08, "contrast": 1.04, "color": 1.03},
 
-    "DSCF8078(1).webp": {"brightness": 0.90, "contrast": 1.08, "color": 1.06},
-    "DSCF8148(1).webp": {"brightness": 0.92, "contrast": 1.07, "color": 1.05},
-    "DSCF8122(1).webp": {"brightness": 0.90, "contrast": 1.07, "color": 1.05},
-    "DSCF8173(1).webp": {"brightness": 0.80, "contrast": 1.12, "color": 1.08},
+    # These sources read brighter / flatter in the final collage.
+    "DSCF8078(1).webp": {"brightness": 0.85, "contrast": 1.10, "color": 1.06},
+    "DSCF8148(1).webp": {"brightness": 0.86, "contrast": 1.09, "color": 1.05},
+    "DSCF8122(1).webp": {"brightness": 0.88, "contrast": 1.08, "color": 1.05},
+    "DSCF8173(1).webp": {"brightness": 0.76, "contrast": 1.14, "color": 1.08},
     "WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp": {
-        "brightness": 0.93,
-        "contrast": 1.06,
+        "brightness": 0.88,
+        "contrast": 1.09,
         "color": 1.05,
     },
 }
@@ -102,31 +102,35 @@ def place(canvas: Image.Image, image: Image.Image, center_x: int, bottom: int, h
     canvas.alpha_composite(clipped, (max(0, x), max(0, y)))
 
 
-# VERSION 2 — tighter, more uniform visual human scale.
+# VERSION 2 — sized by perceived head / shoulder scale, not raw cut-out height.
+# Seated and cropped poses need different pixel heights to look like the same
+# real-world human scale. The values below are intentionally not equal because
+# the goal is equal-looking people in the finished portrait.
 canvas = Image.new("RGBA", (1320, 820), (0, 0, 0, 0))
 
-# Back / upper layer. Deliberately smaller than before for a consistent head scale.
-place(canvas, cutout("DSCF8135(1).webp"), 185, 540, 370)  # laptop woman
-place(canvas, cutout("DSCF8148(1).webp"), 350, 505, 355)  # blue-tool man
-place(canvas, cutout("DSCF8091(1).webp"), 510, 500, 350)  # phone / board woman
-place(canvas, cutout("DSCF8078(1).webp"), 855, 545, 355)  # drill woman
+# BACK / UPPER LAYER
+# Shrink the people that looked oversized; enlarge the ones whose faces read small.
+place(canvas, cutout("DSCF8135(1).webp"), 185, 540, 335)  # laptop woman
+place(canvas, cutout("DSCF8148(1).webp"), 350, 505, 320)  # blue-tool man
+place(canvas, cutout("DSCF8091(1).webp"), 515, 510, 410)  # phone / board woman
+place(canvas, cutout("DSCF8078(1).webp"), 855, 545, 315)  # drill woman
 place(
     canvas,
     cutout("WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp"),
     1050,
-    590,
-    390,
+    600,
+    445,
 )  # standing woman
 
-# Bicycle pair: reduced so they no longer look much larger than everyone else.
-place(canvas, cutout("DSCF8116(1).webp", max_side=1550), 685, 720, 500)
+# MAIN ANCHOR — keep the bicycle pair around the same face scale as the front row.
+place(canvas, cutout("DSCF8116(1).webp", max_side=1550), 685, 720, 495)
 
-# Book woman at the same perceived scale as the upper women.
-place(canvas, cutout("DSCF8122(1).webp"), 995, 815, 405)
+# RIGHT FOREGROUND — seated pose needs more total height to match face scale.
+place(canvas, cutout("DSCF8122(1).webp"), 995, 815, 480)
 
-# Front row: narrow range only, so the men read as the same scale.
+# FRONT ROW — these already read close to one another, so keep a very tight range.
 place(canvas, cutout("DSCF8211(1).webp"), 275, 820, 420)
-place(canvas, cutout("DSCF8186(1).webp"), 445, 820, 415)
+place(canvas, cutout("DSCF8186(1).webp"), 445, 820, 420)
 place(canvas, cutout("DSCF8202(1).webp"), 615, 820, 420)
 place(canvas, cutout("DSCF8173(1).webp"), 795, 820, 420)
 
