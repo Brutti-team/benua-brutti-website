@@ -5,7 +5,7 @@
     display: flex !important;
     flex-direction: column !important;
     padding-top: 36px !important;
-    padding-bottom: 58px !important;
+    padding-bottom: 30px !important;
   }
 
   /* Flatten only the mobile Impact grid so its pieces can be reordered
@@ -37,7 +37,7 @@
     order: 2 !important;
     width: calc(100% - 28px) !important;
     max-width: none !important;
-    margin: 12px auto 20px !important;
+    margin: 12px auto 18px !important;
     gap: 16px !important;
   }
 
@@ -46,19 +46,19 @@
     order: 3 !important;
     width: calc(100% - 28px) !important;
     max-width: none !important;
-    margin: 0 auto 14px !important;
+    margin: 0 auto 4px !important;
     justify-self: auto !important;
   }
 
-  /* 4 — SDG icons last. This is the same SDG strip already used by
-     the desktop Impact grid, only repositioned for phone view. */
+  /* 4 — SDG icons last. Keep the strip compact on phones so it reads as
+     a closing proof row instead of a large empty block. */
   html body main #impact.impact .impact__grid::after {
     order: 4 !important;
     display: block !important;
     width: calc(100% - 28px) !important;
-    min-height: 104px !important;
-    height: 104px !important;
-    margin: 2px auto 0 !important;
+    min-height: 78px !important;
+    height: 78px !important;
+    margin: 0 auto !important;
     grid-column: auto !important;
     align-self: auto !important;
     justify-self: auto !important;
@@ -70,8 +70,8 @@
       url('/assets/sdg/sdg%2012.webp'),
       url('/assets/sdg/sdg%2015.webp') !important;
     background-repeat: no-repeat !important;
-    background-size: 62px auto, 62px auto, 62px auto !important;
-    background-position: 18% 50%, 50% 50%, 82% 50% !important;
+    background-size: 60px auto, 60px auto, 60px auto !important;
+    background-position: 18% 44%, 50% 44%, 82% 44% !important;
     box-shadow: none !important;
     animation: none !important;
     transform: none !important;
@@ -82,6 +82,7 @@
 @media (max-width: 390px) {
   html body main #impact.impact.section-pad {
     padding-top: 30px !important;
+    padding-bottom: 24px !important;
   }
 
   html body main #impact.impact .impact__grid > div:first-child,
@@ -92,8 +93,8 @@
   }
 
   html body main #impact.impact .impact__grid::after {
-    min-height: 96px !important;
-    height: 96px !important;
-    background-size: 58px auto, 58px auto, 58px auto !important;
+    min-height: 72px !important;
+    height: 72px !important;
+    background-size: 56px auto, 56px auto, 56px auto !important;
   }
 }
