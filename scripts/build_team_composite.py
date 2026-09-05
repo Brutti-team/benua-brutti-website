@@ -9,6 +9,7 @@ TEAM = ASSETS / "brutti-team"
 OUTPUT = ASSETS / "brutti-team-composite.webp"
 
 SESSION = new_session("u2netp")
+RENDER_SCALE = 1.5
 
 # Small final nudges after automatic exposure matching.  The automatic pass does
 # most of the work; these only compensate for sources whose shirts / skin still
@@ -90,6 +91,12 @@ def resize_height(image: Image.Image, height: int) -> Image.Image:
 
 
 def place(canvas: Image.Image, image: Image.Image, center_x: int, bottom: int, height: int) -> None:
+    # Layout coordinates below stay easy to tune at the original 1020x720
+    # design scale; this function renders them larger for a sharper web asset.
+    center_x = round(center_x * RENDER_SCALE)
+    bottom = round(bottom * RENDER_SCALE)
+    height = round(height * RENDER_SCALE)
+
     image = resize_height(image, height)
     x = round(center_x - image.width / 2)
     y = round(bottom - image.height)
@@ -111,7 +118,11 @@ def place(canvas: Image.Image, image: Image.Image, center_x: int, bottom: int, h
 # The canvas is intentionally narrow.  Back portraits are pushed inward and
 # down, then the foreground row is lifted so it physically covers cropped legs
 # and lower edges.  The result reads as one team portrait rather than two rows.
-canvas = Image.new("RGBA", (1020, 720), (0, 0, 0, 0))
+canvas = Image.new(
+    "RGBA",
+    (round(1020 * RENDER_SCALE), round(720 * RENDER_SCALE)),
+    (0, 0, 0, 0),
+)
 
 # BACK / UPPER ARC — closer together and lower.
 place(canvas, cutout("DSCF8135(1).webp"), 108, 490, 310)   # laptop woman
@@ -145,9 +156,9 @@ place(canvas, cutout("DSCF8122(1).webp"), 835, 716, 420)   # book woman
 bbox = canvas.getchannel("A").getbbox()
 if bbox:
     left, top, right, bottom = bbox
-    pad_x = 6
-    pad_top = 8
-    pad_bottom = 2
+    pad_x = round(6 * RENDER_SCALE)
+    pad_top = round(8 * RENDER_SCALE)
+    pad_bottom = round(2 * RENDER_SCALE)
     canvas = canvas.crop(
         (
             max(0, left - pad_x),
@@ -157,5 +168,5 @@ if bbox:
         )
     )
 
-canvas.save(OUTPUT, "WEBP", quality=94, method=6, exact=True)
+canvas.save(OUTPUT, "WEBP", quality=95, method=6, exact=True)
 print(f"Built {OUTPUT} at {canvas.width}x{canvas.height}")
