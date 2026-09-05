@@ -1,0 +1,26 @@
+/* Phone-only spacing correction for the home Impact section.
+   Removes the accidental tall empty area caused by the desktop min-height. */
+@media (max-width: 700px) {
+  html body main #impact.impact.section-pad {
+    padding-top: 36px !important;
+    padding-bottom: 58px !important;
+  }
+
+  html body main #impact.impact .impact__grid > div:first-child {
+    min-height: 0 !important;
+    height: auto !important;
+    justify-content: flex-start !important;
+    padding-top: 0 !important;
+    padding-bottom: 12px !important;
+  }
+
+  html body main #impact.impact .impact__grid > div:first-child::after {
+    margin-top: 18px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  html body main #impact.impact.section-pad {
+    padding-top: 30px !important;
+  }
+}
