@@ -14,6 +14,7 @@ function scrollToId(id) {
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState('home')
   const heroRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
   const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '16%'])
@@ -24,6 +25,56 @@ function App() {
     const onScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const trackedIds = ['home', 'about', 'our-journey', 'catalogue', 'contact']
+    let frame = null
+
+    const resolveSection = (id) => {
+      if (id === 'catalogue') {
+        return document.getElementById('catalogue-coming-soon') || document.getElementById('catalogue')
+      }
+      return document.getElementById(id)
+    }
+
+    const updateActiveSection = () => {
+      frame = null
+      const marker = Math.min(window.innerHeight * 0.38, 320)
+      let current = 'home'
+
+      trackedIds.forEach((id) => {
+        const section = resolveSection(id)
+        if (!section) return
+        const rect = section.getBoundingClientRect()
+        if (rect.top <= marker) current = id
+      })
+
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8) {
+        current = 'contact'
+      }
+
+      setActiveSection((previous) => (previous === current ? previous : current))
+    }
+
+    const requestUpdate = () => {
+      if (frame !== null) return
+      frame = window.requestAnimationFrame(updateActiveSection)
+    }
+
+    requestUpdate()
+    window.addEventListener('scroll', requestUpdate, { passive: true })
+    window.addEventListener('resize', requestUpdate)
+
+    const observer = new MutationObserver(requestUpdate)
+    observer.observe(document.body, { childList: true, subtree: true })
+
+    return () => {
+      window.removeEventListener('scroll', requestUpdate)
+      window.removeEventListener('resize', requestUpdate)
+      observer.disconnect()
+      if (frame !== null) window.cancelAnimationFrame(frame)
+    }
   }, [])
 
   const navItems = [
@@ -40,6 +91,7 @@ function App() {
       window.location.href = item.page
       return
     }
+    setActiveSection(item.id)
     scrollToId(item.id)
   }
 
@@ -75,15 +127,19 @@ function App() {
           exit={{ opacity: 0, y: -20 }}
         >
           <button className="mobile-menu__close" onClick={() => setMenuOpen(false)}><X /></button>
-          {navItems.map((item, index) => (
-            <button
-              key={item.id}
-              onClick={() => { openNavItem(item); setMenuOpen(false) }}
-              className="mobile-menu__link"
-            >
-              <span>0{index + 1}</span>{item.label}
-            </button>
-          ))}
+          {navItems.map((item, index) => {
+            const isCurrent = activeSection === item.id
+            return (
+              <button
+                key={item.id}
+                onClick={() => { openNavItem(item); setMenuOpen(false) }}
+                className={`mobile-menu__link ${isCurrent ? 'is-current' : ''}`}
+                aria-current={isCurrent ? 'page' : undefined}
+              >
+                <span>0{index + 1}</span>{item.label}
+              </button>
+            )
+          })}
         </motion.div>
       )}
 
@@ -332,7 +388,7 @@ function App() {
               />
               <a
                 className="location-card__map-link"
-                href="https://www.google.com/maps/dir/?api=1&destination=The+Art+Attic%2C+7+Lorong+Dewan%2C+Pusat+Bandar+Kota+Kinabalu%2C+88000+Kota+Kinabalu%2C+Sabah"
+                href="https://www.google.com/maps/dir/?api=1&destination=The+Art+Attic%2C%207%20Lorong%20Dewan%2C%20Pusat%20Bandar%20Kota%20Kinabalu%2C%2088000%20Kota%20Kinabalu%2C%20Sabah"
                 target="_blank"
                 rel="noreferrer"
               >
