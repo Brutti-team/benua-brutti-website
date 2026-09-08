@@ -158,6 +158,7 @@ html body main #our-journey.story .story__content h2 em {
     width: 100% !important;
     max-width: none !important;
     margin: 0 !important;
+    padding-top: 30px !important;
   }
 
   html body main #our-journey.story .story__content h2 {
