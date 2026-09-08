@@ -1,13 +1,4 @@
-/* Phone-only Impact Report viewer.
-   Rebuilt as a controlled physical-book animation instead of relying on the
-   landscape react-pageflip canvas that was rendering blank on some phones.
-   Behaviour follows the SEDCO Directory reference:
-   - a large single cover sits in the middle
-   - opening the cover shrinks/recentres into a wider two-page book
-   - the page rotates around the spine with front/back page artwork
-   - inner spreads stay slightly wider than the viewport and clip naturally
-   Desktop and tablet remain untouched. */
-
+/* Phone-only SEDCO-style Impact Report book. Desktop/tablet untouched. */
 @media (max-width: 700px) {
   .impact-report-reader__stage {
     position: relative !important;
@@ -16,9 +7,7 @@
     overflow: hidden !important;
     padding: 0 !important;
     background: #727472 !important;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, .045),
-      inset 0 -22px 44px rgba(0, 0, 0, .045) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.045), inset 0 -22px 44px rgba(0,0,0,.045) !important;
   }
 
   .impact-report-reader__stage::before {
@@ -84,7 +73,7 @@
   .impact-mobile-custom-book {
     position: relative !important;
     width: 100% !important;
-    height: calc(var(--impact-mobile-page-height) * 1.34) !important;
+    height: var(--impact-mobile-stage-height) !important;
     min-height: 0 !important;
     display: flex !important;
     align-items: center !important;
@@ -104,22 +93,18 @@
     cursor: grab !important;
   }
 
-  .impact-mobile-custom-book__gesture:active {
-    cursor: grabbing !important;
-  }
+  .impact-mobile-custom-book__gesture:active { cursor: grabbing !important; }
 
   .impact-mobile-custom-book__scene {
     position: relative !important;
-    flex: 0 0 calc(var(--impact-mobile-page-width) * 2) !important;
-    width: calc(var(--impact-mobile-page-width) * 2) !important;
+    flex: 0 0 calc(var(--impact-mobile-page-width) + var(--impact-mobile-page-width)) !important;
+    width: calc(var(--impact-mobile-page-width) + var(--impact-mobile-page-width)) !important;
     height: var(--impact-mobile-page-height) !important;
     transform-style: preserve-3d !important;
     transform-origin: center center !important;
     perspective: 2200px !important;
     will-change: transform !important;
-    filter:
-      drop-shadow(0 24px 28px rgba(0,0,0,.20))
-      drop-shadow(0 6px 10px rgba(0,0,0,.10)) !important;
+    filter: drop-shadow(0 24px 28px rgba(0,0,0,.20)) drop-shadow(0 6px 10px rgba(0,0,0,.10)) !important;
   }
 
   .impact-mobile-custom-book__slot {
@@ -130,35 +115,26 @@
     overflow: visible !important;
   }
 
-  .impact-mobile-custom-book__slot--left {
-    left: 0 !important;
-  }
-
-  .impact-mobile-custom-book__slot--right {
-    left: 50% !important;
-  }
+  .impact-mobile-custom-book__slot--left { left: 0 !important; }
+  .impact-mobile-custom-book__slot--right { left: 50% !important; }
 
   .impact-mobile-custom-book__page,
   .impact-mobile-custom-book__face {
     position: absolute !important;
     inset: 0 !important;
     overflow: hidden !important;
-    background: #ffffff !important;
-    border: 1px solid rgba(14, 28, 22, .055) !important;
+    background: #fff !important;
+    border: 1px solid rgba(14,28,22,.055) !important;
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
   }
 
   .impact-mobile-custom-book__slot--left .impact-mobile-custom-book__page {
-    box-shadow:
-      inset -10px 0 18px rgba(15, 29, 23, .055),
-      inset 0 0 0 1px rgba(255,255,255,.12) !important;
+    box-shadow: inset -10px 0 18px rgba(15,29,23,.055), inset 0 0 0 1px rgba(255,255,255,.12) !important;
   }
 
   .impact-mobile-custom-book__slot--right .impact-mobile-custom-book__page {
-    box-shadow:
-      inset 10px 0 18px rgba(15, 29, 23, .045),
-      inset 0 0 0 1px rgba(255,255,255,.12) !important;
+    box-shadow: inset 10px 0 18px rgba(15,29,23,.045), inset 0 0 0 1px rgba(255,255,255,.12) !important;
   }
 
   .impact-mobile-custom-book__page img,
@@ -174,8 +150,6 @@
     pointer-events: none !important;
   }
 
-  /* The actual turning sheet. Forward turns pivot from the centre spine on the
-     right-hand page; backward turns pivot from the spine on the left-hand page. */
   .impact-mobile-custom-book__turn-sheet {
     position: absolute !important;
     z-index: 25 !important;
@@ -197,9 +171,7 @@
   }
 
   .impact-mobile-custom-book__face {
-    box-shadow:
-      0 12px 32px rgba(0,0,0,calc(.06 + var(--impact-turn-progress) * .20)),
-      inset 0 0 0 1px rgba(0,0,0,.025) !important;
+    box-shadow: 0 12px 32px rgba(0,0,0,var(--impact-turn-shadow-opacity)), inset 0 0 0 1px rgba(0,0,0,.025) !important;
   }
 
   .impact-mobile-custom-book__face--front {
@@ -211,15 +183,13 @@
   }
 
   .impact-mobile-custom-book__turn-sheet--forward .impact-mobile-custom-book__face {
-    border-radius: 0 calc(3px + var(--impact-turn-progress) * 11px) calc(3px + var(--impact-turn-progress) * 11px) 0 !important;
+    border-radius: 0 var(--impact-turn-radius) var(--impact-turn-radius) 0 !important;
   }
 
   .impact-mobile-custom-book__turn-sheet--backward .impact-mobile-custom-book__face {
-    border-radius: calc(3px + var(--impact-turn-progress) * 11px) 0 0 calc(3px + var(--impact-turn-progress) * 11px) !important;
+    border-radius: var(--impact-turn-radius) 0 0 var(--impact-turn-radius) !important;
   }
 
-  /* Moving shadow/highlight along the free edge gives the turn the same paper
-     depth cue that is obvious in the SEDCO recording. */
   .impact-mobile-custom-book__turn-sheet::after {
     content: '' !important;
     position: absolute !important;
@@ -227,9 +197,8 @@
     top: 0 !important;
     bottom: 0 !important;
     width: 22px !important;
-    opacity: calc(.18 + var(--impact-turn-progress) * .58) !important;
+    opacity: var(--impact-turn-edge-opacity) !important;
     pointer-events: none !important;
-    filter: blur(.2px) !important;
   }
 
   .impact-mobile-custom-book__turn-sheet--forward::after {
@@ -250,13 +219,7 @@
     left: 50% !important;
     width: 14px !important;
     transform: translateX(-50%) !important;
-    background: linear-gradient(
-      90deg,
-      rgba(0,0,0,0),
-      rgba(0,0,0,.085) 39%,
-      rgba(255,255,255,.055) 53%,
-      rgba(0,0,0,0)
-    ) !important;
+    background: linear-gradient(90deg, rgba(0,0,0,0), rgba(0,0,0,.085) 39%, rgba(255,255,255,.055) 53%, rgba(0,0,0,0)) !important;
     filter: blur(1px) !important;
     opacity: .64 !important;
     pointer-events: none !important;
@@ -267,8 +230,6 @@
     opacity: 0 !important;
   }
 
-  /* A tiny paper stack behind the closed cover makes it read as a real book,
-     not just an isolated image. */
   .impact-mobile-custom-book.is-front-cover:not(.is-turning) .impact-mobile-custom-book__slot--right::before,
   .impact-mobile-custom-book.is-back-cover:not(.is-turning) .impact-mobile-custom-book__slot--left::before {
     content: '' !important;
@@ -277,12 +238,9 @@
     inset: 3px -4px -4px 4px !important;
     background: #deddd7 !important;
     border: 1px solid rgba(0,0,0,.055) !important;
-    box-shadow:
-      3px 3px 0 #cac9c3,
-      5px 5px 12px rgba(0,0,0,.08) !important;
+    box-shadow: 3px 3px 0 #cac9c3, 5px 5px 12px rgba(0,0,0,.08) !important;
   }
 
-  /* Fixed edge arrows, matching the SEDCO viewer placement. */
   .impact-report-reader__edge {
     top: 50% !important;
     width: 38px !important;
@@ -290,20 +248,13 @@
     background: rgba(83,86,84,.78) !important;
     border-color: rgba(255,255,255,.28) !important;
     color: #fff !important;
-    box-shadow:
-      0 7px 18px rgba(0,0,0,.18),
-      inset 0 1px 0 rgba(255,255,255,.08) !important;
+    box-shadow: 0 7px 18px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.08) !important;
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
   }
 
-  .impact-report-reader__edge--left {
-    left: 8px !important;
-  }
-
-  .impact-report-reader__edge--right {
-    right: 8px !important;
-  }
+  .impact-report-reader__edge--left { left: 8px !important; }
+  .impact-report-reader__edge--right { right: 8px !important; }
 }
 
 @media (max-width: 430px) {
@@ -311,7 +262,6 @@
     padding-top: 22px !important;
     padding-bottom: 28px !important;
   }
-
   .impact-report-reader__edge {
     width: 36px !important;
     height: 36px !important;
