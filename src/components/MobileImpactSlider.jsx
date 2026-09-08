@@ -9,18 +9,27 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   const trackRef = useRef(null)
   const lastPageRef = useRef(currentPage)
   const resizeTimerRef = useRef(null)
+  const scrollTimerRef = useRef(null)
+  const scrollFrameRef = useRef(null)
 
   const pageImage = (page) => `${import.meta.env.BASE_URL}assets/impact-report/page-${String(page).padStart(2, '0')}.webp`
+
+  const getSlides = () => {
+    const track = trackRef.current
+    if (!track) return []
+    return Array.from(track.querySelectorAll('.impact-mobile-slider__slide'))
+  }
 
   const scrollToPage = (page, behavior = 'smooth') => {
     const track = trackRef.current
     if (!track) return
 
-    const target = Math.max(1, Math.min(totalPages, Number(page)))
-    track.scrollTo({
-      left: (target - 1) * track.clientWidth,
-      behavior,
-    })
+    const targetPage = Math.max(1, Math.min(totalPages, Number(page)))
+    const slide = getSlides()[targetPage - 1]
+    if (!slide) return
+
+    const left = slide.offsetLeft - (track.clientWidth - slide.offsetWidth) / 2
+    track.scrollTo({ left, behavior })
   }
 
   useImperativeHandle(ref, () => ({
@@ -46,31 +55,53 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
       window.clearTimeout(resizeTimerRef.current)
       resizeTimerRef.current = window.setTimeout(() => {
         scrollToPage(lastPageRef.current, 'auto')
-      }, 80)
+      }, 90)
     }
 
     window.addEventListener('resize', onResize, { passive: true })
     return () => {
       cancelAnimationFrame(raf)
+      cancelAnimationFrame(scrollFrameRef.current)
       window.clearTimeout(resizeTimerRef.current)
+      window.clearTimeout(scrollTimerRef.current)
       window.removeEventListener('resize', onResize)
     }
   }, [])
 
-  const handleScroll = () => {
+  const resolveNearestPage = () => {
     const track = trackRef.current
-    if (!track || !track.clientWidth) return
+    if (!track) return
 
-    const nextPage = Math.max(
-      1,
-      Math.min(totalPages, Math.round(track.scrollLeft / track.clientWidth) + 1),
-    )
+    const viewportCenter = track.scrollLeft + track.clientWidth / 2
+    const slides = getSlides()
+    if (!slides.length) return
 
+    let closestIndex = 0
+    let closestDistance = Infinity
+
+    slides.forEach((slide, index) => {
+      const slideCenter = slide.offsetLeft + slide.offsetWidth / 2
+      const distance = Math.abs(slideCenter - viewportCenter)
+      if (distance < closestDistance) {
+        closestDistance = distance
+        closestIndex = index
+      }
+    })
+
+    const nextPage = closestIndex + 1
     if (nextPage === lastPageRef.current) return
 
     lastPageRef.current = nextPage
     onPageChange?.(nextPage)
     onPageTurn?.()
+  }
+
+  const handleScroll = () => {
+    cancelAnimationFrame(scrollFrameRef.current)
+    scrollFrameRef.current = requestAnimationFrame(resolveNearestPage)
+
+    window.clearTimeout(scrollTimerRef.current)
+    scrollTimerRef.current = window.setTimeout(resolveNearestPage, 80)
   }
 
   return (
@@ -90,7 +121,8 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
                   alt={page === 1 ? 'Brutti Impact Report 2026 cover' : `Brutti Impact Report 2026 page ${page}`}
                   draggable="false"
                   decoding="async"
-                  loading={page <= 3 ? 'eager' : 'lazy'}
+                  loading={page <= 4 ? 'eager' : 'lazy'}
+                  fetchPriority={page <= 2 ? 'high' : 'auto'}
                 />
               </div>
             </div>
