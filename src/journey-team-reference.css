@@ -100,7 +100,7 @@
     margin: 0 !important;
     display: flex !important;
     align-items: center !important;
-    justify-content: flex-start !important;
+    justify-content: center !important;
     overflow: hidden !important;
     background: #ffffff !important;
     box-shadow: 50vw 0 0 50vw #ffffff !important;
@@ -113,10 +113,10 @@
   }
 
   .journey-team__composite {
-    width: min(108%, 920px) !important;
-    max-width: 920px !important;
-    margin: 0 0 0 -64px !important;
-    transform: none !important;
+    width: min(112%, 960px) !important;
+    max-width: 960px !important;
+    margin: 0 auto !important;
+    transform: translateX(3%) !important;
     transform-origin: 50% 50% !important;
     pointer-events: none !important;
   }
@@ -128,7 +128,7 @@
     max-height: none !important;
     display: block !important;
     object-fit: contain !important;
-    object-position: left center !important;
+    object-position: center center !important;
     transform: none !important;
   }
 }
@@ -145,9 +145,10 @@
   }
 
   .journey-team__composite {
-    width: min(106%, 840px) !important;
-    max-width: 840px !important;
-    margin-left: -58px !important;
+    width: min(110%, 880px) !important;
+    max-width: 880px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 }
 
@@ -165,9 +166,10 @@
   }
 
   .journey-team__composite {
-    width: min(106%, 760px) !important;
-    max-width: 760px !important;
-    margin-left: -46px !important;
+    width: min(108%, 800px) !important;
+    max-width: 800px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 }
 
