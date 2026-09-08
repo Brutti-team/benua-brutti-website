@@ -82,6 +82,12 @@
 /* Mobile-only collaborator typography: make the section title and supporting
    copy easier to read while leaving desktop/tablet sizing unchanged. */
 @media (max-width: 620px) {
+  html body #strategic-collaborators .collaborators-head {
+    box-sizing: border-box !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
   html body #strategic-collaborators .collaborators-head h2 {
     font-size: clamp(42px, 11.8vw, 50px) !important;
     line-height: .98 !important;
