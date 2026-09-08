@@ -46,3 +46,35 @@
     padding-right: 14px !important;
   }
 }
+
+/* Mobile collaborator reliability fix.
+   Some mobile browsers quantise tiny scrollLeft steps, making the first row
+   look frozen. Give the top row its own smooth CSS marquee as a visual fallback
+   while keeping the existing drag/swipe behaviour and the second row untouched. */
+@keyframes collaborators-mobile-top-row {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(calc(-50% + 20.5px), 0, 0);
+  }
+}
+
+@media (max-width: 700px) {
+  #strategic-collaborators .collaborators-marquee > .collaborators-row:first-child .collaborators-track {
+    animation: collaborators-mobile-top-row 64s linear infinite !important;
+    will-change: transform !important;
+  }
+
+  #strategic-collaborators .collaborators-marquee > .collaborators-row:first-child:active .collaborators-track,
+  #strategic-collaborators .collaborators-marquee > .collaborators-row:first-child.is-dragging .collaborators-track {
+    animation-play-state: paused !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #strategic-collaborators .collaborators-marquee > .collaborators-row:first-child .collaborators-track {
+    animation: none !important;
+  }
+}
