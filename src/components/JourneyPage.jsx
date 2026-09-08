@@ -164,7 +164,7 @@ export default function JourneyPage() {
           >
             <figure className="journey-team__composite">
               <img
-                src={`${asset('brutti-hd.webp')}?v=20260905-bgremoved`}
+                src={`${asset('brutti-hd.webp')}?v=20260908-defringe`}
                 alt="The Benua Brutti team"
                 loading="lazy"
                 decoding="async"
