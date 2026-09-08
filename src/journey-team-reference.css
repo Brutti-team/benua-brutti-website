@@ -74,29 +74,31 @@
 
 @media (min-width: 981px) {
   .journey-section--team {
-    min-height: 760px !important;
-    padding-top: 42px !important;
-    padding-bottom: 24px !important;
+    min-height: calc(100vh - 84px) !important;
+    padding-top: 16px !important;
+    padding-bottom: 10px !important;
   }
 
   .journey-team {
-    grid-template-columns: minmax(360px, .72fr) minmax(0, 1.28fr) !important;
+    grid-template-columns: minmax(430px, .86fr) minmax(0, 1.14fr) !important;
     gap: 0 !important;
     align-items: stretch !important;
+    min-height: calc(100vh - 110px) !important;
   }
 
   .journey-team__copy {
-    max-width: 455px !important;
+    max-width: 520px !important;
     position: relative !important;
     z-index: 5 !important;
     align-self: center !important;
-    padding-right: 42px !important;
+    padding-right: 46px !important;
   }
 
   .journey-team__stage {
     isolation: isolate;
     width: 100% !important;
-    min-height: 650px !important;
+    min-height: calc(100vh - 132px) !important;
+    max-height: calc(100vh - 132px) !important;
     margin: 0 !important;
     display: flex !important;
     align-items: center !important;
@@ -104,7 +106,7 @@
     overflow: hidden !important;
     background: #ffffff !important;
     box-shadow: 50vw 0 0 50vw #ffffff !important;
-    padding: 18px 0 10px 0 !important;
+    padding: 8px 0 0 0 !important;
   }
 
   .journey-team__stage::after {
@@ -113,10 +115,10 @@
   }
 
   .journey-team__composite {
-    width: min(112%, 960px) !important;
-    max-width: 960px !important;
-    margin: 0 auto !important;
-    transform: translateX(3%) !important;
+    width: min(118%, 1000px) !important;
+    max-width: 1000px !important;
+    margin: 0 0 0 18px !important;
+    transform: none !important;
     transform-origin: 50% 50% !important;
     pointer-events: none !important;
   }
@@ -125,7 +127,7 @@
     width: 100% !important;
     max-width: 100% !important;
     height: auto !important;
-    max-height: none !important;
+    max-height: calc(100vh - 150px) !important;
     display: block !important;
     object-fit: contain !important;
     object-position: center center !important;
@@ -135,41 +137,59 @@
 
 @media (min-width: 981px) and (max-height: 860px) {
   .journey-section--team {
-    min-height: 700px !important;
-    padding-top: 30px !important;
-    padding-bottom: 16px !important;
+    min-height: calc(100vh - 84px) !important;
+    padding-top: 10px !important;
+    padding-bottom: 8px !important;
+  }
+
+  .journey-team {
+    min-height: calc(100vh - 104px) !important;
+  }
+
+  .journey-team__copy {
+    max-width: 500px !important;
+    padding-right: 38px !important;
   }
 
   .journey-team__stage {
-    min-height: 585px !important;
+    min-height: calc(100vh - 124px) !important;
+    max-height: calc(100vh - 124px) !important;
   }
 
   .journey-team__composite {
-    width: min(110%, 880px) !important;
-    max-width: 880px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    width: min(116%, 920px) !important;
+    max-width: 920px !important;
+    margin-left: 12px !important;
+  }
+
+  .journey-team__composite img {
+    max-height: calc(100vh - 142px) !important;
   }
 }
 
 @media (min-width: 981px) and (max-width: 1320px) {
   .journey-team {
-    grid-template-columns: minmax(345px, .76fr) minmax(0, 1.24fr) !important;
+    grid-template-columns: minmax(390px, .84fr) minmax(0, 1.16fr) !important;
   }
 
   .journey-team__copy {
-    padding-right: 28px !important;
+    max-width: 480px !important;
+    padding-right: 30px !important;
   }
 
   .journey-team__stage {
-    min-height: 560px !important;
+    min-height: calc(100vh - 136px) !important;
+    max-height: calc(100vh - 136px) !important;
   }
 
   .journey-team__composite {
-    width: min(108%, 800px) !important;
-    max-width: 800px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    width: min(116%, 860px) !important;
+    max-width: 860px !important;
+    margin-left: 8px !important;
+  }
+
+  .journey-team__composite img {
+    max-height: calc(100vh - 154px) !important;
   }
 }
 
@@ -208,9 +228,9 @@
   }
 
   .journey-team__composite {
-    width: min(108%, 760px) !important;
-    max-width: 760px !important;
-    margin: 0 -4% -4px !important;
+    width: min(112%, 800px) !important;
+    max-width: 800px !important;
+    margin: 0 -5% -4px !important;
   }
 
   .journey-team__composite img {
@@ -227,8 +247,8 @@
   }
 
   .journey-team__composite {
-    width: 112% !important;
-    margin-left: -6% !important;
-    margin-right: -6% !important;
+    width: 116% !important;
+    margin-left: -8% !important;
+    margin-right: -8% !important;
   }
 }
