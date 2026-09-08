@@ -111,12 +111,12 @@
 
   .journey-team__stage::after {
     right: 8px !important;
-    color: rgba(18, 51, 38, .055) !important;
+    color: rgba(18, 51, 38, .045) !important;
   }
 
   .journey-team__composite {
-    width: min(128%, 1080px) !important;
-    max-width: 1080px !important;
+    width: min(150%, 1280px) !important;
+    max-width: 1280px !important;
     margin: 0 auto !important;
     transform: none !important;
     transform-origin: 50% 50% !important;
@@ -127,7 +127,7 @@
     width: 100% !important;
     max-width: 100% !important;
     height: auto !important;
-    max-height: calc(100vh - 125px) !important;
+    max-height: calc(100vh - 92px) !important;
     display: block !important;
     object-fit: contain !important;
     object-position: center center !important;
@@ -157,13 +157,13 @@
   }
 
   .journey-team__composite {
-    width: min(124%, 980px) !important;
-    max-width: 980px !important;
+    width: min(144%, 1160px) !important;
+    max-width: 1160px !important;
     margin: 0 auto !important;
   }
 
   .journey-team__composite img {
-    max-height: calc(100vh - 120px) !important;
+    max-height: calc(100vh - 88px) !important;
   }
 }
 
@@ -183,13 +183,13 @@
   }
 
   .journey-team__composite {
-    width: min(124%, 940px) !important;
-    max-width: 940px !important;
+    width: min(142%, 1080px) !important;
+    max-width: 1080px !important;
     margin: 0 auto !important;
   }
 
   .journey-team__composite img {
-    max-height: calc(100vh - 132px) !important;
+    max-height: calc(100vh - 96px) !important;
   }
 }
 
@@ -220,7 +220,7 @@
     background: #ffffff !important;
     border-radius: 28px !important;
     box-shadow: none !important;
-    padding: 22px 8px 0 !important;
+    padding: 18px 4px 0 !important;
   }
 
   .journey-team__stage::after {
@@ -228,9 +228,9 @@
   }
 
   .journey-team__composite {
-    width: min(116%, 840px) !important;
-    max-width: 840px !important;
-    margin: 0 -8% -4px !important;
+    width: min(126%, 920px) !important;
+    max-width: 920px !important;
+    margin: 0 -13% -4px !important;
   }
 
   .journey-team__composite img {
@@ -243,12 +243,12 @@
 @media (max-width: 560px) {
   .journey-team__stage {
     border-radius: 22px !important;
-    padding-top: 16px !important;
+    padding-top: 12px !important;
   }
 
   .journey-team__composite {
-    width: 120% !important;
-    margin-left: -10% !important;
-    margin-right: -10% !important;
+    width: 132% !important;
+    margin-left: -16% !important;
+    margin-right: -16% !important;
   }
 }
