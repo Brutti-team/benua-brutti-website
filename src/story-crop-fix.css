@@ -100,10 +100,13 @@ html body main #our-journey.story .story__content h2 em {
     content: 'FROM A BACKYARD IDEA' !important;
     display: inline-flex !important;
     align-items: center !important;
+    justify-content: center !important;
     align-self: flex-start !important;
     width: fit-content !important;
+    min-height: 42px !important;
+    box-sizing: border-box !important;
     margin: 0 !important;
-    padding: 8px 12px 7px !important;
+    padding: 0 16px !important;
     border: 1px solid #175747 !important;
     border-radius: 999px !important;
     background: #175747 !important;
@@ -112,10 +115,10 @@ html body main #our-journey.story .story__content h2 em {
     color: #ffffff !important;
     -webkit-text-fill-color: #ffffff !important;
     font-family: 'Manrope', system-ui, sans-serif !important;
-    font-size: 9px !important;
+    font-size: 10.5px !important;
     font-weight: 800 !important;
     line-height: 1 !important;
-    letter-spacing: .15em !important;
+    letter-spacing: .14em !important;
     text-transform: uppercase !important;
     box-shadow: 0 8px 22px rgba(23, 87, 71, .18) !important;
     opacity: 1 !important;
