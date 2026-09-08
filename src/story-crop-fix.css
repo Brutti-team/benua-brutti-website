@@ -122,6 +122,7 @@ html body main #our-journey.story .story__content h2 em {
     filter: none !important;
     mix-blend-mode: normal !important;
     pointer-events: none !important;
+    transform: translateY(-16px) !important;
   }
 
   html body main #our-journey.story .story__content .eyebrow.eyebrow--light {
