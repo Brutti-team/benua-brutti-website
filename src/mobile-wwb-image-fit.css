@@ -100,3 +100,22 @@
     line-height: 1.62 !important;
   }
 }
+
+/* Phone-only contact spacing: keep the headline, phone CTA and workshop card
+   comfortably inside the screen edges without changing desktop/tablet. */
+@media (max-width: 620px) {
+  html body main #contact.contact .contact__head,
+  html body main #contact.contact .contact__grid {
+    box-sizing: border-box !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  html body main #contact.contact .contact__head h2 {
+    max-width: 100% !important;
+  }
+
+  html body main #contact.contact .contact__phone {
+    max-width: 100% !important;
+  }
+}
