@@ -129,3 +129,78 @@ html body main #our-journey.story .story__content h2 em {
     display: none !important;
   }
 }
+
+/* Mobile story polish: cleaner rhythm, tighter copy and a less bulky quote card.
+   Phone-only overrides; tablet and desktop are untouched. */
+@media (max-width: 600px) {
+  html body main #our-journey.story {
+    padding: 42px 0 48px !important;
+  }
+
+  html body main #our-journey.story > .page-shell {
+    width: calc(100% - 32px) !important;
+  }
+
+  html body main #our-journey.story .story__grid {
+    gap: 20px !important;
+  }
+
+  html body main #our-journey.story .story__visual {
+    gap: 12px !important;
+  }
+
+  html body main #our-journey.story .story__photo-wrap {
+    border-radius: 17px !important;
+    box-shadow: 0 15px 34px rgba(18, 45, 34, .08) !important;
+  }
+
+  html body main #our-journey.story .story__content {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  html body main #our-journey.story .story__content h2 {
+    margin: 0 0 18px !important;
+    font-size: clamp(34px, 9.8vw, 40px) !important;
+    line-height: 1.01 !important;
+    letter-spacing: -.045em !important;
+    text-wrap: balance !important;
+  }
+
+  html body main #our-journey.story .story__content p {
+    margin: 0 0 14px !important;
+    color: #52665d !important;
+    font-size: 13.5px !important;
+    line-height: 1.58 !important;
+    letter-spacing: -.005em !important;
+  }
+
+  html body main #our-journey.story .story__content blockquote {
+    margin: 20px 0 0 !important;
+    padding: 16px 17px !important;
+    border: 1px solid rgba(23, 87, 71, .09) !important;
+    border-left: 2px solid rgba(23, 87, 71, .34) !important;
+    border-radius: 16px !important;
+    background: rgba(255, 255, 255, .62) !important;
+    box-shadow: 0 10px 24px rgba(18, 45, 34, .045) !important;
+    color: #23483a !important;
+    font-size: 13px !important;
+    font-weight: 560 !important;
+    line-height: 1.55 !important;
+    letter-spacing: 0 !important;
+    text-align: left !important;
+    word-spacing: normal !important;
+  }
+
+  html body main #our-journey.story .story__journey-button {
+    width: 100% !important;
+    min-height: 52px !important;
+    margin-top: 20px !important;
+    padding: 0 20px !important;
+    border-radius: 999px !important;
+    font-size: 13px !important;
+    font-weight: 760 !important;
+    box-shadow: 0 9px 20px rgba(13, 68, 49, .13) !important;
+  }
+}
