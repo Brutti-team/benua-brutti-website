@@ -1,26 +1,4 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
-import HTMLFlipBook from 'react-pageflip'
-
-const MobileReportPage = forwardRef(function MobileReportPage({ page, totalPages }, ref) {
-  const isCover = page === 1 || page === totalPages
-  const pageImage = `${import.meta.env.BASE_URL}assets/impact-report/page-${String(page).padStart(2, '0')}.webp`
-
-  return (
-    <div
-      ref={ref}
-      className={`impact-flip-page impact-flip-page--mobile${isCover ? ' impact-flip-page--cover' : ''}`}
-      data-density={isCover ? 'hard' : 'soft'}
-    >
-      <img
-        src={pageImage}
-        alt={page === 1 ? 'Brutti Impact Report 2026 cover' : `Brutti Impact Report 2026 page ${page}`}
-        draggable="false"
-        decoding="async"
-        loading={page <= 3 ? 'eager' : 'lazy'}
-      />
-    </div>
-  )
-})
 
 const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   totalPages,
@@ -28,22 +6,32 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   onPageChange,
   onPageTurn,
 }, ref) {
-  const bookRef = useRef(null)
+  const trackRef = useRef(null)
   const lastPageRef = useRef(currentPage)
-  const gestureSoundPlayedRef = useRef(false)
+  const resizeTimerRef = useRef(null)
 
-  const pageFlip = () => bookRef.current?.pageFlip?.()
+  const pageImage = (page) => `${import.meta.env.BASE_URL}assets/impact-report/page-${String(page).padStart(2, '0')}.webp`
+
+  const scrollToPage = (page, behavior = 'smooth') => {
+    const track = trackRef.current
+    if (!track) return
+
+    const target = Math.max(1, Math.min(totalPages, Number(page)))
+    track.scrollTo({
+      left: (target - 1) * track.clientWidth,
+      behavior,
+    })
+  }
 
   useImperativeHandle(ref, () => ({
-    goTo(page) {
-      const target = Math.max(1, Math.min(totalPages, Number(page)))
-      pageFlip()?.turnToPage(target - 1)
+    goTo(page, behavior = 'smooth') {
+      scrollToPage(page, behavior)
     },
     next() {
-      pageFlip()?.flipNext('top')
+      scrollToPage(Math.min(totalPages, lastPageRef.current + 1))
     },
     previous() {
-      pageFlip()?.flipPrev('top')
+      scrollToPage(Math.max(1, lastPageRef.current - 1))
     },
   }))
 
@@ -52,69 +40,63 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   }, [currentPage])
 
   useEffect(() => {
-    const target = Math.max(1, Math.min(totalPages, Number(currentPage)))
-    if (target <= 1) return undefined
+    const raf = requestAnimationFrame(() => scrollToPage(currentPage, 'auto'))
 
-    const frame = requestAnimationFrame(() => {
-      pageFlip()?.turnToPage(target - 1)
-    })
+    const onResize = () => {
+      window.clearTimeout(resizeTimerRef.current)
+      resizeTimerRef.current = window.setTimeout(() => {
+        scrollToPage(lastPageRef.current, 'auto')
+      }, 80)
+    }
 
-    return () => cancelAnimationFrame(frame)
+    window.addEventListener('resize', onResize, { passive: true })
+    return () => {
+      cancelAnimationFrame(raf)
+      window.clearTimeout(resizeTimerRef.current)
+      window.removeEventListener('resize', onResize)
+    }
   }, [])
 
-  const handleFlip = (event) => {
-    const nextPage = Math.max(1, Math.min(totalPages, event.data + 1))
+  const handleScroll = () => {
+    const track = trackRef.current
+    if (!track || !track.clientWidth) return
+
+    const nextPage = Math.max(
+      1,
+      Math.min(totalPages, Math.round(track.scrollLeft / track.clientWidth) + 1),
+    )
+
+    if (nextPage === lastPageRef.current) return
+
     lastPageRef.current = nextPage
     onPageChange?.(nextPage)
-  }
-
-  const handleStateChange = (event) => {
-    const state = event.data
-    const turning = state === 'user_fold' || state === 'flipping'
-
-    if (turning && !gestureSoundPlayedRef.current) {
-      onPageTurn?.()
-      gestureSoundPlayedRef.current = true
-    }
-
-    if (state === 'read') {
-      gestureSoundPlayedRef.current = false
-    }
+    onPageTurn?.()
   }
 
   return (
-    <div className="impact-mobile-book" aria-label="Impact Report mobile book viewer">
-      <HTMLFlipBook
-        ref={bookRef}
-        width={330}
-        height={467}
-        size="fixed"
-        startPage={Math.max(0, Math.min(totalPages - 1, currentPage - 1))}
-        drawShadow
-        flippingTime={720}
-        usePortrait
-        startZIndex={10}
-        autoSize={false}
-        maxShadowOpacity={0.38}
-        showCover
-        mobileScrollSupport
-        clickEventForward={false}
-        useMouseEvents
-        swipeDistance={18}
-        showPageCorners
-        disableFlipByClick={false}
-        className="impact-html-flipbook impact-html-flipbook--mobile"
-        onFlip={handleFlip}
-        onChangeState={handleStateChange}
+    <div className="impact-mobile-slider" aria-label="Impact Report mobile page viewer">
+      <div
+        ref={trackRef}
+        className="impact-mobile-slider__track"
+        onScroll={handleScroll}
       >
-        {Array.from({ length: totalPages }, (_, index) => (
-          <MobileReportPage
-            page={index + 1}
-            totalPages={totalPages}
-            key={index + 1}
-          />
-        ))}
-      </HTMLFlipBook>
+        {Array.from({ length: totalPages }, (_, index) => {
+          const page = index + 1
+          return (
+            <div className="impact-mobile-slider__slide" key={page}>
+              <div className="impact-mobile-slider__paper">
+                <img
+                  src={pageImage(page)}
+                  alt={page === 1 ? 'Brutti Impact Report 2026 cover' : `Brutti Impact Report 2026 page ${page}`}
+                  draggable="false"
+                  decoding="async"
+                  loading={page <= 3 ? 'eager' : 'lazy'}
+                />
+              </div>
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 })
