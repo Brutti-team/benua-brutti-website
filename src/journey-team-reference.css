@@ -33,6 +33,7 @@
   font-size: 12px !important;
   letter-spacing: .15em !important;
   gap: 0 !important;
+  margin-bottom: 26px !important;
 }
 
 /* Remove the decorative dash before 04. */
@@ -44,18 +45,20 @@
   color: #ffffff !important;
   max-width: 520px !important;
   font-size: clamp(56px, 4.7vw, 74px) !important;
-  line-height: .96 !important;
+  line-height: 1.02 !important;
 }
 
 .journey-team__copy h2 span {
   color: #d29a43 !important;
+  margin-top: .12em !important;
 }
 
 .journey-team__copy > p:not(.journey-kicker) {
   color: rgba(244, 248, 245, .80) !important;
   max-width: 470px !important;
   font-size: 15.5px !important;
-  line-height: 1.62 !important;
+  line-height: 1.70 !important;
+  margin-top: 27px !important;
 }
 
 .journey-team__values {
@@ -63,12 +66,13 @@
   font-size: 9.5px !important;
   letter-spacing: .11em !important;
   gap: 0 !important;
+  margin-top: 25px !important;
 }
 
 /* Cleaner editorial separators instead of dot bullets. */
 .journey-team__values span {
   gap: 0 !important;
-  padding: 0 16px !important;
+  padding: 0 19px !important;
   border-left: 1px solid rgba(215, 170, 93, .30) !important;
 }
 
@@ -87,6 +91,7 @@
   border-color: rgba(255, 255, 255, .20) !important;
   box-shadow: none !important;
   font-size: 14px !important;
+  margin-top: 30px !important;
 }
 
 .journey-team__copy .journey-primary:hover {
@@ -178,12 +183,25 @@
     padding-right: 38px !important;
   }
 
+  .journey-team__copy .journey-kicker {
+    margin-bottom: 22px !important;
+  }
+
   .journey-team__copy h2 {
     font-size: clamp(52px, 4.35vw, 68px) !important;
   }
 
   .journey-team__copy > p:not(.journey-kicker) {
     font-size: 14.5px !important;
+    margin-top: 23px !important;
+  }
+
+  .journey-team__values {
+    margin-top: 21px !important;
+  }
+
+  .journey-team__copy .journey-primary {
+    margin-top: 25px !important;
   }
 
   .journey-team__stage {
@@ -254,12 +272,25 @@
     max-width: 650px !important;
   }
 
+  .journey-team__copy .journey-kicker {
+    margin-bottom: 22px !important;
+  }
+
   .journey-team__copy h2 {
     font-size: clamp(50px, 9vw, 66px) !important;
   }
 
   .journey-team__copy > p:not(.journey-kicker) {
     font-size: 15px !important;
+    margin-top: 24px !important;
+  }
+
+  .journey-team__values {
+    margin-top: 22px !important;
+  }
+
+  .journey-team__copy .journey-primary {
+    margin-top: 26px !important;
   }
 
   .journey-team__stage {
