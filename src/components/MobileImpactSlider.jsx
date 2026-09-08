@@ -35,6 +35,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   onPageTurn,
 }, ref) {
   const displayPageRef = useRef(normaliseDisplayPage(currentPage, totalPages))
+  const pendingEmittedPageRef = useRef(null)
   const animationRef = useRef(null)
   const gestureRef = useRef(null)
 
@@ -52,7 +53,17 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
 
   useEffect(() => {
     if (turn) return
+
     const next = normaliseDisplayPage(currentPage, totalPages)
+
+    if (pendingEmittedPageRef.current !== null) {
+      if (next === pendingEmittedPageRef.current) {
+        pendingEmittedPageRef.current = null
+      } else {
+        return
+      }
+    }
+
     displayPageRef.current = next
     setDisplayPage(next)
   }, [currentPage, totalPages, turn])
@@ -62,13 +73,11 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   }, [])
 
   const pageWidth = useMemo(() => {
-    // SEDCO's open book is a little wider than the phone viewport, while the
-    // closed cover is enlarged. Keeping the physical page near 56vw matches
-    // that relationship without producing the huge blank canvas we had before.
     return Math.round(clamp(viewportWidth * 0.56, 218, 286))
   }, [viewportWidth])
 
   const pageHeight = useMemo(() => Math.round(pageWidth * (632 / 447)), [pageWidth])
+  const stageHeight = Math.round(pageHeight * 1.34)
   const coverScale = 1.34
 
   const nextTarget = (page = displayPageRef.current) => {
@@ -84,6 +93,13 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     return Math.max(2, page - 2)
   }
 
+  const emitDisplayPage = (target) => {
+    pendingEmittedPageRef.current = target
+    displayPageRef.current = target
+    setDisplayPage(target)
+    onPageChange?.(target)
+  }
+
   const commitTurn = (direction) => {
     const target = direction === 'forward' ? nextTarget() : previousTarget()
     if (!target) {
@@ -91,10 +107,8 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
       return
     }
 
-    displayPageRef.current = target
-    setDisplayPage(target)
+    emitDisplayPage(target)
     setTurn(null)
-    onPageChange?.(target)
   }
 
   const animateProgress = (direction, fromProgress, toProgress, commitAtEnd) => {
@@ -140,9 +154,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
       animationRef.current = null
       setTurn(null)
       const target = normaliseDisplayPage(page, totalPages)
-      displayPageRef.current = target
-      setDisplayPage(target)
-      onPageChange?.(target)
+      emitDisplayPage(target)
     },
     next() {
       startProgrammaticTurn('forward')
@@ -291,6 +303,10 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     ? (turn.direction === 'forward' ? -180 : 180) * progress
     : 0
 
+  const turnRadius = `${Math.round(3 + progress * 11)}px`
+  const turnEdgeOpacity = String(0.18 + progress * 0.58)
+  const turnShadowOpacity = String(0.06 + progress * 0.20)
+
   return (
     <div
       className={`impact-mobile-custom-book${isFrontCover ? ' is-front-cover' : ''}${isBackCover ? ' is-back-cover' : ''}${turn ? ' is-turning' : ''}`}
@@ -298,7 +314,11 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
       style={{
         '--impact-mobile-page-width': `${pageWidth}px`,
         '--impact-mobile-page-height': `${pageHeight}px`,
+        '--impact-mobile-stage-height': `${stageHeight}px`,
         '--impact-turn-progress': progress,
+        '--impact-turn-radius': turnRadius,
+        '--impact-turn-edge-opacity': turnEdgeOpacity,
+        '--impact-turn-shadow-opacity': turnShadowOpacity,
       }}
     >
       <div
