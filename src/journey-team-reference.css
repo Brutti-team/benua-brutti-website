@@ -2,6 +2,67 @@
    Keep the staff artwork large, but contained inside the right column so the
    section never creates horizontal scrolling or pushes the copy off-screen. */
 
+/* White finale so the current team artwork blends cleanly into the section. */
+.journey-section--team {
+  background: #ffffff !important;
+  color: #123326 !important;
+}
+
+.journey-section--team::before,
+.journey-section--team::after,
+.journey-team__stage::before {
+  display: none !important;
+}
+
+.journey-team__copy .journey-kicker {
+  color: #b8832f !important;
+  border-color: rgba(184, 131, 47, .22) !important;
+  background: rgba(184, 131, 47, .05) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.journey-team__copy .journey-kicker::before {
+  background: #b8832f !important;
+}
+
+.journey-team__copy h2 {
+  color: #123326 !important;
+}
+
+.journey-team__copy h2 span {
+  color: #c99342 !important;
+}
+
+.journey-team__copy > p:not(.journey-kicker) {
+  color: rgba(18, 51, 38, .72) !important;
+}
+
+.journey-team__values {
+  color: rgba(18, 51, 38, .68) !important;
+}
+
+.journey-team__values span::before {
+  background: #c99342 !important;
+  box-shadow: 0 0 0 4px rgba(201, 147, 66, .11) !important;
+}
+
+.journey-team__copy .journey-primary {
+  background: #ffffff !important;
+  color: #123326 !important;
+  border-color: rgba(18, 51, 38, .16) !important;
+  box-shadow: 0 12px 30px rgba(8, 33, 24, .07) !important;
+}
+
+.journey-team__copy .journey-primary:hover {
+  background: #f5f7f4 !important;
+}
+
+.journey-team__stage::after {
+  color: rgba(18, 51, 38, .07) !important;
+}
+
 /* The deployment script already removes the pale matte from the supplied HD
    artwork. Do not add a silhouette shadow back around the transparent cut-out. */
 .journey-team__composite img {
@@ -49,22 +110,6 @@
     align-items: flex-end !important;
     justify-content: flex-end !important;
     overflow: hidden !important;
-  }
-
-  .journey-team__stage::before {
-    width: 96% !important;
-    left: 4% !important;
-    top: 8% !important;
-    opacity: .76 !important;
-    transform: none !important;
-    background: radial-gradient(
-      ellipse at center,
-      rgba(219, 172, 88, .17) 0%,
-      rgba(123, 119, 73, .075) 38%,
-      rgba(255, 255, 255, .016) 56%,
-      transparent 74%
-    ) !important;
-    filter: blur(28px) !important;
   }
 
   .journey-team__stage::after {
