@@ -78,3 +78,19 @@
     animation: none !important;
   }
 }
+
+/* Mobile-only collaborator typography: make the section title and supporting
+   copy easier to read while leaving desktop/tablet sizing unchanged. */
+@media (max-width: 620px) {
+  html body #strategic-collaborators .collaborators-head h2 {
+    font-size: clamp(42px, 11.8vw, 50px) !important;
+    line-height: .98 !important;
+    letter-spacing: -.045em !important;
+  }
+
+  html body #strategic-collaborators .collaborators-copy {
+    max-width: 360px !important;
+    font-size: 14.5px !important;
+    line-height: 1.62 !important;
+  }
+}
