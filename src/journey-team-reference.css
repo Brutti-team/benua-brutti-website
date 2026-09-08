@@ -113,9 +113,9 @@
   }
 
   .journey-team__composite {
-    width: min(115%, 980px) !important;
-    max-width: 980px !important;
-    margin: 0 0 0 -52px !important;
+    width: min(108%, 920px) !important;
+    max-width: 920px !important;
+    margin: 0 0 0 -64px !important;
     transform: none !important;
     transform-origin: 50% 50% !important;
     pointer-events: none !important;
@@ -145,9 +145,9 @@
   }
 
   .journey-team__composite {
-    width: min(114%, 900px) !important;
-    max-width: 900px !important;
-    margin-left: -42px !important;
+    width: min(106%, 840px) !important;
+    max-width: 840px !important;
+    margin-left: -58px !important;
   }
 }
 
@@ -165,9 +165,9 @@
   }
 
   .journey-team__composite {
-    width: min(112%, 810px) !important;
-    max-width: 810px !important;
-    margin-left: -36px !important;
+    width: min(106%, 760px) !important;
+    max-width: 760px !important;
+    margin-left: -46px !important;
   }
 }
 
