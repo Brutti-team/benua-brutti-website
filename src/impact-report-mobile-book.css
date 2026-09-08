@@ -1,38 +1,38 @@
-/* Mobile Impact Report — real book movement based on the supplied phone reference.
-   Phone only: the cover remains a single centred book page, inner pages open as
-   a two-page spread, and the page physically bends/folds while the user swipes.
-   Desktop/tablet reader behaviour is intentionally untouched. */
+/* Mobile Impact Report — match the supplied phone flipbook reference.
+   Phone only: keep one portrait page centred like a real book, then let the
+   paper bend/fold from the edge during swipe. Desktop/tablet stay untouched. */
 
 @media (max-width: 700px) {
   .impact-report-reader__stage {
-    min-height: clamp(520px, 68svh, 650px) !important;
+    min-height: 0 !important;
+    height: auto !important;
     overflow: hidden !important;
     background:
-      radial-gradient(ellipse at 50% 38%, rgba(255, 255, 255, .07), transparent 42%),
-      linear-gradient(180deg, #707371 0%, #626563 100%) !important;
+      radial-gradient(ellipse at 50% 38%, rgba(255,255,255,.055), transparent 42%),
+      linear-gradient(180deg, #747775 0%, #666967 100%) !important;
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, .06),
-      inset 0 -26px 52px rgba(0, 0, 0, .08) !important;
+      inset 0 1px 0 rgba(255,255,255,.055),
+      inset 0 -22px 42px rgba(0,0,0,.055) !important;
   }
 
   .impact-report-reader__stage::before {
-    opacity: .28 !important;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,.035), transparent 26%, rgba(0,0,0,.045)) !important;
+    opacity: .24 !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.035), transparent 28%, rgba(0,0,0,.035)) !important;
   }
 
   .impact-report-reader__stage::after {
-    left: 17% !important;
-    right: 17% !important;
-    bottom: 7% !important;
-    height: 5% !important;
-    background: rgba(0, 0, 0, .27) !important;
-    filter: blur(19px) !important;
-    opacity: .62 !important;
+    left: 22% !important;
+    right: 22% !important;
+    bottom: 23px !important;
+    height: 18px !important;
+    background: rgba(0,0,0,.24) !important;
+    filter: blur(15px) !important;
+    opacity: .58 !important;
   }
 
   .impact-report-reader__viewport {
-    min-height: inherit !important;
+    min-height: 0 !important;
+    height: auto !important;
     width: 100% !important;
     padding: 24px 0 30px !important;
     overflow: hidden !important;
@@ -43,6 +43,7 @@
 
   .impact-report-reader__zoom {
     width: 100% !important;
+    min-height: 0 !important;
     overflow: visible !important;
     display: flex !important;
     align-items: center !important;
@@ -54,27 +55,17 @@
   .impact-report-reader__book-wrap.is-back-cover {
     position: relative !important;
     width: 100% !important;
-    height: 490px !important;
-    min-height: 490px !important;
-    max-height: none !important;
+    height: 467px !important;
+    min-height: 467px !important;
+    max-height: 467px !important;
     overflow: visible !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     perspective: 2200px !important;
+    transform: none !important;
     transform-style: preserve-3d !important;
-    transition: transform 560ms cubic-bezier(.22, 1, .36, 1) !important;
-  }
-
-  /* react-pageflip keeps a landscape cover on one side of its two-page canvas.
-     Move that canvas by half a page so the closed front/back cover sits exactly
-     in the middle of the phone, then glide back to centre as the book opens. */
-  .impact-report-reader__book-wrap.is-front-cover {
-    transform: translate3d(-165px, 0, 0) !important;
-  }
-
-  .impact-report-reader__book-wrap.is-back-cover {
-    transform: translate3d(165px, 0, 0) !important;
+    transition: none !important;
   }
 
   .impact-report-reader__book-wrap::before,
@@ -85,8 +76,8 @@
   .impact-mobile-book {
     --mobile-book-scale: 1;
     position: relative !important;
-    flex: 0 0 660px !important;
-    width: 660px !important;
+    flex: 0 0 330px !important;
+    width: 330px !important;
     height: 467px !important;
     display: flex !important;
     align-items: center !important;
@@ -95,40 +86,32 @@
     transform: scale(var(--mobile-book-scale)) translateZ(0) !important;
     transform-origin: center center !important;
     filter:
-      drop-shadow(0 24px 28px rgba(0, 0, 0, .22))
-      drop-shadow(0 7px 10px rgba(0, 0, 0, .12));
+      drop-shadow(0 18px 22px rgba(0,0,0,.20))
+      drop-shadow(0 4px 7px rgba(0,0,0,.11));
   }
 
-  /* A restrained centre crease remains visible when the book is open. */
-  .impact-mobile-book::after {
+  /* Thin sheet behind the active page makes the settled view still read as a
+     physical book/page stack, like the reference instead of a flat image. */
+  .impact-mobile-book::before {
     content: '' !important;
     position: absolute !important;
-    z-index: 30 !important;
-    top: 1.5% !important;
-    bottom: 1.5% !important;
-    left: 50% !important;
-    width: 14px !important;
-    transform: translateX(-50%) !important;
-    background: linear-gradient(
-      90deg,
-      rgba(0,0,0,0),
-      rgba(0,0,0,.08) 40%,
-      rgba(255,255,255,.05) 53%,
-      rgba(0,0,0,0)
-    ) !important;
-    filter: blur(1.5px) !important;
-    opacity: .72 !important;
+    z-index: 0 !important;
+    inset: 5px -5px -6px 5px !important;
+    background: #d9d8d2 !important;
+    border: 1px solid rgba(0,0,0,.08) !important;
+    box-shadow: 0 5px 12px rgba(0,0,0,.12) !important;
     pointer-events: none !important;
   }
 
-  .impact-report-reader__book-wrap.is-front-cover .impact-mobile-book::after,
-  .impact-report-reader__book-wrap.is-back-cover .impact-mobile-book::after {
-    opacity: 0 !important;
+  .impact-mobile-book::after {
+    content: none !important;
   }
 
   .impact-html-flipbook--mobile {
     position: relative !important;
-    z-index: 5 !important;
+    z-index: 3 !important;
+    width: 330px !important;
+    height: 467px !important;
     margin: 0 auto !important;
     transform: translateZ(0) !important;
     transform-style: preserve-3d !important;
@@ -149,42 +132,47 @@
   }
 
   .impact-flip-page--mobile {
+    width: 100% !important;
+    height: 100% !important;
     background: #fff !important;
-    border: 0 !important;
+    border: 1px solid rgba(0,0,0,.045) !important;
     box-shadow:
-      inset 0 0 0 1px rgba(0, 0, 0, .035),
-      inset -10px 0 18px rgba(8, 31, 23, .028) !important;
+      inset 0 0 0 1px rgba(255,255,255,.18),
+      inset -8px 0 15px rgba(8,31,23,.025) !important;
   }
 
   .impact-flip-page--mobile::after {
-    opacity: .78 !important;
-    background:
-      linear-gradient(
-        90deg,
-        rgba(0,0,0,.035),
-        transparent 7%,
-        transparent 92%,
-        rgba(0,0,0,.055)
-      ) !important;
+    opacity: .72 !important;
+    background: linear-gradient(
+      90deg,
+      rgba(0,0,0,.025),
+      transparent 6%,
+      transparent 93%,
+      rgba(0,0,0,.05)
+    ) !important;
   }
 
   .impact-flip-page--mobile img {
-    object-fit: cover !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
     background: #fff !important;
     -webkit-user-drag: none !important;
     user-select: none !important;
     pointer-events: none !important;
   }
 
-  /* Reference-style edge arrows remain stationary while the paper moves below. */
+  /* Arrows stay fixed at the edge while the page itself curls underneath. */
   .impact-report-reader__edge {
     top: 50% !important;
     width: 38px !important;
     height: 38px !important;
-    background: rgba(57, 61, 59, .78) !important;
-    border-color: rgba(255, 255, 255, .23) !important;
+    background: rgba(57,61,59,.78) !important;
+    border-color: rgba(255,255,255,.23) !important;
     color: #fff !important;
-    box-shadow: 0 8px 19px rgba(0, 0, 0, .16) !important;
+    box-shadow: 0 8px 19px rgba(0,0,0,.16) !important;
     backdrop-filter: blur(9px) !important;
     -webkit-backdrop-filter: blur(9px) !important;
   }
@@ -198,30 +186,31 @@
   }
 }
 
-@media (max-width: 430px) {
-  .impact-report-reader__stage {
-    min-height: clamp(500px, 66svh, 610px) !important;
+@media (max-width: 390px) {
+  .impact-mobile-book {
+    --mobile-book-scale: .94;
   }
 
   .impact-report-reader__book-wrap,
   .impact-report-reader__book-wrap.is-front-cover,
   .impact-report-reader__book-wrap.is-back-cover {
-    height: 472px !important;
-    min-height: 472px !important;
+    height: 446px !important;
+    min-height: 446px !important;
+    max-height: 446px !important;
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 350px) {
   .impact-mobile-book {
-    --mobile-book-scale: .92;
+    --mobile-book-scale: .86;
   }
 
-  .impact-report-reader__book-wrap.is-front-cover {
-    transform: translate3d(-152px, 0, 0) !important;
-  }
-
+  .impact-report-reader__book-wrap,
+  .impact-report-reader__book-wrap.is-front-cover,
   .impact-report-reader__book-wrap.is-back-cover {
-    transform: translate3d(152px, 0, 0) !important;
+    height: 410px !important;
+    min-height: 410px !important;
+    max-height: 410px !important;
   }
 
   .impact-report-reader__edge {
@@ -230,22 +219,7 @@
   }
 }
 
-@media (max-width: 330px) {
-  .impact-mobile-book {
-    --mobile-book-scale: .85;
-  }
-
-  .impact-report-reader__book-wrap.is-front-cover {
-    transform: translate3d(-140px, 0, 0) !important;
-  }
-
-  .impact-report-reader__book-wrap.is-back-cover {
-    transform: translate3d(140px, 0, 0) !important;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .impact-report-reader__book-wrap,
   .impact-html-flipbook--mobile {
     transition: none !important;
   }
