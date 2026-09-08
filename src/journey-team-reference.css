@@ -115,8 +115,8 @@
   }
 
   .journey-team__composite {
-    width: min(235%, 1980px) !important;
-    max-width: 1980px !important;
+    width: min(250%, 2100px) !important;
+    max-width: 2100px !important;
     margin: 0 auto !important;
     transform: translateX(6%) !important;
     transform-origin: 50% 50% !important;
@@ -131,7 +131,7 @@
     display: block !important;
     object-fit: contain !important;
     object-position: center center !important;
-    transform: scale(1.48) !important;
+    transform: scale(1.58) !important;
     transform-origin: 50% 50% !important;
   }
 }
@@ -158,14 +158,14 @@
   }
 
   .journey-team__composite {
-    width: min(225%, 1820px) !important;
-    max-width: 1820px !important;
+    width: min(240%, 1940px) !important;
+    max-width: 1940px !important;
     margin: 0 auto !important;
     transform: translateX(6%) !important;
   }
 
   .journey-team__composite img {
-    transform: scale(1.48) !important;
+    transform: scale(1.58) !important;
   }
 }
 
@@ -185,14 +185,14 @@
   }
 
   .journey-team__composite {
-    width: min(215%, 1640px) !important;
-    max-width: 1640px !important;
+    width: min(230%, 1760px) !important;
+    max-width: 1760px !important;
     margin: 0 auto !important;
     transform: translateX(5%) !important;
   }
 
   .journey-team__composite img {
-    transform: scale(1.46) !important;
+    transform: scale(1.56) !important;
   }
 }
 
@@ -231,16 +231,16 @@
   }
 
   .journey-team__composite {
-    width: min(168%, 1260px) !important;
-    max-width: 1260px !important;
-    margin: 0 -34% -4px !important;
+    width: min(178%, 1340px) !important;
+    max-width: 1340px !important;
+    margin: 0 -39% -4px !important;
   }
 
   .journey-team__composite img {
     width: 100% !important;
     object-fit: contain !important;
     object-position: center bottom !important;
-    transform: scale(1.26) !important;
+    transform: scale(1.32) !important;
     transform-origin: center bottom !important;
   }
 }
@@ -252,8 +252,8 @@
   }
 
   .journey-team__composite {
-    width: 176% !important;
-    margin-left: -38% !important;
-    margin-right: -38% !important;
+    width: 188% !important;
+    margin-left: -44% !important;
+    margin-right: -44% !important;
   }
 }
