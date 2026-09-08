@@ -1,36 +1,15 @@
-/* Journey section 03 — two-background split: green section, white image panel. */
+/* Journey section 03 — keep the current layout, only use a clean split background. */
 
 .journey-section--purpose {
   position: relative;
   overflow: hidden;
   padding: 96px 0 104px;
-  background:
-    radial-gradient(circle at 82% 18%, rgba(209, 157, 67, .12), transparent 28%),
-    linear-gradient(145deg, #063c2a 0%, #0a4f39 100%);
+  background: linear-gradient(90deg, #ffffff 0%, #ffffff 44%, #063c2a 44%, #063c2a 100%) !important;
 }
 
-.journey-section--purpose::before {
-  content: '';
-  position: absolute;
-  width: 560px;
-  height: 560px;
-  right: -260px;
-  top: 44%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, .05) 0%, rgba(255, 255, 255, 0) 72%);
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
+.journey-section--purpose::before,
 .journey-section--purpose::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 46%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, .025), rgba(255, 255, 255, 0));
-  pointer-events: none;
+  display: none !important;
 }
 
 .journey-section--purpose .journey-purpose {
@@ -76,7 +55,7 @@
   transform: none;
 }
 
-/* Copy sits directly on the green section — no green card. */
+/* Copy stays directly on the green half — no card. */
 .journey-section--purpose .journey-purpose__copy {
   max-width: 740px;
   padding: 0 clamp(0px, 1.6vw, 20px) 0 0;
@@ -170,10 +149,7 @@
 @media (max-width: 900px) {
   .journey-section--purpose {
     padding: 70px 0 76px;
-  }
-
-  .journey-section--purpose::after {
-    display: none;
+    background: #063c2a !important;
   }
 
   .journey-section--purpose .journey-purpose {
