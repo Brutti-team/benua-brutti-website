@@ -145,3 +145,64 @@
     line-height: 1.52 !important;
   }
 }
+
+/* Phone-only footer social alignment: center the Follow Brutti label and
+   social icons, then scale the icons up for stronger visual balance. */
+@media (max-width: 700px) {
+  html body .footer .footer__social {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  html body .footer .footer__social-label {
+    display: block !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+  }
+
+  html body .footer .footer__social-links {
+    width: 100% !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 15px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  html body .footer .footer__social-links > a,
+  html body .footer .footer__social-icon-link,
+  html body .footer .footer__social-links > a:nth-child(1),
+  html body .footer .footer__social-links > a:nth-child(3),
+  html body .footer .footer__social-links > a:nth-child(4),
+  html body .footer .footer__social-links > a[href*="instagram.com"] {
+    flex: 0 0 48px !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    max-width: 48px !important;
+    max-height: 48px !important;
+  }
+
+  html body .footer .footer__social-links > a[href*="instagram.com"] .footer__social-logo,
+  html body .footer .footer__social-links > a[href*="instagram.com"] img {
+    width: 46px !important;
+    height: 46px !important;
+    max-width: 46px !important;
+    max-height: 46px !important;
+  }
+
+  html body .footer .footer__social-links > a:nth-child(1) {
+    background-size: 86% 86% !important;
+  }
+
+  html body .footer .footer__social-links > a:nth-child(4) {
+    background-size: 84% 84% !important;
+  }
+}
