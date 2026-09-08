@@ -31,6 +31,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
 }, ref) {
   const bookRef = useRef(null)
   const soundPlayedRef = useRef(false)
+  const [isTurning, setIsTurning] = useState(false)
   const [viewportWidth, setViewportWidth] = useState(() => (
     typeof window === 'undefined' ? 390 : window.innerWidth
   ))
@@ -42,10 +43,9 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   }, [])
 
   const pageWidth = useMemo(() => {
-    // SEDCO keeps a landscape two-page book on phones. Each physical page is
-    // intentionally wider than half the viewport so the open spread clips at
-    // the sides, while the closed cover sits on the right half of the book.
-    return Math.round(Math.max(250, Math.min(332, viewportWidth * 0.76)))
+    // Keep each physical page large on phones, like SEDCO. The opened spread
+    // is intentionally wider than the viewport and clips at both sides.
+    return Math.round(Math.max(248, Math.min(334, viewportWidth * 0.76)))
   }, [viewportWidth])
 
   const pageHeight = useMemo(() => Math.round(pageWidth * (632 / 447)), [pageWidth])
@@ -74,6 +74,8 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     const state = event.data
     const turning = state === 'user_fold' || state === 'flipping'
 
+    setIsTurning(turning)
+
     if (turning && !soundPlayedRef.current) {
       onPageTurn?.()
       soundPlayedRef.current = true
@@ -81,12 +83,16 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
 
     if (state === 'read') {
       soundPlayedRef.current = false
+      setIsTurning(false)
     }
   }
 
+  const isFrontCover = currentPage <= 1
+  const isBackCover = currentPage >= totalPages
+
   return (
     <div
-      className="impact-mobile-sedco-book"
+      className={`impact-mobile-sedco-book${isFrontCover ? ' is-front-cover' : ''}${isBackCover ? ' is-back-cover' : ''}${isTurning ? ' is-turning' : ''}`}
       aria-label="Impact Report mobile book viewer"
       style={{
         '--impact-mobile-page-width': `${pageWidth}px`,
@@ -105,16 +111,16 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
         maxHeight={pageHeight}
         startPage={Math.max(0, Math.min(totalPages - 1, currentPage - 1))}
         drawShadow
-        flippingTime={860}
+        flippingTime={900}
         usePortrait={false}
         startZIndex={10}
         autoSize={false}
-        maxShadowOpacity={0.52}
+        maxShadowOpacity={0.58}
         showCover
         mobileScrollSupport
         clickEventForward={false}
         useMouseEvents
-        swipeDistance={16}
+        swipeDistance={14}
         showPageCorners
         disableFlipByClick={false}
         className="impact-sedco-flipbook"
