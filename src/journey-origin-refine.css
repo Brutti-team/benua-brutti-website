@@ -1,90 +1,152 @@
-/* Refined layout for Journey section 01: fuller, larger and better aligned. */
+/* Journey section 01 — refined editorial origin story. */
 
 .journey-section--origin {
   position: relative;
   overflow: hidden;
-  padding: 86px 0 94px;
+  padding: 92px 0 102px;
+  background:
+    radial-gradient(circle at 10% 22%, rgba(23, 87, 71, .06), transparent 31%),
+    linear-gradient(180deg, #f7f7f3 0%, #f3f4ef 100%);
 }
 
 .journey-section--origin::before {
   content: '';
   position: absolute;
-  width: 520px;
-  height: 520px;
-  left: -260px;
-  top: 50%;
+  width: 560px;
+  height: 560px;
+  left: -300px;
+  top: 48%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(15, 96, 75, .055) 0%, rgba(15, 96, 75, 0) 70%);
+  background: radial-gradient(circle, rgba(201, 149, 60, .08) 0%, rgba(201, 149, 60, 0) 72%);
   transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.journey-section--origin::after {
+  content: '';
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  right: -170px;
+  bottom: -120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(23, 87, 71, .055) 0%, rgba(23, 87, 71, 0) 72%);
   pointer-events: none;
 }
 
 .journey-section--origin .journey-origin {
   position: relative;
   z-index: 1;
-  width: min(1360px, calc(100% - 72px));
-  grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr);
-  gap: clamp(66px, 5.5vw, 96px);
+  width: min(1380px, calc(100% - 72px));
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+  gap: clamp(70px, 5.8vw, 104px);
   align-items: center;
 }
 
 .journey-section--origin .journey-origin__copy {
-  max-width: 650px;
+  max-width: 660px;
 }
 
 .journey-section--origin .journey-kicker {
-  margin-bottom: 26px;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-bottom: 30px;
+  padding: 14px 23px;
+  border: 1px solid rgba(23, 87, 71, .10);
+  border-radius: 999px;
+  background: #146b4e;
+  color: #ffffff;
+  box-shadow: 0 12px 30px rgba(20, 107, 78, .10);
+  font-size: 12px;
+  font-weight: 760;
+  letter-spacing: .14em;
+  text-transform: uppercase;
 }
 
 .journey-section--origin .journey-origin h2 {
-  max-width: 650px;
-  font-size: clamp(58px, 4.7vw, 82px);
-  font-weight: 560;
-  line-height: .96;
-  letter-spacing: -.052em;
+  max-width: 680px;
+  margin: 0;
   color: #123f31;
+  font-size: clamp(60px, 4.9vw, 84px);
+  font-weight: 560;
+  line-height: .98;
+  letter-spacing: -.052em;
+  text-wrap: balance;
 }
 
 .journey-section--origin .journey-origin h2 span {
-  color: #175747;
+  color: #c9953c;
 }
 
 .journey-section--origin .journey-origin__copy > p:not(.journey-kicker) {
-  max-width: 630px;
-  margin-top: 30px;
+  max-width: 640px;
+  margin-top: 32px;
   color: #52685e;
   font-size: clamp(18px, 1.25vw, 20px);
-  line-height: 1.72;
+  line-height: 1.78;
   letter-spacing: -.012em;
 }
 
 .journey-section--origin .journey-origin__image {
+  position: relative;
   width: 100%;
   aspect-ratio: 1.31 / 1;
-  border-radius: 30px;
-  box-shadow: 0 30px 76px rgba(8, 33, 24, .17);
+  overflow: hidden;
+  border: 1px solid rgba(18, 63, 49, .08);
+  border-radius: 34px;
+  background: #e8ebe5;
+  box-shadow:
+    0 34px 80px rgba(8, 33, 24, .16),
+    0 2px 0 rgba(255, 255, 255, .65) inset;
+}
+
+.journey-section--origin .journey-origin__image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(8, 33, 24, 0) 55%, rgba(8, 33, 24, .18) 100%);
+}
+
+.journey-section--origin .journey-origin__image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.015);
 }
 
 .journey-section--origin .journey-origin__image figcaption {
-  left: 20px;
-  bottom: 20px;
-  padding: 10px 14px;
+  left: 22px;
+  bottom: 22px;
+  z-index: 2;
+  padding: 11px 16px;
+  border: 1px solid rgba(255, 255, 255, .42);
+  border-radius: 999px;
+  background: rgba(247, 247, 243, .92);
+  color: #204f40;
+  box-shadow: 0 8px 22px rgba(8, 33, 24, .10);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   font-size: 10px;
+  font-weight: 700;
   letter-spacing: .045em;
 }
 
 @media (max-width: 1180px) and (min-width: 901px) {
   .journey-section--origin {
-    padding: 78px 0 84px;
+    padding: 80px 0 88px;
   }
 
   .journey-section--origin .journey-origin {
     width: min(100% - 52px, 1120px);
-    gap: 48px;
+    gap: 52px;
   }
 
   .journey-section--origin .journey-origin h2 {
-    font-size: clamp(52px, 5.4vw, 68px);
+    font-size: clamp(52px, 5.4vw, 70px);
   }
 
   .journey-section--origin .journey-origin__copy > p:not(.journey-kicker) {
@@ -94,7 +156,7 @@
 
 @media (max-width: 900px) {
   .journey-section--origin {
-    padding: 68px 0 72px;
+    padding: 68px 0 76px;
   }
 
   .journey-section--origin::before {
@@ -107,11 +169,15 @@
   .journey-section--origin .journey-origin {
     width: min(100% - 38px, 760px);
     grid-template-columns: 1fr;
-    gap: 38px;
+    gap: 40px;
   }
 
   .journey-section--origin .journey-origin__copy {
     max-width: 680px;
+  }
+
+  .journey-section--origin .journey-kicker {
+    margin-bottom: 24px;
   }
 
   .journey-section--origin .journey-origin h2 {
@@ -121,15 +187,15 @@
 
   .journey-section--origin .journey-origin__copy > p:not(.journey-kicker) {
     max-width: 650px;
-    margin-top: 24px;
+    margin-top: 25px;
     font-size: 17px;
-    line-height: 1.68;
+    line-height: 1.72;
   }
 }
 
 @media (max-width: 560px) {
   .journey-section--origin {
-    padding: 58px 0 62px;
+    padding: 58px 0 64px;
   }
 
   .journey-section--origin .journey-origin {
@@ -139,21 +205,29 @@
 
   .journey-section--origin .journey-kicker {
     margin-bottom: 20px;
+    padding: 12px 18px;
+    font-size: 10px;
   }
 
   .journey-section--origin .journey-origin h2 {
     font-size: clamp(44px, 12.2vw, 56px);
-    line-height: .98;
+    line-height: 1;
   }
 
   .journey-section--origin .journey-origin__copy > p:not(.journey-kicker) {
-    margin-top: 21px;
+    margin-top: 22px;
     font-size: 16px;
-    line-height: 1.66;
+    line-height: 1.68;
   }
 
   .journey-section--origin .journey-origin__image {
     aspect-ratio: 4 / 3;
-    border-radius: 22px;
+    border-radius: 24px;
+  }
+
+  .journey-section--origin .journey-origin__image figcaption {
+    left: 14px;
+    bottom: 14px;
+    padding: 9px 12px;
   }
 }
