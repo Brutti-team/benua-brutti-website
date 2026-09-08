@@ -55,9 +55,10 @@
 
 .journey-team__copy > p:not(.journey-kicker) {
   color: rgba(244, 248, 245, .80) !important;
-  max-width: 470px !important;
-  font-size: 15.5px !important;
-  line-height: 1.70 !important;
+  max-width: 500px !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 18.5px !important;
+  line-height: 1.72 !important;
   margin-top: 27px !important;
 }
 
@@ -192,7 +193,8 @@
   }
 
   .journey-team__copy > p:not(.journey-kicker) {
-    font-size: 14.5px !important;
+    font-size: 17px !important;
+    line-height: 1.68 !important;
     margin-top: 23px !important;
   }
 
@@ -236,7 +238,8 @@
   }
 
   .journey-team__copy > p:not(.journey-kicker) {
-    font-size: 14px !important;
+    font-size: 16.5px !important;
+    line-height: 1.68 !important;
   }
 
   .journey-team__stage {
@@ -281,7 +284,8 @@
   }
 
   .journey-team__copy > p:not(.journey-kicker) {
-    font-size: 15px !important;
+    font-size: 17.5px !important;
+    line-height: 1.70 !important;
     margin-top: 24px !important;
   }
 
