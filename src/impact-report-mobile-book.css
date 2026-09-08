@@ -1,8 +1,10 @@
-/* Phone-only Impact Report viewer — match the SEDCO Directory behaviour.
-   SEDCO keeps a real landscape book canvas on mobile: the front cover sits on
-   the RIGHT half of the virtual book; opening it reveals a two-page spread;
-   dragging/swiping bends the physical page with a 3D fold and shadow.
-   Desktop/tablet are intentionally untouched. */
+/* Phone-only Impact Report viewer.
+   Behaviour mirrors the SEDCO Directory phone viewer:
+   - front cover is a single portrait page centred in the grey stage
+   - swiping the cover starts a real 3D page turn
+   - while the cover turns, the virtual book recentres
+   - inner pages remain a wide two-page spread that clips naturally at the sides
+   Desktop/tablet are untouched. */
 
 @media (max-width: 700px) {
   .impact-report-reader__stage {
@@ -11,24 +13,25 @@
     height: auto !important;
     overflow: hidden !important;
     padding: 0 !important;
-    background: #707270 !important;
+    background: #747674 !important;
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.05),
-      inset 0 -22px 44px rgba(0,0,0,.045) !important;
+      inset 0 1px 0 rgba(255, 255, 255, .05),
+      inset 0 -22px 44px rgba(0, 0, 0, .045) !important;
   }
 
   .impact-report-reader__stage::before {
-    opacity: .22 !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.035), transparent 26%, rgba(0,0,0,.03)) !important;
+    opacity: .18 !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.028), transparent 26%, rgba(0,0,0,.025)) !important;
   }
 
   .impact-report-reader__stage::after {
-    left: 14% !important;
-    right: 14% !important;
-    bottom: 18px !important;
-    height: 20px !important;
-    background: rgba(0,0,0,.22) !important;
-    filter: blur(18px) !important;
+    left: 18% !important;
+    right: 18% !important;
+    bottom: 20px !important;
+    height: 18px !important;
+    border-radius: 50% !important;
+    background: rgba(0,0,0,.20) !important;
+    filter: blur(17px) !important;
     opacity: .48 !important;
   }
 
@@ -39,7 +42,7 @@
     min-height: 0 !important;
     height: auto !important;
     overflow: hidden !important;
-    padding: 28px 0 34px !important;
+    padding: 26px 0 34px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -54,9 +57,6 @@
     transform: none !important;
   }
 
-  /* Do NOT centre the closed cover by translating the virtual book. In SEDCO
-     the book itself stays centred and the cover naturally occupies its right
-     half. That is the key visual difference from a normal mobile carousel. */
   .impact-report-reader__book-wrap,
   .impact-report-reader__book-wrap.is-front-cover,
   .impact-report-reader__book-wrap.is-back-cover {
@@ -79,6 +79,9 @@
     content: none !important;
   }
 
+  /* react-pageflip uses a two-page landscape canvas. The cover occupies the
+     right half. Move the whole canvas left by half a page so that the single
+     front cover sits exactly in the middle, just like SEDCO. */
   .impact-mobile-sedco-book {
     position: relative !important;
     flex: 0 0 calc(var(--impact-mobile-page-width) * 2) !important;
@@ -86,11 +89,28 @@
     height: var(--impact-mobile-page-height) !important;
     display: block !important;
     overflow: visible !important;
-    transform: translateZ(0) !important;
+    transform: translate3d(0, 0, 0) !important;
     transform-style: preserve-3d !important;
+    transform-origin: center center !important;
+    transition: transform 620ms cubic-bezier(.22, 1, .36, 1) !important;
     filter:
       drop-shadow(0 22px 28px rgba(0,0,0,.22))
       drop-shadow(0 5px 9px rgba(0,0,0,.10));
+    will-change: transform;
+  }
+
+  .impact-mobile-sedco-book.is-front-cover:not(.is-turning) {
+    transform: translate3d(calc(var(--impact-mobile-page-width) * -0.5), 0, 0) !important;
+  }
+
+  .impact-mobile-sedco-book.is-back-cover:not(.is-turning) {
+    transform: translate3d(calc(var(--impact-mobile-page-width) * 0.5), 0, 0) !important;
+  }
+
+  /* During the actual page turn the virtual book recentres while the sheet
+     bends. This is the distinctive SEDCO motion seen in the supplied video. */
+  .impact-mobile-sedco-book.is-turning {
+    transform: translate3d(0, 0, 0) !important;
   }
 
   .impact-sedco-flipbook {
@@ -144,10 +164,10 @@
     pointer-events: none !important;
     background: linear-gradient(
       90deg,
-      rgba(0,0,0,.035),
+      rgba(0,0,0,.028),
       transparent 5%,
       transparent 94%,
-      rgba(0,0,0,.05)
+      rgba(0,0,0,.045)
     ) !important;
     mix-blend-mode: multiply !important;
   }
@@ -158,7 +178,7 @@
     display: block !important;
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain !important;
+    object-fit: cover !important;
     object-position: center !important;
     background: #fff !important;
     -webkit-user-drag: none !important;
@@ -167,7 +187,7 @@
     backface-visibility: hidden !important;
   }
 
-  /* A fine centre seam makes the opened state read as a physical book. */
+  /* Subtle central gutter only once the book is open. */
   .impact-mobile-sedco-book::after {
     content: '' !important;
     position: absolute !important;
@@ -175,33 +195,33 @@
     top: 0 !important;
     bottom: 0 !important;
     left: 50% !important;
-    width: 10px !important;
+    width: 12px !important;
     transform: translateX(-50%) !important;
     background: linear-gradient(
       90deg,
       rgba(0,0,0,0),
-      rgba(0,0,0,.075) 42%,
-      rgba(255,255,255,.05) 53%,
+      rgba(0,0,0,.08) 43%,
+      rgba(255,255,255,.055) 54%,
       rgba(0,0,0,0)
     ) !important;
     filter: blur(1px) !important;
-    opacity: .55 !important;
+    opacity: .58 !important;
     pointer-events: none !important;
   }
 
-  .impact-report-reader__book-wrap.is-front-cover .impact-mobile-sedco-book::after,
-  .impact-report-reader__book-wrap.is-back-cover .impact-mobile-sedco-book::after {
+  .impact-mobile-sedco-book.is-front-cover::after,
+  .impact-mobile-sedco-book.is-back-cover::after,
+  .impact-mobile-sedco-book.is-turning::after {
     opacity: 0 !important;
   }
 
-  /* SEDCO-like arrows: attached to the visible viewer edges while the paper
-     turns underneath them. */
+  /* Fixed edge arrows, like the SEDCO viewer. */
   .impact-report-reader__edge {
     top: 50% !important;
     width: 38px !important;
     height: 38px !important;
     background: rgba(83,86,84,.76) !important;
-    border-color: rgba(255,255,255,.27) !important;
+    border-color: rgba(255,255,255,.28) !important;
     color: #fff !important;
     box-shadow:
       0 7px 18px rgba(0,0,0,.18),
@@ -221,8 +241,8 @@
 
 @media (max-width: 430px) {
   .impact-report-reader__viewport {
-    padding-top: 24px !important;
-    padding-bottom: 30px !important;
+    padding-top: 22px !important;
+    padding-bottom: 28px !important;
   }
 
   .impact-report-reader__edge {
@@ -239,6 +259,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .impact-mobile-sedco-book,
   .impact-sedco-flipbook,
   .impact-mobile-flip-page {
     transition: none !important;
