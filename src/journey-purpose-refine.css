@@ -1,10 +1,10 @@
-/* Journey section 03 — keep the current layout, only use a clean split background. */
+/* Journey section 03 — full white background, keeping the current layout and sizing. */
 
 .journey-section--purpose {
   position: relative;
   overflow: hidden;
   padding: 96px 0 104px;
-  background: linear-gradient(90deg, #ffffff 0%, #ffffff 47%, #063c2a 47%, #063c2a 100%) !important;
+  background: #ffffff !important;
 }
 
 .journey-section--purpose::before,
@@ -21,7 +21,6 @@
   align-items: center;
 }
 
-/* Image stays fully on the white side, without an extra white backing/frame. */
 .journey-section--purpose .journey-purpose__image {
   position: relative;
   width: 100%;
@@ -53,7 +52,6 @@
   transform: none;
 }
 
-/* Copy stays directly on the green half — no card. */
 .journey-section--purpose .journey-purpose__copy {
   max-width: 740px;
   padding: 0 clamp(0px, 1.6vw, 20px) 0 0;
@@ -68,11 +66,11 @@
   width: auto;
   margin: 0 0 30px;
   padding: 13px 22px;
-  border: 1px solid rgba(214, 164, 84, .38);
+  border: 0;
   border-radius: 999px;
-  background: rgba(255, 255, 255, .045);
-  color: #e0b466;
-  box-shadow: none;
+  background: #14634c;
+  color: #ffffff;
+  box-shadow: 0 10px 28px rgba(20, 99, 76, .12);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: .15em;
@@ -90,7 +88,7 @@
   font-weight: 520;
   line-height: .98;
   letter-spacing: -.048em;
-  color: #ffffff;
+  color: #123f31;
   text-wrap: balance;
 }
 
@@ -103,7 +101,7 @@
 .journey-section--purpose .journey-purpose__copy > p:not(.journey-kicker) {
   max-width: 680px;
   margin-top: 34px;
-  color: rgba(245, 248, 246, .80);
+  color: #566c62;
   font-family: 'Manrope', system-ui, sans-serif;
   font-size: clamp(18px, 1.3vw, 21px);
   line-height: 1.78;
@@ -113,7 +111,7 @@
 @media (max-width: 1180px) and (min-width: 901px) {
   .journey-section--purpose {
     padding: 82px 0 90px;
-    background: linear-gradient(90deg, #ffffff 0%, #ffffff 48%, #063c2a 48%, #063c2a 100%) !important;
+    background: #ffffff !important;
   }
 
   .journey-section--purpose .journey-purpose {
@@ -148,7 +146,7 @@
 @media (max-width: 900px) {
   .journey-section--purpose {
     padding: 70px 0 76px;
-    background: #063c2a !important;
+    background: #ffffff !important;
   }
 
   .journey-section--purpose .journey-purpose {
@@ -199,6 +197,7 @@
 @media (max-width: 560px) {
   .journey-section--purpose {
     padding: 58px 0 64px;
+    background: #ffffff !important;
   }
 
   .journey-section--purpose .journey-purpose {
