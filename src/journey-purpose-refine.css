@@ -4,7 +4,7 @@
   position: relative;
   overflow: hidden;
   padding: 96px 0 104px;
-  background: linear-gradient(90deg, #ffffff 0%, #ffffff 44%, #063c2a 44%, #063c2a 100%) !important;
+  background: linear-gradient(90deg, #ffffff 0%, #ffffff 47%, #063c2a 47%, #063c2a 100%) !important;
 }
 
 .journey-section--purpose::before,
@@ -21,26 +21,24 @@
   align-items: center;
 }
 
-/* Only the image sits on white. */
+/* Image stays fully on the white side, without an extra white backing/frame. */
 .journey-section--purpose .journey-purpose__image {
   position: relative;
   width: 100%;
   aspect-ratio: 1.05 / 1;
   overflow: hidden;
   border-radius: 36px;
-  background: #ffffff;
-  padding: 18px;
-  border: 1px solid rgba(255, 255, 255, .32);
-  box-shadow:
-    0 34px 86px rgba(0, 0, 0, .22),
-    0 1px 0 rgba(255, 255, 255, .78) inset;
+  background: transparent;
+  padding: 0;
+  border: 0;
+  box-shadow: 0 34px 86px rgba(0, 0, 0, .18);
 }
 
 .journey-section--purpose .journey-purpose__image::after {
   content: '';
   position: absolute;
-  inset: 18px;
-  border-radius: 26px;
+  inset: 0;
+  border-radius: inherit;
   pointer-events: none;
   background: linear-gradient(180deg, transparent 58%, rgba(5, 29, 20, .08) 100%);
 }
@@ -51,7 +49,7 @@
   display: block;
   object-fit: cover;
   object-position: center;
-  border-radius: 26px;
+  border-radius: inherit;
   transform: none;
 }
 
@@ -115,6 +113,7 @@
 @media (max-width: 1180px) and (min-width: 901px) {
   .journey-section--purpose {
     padding: 82px 0 90px;
+    background: linear-gradient(90deg, #ffffff 0%, #ffffff 48%, #063c2a 48%, #063c2a 100%) !important;
   }
 
   .journey-section--purpose .journey-purpose {
@@ -124,17 +123,17 @@
   }
 
   .journey-section--purpose .journey-purpose__image {
-    padding: 14px;
+    padding: 0;
     border-radius: 30px;
   }
 
   .journey-section--purpose .journey-purpose__image::after {
-    inset: 14px;
-    border-radius: 22px;
+    inset: 0;
+    border-radius: inherit;
   }
 
   .journey-section--purpose .journey-purpose__image img {
-    border-radius: 22px;
+    border-radius: inherit;
   }
 
   .journey-section--purpose .journey-purpose h2 {
@@ -183,17 +182,17 @@
   .journey-section--purpose .journey-purpose__image {
     order: 2;
     aspect-ratio: 4 / 3;
-    padding: 12px;
+    padding: 0;
     border-radius: 28px;
   }
 
   .journey-section--purpose .journey-purpose__image::after {
-    inset: 12px;
-    border-radius: 20px;
+    inset: 0;
+    border-radius: inherit;
   }
 
   .journey-section--purpose .journey-purpose__image img {
-    border-radius: 20px;
+    border-radius: inherit;
   }
 }
 
@@ -226,16 +225,16 @@
 
   .journey-section--purpose .journey-purpose__image {
     aspect-ratio: 4 / 3;
-    padding: 10px;
+    padding: 0;
     border-radius: 24px;
   }
 
   .journey-section--purpose .journey-purpose__image::after {
-    inset: 10px;
-    border-radius: 17px;
+    inset: 0;
+    border-radius: inherit;
   }
 
   .journey-section--purpose .journey-purpose__image img {
-    border-radius: 17px;
+    border-radius: inherit;
   }
 }
