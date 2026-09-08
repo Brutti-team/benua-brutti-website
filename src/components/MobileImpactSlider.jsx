@@ -4,13 +4,6 @@ function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value))
 }
 
-function normaliseDisplayPage(page, totalPages) {
-  const value = clamp(Number(page) || 1, 1, totalPages)
-  if (value <= 1) return 1
-  if (value >= totalPages) return totalPages
-  return value % 2 === 0 ? value : value - 1
-}
-
 function ReportImage({ page, totalPages, priority = false }) {
   if (!page || page < 1 || page > totalPages) return null
 
@@ -34,81 +27,88 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   onPageChange,
   onPageTurn,
 }, ref) {
-  const displayPageRef = useRef(normaliseDisplayPage(currentPage, totalPages))
-  const pendingEmittedPageRef = useRef(null)
-  const animationRef = useRef(null)
+  const hostRef = useRef(null)
+  const pageRef = useRef(clamp(Number(currentPage) || 1, 1, totalPages))
   const gestureRef = useRef(null)
+  const animationRef = useRef(null)
 
-  const [displayPage, setDisplayPage] = useState(displayPageRef.current)
+  const [page, setPage] = useState(pageRef.current)
   const [turn, setTurn] = useState(null)
-  const [viewportWidth, setViewportWidth] = useState(() => (
-    typeof window === 'undefined' ? 390 : window.innerWidth
+  const [viewerWidth, setViewerWidth] = useState(() => (
+    typeof window === 'undefined' ? 390 : Math.min(window.innerWidth, 520)
   ))
 
   useEffect(() => {
-    const onResize = () => setViewportWidth(window.innerWidth)
-    window.addEventListener('resize', onResize, { passive: true })
-    return () => window.removeEventListener('resize', onResize)
+    const host = hostRef.current
+    if (!host) return undefined
+
+    const update = () => {
+      const width = host.getBoundingClientRect().width
+      if (width > 0) setViewerWidth(width)
+    }
+
+    update()
+
+    const observer = typeof ResizeObserver !== 'undefined'
+      ? new ResizeObserver(update)
+      : null
+
+    observer?.observe(host)
+    window.addEventListener('resize', update, { passive: true })
+
+    return () => {
+      observer?.disconnect()
+      window.removeEventListener('resize', update)
+    }
   }, [])
 
   useEffect(() => {
-    if (turn) return
+    if (turn || animationRef.current) return
+    const next = clamp(Number(currentPage) || 1, 1, totalPages)
+    pageRef.current = next
+    setPage(next)
+  }, [currentPage, totalPages, turn])
 
-    const next = normaliseDisplayPage(currentPage, totalPages)
-
-    if (pendingEmittedPageRef.current !== null) {
-      if (next === pendingEmittedPageRef.current) {
-        pendingEmittedPageRef.current = null
-      } else {
-        return
-      }
+  useEffect(() => {
+    const preload = (pageNumber) => {
+      if (pageNumber < 1 || pageNumber > totalPages) return
+      const image = new Image()
+      image.src = `${import.meta.env.BASE_URL}assets/impact-report/page-${String(pageNumber).padStart(2, '0')}.webp`
     }
 
-    displayPageRef.current = next
-    setDisplayPage(next)
-  }, [currentPage, totalPages, turn])
+    ;[page - 2, page - 1, page, page + 1, page + 2].forEach(preload)
+  }, [page, totalPages])
 
   useEffect(() => () => {
     if (animationRef.current) cancelAnimationFrame(animationRef.current)
   }, [])
 
   const pageWidth = useMemo(() => {
-    return Math.round(clamp(viewportWidth * 0.56, 218, 286))
-  }, [viewportWidth])
+    // SEDCO keeps one portrait page inside a fixed grey frame on phone.
+    // About 80% of the viewer width leaves the same narrow side gutters.
+    return Math.round(clamp(viewerWidth * 0.80, 220, 340))
+  }, [viewerWidth])
 
   const pageHeight = useMemo(() => Math.round(pageWidth * (632 / 447)), [pageWidth])
-  const stageHeight = Math.round(pageHeight * 1.34)
-  const coverScale = 1.34
 
-  const nextTarget = (page = displayPageRef.current) => {
-    if (page >= totalPages) return null
-    if (page <= 1) return Math.min(2, totalPages)
-    return Math.min(totalPages, page + 2)
-  }
-
-  const previousTarget = (page = displayPageRef.current) => {
-    if (page <= 1) return null
-    if (page <= 2) return 1
-    if (page >= totalPages) return Math.max(2, totalPages - 2)
-    return Math.max(2, page - 2)
-  }
-
-  const emitDisplayPage = (target) => {
-    pendingEmittedPageRef.current = target
-    displayPageRef.current = target
-    setDisplayPage(target)
-    onPageChange?.(target)
+  const getTarget = (direction, source = pageRef.current) => {
+    if (direction === 'forward') {
+      return source < totalPages ? source + 1 : null
+    }
+    return source > 1 ? source - 1 : null
   }
 
   const commitTurn = (direction) => {
-    const target = direction === 'forward' ? nextTarget() : previousTarget()
+    const target = getTarget(direction)
     if (!target) {
       setTurn(null)
       return
     }
 
-    emitDisplayPage(target)
+    pageRef.current = target
+    setPage(target)
     setTurn(null)
+    onPageChange?.(target)
   }
 
   const animateProgress = (direction, fromProgress, toProgress, commitAtEnd) => {
@@ -116,7 +116,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
 
     const startedAt = performance.now()
     const distance = Math.abs(toProgress - fromProgress)
-    const duration = Math.max(180, 620 * distance)
+    const duration = Math.max(160, 520 * distance)
 
     const frame = (time) => {
       const raw = clamp((time - startedAt) / duration, 0, 1)
@@ -138,29 +138,29 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     animationRef.current = requestAnimationFrame(frame)
   }
 
-  const startProgrammaticTurn = (direction) => {
-    if (turn || animationRef.current) return
-    const target = direction === 'forward' ? nextTarget() : previousTarget()
-    if (!target) return
-
+  const startTurn = (direction) => {
+    if (turn || animationRef.current || !getTarget(direction)) return
     onPageTurn?.()
     setTurn({ direction, progress: 0, interactive: false })
     animateProgress(direction, 0, 1, true)
   }
 
   useImperativeHandle(ref, () => ({
-    goTo(page) {
+    goTo(pageNumber) {
       if (animationRef.current) cancelAnimationFrame(animationRef.current)
       animationRef.current = null
       setTurn(null)
-      const target = normaliseDisplayPage(page, totalPages)
-      emitDisplayPage(target)
+
+      const target = clamp(Number(pageNumber) || 1, 1, totalPages)
+      pageRef.current = target
+      setPage(target)
+      onPageChange?.(target)
     },
     next() {
-      startProgrammaticTurn('forward')
+      startTurn('forward')
     },
     previous() {
-      startProgrammaticTurn('backward')
+      startTurn('backward')
     },
   }))
 
@@ -186,24 +186,22 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
 
     const dx = event.clientX - gesture.startX
     const now = performance.now()
-    const deltaTime = Math.max(1, now - gesture.lastTime)
-    gesture.velocity = (event.clientX - gesture.lastX) / deltaTime
+    const elapsed = Math.max(1, now - gesture.lastTime)
+    gesture.velocity = (event.clientX - gesture.lastX) / elapsed
     gesture.lastX = event.clientX
     gesture.lastTime = now
 
-    if (!gesture.direction && Math.abs(dx) > 8) {
+    if (!gesture.direction && Math.abs(dx) > 7) {
       const direction = dx < 0 ? 'forward' : 'backward'
-      const target = direction === 'forward' ? nextTarget() : previousTarget()
-      if (!target) return
-
+      if (!getTarget(direction)) return
       gesture.direction = direction
       onPageTurn?.()
     }
 
     if (!gesture.direction) return
 
-    const signedDistance = gesture.direction === 'forward' ? -dx : dx
-    const progress = clamp(signedDistance / (pageWidth * 0.82), 0, 1)
+    const travel = gesture.direction === 'forward' ? -dx : dx
+    const progress = clamp(travel / (pageWidth * 0.78), 0, 1)
     gesture.progress = progress
     setTurn({ direction: gesture.direction, progress, interactive: true })
   }
@@ -220,8 +218,11 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
       return
     }
 
-    const directionalVelocity = gesture.direction === 'forward' ? -gesture.velocity : gesture.velocity
-    const shouldComplete = gesture.progress > 0.22 || directionalVelocity > 0.35
+    const directionalVelocity = gesture.direction === 'forward'
+      ? -gesture.velocity
+      : gesture.velocity
+
+    const shouldComplete = gesture.progress > 0.20 || directionalVelocity > 0.32
 
     animateProgress(
       gesture.direction,
@@ -231,138 +232,75 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     )
   }
 
-  const isFrontCover = displayPage <= 1
-  const isBackCover = displayPage >= totalPages
   const progress = turn?.progress ?? 0
+  const direction = turn?.direction ?? null
+  const targetPage = direction ? getTarget(direction, page) : null
 
-  let leftPage = null
-  let rightPage = null
-  let flipFront = null
-  let flipBack = null
+  // SEDCO shows only one portrait page after each turn. During a forward turn,
+  // the current sheet swings left and exposes the next page underneath. During
+  // a backward turn, the previous sheet swings in from the left over the current page.
+  const basePage = direction === 'forward'
+    ? targetPage
+    : page
 
-  if (!turn) {
-    if (isFrontCover) {
-      rightPage = 1
-    } else if (isBackCover) {
-      leftPage = totalPages
-    } else {
-      leftPage = displayPage
-      rightPage = Math.min(totalPages, displayPage + 1)
-    }
-  } else if (turn.direction === 'forward') {
-    if (displayPage <= 1) {
-      rightPage = Math.min(totalPages, 3)
-      flipFront = 1
-      flipBack = Math.min(totalPages, 2)
-    } else {
-      leftPage = displayPage
-      rightPage = displayPage + 3 <= totalPages ? displayPage + 3 : null
-      flipFront = Math.min(totalPages, displayPage + 1)
-      flipBack = Math.min(totalPages, displayPage + 2)
-    }
-  } else if (displayPage >= totalPages) {
-    leftPage = Math.max(1, totalPages - 2)
-    flipFront = totalPages
-    flipBack = Math.max(1, totalPages - 1)
-  } else {
-    leftPage = displayPage > 2 ? displayPage - 2 : null
-    rightPage = Math.min(totalPages, displayPage + 1)
-    flipFront = displayPage
-    flipBack = displayPage <= 2 ? 1 : displayPage - 1
-  }
+  const turningPage = direction === 'forward'
+    ? page
+    : targetPage
 
-  const openingFront = Boolean(turn && displayPage <= 1 && turn.direction === 'forward')
-  const closingFront = Boolean(turn && displayPage <= 2 && turn.direction === 'backward')
-  const closingBack = Boolean(turn && turn.direction === 'forward' && nextTarget(displayPage) === totalPages)
-  const openingBack = Boolean(turn && displayPage >= totalPages && turn.direction === 'backward')
+  const backFacePage = direction === 'forward'
+    ? targetPage
+    : page
 
-  let sceneShift = 0
-  let sceneScale = 1
+  const turnAngle = direction === 'forward'
+    ? -180 * progress
+    : -180 + (180 * progress)
 
-  if (!turn && isFrontCover) {
-    sceneShift = -pageWidth / 2
-    sceneScale = coverScale
-  } else if (!turn && isBackCover) {
-    sceneShift = pageWidth / 2
-    sceneScale = coverScale
-  } else if (openingFront) {
-    sceneShift = -(pageWidth / 2) * (1 - progress)
-    sceneScale = coverScale - (coverScale - 1) * progress
-  } else if (closingFront) {
-    sceneShift = -(pageWidth / 2) * progress
-    sceneScale = 1 + (coverScale - 1) * progress
-  } else if (closingBack) {
-    sceneShift = (pageWidth / 2) * progress
-    sceneScale = 1 + (coverScale - 1) * progress
-  } else if (openingBack) {
-    sceneShift = (pageWidth / 2) * (1 - progress)
-    sceneScale = coverScale - (coverScale - 1) * progress
-  }
-
-  const turnAngle = turn
-    ? (turn.direction === 'forward' ? -180 : 180) * progress
-    : 0
-
-  const turnRadius = `${Math.round(3 + progress * 11)}px`
-  const turnEdgeOpacity = String(0.18 + progress * 0.58)
-  const turnShadowOpacity = String(0.06 + progress * 0.20)
+  const curl = Math.sin(Math.PI * progress)
+  const turnScaleX = 1 - (0.055 * curl)
 
   return (
     <div
-      className={`impact-mobile-custom-book${isFrontCover ? ' is-front-cover' : ''}${isBackCover ? ' is-back-cover' : ''}${turn ? ' is-turning' : ''}`}
+      ref={hostRef}
+      className={`impact-mobile-sedco-single${turn ? ' is-turning' : ''}`}
       aria-label="Impact Report mobile book viewer"
       style={{
         '--impact-mobile-page-width': `${pageWidth}px`,
         '--impact-mobile-page-height': `${pageHeight}px`,
-        '--impact-mobile-stage-height': `${stageHeight}px`,
         '--impact-turn-progress': progress,
-        '--impact-turn-radius': turnRadius,
-        '--impact-turn-edge-opacity': turnEdgeOpacity,
-        '--impact-turn-shadow-opacity': turnShadowOpacity,
+        '--impact-turn-curl': curl,
       }}
     >
       <div
-        className="impact-mobile-custom-book__gesture"
+        className="impact-mobile-sedco-single__gesture"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={finishPointerGesture}
         onPointerCancel={finishPointerGesture}
       >
-        <div
-          className="impact-mobile-custom-book__scene"
-          style={{ transform: `translate3d(${sceneShift}px, 0, 0) scale(${sceneScale})` }}
-        >
-          <div className="impact-mobile-custom-book__slot impact-mobile-custom-book__slot--left">
-            {leftPage && (
-              <div className="impact-mobile-custom-book__page">
-                <ReportImage page={leftPage} totalPages={totalPages} priority={leftPage <= 4} />
-              </div>
-            )}
+        <div className="impact-mobile-sedco-single__book">
+          <div className="impact-mobile-sedco-single__paper impact-mobile-sedco-single__paper--base">
+            <ReportImage
+              page={basePage || page}
+              totalPages={totalPages}
+              priority
+            />
           </div>
 
-          <div className="impact-mobile-custom-book__slot impact-mobile-custom-book__slot--right">
-            {rightPage && (
-              <div className="impact-mobile-custom-book__page">
-                <ReportImage page={rightPage} totalPages={totalPages} priority={rightPage <= 4} />
-              </div>
-            )}
-          </div>
-
-          {turn && flipFront && flipBack && (
+          {turn && turningPage && backFacePage && (
             <div
-              className={`impact-mobile-custom-book__turn-sheet impact-mobile-custom-book__turn-sheet--${turn.direction}`}
-              style={{ transform: `rotateY(${turnAngle}deg)` }}
+              className={`impact-mobile-sedco-single__turn impact-mobile-sedco-single__turn--${direction}`}
+              style={{ transform: `rotateY(${turnAngle}deg) scaleX(${turnScaleX})` }}
             >
-              <div className="impact-mobile-custom-book__face impact-mobile-custom-book__face--front">
-                <ReportImage page={flipFront} totalPages={totalPages} priority />
+              <div className="impact-mobile-sedco-single__face impact-mobile-sedco-single__face--front">
+                <ReportImage page={turningPage} totalPages={totalPages} priority />
               </div>
-              <div className="impact-mobile-custom-book__face impact-mobile-custom-book__face--back">
-                <ReportImage page={flipBack} totalPages={totalPages} priority />
+              <div className="impact-mobile-sedco-single__face impact-mobile-sedco-single__face--back">
+                <ReportImage page={backFacePage} totalPages={totalPages} priority />
               </div>
             </div>
           )}
 
-          <div className="impact-mobile-custom-book__spine" aria-hidden="true" />
+          <div className="impact-mobile-sedco-single__page-stack" aria-hidden="true" />
         </div>
       </div>
     </div>
