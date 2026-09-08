@@ -1,4 +1,9 @@
-/* Phone-only SEDCO-style Impact Report book. Desktop/tablet untouched. */
+/* Phone-only Impact Report viewer — mirrors the SEDCO Directory phone behaviour.
+   One portrait page stays centred inside the grey reader. When swiped, that
+   physical page swings left/right around its left edge and exposes the adjacent
+   page underneath, then settles back to one centred portrait page.
+   Desktop/tablet are intentionally untouched. */
+
 @media (max-width: 700px) {
   .impact-report-reader__stage {
     position: relative !important;
@@ -7,23 +12,29 @@
     overflow: hidden !important;
     padding: 0 !important;
     background: #727472 !important;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.045), inset 0 -22px 44px rgba(0,0,0,.045) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.045),
+      inset 0 -18px 36px rgba(0,0,0,.045) !important;
   }
 
   .impact-report-reader__stage::before {
-    opacity: .18 !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.028), transparent 28%, rgba(0,0,0,.024)) !important;
+    opacity: .16 !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.025), transparent 30%, rgba(0,0,0,.022)) !important;
   }
 
   .impact-report-reader__stage::after {
-    left: 18% !important;
-    right: 18% !important;
-    bottom: 17px !important;
-    height: 18px !important;
+    content: '' !important;
+    position: absolute !important;
+    z-index: 1 !important;
+    left: 22% !important;
+    right: 22% !important;
+    bottom: 15px !important;
+    height: 15px !important;
     border-radius: 50% !important;
-    background: rgba(0,0,0,.20) !important;
-    filter: blur(17px) !important;
-    opacity: .44 !important;
+    background: rgba(0,0,0,.18) !important;
+    filter: blur(15px) !important;
+    opacity: .38 !important;
+    pointer-events: none !important;
   }
 
   .impact-report-reader__viewport {
@@ -33,7 +44,7 @@
     min-height: 0 !important;
     height: auto !important;
     overflow: hidden !important;
-    padding: 26px 0 32px !important;
+    padding: 20px 0 24px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -70,18 +81,18 @@
     content: none !important;
   }
 
-  .impact-mobile-custom-book {
+  .impact-mobile-sedco-single {
     position: relative !important;
     width: 100% !important;
-    height: var(--impact-mobile-stage-height) !important;
+    height: calc(var(--impact-mobile-page-height) + 12px) !important;
     min-height: 0 !important;
+    overflow: hidden !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    overflow: hidden !important;
   }
 
-  .impact-mobile-custom-book__gesture {
+  .impact-mobile-sedco-single__gesture {
     position: relative !important;
     width: 100% !important;
     height: 100% !important;
@@ -91,177 +102,166 @@
     overflow: hidden !important;
     touch-action: pan-y !important;
     cursor: grab !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
   }
 
-  .impact-mobile-custom-book__gesture:active { cursor: grabbing !important; }
+  .impact-mobile-sedco-single__gesture:active {
+    cursor: grabbing !important;
+  }
 
-  .impact-mobile-custom-book__scene {
+  .impact-mobile-sedco-single__book {
     position: relative !important;
-    flex: 0 0 calc(var(--impact-mobile-page-width) + var(--impact-mobile-page-width)) !important;
-    width: calc(var(--impact-mobile-page-width) + var(--impact-mobile-page-width)) !important;
-    height: var(--impact-mobile-page-height) !important;
-    transform-style: preserve-3d !important;
-    transform-origin: center center !important;
-    perspective: 2200px !important;
-    will-change: transform !important;
-    filter: drop-shadow(0 24px 28px rgba(0,0,0,.20)) drop-shadow(0 6px 10px rgba(0,0,0,.10)) !important;
-  }
-
-  .impact-mobile-custom-book__slot {
-    position: absolute !important;
-    top: 0 !important;
+    flex: 0 0 var(--impact-mobile-page-width) !important;
     width: var(--impact-mobile-page-width) !important;
     height: var(--impact-mobile-page-height) !important;
-    overflow: visible !important;
+    perspective: 2100px !important;
+    transform-style: preserve-3d !important;
+    filter:
+      drop-shadow(0 18px 24px rgba(0,0,0,.18))
+      drop-shadow(0 5px 8px rgba(0,0,0,.10)) !important;
   }
 
-  .impact-mobile-custom-book__slot--left { left: 0 !important; }
-  .impact-mobile-custom-book__slot--right { left: 50% !important; }
-
-  .impact-mobile-custom-book__page,
-  .impact-mobile-custom-book__face {
+  .impact-mobile-sedco-single__paper,
+  .impact-mobile-sedco-single__turn,
+  .impact-mobile-sedco-single__face {
     position: absolute !important;
     inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .impact-mobile-sedco-single__paper,
+  .impact-mobile-sedco-single__face {
     overflow: hidden !important;
     background: #fff !important;
-    border: 1px solid rgba(14,28,22,.055) !important;
+    border: 1px solid rgba(18,28,23,.07) !important;
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
   }
 
-  .impact-mobile-custom-book__slot--left .impact-mobile-custom-book__page {
-    box-shadow: inset -10px 0 18px rgba(15,29,23,.055), inset 0 0 0 1px rgba(255,255,255,.12) !important;
+  .impact-mobile-sedco-single__paper--base {
+    z-index: 4 !important;
+    box-shadow:
+      inset 7px 0 13px rgba(14,29,22,.018),
+      inset -2px 0 5px rgba(14,29,22,.025) !important;
   }
 
-  .impact-mobile-custom-book__slot--right .impact-mobile-custom-book__page {
-    box-shadow: inset 10px 0 18px rgba(15,29,23,.045), inset 0 0 0 1px rgba(255,255,255,.12) !important;
-  }
-
-  .impact-mobile-custom-book__page img,
-  .impact-mobile-custom-book__face img {
+  .impact-mobile-sedco-single__paper img,
+  .impact-mobile-sedco-single__face img {
     display: block !important;
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover !important;
-    object-position: center !important;
+    object-fit: contain !important;
+    object-position: center center !important;
     background: #fff !important;
     -webkit-user-drag: none !important;
     user-select: none !important;
     pointer-events: none !important;
   }
 
-  .impact-mobile-custom-book__turn-sheet {
-    position: absolute !important;
-    z-index: 25 !important;
-    top: 0 !important;
-    width: var(--impact-mobile-page-width) !important;
-    height: var(--impact-mobile-page-height) !important;
+  /* Turning sheet: SEDCO rotates the current portrait page around its LEFT
+     edge. The next page stays flat underneath, so the reader never becomes a
+     permanent two-page spread. */
+  .impact-mobile-sedco-single__turn {
+    z-index: 20 !important;
+    transform-origin: left center !important;
     transform-style: preserve-3d !important;
     will-change: transform !important;
   }
 
-  .impact-mobile-custom-book__turn-sheet--forward {
-    left: 50% !important;
-    transform-origin: left center !important;
+  .impact-mobile-sedco-single__face {
+    box-shadow:
+      0 10px 28px rgba(0,0,0,calc(.05 + var(--impact-turn-curl) * .22)),
+      inset 0 0 0 1px rgba(0,0,0,.022) !important;
   }
 
-  .impact-mobile-custom-book__turn-sheet--backward {
-    left: 0 !important;
-    transform-origin: right center !important;
+  .impact-mobile-sedco-single__face--front {
+    transform: rotateY(0deg) translateZ(.7px) !important;
   }
 
-  .impact-mobile-custom-book__face {
-    box-shadow: 0 12px 32px rgba(0,0,0,var(--impact-turn-shadow-opacity)), inset 0 0 0 1px rgba(0,0,0,.025) !important;
+  .impact-mobile-sedco-single__face--back {
+    transform: rotateY(180deg) translateZ(.7px) !important;
   }
 
-  .impact-mobile-custom-book__face--front {
-    transform: rotateY(0deg) translateZ(.6px) !important;
-  }
-
-  .impact-mobile-custom-book__face--back {
-    transform: rotateY(180deg) translateZ(.6px) !important;
-  }
-
-  .impact-mobile-custom-book__turn-sheet--forward .impact-mobile-custom-book__face {
-    border-radius: 0 var(--impact-turn-radius) var(--impact-turn-radius) 0 !important;
-  }
-
-  .impact-mobile-custom-book__turn-sheet--backward .impact-mobile-custom-book__face {
-    border-radius: var(--impact-turn-radius) 0 0 var(--impact-turn-radius) !important;
-  }
-
-  .impact-mobile-custom-book__turn-sheet::after {
+  .impact-mobile-sedco-single__turn::before {
     content: '' !important;
     position: absolute !important;
-    z-index: 40 !important;
+    z-index: 35 !important;
     top: 0 !important;
     bottom: 0 !important;
-    width: 22px !important;
-    opacity: var(--impact-turn-edge-opacity) !important;
+    left: 0 !important;
+    width: calc(16px + var(--impact-turn-curl) * 22px) !important;
+    background: linear-gradient(90deg, rgba(0,0,0,.13), rgba(0,0,0,.035), transparent) !important;
+    opacity: calc(.12 + var(--impact-turn-curl) * .52) !important;
     pointer-events: none !important;
   }
 
-  .impact-mobile-custom-book__turn-sheet--forward::after {
-    right: -2px !important;
-    background: linear-gradient(90deg, transparent, rgba(0,0,0,.16), rgba(255,255,255,.20)) !important;
-  }
-
-  .impact-mobile-custom-book__turn-sheet--backward::after {
-    left: -2px !important;
-    background: linear-gradient(90deg, rgba(255,255,255,.20), rgba(0,0,0,.16), transparent) !important;
-  }
-
-  .impact-mobile-custom-book__spine {
-    position: absolute !important;
-    z-index: 18 !important;
-    top: .3% !important;
-    bottom: .3% !important;
-    left: 50% !important;
-    width: 14px !important;
-    transform: translateX(-50%) !important;
-    background: linear-gradient(90deg, rgba(0,0,0,0), rgba(0,0,0,.085) 39%, rgba(255,255,255,.055) 53%, rgba(0,0,0,0)) !important;
-    filter: blur(1px) !important;
-    opacity: .64 !important;
-    pointer-events: none !important;
-  }
-
-  .impact-mobile-custom-book.is-front-cover:not(.is-turning) .impact-mobile-custom-book__spine,
-  .impact-mobile-custom-book.is-back-cover:not(.is-turning) .impact-mobile-custom-book__spine {
-    opacity: 0 !important;
-  }
-
-  .impact-mobile-custom-book.is-front-cover:not(.is-turning) .impact-mobile-custom-book__slot--right::before,
-  .impact-mobile-custom-book.is-back-cover:not(.is-turning) .impact-mobile-custom-book__slot--left::before {
+  .impact-mobile-sedco-single__turn::after {
     content: '' !important;
     position: absolute !important;
-    z-index: -1 !important;
-    inset: 3px -4px -4px 4px !important;
-    background: #deddd7 !important;
-    border: 1px solid rgba(0,0,0,.055) !important;
-    box-shadow: 3px 3px 0 #cac9c3, 5px 5px 12px rgba(0,0,0,.08) !important;
+    z-index: 36 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    right: -1px !important;
+    width: calc(10px + var(--impact-turn-curl) * 20px) !important;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,.11), rgba(255,255,255,.16)) !important;
+    opacity: calc(.12 + var(--impact-turn-curl) * .55) !important;
+    pointer-events: none !important;
   }
 
+  .impact-mobile-sedco-single__turn--forward .impact-mobile-sedco-single__face,
+  .impact-mobile-sedco-single__turn--backward .impact-mobile-sedco-single__face {
+    border-radius: 0 calc(2px + var(--impact-turn-curl) * 10px) calc(2px + var(--impact-turn-curl) * 10px) 0 !important;
+  }
+
+  /* Tiny paper edge behind the settled page so it still reads as a physical
+     booklet rather than a flat screenshot. */
+  .impact-mobile-sedco-single__page-stack {
+    position: absolute !important;
+    z-index: 1 !important;
+    top: 3px !important;
+    right: -5px !important;
+    bottom: -5px !important;
+    left: 5px !important;
+    background: #d9d8d3 !important;
+    border: 1px solid rgba(0,0,0,.055) !important;
+    box-shadow:
+      2px 2px 0 #c9c8c3,
+      4px 4px 10px rgba(0,0,0,.07) !important;
+    pointer-events: none !important;
+  }
+
+  /* Fixed side arrows, like the SEDCO viewer. */
   .impact-report-reader__edge {
     top: 50% !important;
     width: 38px !important;
     height: 38px !important;
-    background: rgba(83,86,84,.78) !important;
+    background: rgba(83,86,84,.80) !important;
     border-color: rgba(255,255,255,.28) !important;
     color: #fff !important;
-    box-shadow: 0 7px 18px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.08) !important;
+    box-shadow:
+      0 7px 18px rgba(0,0,0,.18),
+      inset 0 1px 0 rgba(255,255,255,.08) !important;
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
   }
 
-  .impact-report-reader__edge--left { left: 8px !important; }
-  .impact-report-reader__edge--right { right: 8px !important; }
+  .impact-report-reader__edge--left {
+    left: 8px !important;
+  }
+
+  .impact-report-reader__edge--right {
+    right: 8px !important;
+  }
 }
 
 @media (max-width: 430px) {
   .impact-report-reader__viewport {
-    padding-top: 22px !important;
-    padding-bottom: 28px !important;
+    padding-top: 18px !important;
+    padding-bottom: 22px !important;
   }
+
   .impact-report-reader__edge {
     width: 36px !important;
     height: 36px !important;
@@ -276,8 +276,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .impact-mobile-custom-book__scene,
-  .impact-mobile-custom-book__turn-sheet {
+  .impact-mobile-sedco-single__turn {
     transition: none !important;
   }
 }
