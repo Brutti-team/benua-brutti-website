@@ -30,14 +30,21 @@
   box-shadow: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  font-size: 12px !important;
+  letter-spacing: .15em !important;
+  gap: 0 !important;
 }
 
+/* Remove the decorative dash before 04. */
 .journey-team__copy .journey-kicker::before {
-  background: #d7aa5d !important;
+  display: none !important;
 }
 
 .journey-team__copy h2 {
   color: #ffffff !important;
+  max-width: 520px !important;
+  font-size: clamp(56px, 4.7vw, 74px) !important;
+  line-height: .96 !important;
 }
 
 .journey-team__copy h2 span {
@@ -45,16 +52,33 @@
 }
 
 .journey-team__copy > p:not(.journey-kicker) {
-  color: rgba(244, 248, 245, .76) !important;
+  color: rgba(244, 248, 245, .80) !important;
+  max-width: 470px !important;
+  font-size: 15.5px !important;
+  line-height: 1.62 !important;
 }
 
 .journey-team__values {
-  color: rgba(255, 255, 255, .70) !important;
+  color: rgba(255, 255, 255, .74) !important;
+  font-size: 9.5px !important;
+  letter-spacing: .11em !important;
+  gap: 0 !important;
+}
+
+/* Cleaner editorial separators instead of dot bullets. */
+.journey-team__values span {
+  gap: 0 !important;
+  padding: 0 16px !important;
+  border-left: 1px solid rgba(215, 170, 93, .30) !important;
+}
+
+.journey-team__values span:first-child {
+  padding-left: 0 !important;
+  border-left: 0 !important;
 }
 
 .journey-team__values span::before {
-  background: #d6a454 !important;
-  box-shadow: 0 0 0 4px rgba(214, 164, 84, .10) !important;
+  display: none !important;
 }
 
 .journey-team__copy .journey-primary {
@@ -62,6 +86,7 @@
   color: #ffffff !important;
   border-color: rgba(255, 255, 255, .20) !important;
   box-shadow: none !important;
+  font-size: 14px !important;
 }
 
 .journey-team__copy .journey-primary:hover {
@@ -87,7 +112,7 @@
   }
 
   .journey-team__copy {
-    max-width: 520px !important;
+    max-width: 560px !important;
     position: relative !important;
     z-index: 5 !important;
     align-self: center !important;
@@ -149,8 +174,16 @@
   }
 
   .journey-team__copy {
-    max-width: 500px !important;
+    max-width: 535px !important;
     padding-right: 38px !important;
+  }
+
+  .journey-team__copy h2 {
+    font-size: clamp(52px, 4.35vw, 68px) !important;
+  }
+
+  .journey-team__copy > p:not(.journey-kicker) {
+    font-size: 14.5px !important;
   }
 
   .journey-team__stage {
@@ -176,8 +209,16 @@
   }
 
   .journey-team__copy {
-    max-width: 480px !important;
+    max-width: 510px !important;
     padding-right: 30px !important;
+  }
+
+  .journey-team__copy h2 {
+    font-size: clamp(50px, 4.5vw, 66px) !important;
+  }
+
+  .journey-team__copy > p:not(.journey-kicker) {
+    font-size: 14px !important;
   }
 
   .journey-team__stage {
@@ -211,6 +252,14 @@
 
   .journey-team__copy {
     max-width: 650px !important;
+  }
+
+  .journey-team__copy h2 {
+    font-size: clamp(50px, 9vw, 66px) !important;
+  }
+
+  .journey-team__copy > p:not(.journey-kicker) {
+    font-size: 15px !important;
   }
 
   .journey-team__stage {
