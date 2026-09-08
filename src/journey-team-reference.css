@@ -115,8 +115,8 @@
   }
 
   .journey-team__composite {
-    width: min(170%, 1450px) !important;
-    max-width: 1450px !important;
+    width: min(182%, 1540px) !important;
+    max-width: 1540px !important;
     margin: 0 auto !important;
     transform: none !important;
     transform-origin: 50% 50% !important;
@@ -131,7 +131,7 @@
     display: block !important;
     object-fit: contain !important;
     object-position: center center !important;
-    transform: scale(1.16) !important;
+    transform: scale(1.22) !important;
     transform-origin: 50% 50% !important;
   }
 }
@@ -158,13 +158,13 @@
   }
 
   .journey-team__composite {
-    width: min(162%, 1320px) !important;
-    max-width: 1320px !important;
+    width: min(172%, 1400px) !important;
+    max-width: 1400px !important;
     margin: 0 auto !important;
   }
 
   .journey-team__composite img {
-    transform: scale(1.18) !important;
+    transform: scale(1.22) !important;
   }
 }
 
@@ -184,13 +184,13 @@
   }
 
   .journey-team__composite {
-    width: min(158%, 1200px) !important;
-    max-width: 1200px !important;
+    width: min(168%, 1280px) !important;
+    max-width: 1280px !important;
     margin: 0 auto !important;
   }
 
   .journey-team__composite img {
-    transform: scale(1.16) !important;
+    transform: scale(1.20) !important;
   }
 }
 
@@ -229,16 +229,16 @@
   }
 
   .journey-team__composite {
-    width: min(134%, 980px) !important;
-    max-width: 980px !important;
-    margin: 0 -17% -4px !important;
+    width: min(142%, 1040px) !important;
+    max-width: 1040px !important;
+    margin: 0 -21% -4px !important;
   }
 
   .journey-team__composite img {
     width: 100% !important;
     object-fit: contain !important;
     object-position: center bottom !important;
-    transform: scale(1.08) !important;
+    transform: scale(1.12) !important;
     transform-origin: center bottom !important;
   }
 }
@@ -250,8 +250,8 @@
   }
 
   .journey-team__composite {
-    width: 138% !important;
-    margin-left: -19% !important;
-    margin-right: -19% !important;
+    width: 148% !important;
+    margin-left: -24% !important;
+    margin-right: -24% !important;
   }
 }
