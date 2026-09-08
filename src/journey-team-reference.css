@@ -115,8 +115,8 @@
   }
 
   .journey-team__composite {
-    width: min(150%, 1280px) !important;
-    max-width: 1280px !important;
+    width: min(170%, 1450px) !important;
+    max-width: 1450px !important;
     margin: 0 auto !important;
     transform: none !important;
     transform-origin: 50% 50% !important;
@@ -127,11 +127,12 @@
     width: 100% !important;
     max-width: 100% !important;
     height: auto !important;
-    max-height: calc(100vh - 92px) !important;
+    max-height: none !important;
     display: block !important;
     object-fit: contain !important;
     object-position: center center !important;
-    transform: none !important;
+    transform: scale(1.16) !important;
+    transform-origin: 50% 50% !important;
   }
 }
 
@@ -157,13 +158,13 @@
   }
 
   .journey-team__composite {
-    width: min(144%, 1160px) !important;
-    max-width: 1160px !important;
+    width: min(162%, 1320px) !important;
+    max-width: 1320px !important;
     margin: 0 auto !important;
   }
 
   .journey-team__composite img {
-    max-height: calc(100vh - 88px) !important;
+    transform: scale(1.18) !important;
   }
 }
 
@@ -183,13 +184,13 @@
   }
 
   .journey-team__composite {
-    width: min(142%, 1080px) !important;
-    max-width: 1080px !important;
+    width: min(158%, 1200px) !important;
+    max-width: 1200px !important;
     margin: 0 auto !important;
   }
 
   .journey-team__composite img {
-    max-height: calc(100vh - 96px) !important;
+    transform: scale(1.16) !important;
   }
 }
 
@@ -228,15 +229,17 @@
   }
 
   .journey-team__composite {
-    width: min(126%, 920px) !important;
-    max-width: 920px !important;
-    margin: 0 -13% -4px !important;
+    width: min(134%, 980px) !important;
+    max-width: 980px !important;
+    margin: 0 -17% -4px !important;
   }
 
   .journey-team__composite img {
     width: 100% !important;
     object-fit: contain !important;
     object-position: center bottom !important;
+    transform: scale(1.08) !important;
+    transform-origin: center bottom !important;
   }
 }
 
@@ -247,8 +250,8 @@
   }
 
   .journey-team__composite {
-    width: 132% !important;
-    margin-left: -16% !important;
-    margin-right: -16% !important;
+    width: 138% !important;
+    margin-left: -19% !important;
+    margin-right: -19% !important;
   }
 }
