@@ -1,0 +1,271 @@
+/* Phone-only catalogue flipbook.
+   Recreates the supplied reference behaviour: one portrait page at a time,
+   with a real 3D page fold while swiping or dragging the page edge.
+   Desktop and tablet catalogue media stay unchanged. */
+
+.catalogue-coming__mobile-book {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .catalogue-coming__media--desktop {
+    display: none !important;
+  }
+
+  .catalogue-coming__mobile-book {
+    display: block !important;
+    width: 100% !important;
+    margin: 4px auto 0 !important;
+  }
+
+  .catalogue-mobile-book__stage {
+    position: relative !important;
+    width: 100% !important;
+    min-height: 500px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    padding: 18px 30px 22px !important;
+    box-sizing: border-box !important;
+    border: 1px solid rgba(24, 61, 45, .09) !important;
+    border-radius: 18px !important;
+    background:
+      radial-gradient(circle at 50% 38%, rgba(255,255,255,.13), transparent 34%),
+      linear-gradient(180deg, #6a6d6b 0%, #5e615f 100%) !important;
+    box-shadow:
+      0 20px 46px rgba(24, 38, 31, .11),
+      inset 0 1px 0 rgba(255,255,255,.06) !important;
+    perspective: 1800px !important;
+    isolation: isolate !important;
+  }
+
+  .catalogue-mobile-book__stage::after {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    left: 20%;
+    right: 20%;
+    bottom: 28px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, .25);
+    filter: blur(17px);
+    opacity: .62;
+    pointer-events: none;
+  }
+
+  .catalogue-mobile-flipbook {
+    position: relative !important;
+    z-index: 2 !important;
+    margin: 0 auto !important;
+    filter: drop-shadow(0 16px 21px rgba(0,0,0,.17));
+    touch-action: pan-y !important;
+  }
+
+  .catalogue-mobile-flipbook .stf__parent,
+  .catalogue-mobile-flipbook .stf__wrapper,
+  .catalogue-mobile-flipbook .stf__block {
+    overflow: visible !important;
+  }
+
+  .catalogue-mobile-page {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    background: #eeeae0 !important;
+    border: 1px solid rgba(20, 39, 30, .12) !important;
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.24),
+      inset -12px 0 20px rgba(15, 26, 20, .045) !important;
+    transform: translateZ(0);
+  }
+
+  .catalogue-mobile-page::after {
+    content: '';
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(255,255,255,.09), transparent 8%, transparent 90%, rgba(0,0,0,.07));
+    mix-blend-mode: soft-light;
+  }
+
+  .catalogue-mobile-page img {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    user-select: none !important;
+    -webkit-user-drag: none !important;
+    pointer-events: none !important;
+  }
+
+  .catalogue-mobile-page__shade {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(4, 20, 14, .12) 0%, rgba(4, 20, 14, .05) 34%, rgba(3, 20, 14, .76) 100%);
+    pointer-events: none;
+  }
+
+  .catalogue-mobile-page__copy {
+    position: absolute;
+    z-index: 3;
+    left: 20px;
+    right: 20px;
+    bottom: 22px;
+    display: grid;
+    gap: 7px;
+    color: #fff;
+    text-align: left;
+    pointer-events: none;
+  }
+
+  .catalogue-mobile-page__copy > span {
+    font-size: 8.5px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    opacity: .82;
+  }
+
+  .catalogue-mobile-page__copy > strong {
+    max-width: 92%;
+    font-size: clamp(22px, 7vw, 29px);
+    font-weight: 650;
+    line-height: 1.02;
+    letter-spacing: -.04em;
+  }
+
+  .catalogue-mobile-page__copy > p {
+    max-width: 92%;
+    margin: 0;
+    color: rgba(255,255,255,.82);
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+
+  .catalogue-mobile-page--cover .catalogue-mobile-page__shade {
+    background:
+      linear-gradient(180deg, rgba(2, 20, 13, .18) 0%, rgba(2, 20, 13, .10) 30%, rgba(3, 25, 17, .84) 100%);
+  }
+
+  .catalogue-mobile-page--cover .catalogue-mobile-page__copy > strong {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: clamp(26px, 8.6vw, 34px);
+  }
+
+  .catalogue-mobile-book__edge {
+    position: absolute !important;
+    z-index: 8 !important;
+    top: 50% !important;
+    width: 38px !important;
+    height: 38px !important;
+    display: grid !important;
+    place-items: center !important;
+    padding: 0 !important;
+    transform: translateY(-50%) !important;
+    border: 1px solid rgba(255,255,255,.23) !important;
+    border-radius: 50% !important;
+    background: rgba(45, 49, 47, .78) !important;
+    color: #fff !important;
+    font-size: 28px !important;
+    font-weight: 300 !important;
+    line-height: 1 !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,.16) !important;
+    backdrop-filter: blur(9px) !important;
+    -webkit-backdrop-filter: blur(9px) !important;
+    cursor: pointer !important;
+  }
+
+  .catalogue-mobile-book__edge--left {
+    left: 7px !important;
+  }
+
+  .catalogue-mobile-book__edge--right {
+    right: 7px !important;
+  }
+
+  .catalogue-mobile-book__edge:disabled {
+    opacity: .24 !important;
+    pointer-events: none !important;
+  }
+
+  .catalogue-mobile-book__footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 4px 0;
+    box-sizing: border-box;
+    color: #6e746e;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .catalogue-mobile-book__footer span:first-child {
+    flex: 0 0 auto;
+    color: #315846;
+  }
+
+  .catalogue-mobile-book__footer span:last-child {
+    text-align: right;
+  }
+}
+
+@media (max-width: 430px) {
+  .catalogue-mobile-book__stage {
+    min-height: 470px !important;
+    padding: 16px 28px 20px !important;
+  }
+
+  .catalogue-mobile-book__edge {
+    width: 35px !important;
+    height: 35px !important;
+    font-size: 25px !important;
+  }
+
+  .catalogue-mobile-page__copy {
+    left: 17px;
+    right: 17px;
+    bottom: 19px;
+  }
+}
+
+@media (max-width: 360px) {
+  .catalogue-mobile-book__stage {
+    min-height: 435px !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  .catalogue-mobile-book__edge--left {
+    left: 4px !important;
+  }
+
+  .catalogue-mobile-book__edge--right {
+    right: 4px !important;
+  }
+
+  .catalogue-mobile-book__footer {
+    font-size: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catalogue-mobile-flipbook {
+    filter: none !important;
+  }
+}
