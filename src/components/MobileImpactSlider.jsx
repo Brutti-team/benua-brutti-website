@@ -91,16 +91,16 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
         size="fixed"
         startPage={Math.max(0, Math.min(totalPages - 1, currentPage - 1))}
         drawShadow
-        flippingTime={780}
-        usePortrait={false}
+        flippingTime={720}
+        usePortrait
         startZIndex={10}
         autoSize={false}
-        maxShadowOpacity={0.42}
+        maxShadowOpacity={0.38}
         showCover
         mobileScrollSupport
         clickEventForward={false}
         useMouseEvents
-        swipeDistance={22}
+        swipeDistance={18}
         showPageCorners
         disableFlipByClick={false}
         className="impact-html-flipbook impact-html-flipbook--mobile"
