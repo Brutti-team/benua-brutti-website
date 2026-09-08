@@ -36,3 +36,13 @@
     min-height: 0 !important;
   }
 }
+
+/* Phone-only catalogue inset: keep the whole section comfortably away from
+   the screen edge while preserving the desktop/tablet design. */
+@media (max-width: 620px) {
+  html body .catalogue-coming .catalogue-coming__shell {
+    box-sizing: border-box !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+}
