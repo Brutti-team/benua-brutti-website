@@ -2,10 +2,12 @@
    Deployment builds a tight transparent composite from the individual staff
    portraits, so the group can sit directly on the green section without a card. */
 
+/* Keep the cut-out edge completely clean. A CSS drop-shadow follows every
+   transparent pixel and was reading as a thick black outline around hair,
+   sleeves, tools and legs on the dark green background. The source image is
+   already defringed during deployment, so no silhouette shadow is needed. */
 .journey-team__composite img {
-  filter:
-    drop-shadow(0 30px 30px rgba(0, 20, 13, .24))
-    drop-shadow(0 5px 8px rgba(0, 0, 0, .10)) !important;
+  filter: none !important;
 }
 
 @media (min-width: 981px) {
