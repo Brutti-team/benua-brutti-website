@@ -1,86 +1,13 @@
-import { forwardRef, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import HTMLFlipBook from 'react-pageflip'
 import '../catalogue-coming-clean.css'
-import '../catalogue-mobile-flip.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
 const categories = ['Furniture', 'Custom Work', 'Spaces', 'Projects']
 
-const mobileCataloguePages = [
-  {
-    image: 'what-we-build/memento.webp',
-    kicker: 'BRUTTI CATALOG',
-    title: 'The Brutti Collection',
-    meta: 'Furniture · Custom Work · Spaces · Projects',
-    cover: true,
-  },
-  {
-    image: 'what-we-build/table & counters.webp',
-    kicker: '01 · FURNITURE',
-    title: 'Furniture',
-    meta: 'Functional pieces, made to live longer.',
-  },
-  {
-    image: 'what-we-build/built in cabinet.webp',
-    kicker: '02 · CUSTOM WORK',
-    title: 'Custom Work',
-    meta: 'Built around the space, purpose and people.',
-  },
-  {
-    image: 'what-we-build/our camper.webp',
-    kicker: '03 · SPACES',
-    title: 'Spaces',
-    meta: 'Ideas shaped into useful, memorable spaces.',
-  },
-  {
-    image: 'what-we-build/builders & partner event.webp',
-    kicker: '04 · PROJECTS',
-    title: 'Projects',
-    meta: 'Selected work from Brutti and our collaborators.',
-  },
-  {
-    image: 'what-we-build/others.webp',
-    kicker: 'THE BRUTTI COLLECTION',
-    title: 'Coming soon.',
-    meta: 'The full digital catalogue is on its way.',
-    cover: true,
-  },
-]
-
 const revealViewport = { once: false, amount: 0.65, margin: '0px 0px -8% 0px' }
 
-const CatalogueFlipPage = forwardRef(function CatalogueFlipPage({ page }, ref) {
-  return (
-    <div
-      ref={ref}
-      className={`catalogue-mobile-page${page.cover ? ' catalogue-mobile-page--cover' : ''}`}
-      data-density={page.cover ? 'hard' : 'soft'}
-    >
-      <img src={asset(page.image)} alt="" draggable="false" decoding="async" loading="lazy" />
-      <div className="catalogue-mobile-page__shade" />
-      <div className="catalogue-mobile-page__copy">
-        <span>{page.kicker}</span>
-        <strong>{page.title}</strong>
-        <p>{page.meta}</p>
-      </div>
-    </div>
-  )
-})
-
 export default function CatalogueComingSoon() {
-  const mobileBookRef = useRef(null)
-  const [mobilePage, setMobilePage] = useState(1)
-
-  const previousMobilePage = () => {
-    mobileBookRef.current?.pageFlip?.()?.flipPrev('top')
-  }
-
-  const nextMobilePage = () => {
-    mobileBookRef.current?.pageFlip?.()?.flipNext('top')
-  }
-
   return (
     <section className="catalogue-coming section-pad" aria-labelledby="catalogue-coming-title">
       <div className="catalogue-coming__ambient catalogue-coming__ambient--one" aria-hidden="true" />
@@ -148,7 +75,7 @@ export default function CatalogueComingSoon() {
         </div>
 
         <motion.div
-          className="catalogue-coming__media catalogue-coming__media--desktop"
+          className="catalogue-coming__media"
           initial={{ opacity: 0, y: 36, scale: 0.99 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           whileHover={{ y: -2 }}
@@ -208,66 +135,6 @@ export default function CatalogueComingSoon() {
             </motion.span>
           </div>
         </motion.div>
-
-        <div className="catalogue-coming__mobile-book" aria-label="Swipeable Brutti catalogue preview">
-          <div className="catalogue-mobile-book__stage">
-            <button
-              type="button"
-              className="catalogue-mobile-book__edge catalogue-mobile-book__edge--left"
-              onClick={previousMobilePage}
-              disabled={mobilePage <= 1}
-              aria-label="Previous catalogue page"
-            >
-              ‹
-            </button>
-
-            <HTMLFlipBook
-              ref={mobileBookRef}
-              width={330}
-              height={450}
-              size="stretch"
-              minWidth={250}
-              maxWidth={370}
-              minHeight={341}
-              maxHeight={505}
-              startPage={0}
-              drawShadow
-              flippingTime={720}
-              usePortrait
-              startZIndex={10}
-              autoSize
-              maxShadowOpacity={0.42}
-              showCover
-              mobileScrollSupport
-              clickEventForward={false}
-              useMouseEvents
-              swipeDistance={18}
-              showPageCorners
-              disableFlipByClick={false}
-              className="catalogue-mobile-flipbook"
-              onFlip={(event) => setMobilePage(event.data + 1)}
-            >
-              {mobileCataloguePages.map((page, index) => (
-                <CatalogueFlipPage page={page} key={`${page.title}-${index}`} />
-              ))}
-            </HTMLFlipBook>
-
-            <button
-              type="button"
-              className="catalogue-mobile-book__edge catalogue-mobile-book__edge--right"
-              onClick={nextMobilePage}
-              disabled={mobilePage >= mobileCataloguePages.length}
-              aria-label="Next catalogue page"
-            >
-              ›
-            </button>
-          </div>
-
-          <div className="catalogue-mobile-book__footer">
-            <span>{mobilePage} / {mobileCataloguePages.length}</span>
-            <span>Swipe or drag the page edge</span>
-          </div>
-        </div>
       </div>
     </section>
   )
