@@ -119,3 +119,29 @@
     max-width: 100% !important;
   }
 }
+
+/* Phone-only contact cards: enlarge location labels, names and addresses for
+   both Workshop and Shared Showroom while keeping the desktop layout intact. */
+@media (max-width: 620px) {
+  html body main #contact.contact .location-card__content > span {
+    font-size: 12px !important;
+    font-weight: 760 !important;
+    line-height: 1.2 !important;
+    letter-spacing: .15em !important;
+  }
+
+  html body main #contact.contact .location-card__content h3 {
+    margin: 11px 0 12px !important;
+    font-size: 21px !important;
+    font-weight: 650 !important;
+    line-height: 1.12 !important;
+    letter-spacing: -.025em !important;
+  }
+
+  html body main #contact.contact .location-card__content p {
+    margin: 0 !important;
+    font-size: 15.5px !important;
+    font-weight: 500 !important;
+    line-height: 1.52 !important;
+  }
+}
