@@ -206,3 +206,39 @@
     background-size: 84% 84% !important;
   }
 }
+
+/* Phone-only footer contact typography: enlarge the Get in touch heading,
+   supporting sentence, email labels and addresses while keeping desktop intact. */
+@media (max-width: 700px) {
+  html body .footer .footer__connect-label {
+    font-size: 13.5px !important;
+    font-weight: 760 !important;
+    line-height: 1.2 !important;
+    letter-spacing: .18em !important;
+  }
+
+  html body .footer .footer__connect-head > p {
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    line-height: 1.5 !important;
+  }
+
+  html body .footer .footer__email-link {
+    min-height: 76px !important;
+    padding-top: 13px !important;
+    padding-bottom: 13px !important;
+  }
+
+  html body .footer .footer__email-copy small {
+    font-size: 11.5px !important;
+    font-weight: 760 !important;
+    line-height: 1.2 !important;
+    letter-spacing: .11em !important;
+  }
+
+  html body .footer .footer__email-copy strong {
+    font-size: 15.5px !important;
+    font-weight: 600 !important;
+    line-height: 1.35 !important;
+  }
+}
