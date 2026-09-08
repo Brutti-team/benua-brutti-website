@@ -8,7 +8,10 @@ ASSETS = Path("public/assets")
 TEAM = ASSETS / "brutti-team"
 OUTPUT = ASSETS / "brutti-team-composite.webp"
 
-SESSION = new_session("u2netp")
+# Use the full U2Net model here rather than the small u2netp model. The extra
+# edge accuracy matters on the dark green Journey section, especially around
+# hair, sleeves, bicycle parts and tools.
+SESSION = new_session("u2net")
 RENDER_SCALE = 1.5
 
 # Small final nudges after automatic exposure matching.  The automatic pass does
@@ -27,6 +30,82 @@ TONE_NUDGE = {
     "DSCF8173(1).webp": 0.91,
     "WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp": 0.93,
 }
+
+
+def estimate_matte(image: Image.Image) -> tuple[int, int, int]:
+    """Estimate the original flat background colour from the four corners."""
+    rgb = image.convert("RGB")
+    width, height = rgb.size
+    patch = max(4, min(32, min(width, height) // 24))
+    boxes = [
+        (0, 0, patch, patch),
+        (width - patch, 0, width, patch),
+        (0, height - patch, patch, height),
+        (width - patch, height - patch, width, height),
+    ]
+    corner_colours = [ImageStat.Stat(rgb.crop(box)).median for box in boxes]
+    return tuple(
+        int(round(sum(colour[channel] for colour in corner_colours) / len(corner_colours)))
+        for channel in range(3)
+    )
+
+
+def decontaminate_matte(image: Image.Image, matte: tuple[int, int, int]) -> Image.Image:
+    """Remove light matte colour trapped inside semi-transparent edge pixels.
+
+    rembg correctly makes the background transparent, but the RGB values at the
+    anti-aliased boundary can still contain part of the old background. On a dark
+    green page those pixels show up as a pale/white outline. This reverses that
+    matte blend without changing fully opaque pixels, faces or the layout.
+    """
+    image = image.convert("RGBA")
+    pixels = image.load()
+
+    for y in range(image.height):
+        for x in range(image.width):
+            r, g, b, a = pixels[x, y]
+            if a <= 0 or a >= 255:
+                continue
+
+            alpha = max(a / 255.0, 0.035)
+            cleaned = []
+            for channel, background in zip((r, g, b), matte):
+                value = (channel - background * (1.0 - alpha)) / alpha
+                cleaned.append(max(0, min(255, int(round(value)))))
+
+            pixels[x, y] = (*cleaned, a)
+
+    return image
+
+
+def polish_alpha(image: Image.Image, low: int = 10, high: int = 248) -> Image.Image:
+    """Drop only low-confidence haze while preserving normal anti-aliasing."""
+    alpha = image.getchannel("A")
+
+    def remap(value: int) -> int:
+        if value <= low:
+            return 0
+        if value >= high:
+            return 255
+        t = (value - low) / max(1, high - low)
+        # A very small gamma toward transparency removes the grey/white mist
+        # without visibly shrinking the people or fine props.
+        return int(round(255 * (t ** 1.08)))
+
+    alpha = alpha.point(remap)
+    image.putalpha(alpha)
+    return image
+
+
+def remove_clean(image: Image.Image) -> Image.Image:
+    """Background removal plus edge decontamination for dark-page placement."""
+    matte = estimate_matte(image)
+    result = remove(image, session=SESSION)
+    if not isinstance(result, Image.Image):
+        result = Image.open(BytesIO(result))
+    result = result.convert("RGBA")
+    result = decontaminate_matte(result, matte)
+    return polish_alpha(result)
 
 
 def match_exposure(image: Image.Image, filename: str) -> Image.Image:
@@ -57,16 +136,8 @@ def cutout(filename: str, max_side: int = 1150) -> Image.Image:
     image = ImageOps.exif_transpose(image).convert("RGBA")
     image.thumbnail((max_side, max_side), Image.Resampling.LANCZOS)
 
-    result = remove(image, session=SESSION)
-    if not isinstance(result, Image.Image):
-        result = Image.open(BytesIO(result))
-    result = result.convert("RGBA")
-
-    # Keep hair / bicycle spokes / tools, but clean the faint matte fringe.
-    alpha = result.getchannel("A").point(
-        lambda value: 0 if value < 7 else (255 if value > 250 else value)
-    )
-    result.putalpha(alpha)
+    result = remove_clean(image)
+    alpha = result.getchannel("A")
 
     bbox = alpha.getbbox()
     if bbox:
@@ -114,26 +185,18 @@ def place(canvas: Image.Image, image: Image.Image, center_x: int, bottom: int, h
 
 
 def strip_brutti_hd_background() -> None:
-    """Remove only the background from the existing brutti-hd.webp artwork.
+    """Remove the background from the supplied HD team artwork cleanly.
 
-    This intentionally keeps the original team arrangement, faces, proportions,
-    props and spacing exactly as supplied.  The build only adds transparency and
-    trims empty outer pixels so the portrait can sit directly on the green page.
+    The team arrangement, faces, proportions, props and spacing stay untouched.
+    Only the background/matte is removed, then the transparent outer area is
+    trimmed so the artwork can sit directly on the Journey page's green section.
     """
     source = ASSETS / "brutti-hd.webp"
     image = Image.open(source)
     image = ImageOps.exif_transpose(image).convert("RGBA")
 
-    result = remove(image, session=SESSION)
-    if not isinstance(result, Image.Image):
-        result = Image.open(BytesIO(result))
-    result = result.convert("RGBA")
-
-    # Retain soft hair/tool edges and fine details while removing faint residue.
-    alpha = result.getchannel("A").point(
-        lambda value: 0 if value < 5 else (255 if value > 252 else value)
-    )
-    result.putalpha(alpha)
+    result = remove_clean(image)
+    alpha = result.getchannel("A")
 
     bbox = alpha.getbbox()
     if bbox:
@@ -149,10 +212,10 @@ def strip_brutti_hd_background() -> None:
         )
 
     result.save(source, "WEBP", quality=96, method=6, exact=True)
-    print(f"Removed background from {source} at {result.width}x{result.height}")
+    print(f"Removed background + white matte from {source} at {result.width}x{result.height}")
 
 
-# Use the existing Brutti HD artwork itself on the journey page.  Do not rebuild
+# Use the existing Brutti HD artwork itself on the journey page. Do not rebuild
 # or re-space that artwork; only remove its background during deployment.
 strip_brutti_hd_background()
 
