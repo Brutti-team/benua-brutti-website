@@ -8,15 +8,10 @@ ASSETS = Path("public/assets")
 TEAM = ASSETS / "brutti-team"
 OUTPUT = ASSETS / "brutti-team-composite.webp"
 
-# Use the full U2Net model here rather than the small u2netp model. The extra
-# edge accuracy matters on the dark green Journey section, especially around
-# hair, sleeves, bicycle parts and tools.
+# Full U2Net gives cleaner hair, sleeves, tools and bicycle edges than u2netp.
 SESSION = new_session("u2net")
 RENDER_SCALE = 1.5
 
-# Small final nudges after automatic exposure matching.  The automatic pass does
-# most of the work; these only compensate for sources whose shirts / skin still
-# read unusually bright or dark after background removal.
 TONE_NUDGE = {
     "DSCF8135(1).webp": 1.04,
     "DSCF8091(1).webp": 1.05,
@@ -51,13 +46,7 @@ def estimate_matte(image: Image.Image) -> tuple[int, int, int]:
 
 
 def decontaminate_matte(image: Image.Image, matte: tuple[int, int, int]) -> Image.Image:
-    """Remove light matte colour trapped inside semi-transparent edge pixels.
-
-    rembg correctly makes the background transparent, but the RGB values at the
-    anti-aliased boundary can still contain part of the old background. On a dark
-    green page those pixels show up as a pale/white outline. This reverses that
-    matte blend without changing fully opaque pixels, faces or the layout.
-    """
+    """Remove old background colour trapped in semi-transparent edge pixels."""
     image = image.convert("RGBA")
     pixels = image.load()
 
@@ -78,8 +67,8 @@ def decontaminate_matte(image: Image.Image, matte: tuple[int, int, int]) -> Imag
     return image
 
 
-def polish_alpha(image: Image.Image, low: int = 10, high: int = 248) -> Image.Image:
-    """Drop only low-confidence haze while preserving normal anti-aliasing."""
+def polish_alpha(image: Image.Image, low: int = 24, high: int = 232) -> Image.Image:
+    """Remove the remaining pale/green fringe while keeping normal antialiasing."""
     alpha = image.getchannel("A")
 
     def remap(value: int) -> int:
@@ -88,19 +77,23 @@ def polish_alpha(image: Image.Image, low: int = 10, high: int = 248) -> Image.Im
         if value >= high:
             return 255
         t = (value - low) / max(1, high - low)
-        # A very small gamma toward transparency removes the grey/white mist
-        # without visibly shrinking the people or fine props.
-        return int(round(255 * (t ** 1.08)))
+        return int(round(255 * (t ** 1.28)))
 
-    alpha = alpha.point(remap)
-    image.putalpha(alpha)
+    image.putalpha(alpha.point(remap))
     return image
 
 
 def remove_clean(image: Image.Image) -> Image.Image:
-    """Background removal plus edge decontamination for dark-page placement."""
+    """Create a true transparent cutout with no white/green matte around it."""
     matte = estimate_matte(image)
-    result = remove(image, session=SESSION)
+    result = remove(
+        image,
+        session=SESSION,
+        alpha_matting=True,
+        alpha_matting_foreground_threshold=235,
+        alpha_matting_background_threshold=18,
+        alpha_matting_erode_size=6,
+    )
     if not isinstance(result, Image.Image):
         result = Image.open(BytesIO(result))
     result = result.convert("RGBA")
@@ -109,7 +102,7 @@ def remove_clean(image: Image.Image) -> Image.Image:
 
 
 def match_exposure(image: Image.Image, filename: str) -> Image.Image:
-    """Match every cut-out to one shared luminance range, then apply one grade."""
+    """Match the separate portraits to one shared brightness range."""
     alpha = image.getchannel("A")
     mask = alpha.point(lambda value: 255 if value > 48 else 0)
 
@@ -142,7 +135,7 @@ def cutout(filename: str, max_side: int = 1150) -> Image.Image:
     bbox = alpha.getbbox()
     if bbox:
         left, top, right, bottom = bbox
-        pad = 8
+        pad = 6
         result = result.crop(
             (
                 max(0, left - pad),
@@ -162,8 +155,6 @@ def resize_height(image: Image.Image, height: int) -> Image.Image:
 
 
 def place(canvas: Image.Image, image: Image.Image, center_x: int, bottom: int, height: int) -> None:
-    # Layout coordinates below stay easy to tune at the original 1020x720
-    # design scale; this function renders them larger for a sharper web asset.
     center_x = round(center_x * RENDER_SCALE)
     bottom = round(bottom * RENDER_SCALE)
     height = round(height * RENDER_SCALE)
@@ -184,85 +175,45 @@ def place(canvas: Image.Image, image: Image.Image, center_x: int, bottom: int, h
     canvas.alpha_composite(clipped, (max(0, x), max(0, y)))
 
 
-def strip_brutti_hd_background() -> None:
-    """Remove the background from the supplied HD team artwork cleanly.
-
-    The team arrangement, faces, proportions, props and spacing stay untouched.
-    Only the background/matte is removed, then the transparent outer area is
-    trimmed so the artwork can sit directly on the Journey page's green section.
-    """
-    source = ASSETS / "brutti-hd.webp"
-    image = Image.open(source)
-    image = ImageOps.exif_transpose(image).convert("RGBA")
-
-    result = remove_clean(image)
-    alpha = result.getchannel("A")
-
-    bbox = alpha.getbbox()
-    if bbox:
-        left, top, right, bottom = bbox
-        pad = 10
-        result = result.crop(
-            (
-                max(0, left - pad),
-                max(0, top - pad),
-                min(result.width, right + pad),
-                min(result.height, bottom + pad),
-            )
-        )
-
-    result.save(source, "WEBP", quality=96, method=6, exact=True)
-    print(f"Removed background + white matte from {source} at {result.width}x{result.height}")
-
-
-# Use the existing Brutti HD artwork itself on the journey page. Do not rebuild
-# or re-space that artwork; only remove its background during deployment.
-strip_brutti_hd_background()
-
-# FINAL COMPACT VERSION
-# ---------------------
-# Kept for other uses that may still reference the generated composite.
+# Build the Journey portrait from the individual staff photos instead of using
+# the old flattened team artwork. This guarantees the web asset itself is RGBA
+# with a genuinely transparent background rather than relying on CSS blending.
 canvas = Image.new(
     "RGBA",
     (round(1020 * RENDER_SCALE), round(720 * RENDER_SCALE)),
     (0, 0, 0, 0),
 )
 
-# BACK / UPPER ARC — closer together and lower.
-place(canvas, cutout("DSCF8135(1).webp"), 108, 490, 310)   # laptop woman
-place(canvas, cutout("DSCF8148(1).webp"), 245, 470, 302)   # blue-tool man
-place(canvas, cutout("DSCF8091(1).webp"), 382, 492, 350)   # phone / board woman
-place(canvas, cutout("DSCF8078(1).webp"), 700, 500, 305)   # drill woman
+# BACK / UPPER ARC
+place(canvas, cutout("DSCF8135(1).webp"), 108, 490, 310)
+place(canvas, cutout("DSCF8148(1).webp"), 245, 470, 302)
+place(canvas, cutout("DSCF8091(1).webp"), 382, 492, 350)
+place(canvas, cutout("DSCF8078(1).webp"), 700, 500, 305)
 place(
     canvas,
     cutout("WhatsApp Image 2026-09-04 at 12.05.41 PM(1).webp"),
     850,
     545,
     350,
-)  # standing woman
+)
 
-# CENTRAL ANCHOR — behind the foreground so lower bicycle / legs disappear
-# naturally into the front group.
+# CENTRAL ANCHOR
 place(canvas, cutout("DSCF8116(1).webp", max_side=1500), 535, 650, 440)
 
-# FOREGROUND — drawn last and raised aggressively to hide cropped back-row legs.
-place(canvas, cutout("DSCF8211(1).webp"), 250, 715, 400)   # sunglasses man
-place(canvas, cutout("DSCF8202(1).webp"), 382, 715, 398)   # plain standing man
-place(canvas, cutout("DSCF8186(1).webp"), 515, 715, 405)   # front tool man
-place(canvas, cutout("DSCF8173(1).webp"), 650, 715, 400)   # front-right man
+# FOREGROUND
+place(canvas, cutout("DSCF8211(1).webp"), 250, 715, 400)
+place(canvas, cutout("DSCF8202(1).webp"), 382, 715, 398)
+place(canvas, cutout("DSCF8186(1).webp"), 515, 715, 405)
+place(canvas, cutout("DSCF8173(1).webp"), 650, 715, 400)
+place(canvas, cutout("DSCF8122(1).webp"), 835, 716, 420)
 
-# Right foreground closes the final gap and covers the lower edge of the drill /
-# standing portraits.
-place(canvas, cutout("DSCF8122(1).webp"), 835, 716, 420)   # book woman
-
-# Crop almost all transparent breathing room so the website receives a genuinely
-# compact image, not a compact group sitting inside a wide empty canvas.
+# Tight crop: no rectangular transparent padding around the team.
 bbox = canvas.getchannel("A").getbbox()
 if bbox:
     left, top, right, bottom = bbox
-    pad_x = round(6 * RENDER_SCALE)
-    pad_top = round(8 * RENDER_SCALE)
-    pad_bottom = round(2 * RENDER_SCALE)
+    pad_x = round(4 * RENDER_SCALE)
+    pad_top = round(5 * RENDER_SCALE)
+    pad_bottom = round(1 * RENDER_SCALE)
     canvas = canvas.crop(
         (
             max(0, left - pad_x),
@@ -272,5 +223,5 @@ if bbox:
         )
     )
 
-canvas.save(OUTPUT, "WEBP", quality=95, method=6, exact=True)
-print(f"Built {OUTPUT} at {canvas.width}x{canvas.height}")
+canvas.save(OUTPUT, "WEBP", quality=96, method=6, exact=True)
+print(f"Built clean transparent {OUTPUT} at {canvas.width}x{canvas.height}")
