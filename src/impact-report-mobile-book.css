@@ -1,50 +1,62 @@
-/* Mobile Impact Report — mirror the SEDCO reference movement.
-   One portrait page stays centred, neighbouring pages peek in from the sides,
-   the active page follows the finger horizontally, then snaps into place.
-   Desktop/tablet remain untouched. */
+/* Phone-only Impact Report viewer — match the SEDCO Directory behaviour.
+   SEDCO keeps a real landscape book canvas on mobile: the front cover sits on
+   the RIGHT half of the virtual book; opening it reveals a two-page spread;
+   dragging/swiping bends the physical page with a 3D fold and shadow.
+   Desktop/tablet are intentionally untouched. */
 
 @media (max-width: 700px) {
   .impact-report-reader__stage {
+    position: relative !important;
     min-height: 0 !important;
     height: auto !important;
     overflow: hidden !important;
     padding: 0 !important;
-    background: #686b69 !important;
+    background: #707270 !important;
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.04),
-      inset 0 -18px 36px rgba(0,0,0,.05) !important;
+      inset 0 1px 0 rgba(255,255,255,.05),
+      inset 0 -22px 44px rgba(0,0,0,.045) !important;
   }
 
   .impact-report-reader__stage::before {
-    opacity: .2 !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.03), transparent 28%, rgba(0,0,0,.025)) !important;
+    opacity: .22 !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.035), transparent 26%, rgba(0,0,0,.03)) !important;
   }
 
   .impact-report-reader__stage::after {
-    left: 24% !important;
-    right: 24% !important;
-    bottom: 5.5% !important;
-    height: 3.8% !important;
-    background: rgba(0,0,0,.18) !important;
-    filter: blur(15px) !important;
-    opacity: .42 !important;
+    left: 14% !important;
+    right: 14% !important;
+    bottom: 18px !important;
+    height: 20px !important;
+    background: rgba(0,0,0,.22) !important;
+    filter: blur(18px) !important;
+    opacity: .48 !important;
   }
 
   .impact-report-reader__viewport {
-    min-height: 0 !important;
+    position: relative !important;
+    z-index: 2 !important;
     width: 100% !important;
-    padding: 14px 0 18px !important;
+    min-height: 0 !important;
+    height: auto !important;
     overflow: hidden !important;
-    display: block !important;
+    padding: 28px 0 34px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
   .impact-report-reader__zoom {
     width: 100% !important;
-    overflow: hidden !important;
-    display: block !important;
+    overflow: visible !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     transform: none !important;
   }
 
+  /* Do NOT centre the closed cover by translating the virtual book. In SEDCO
+     the book itself stays centred and the cover naturally occupies its right
+     half. That is the key visual difference from a normal mobile carousel. */
   .impact-report-reader__book-wrap,
   .impact-report-reader__book-wrap.is-front-cover,
   .impact-report-reader__book-wrap.is-back-cover {
@@ -53,9 +65,11 @@
     height: auto !important;
     min-height: 0 !important;
     max-height: none !important;
-    overflow: hidden !important;
-    display: block !important;
-    perspective: none !important;
+    overflow: visible !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    perspective: 2400px !important;
     transform: none !important;
     transition: none !important;
   }
@@ -65,158 +79,159 @@
     content: none !important;
   }
 
-  .impact-mobile-slider {
+  .impact-mobile-sedco-book {
     position: relative !important;
-    width: 100% !important;
-    overflow: hidden !important;
+    flex: 0 0 calc(var(--impact-mobile-page-width) * 2) !important;
+    width: calc(var(--impact-mobile-page-width) * 2) !important;
+    height: var(--impact-mobile-page-height) !important;
+    display: block !important;
+    overflow: visible !important;
+    transform: translateZ(0) !important;
+    transform-style: preserve-3d !important;
+    filter:
+      drop-shadow(0 22px 28px rgba(0,0,0,.22))
+      drop-shadow(0 5px 9px rgba(0,0,0,.10));
   }
 
-  /* The important SEDCO behaviour: cards are narrower than the viewport.
-     That keeps a sliver of the neighbouring page visible during movement,
-     instead of each page occupying a full-screen slide. */
-  .impact-mobile-slider__track {
+  .impact-sedco-flipbook {
     position: relative !important;
-    width: 100% !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 12px !important;
-    padding: 8px 8% 16px !important;
-    box-sizing: border-box !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    scroll-snap-type: x mandatory !important;
-    scroll-padding-inline: 8% !important;
-    overscroll-behavior-x: contain !important;
-    -webkit-overflow-scrolling: touch !important;
-    scrollbar-width: none !important;
-    touch-action: pan-x pan-y pinch-zoom !important;
+    z-index: 4 !important;
+    width: calc(var(--impact-mobile-page-width) * 2) !important;
+    height: var(--impact-mobile-page-height) !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    transform: translateZ(0) !important;
+    transform-style: preserve-3d !important;
+    touch-action: pan-y !important;
+    filter: none !important;
   }
 
-  .impact-mobile-slider__track::-webkit-scrollbar {
-    display: none !important;
+  .impact-sedco-flipbook .stf__parent,
+  .impact-sedco-flipbook .stf__wrapper,
+  .impact-sedco-flipbook .stf__block,
+  .impact-sedco-flipbook .stf__item,
+  .impact-sedco-flipbook .stf__outerShadow,
+  .impact-sedco-flipbook .stf__innerShadow,
+  .impact-sedco-flipbook .stf__hardShadow {
+    overflow: visible !important;
+    backface-visibility: hidden !important;
+    transform-style: preserve-3d !important;
   }
 
-  .impact-mobile-slider__slide {
-    position: relative !important;
-    flex: 0 0 84% !important;
-    width: 84% !important;
-    aspect-ratio: 447 / 632 !important;
-    box-sizing: border-box !important;
-    display: flex !important;
-    align-items: stretch !important;
-    justify-content: stretch !important;
-    scroll-snap-align: center !important;
-    scroll-snap-stop: always !important;
+  .impact-sedco-flipbook .stf__block {
+    background: transparent !important;
   }
 
-  .impact-mobile-slider__paper {
+  .impact-mobile-flip-page {
     position: relative !important;
     width: 100% !important;
     height: 100% !important;
-    min-height: 0 !important;
-    overflow: visible !important;
-    flex: 1 1 auto !important;
-    background: #f7f6f2 !important;
-    border: 1px solid rgba(18, 28, 23, .10) !important;
+    overflow: hidden !important;
+    background: #fff !important;
+    border: 0 !important;
     box-shadow:
-      0 16px 28px rgba(0,0,0,.20),
-      0 4px 8px rgba(0,0,0,.10),
-      inset 7px 0 12px rgba(20,30,24,.025),
-      inset -1px 0 rgba(20,30,24,.04) !important;
-    isolation: isolate !important;
+      inset 0 0 0 1px rgba(0,0,0,.035),
+      inset -8px 0 14px rgba(17,35,27,.025) !important;
+    backface-visibility: hidden !important;
+    transform: translateZ(0) !important;
   }
 
-  /* A restrained paper edge behind the page makes it still read as a book,
-     like the SEDCO viewer, without adding a fake 3D curl. */
-  .impact-mobile-slider__paper::before {
-    content: '' !important;
-    position: absolute !important;
-    z-index: -2 !important;
-    top: 3px !important;
-    right: -5px !important;
-    bottom: -5px !important;
-    left: 5px !important;
-    background: #deddd7 !important;
-    border: 1px solid rgba(0,0,0,.06) !important;
-    box-shadow: 2px 2px 0 rgba(255,255,255,.28) inset !important;
-    pointer-events: none !important;
-  }
-
-  .impact-mobile-slider__paper::after {
+  .impact-mobile-flip-page::after {
     content: '' !important;
     position: absolute !important;
     z-index: 3 !important;
-    top: 0 !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    width: 9px !important;
-    background: linear-gradient(90deg, rgba(15,33,25,.055), rgba(15,33,25,.012), transparent) !important;
+    inset: 0 !important;
     pointer-events: none !important;
+    background: linear-gradient(
+      90deg,
+      rgba(0,0,0,.035),
+      transparent 5%,
+      transparent 94%,
+      rgba(0,0,0,.05)
+    ) !important;
+    mix-blend-mode: multiply !important;
   }
 
-  .impact-mobile-slider__paper img {
+  .impact-mobile-flip-page img {
     position: relative !important;
     z-index: 2 !important;
     display: block !important;
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover !important;
+    object-fit: contain !important;
     object-position: center !important;
     background: #fff !important;
     -webkit-user-drag: none !important;
     user-select: none !important;
     pointer-events: none !important;
+    backface-visibility: hidden !important;
   }
 
-  /* SEDCO-style fixed side controls. */
+  /* A fine centre seam makes the opened state read as a physical book. */
+  .impact-mobile-sedco-book::after {
+    content: '' !important;
+    position: absolute !important;
+    z-index: 20 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    width: 10px !important;
+    transform: translateX(-50%) !important;
+    background: linear-gradient(
+      90deg,
+      rgba(0,0,0,0),
+      rgba(0,0,0,.075) 42%,
+      rgba(255,255,255,.05) 53%,
+      rgba(0,0,0,0)
+    ) !important;
+    filter: blur(1px) !important;
+    opacity: .55 !important;
+    pointer-events: none !important;
+  }
+
+  .impact-report-reader__book-wrap.is-front-cover .impact-mobile-sedco-book::after,
+  .impact-report-reader__book-wrap.is-back-cover .impact-mobile-sedco-book::after {
+    opacity: 0 !important;
+  }
+
+  /* SEDCO-like arrows: attached to the visible viewer edges while the paper
+     turns underneath them. */
   .impact-report-reader__edge {
     top: 50% !important;
-    width: 36px !important;
-    height: 36px !important;
-    background: rgba(68,72,70,.82) !important;
-    border-color: rgba(255,255,255,.24) !important;
+    width: 38px !important;
+    height: 38px !important;
+    background: rgba(83,86,84,.76) !important;
+    border-color: rgba(255,255,255,.27) !important;
     color: #fff !important;
-    box-shadow: 0 7px 17px rgba(0,0,0,.16) !important;
+    box-shadow:
+      0 7px 18px rgba(0,0,0,.18),
+      inset 0 1px 0 rgba(255,255,255,.08) !important;
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
   }
 
   .impact-report-reader__edge--left {
-    left: 7px !important;
+    left: 8px !important;
   }
 
   .impact-report-reader__edge--right {
-    right: 7px !important;
+    right: 8px !important;
   }
 }
 
 @media (max-width: 430px) {
-  .impact-mobile-slider__track {
-    gap: 10px !important;
-    padding-left: 7.5% !important;
-    padding-right: 7.5% !important;
-    scroll-padding-inline: 7.5% !important;
+  .impact-report-reader__viewport {
+    padding-top: 24px !important;
+    padding-bottom: 30px !important;
   }
 
-  .impact-mobile-slider__slide {
-    flex-basis: 85% !important;
-    width: 85% !important;
+  .impact-report-reader__edge {
+    width: 36px !important;
+    height: 36px !important;
   }
 }
 
 @media (max-width: 360px) {
-  .impact-mobile-slider__track {
-    gap: 9px !important;
-    padding-left: 7% !important;
-    padding-right: 7% !important;
-    scroll-padding-inline: 7% !important;
-  }
-
-  .impact-mobile-slider__slide {
-    flex-basis: 86% !important;
-    width: 86% !important;
-  }
-
   .impact-report-reader__edge {
     width: 33px !important;
     height: 33px !important;
@@ -224,7 +239,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .impact-mobile-slider__track {
-    scroll-behavior: auto !important;
+  .impact-sedco-flipbook,
+  .impact-mobile-flip-page {
+    transition: none !important;
   }
 }
