@@ -248,5 +248,6 @@
 
   .journey-section--green .journey-section__head p:not(.journey-kicker) {
     max-width: 1180px;
+    font-size: clamp(18px, 1.25vw, 20px);
   }
 }
