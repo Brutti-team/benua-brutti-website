@@ -53,7 +53,7 @@
     justify-content: center !important;
   }
 
-  /* Larger full-bleed team crop so the source-image white margins disappear. */
+  /* Full-bleed team crop, balanced so the left-most person stays visible. */
   .journey-team__stage {
     width: 100% !important;
     min-height: 0 !important;
@@ -68,10 +68,10 @@
   }
 
   .journey-team__composite {
-    width: 160% !important;
+    width: 154% !important;
     max-width: none !important;
-    margin: 0 -30% -72px !important;
-    transform: translateX(-1.5%) !important;
+    margin: 0 -27% -66px !important;
+    transform: translateX(1.5%) !important;
   }
 
   .journey-team__composite img {
