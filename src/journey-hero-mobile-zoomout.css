@@ -1,4 +1,4 @@
-/* Mobile-only hero framing: larger zoom and better centering, without changing laptop/desktop. */
+/* Mobile-only hero framing: larger zoom with clearer faces, without changing laptop/desktop. */
 @media (max-width: 560px) {
   .journey-hero,
   .journey-hero__media {
@@ -21,16 +21,25 @@
     opacity: .82;
   }
 
-  /* Stronger mobile zoom, nudged left so the whole group reads more centred.
-     Any crop is intended to fall on lower legs / spare background rather than faces. */
+  /* Stronger mobile zoom so faces are clearer while keeping the group centred.
+     Any crop should fall mainly on lower legs / spare background. */
   .journey-hero__media img {
     z-index: 1 !important;
     width: 100% !important;
     height: 100% !important;
     object-fit: contain !important;
-    object-position: 49% 40% !important;
-    transform: translateX(-3%) scale(1.50) !important;
-    transform-origin: 49% 40% !important;
+    object-position: 50% 38% !important;
+    transform: translateX(-2%) scale(1.58) !important;
+    transform-origin: 50% 38% !important;
+  }
+
+  /* Keep the hero paragraph natural on phone: no justified spacing. */
+  .journey-hero__intro {
+    text-align: left !important;
+    text-justify: auto !important;
+    hyphens: none !important;
+    -webkit-hyphens: none !important;
+    word-spacing: normal !important;
   }
 
   .journey-hero__shade {
