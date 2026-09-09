@@ -5,6 +5,7 @@ import '../journey-origin-refine.css'
 import '../journey-purpose-refine.css'
 import '../journey-team.css'
 import '../journey-team-reference.css'
+import '../journey-team-mobile-final.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
@@ -149,7 +150,7 @@ export default function JourneyPage() {
               <span>Going further</span>
             </div>
 
-            <button className="journey-primary" onClick={backHome}>
+            <button className="journey-primary journey-team__cta-desktop" onClick={backHome}>
               Return to Benua Brutti <ArrowUpRight size={17} />
             </button>
           </motion.div>
@@ -171,6 +172,10 @@ export default function JourneyPage() {
               />
             </figure>
           </motion.div>
+
+          <button className="journey-primary journey-team__cta-mobile" onClick={backHome}>
+            Return to Benua Brutti <ArrowUpRight size={17} />
+          </button>
         </div>
       </section>
     </main>
