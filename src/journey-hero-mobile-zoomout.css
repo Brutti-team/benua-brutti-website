@@ -1,36 +1,36 @@
-/* Mobile-only hero framing: full-screen team image, centred, without changing laptop/desktop. */
+/* Mobile-only hero framing: larger zoom with clearer faces, without changing laptop/desktop. */
 @media (max-width: 560px) {
   .journey-hero,
   .journey-hero__media {
     background: #0b3022 !important;
   }
 
-  .journey-hero {
-    min-height: 100svh !important;
-    align-items: flex-end !important;
-  }
-
   .journey-hero__media {
     overflow: hidden !important;
   }
 
-  /* Use the real photo as the full-screen hero; remove the blurred duplicate layer. */
+  /* Soft fill behind the main image so the portrait hero still feels full. */
   .journey-hero__media::before {
-    display: none !important;
+    content: '';
+    position: absolute;
+    z-index: 0;
+    inset: -5%;
+    background: url('/assets/our-journey-web.jpg') center 42% / cover no-repeat;
+    filter: blur(16px);
+    transform: scale(1.08);
+    opacity: .82;
   }
 
+  /* Zoom further and shift the team slightly left so the people read centred.
+     Crop is allowed mainly on lower legs / spare background, not faces. */
   .journey-hero__media img {
     z-index: 1 !important;
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover !important;
-    object-position: 50% 40% !important;
-    transform: scale(1.04) !important;
-    transform-origin: 50% 40% !important;
-  }
-
-  .journey-hero__content {
-    padding-bottom: 42px !important;
+    object-fit: contain !important;
+    object-position: 50% 38% !important;
+    transform: translateX(-4%) scale(1.64) !important;
+    transform-origin: 50% 38% !important;
   }
 
   /* Keep the hero paragraph natural on phone: no justified spacing. */
