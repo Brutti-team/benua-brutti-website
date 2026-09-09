@@ -256,3 +256,11 @@
     line-height: 1.72;
   }
 }
+
+/* Keep the larger origin paragraph visible on narrower laptop/tablet landscape widths too. */
+@media (min-width: 561px) {
+  .journey-section--origin .journey-origin__copy > p:not(.journey-kicker) {
+    font-size: clamp(20px, 2vw, 23px);
+    line-height: 1.72;
+  }
+}
