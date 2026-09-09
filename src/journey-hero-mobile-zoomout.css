@@ -21,15 +21,15 @@
     opacity: .82;
   }
 
-  /* Stronger mobile zoom so faces are clearer while keeping the group centred.
-     Any crop should fall mainly on lower legs / spare background. */
+  /* Zoom further and shift the team slightly left so the people read centred.
+     Crop is allowed mainly on lower legs / spare background, not faces. */
   .journey-hero__media img {
     z-index: 1 !important;
     width: 100% !important;
     height: 100% !important;
     object-fit: contain !important;
     object-position: 50% 38% !important;
-    transform: translateX(-2%) scale(1.58) !important;
+    transform: translateX(-4%) scale(1.64) !important;
     transform-origin: 50% 38% !important;
   }
 
