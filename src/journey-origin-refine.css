@@ -235,3 +235,18 @@
     padding: 9px 12px;
   }
 }
+
+/* Section 02 desktop copy — let the paragraph use the full content width while keeping the heading compact. */
+@media (min-width: 901px) {
+  .journey-section--green .journey-section__head {
+    max-width: none;
+  }
+
+  .journey-section--green .journey-section__head h2 {
+    max-width: 760px;
+  }
+
+  .journey-section--green .journey-section__head p:not(.journey-kicker) {
+    max-width: 1180px;
+  }
+}
