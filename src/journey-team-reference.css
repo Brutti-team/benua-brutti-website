@@ -397,7 +397,7 @@
     min-height: 0 !important;
     height: auto !important;
     margin: 0 auto !important;
-    padding: 12px 8px 0 !important;
+    padding: 6px 0 0 !important;
     align-items: flex-end !important;
     overflow: hidden !important;
     border: 1px solid rgba(255, 255, 255, .12) !important;
@@ -407,9 +407,9 @@
   }
 
   .journey-team__composite {
-    width: 100% !important;
+    width: 124% !important;
     max-width: none !important;
-    margin: 0 !important;
+    margin: 0 -12% -42px !important;
     transform: none !important;
   }
 
