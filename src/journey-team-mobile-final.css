@@ -5,17 +5,55 @@
 }
 
 @media (max-width: 560px) {
-  /* Keep the desktop CTA out of the phone layout. */
+  /* Keep laptop/desktop layout untouched. */
   .journey-team__cta-desktop {
     display: none !important;
   }
 
-  /* Let the image sit closer to the values above it. */
   .journey-team {
-    gap: 24px !important;
+    gap: 22px !important;
   }
 
-  /* Full-bleed team crop inside the rounded white card. */
+  /* Justify the team description on phones only. */
+  .journey-team__copy > p:not(.journey-kicker) {
+    text-align: justify !important;
+    text-justify: inter-word !important;
+    hyphens: auto !important;
+  }
+
+  /* Keep the three values tighter and centred as one group. */
+  .journey-team__values {
+    width: max-content !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 18px auto 0 !important;
+    gap: 0 !important;
+    font-size: 7.8px !important;
+    letter-spacing: .055em !important;
+  }
+
+  .journey-team__values span {
+    flex: 0 0 auto !important;
+    min-width: 0 !important;
+    padding: 0 11px !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+  }
+
+  .journey-team__values span:first-child {
+    padding-left: 0 !important;
+    justify-content: center !important;
+  }
+
+  .journey-team__values span:last-child {
+    padding-right: 0 !important;
+    justify-content: center !important;
+  }
+
+  /* Larger full-bleed team crop so the source-image white margins disappear. */
   .journey-team__stage {
     width: 100% !important;
     min-height: 0 !important;
@@ -30,10 +68,10 @@
   }
 
   .journey-team__composite {
-    width: 142% !important;
+    width: 160% !important;
     max-width: none !important;
-    margin: 0 -21% -58px !important;
-    transform: none !important;
+    margin: 0 -30% -72px !important;
+    transform: translateX(-1.5%) !important;
   }
 
   .journey-team__composite img {
@@ -47,7 +85,7 @@
     transform-origin: center bottom !important;
   }
 
-  /* Mobile CTA belongs below the photo. */
+  /* Mobile CTA stays below the team image. */
   .journey-team__cta-mobile {
     width: 100% !important;
     min-height: 58px !important;
