@@ -287,6 +287,17 @@
   margin-bottom: 46px;
 }
 
+@media (min-width: 901px) {
+  .journey-section--green .journey-section__head p:not(.journey-kicker) {
+    font-size: clamp(19px, 1.45vw, 22px);
+    line-height: 1.72;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+}
+
 .journey-workshops {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
