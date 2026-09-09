@@ -1,4 +1,4 @@
-/* Mobile-only hero framing: make the team more prominent while keeping every person visible. */
+/* Mobile-only hero framing: make the team larger while keeping every person inside the crop. */
 @media (max-width: 560px) {
   .journey-hero,
   .journey-hero__media {
@@ -21,16 +21,16 @@
     opacity: .82;
   }
 
-  /* Slightly stronger zoom than before, centred to protect the people at both edges.
-     A little lower-body crop is intentional so faces and upper bodies read clearly. */
+  /* Stronger mobile zoom. Keep the crop centred so people at both sides remain visible;
+     any crop should happen mainly around the lower legs / extra background. */
   .journey-hero__media img {
     z-index: 1 !important;
     width: 100% !important;
     height: 100% !important;
     object-fit: contain !important;
-    object-position: 50% 40% !important;
-    transform: scale(1.16) !important;
-    transform-origin: 50% 40% !important;
+    object-position: 50% 41% !important;
+    transform: scale(1.30) !important;
+    transform-origin: 50% 41% !important;
   }
 
   .journey-hero__shade {
