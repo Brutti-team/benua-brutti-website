@@ -1,4 +1,4 @@
-/* Mobile-only hero framing: show more of the full team without changing laptop/desktop. */
+/* Mobile-only hero framing: show the whole team with only a light crop, without changing laptop/desktop. */
 @media (max-width: 560px) {
   .journey-hero,
   .journey-hero__media {
@@ -9,7 +9,7 @@
     overflow: hidden !important;
   }
 
-  /* Soft fill behind the contained image so zooming out does not leave harsh empty bands. */
+  /* Soft fill behind the contained image so the lighter zoom does not leave harsh empty bands. */
   .journey-hero__media::before {
     content: '';
     position: absolute;
@@ -26,9 +26,9 @@
     width: 100% !important;
     height: 100% !important;
     object-fit: contain !important;
-    object-position: center 40% !important;
-    transform: scale(1.14) !important;
-    transform-origin: center 40% !important;
+    object-position: center 42% !important;
+    transform: scale(1.07) !important;
+    transform-origin: center 42% !important;
   }
 
   .journey-hero__shade {
