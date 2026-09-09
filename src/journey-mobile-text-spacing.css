@@ -1,0 +1,40 @@
+/* Journey mobile typography polish.
+   Phone-only: add safer left/right breathing room and justify prose.
+   The People Behind the Journey section is intentionally excluded. */
+
+@media (max-width: 560px) {
+  /* Give all Journey text areas more horizontal breathing room,
+     except the final team section which keeps its current layout. */
+  .journey-hero__content,
+  .journey-section--origin .journey-origin__copy,
+  .journey-section--green .journey-section__head,
+  .journey-section--purpose .journey-purpose__copy {
+    box-sizing: border-box !important;
+    padding-left: 9px !important;
+    padding-right: 9px !important;
+  }
+
+  /* Justify all long-form Journey copy on phones. */
+  .journey-hero__intro,
+  .journey-section--origin .journey-origin__copy > p:not(.journey-kicker),
+  .journey-section--green .journey-section__head > p:not(.journey-kicker),
+  .journey-section--purpose .journey-purpose__copy > p:not(.journey-kicker) {
+    text-align: justify !important;
+    text-justify: inter-word !important;
+    hyphens: auto !important;
+    -webkit-hyphens: auto !important;
+  }
+
+  /* Keep headings and section labels naturally aligned while inheriting
+     the extra left/right spacing from their text containers. */
+  .journey-hero h1,
+  .journey-hero .journey-kicker,
+  .journey-section--origin .journey-origin h2,
+  .journey-section--origin .journey-kicker,
+  .journey-section--green .journey-section__head h2,
+  .journey-section--green .journey-section__head .journey-kicker,
+  .journey-section--purpose .journey-purpose h2,
+  .journey-section--purpose .journey-kicker {
+    text-align: left !important;
+  }
+}
