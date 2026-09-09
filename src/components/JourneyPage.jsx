@@ -6,6 +6,7 @@ import '../journey-purpose-refine.css'
 import '../journey-team.css'
 import '../journey-team-reference.css'
 import '../journey-team-mobile-final.css'
+import '../journey-mobile-text-spacing.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
