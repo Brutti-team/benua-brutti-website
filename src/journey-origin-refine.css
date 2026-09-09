@@ -250,4 +250,9 @@
     max-width: 1180px;
     font-size: clamp(18px, 1.25vw, 20px);
   }
+
+  .journey-section--origin .journey-origin__copy > p:not(.journey-kicker) {
+    font-size: clamp(20px, 1.45vw, 23px);
+    line-height: 1.72;
+  }
 }
