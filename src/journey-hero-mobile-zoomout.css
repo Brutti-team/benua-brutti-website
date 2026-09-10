@@ -1,35 +1,43 @@
-/* Mobile-only hero framing: larger zoom with clearer faces, without changing laptop/desktop. */
+/* Mobile-only journey hero: keep the same image, but make it fill the entire phone page cleanly. */
 @media (max-width: 560px) {
   .journey-hero,
   .journey-hero__media {
     background: #0b3022 !important;
   }
 
-  .journey-hero__media {
+  /* Fill one complete visible phone page. */
+  .journey-hero {
+    min-height: 100dvh !important;
     overflow: hidden !important;
   }
 
-  /* Soft fill behind the main image so the portrait hero still feels full. */
-  .journey-hero__media::before {
-    content: '';
-    position: absolute;
-    z-index: 0;
-    inset: -5%;
-    background: url('/assets/our-journey-web.jpg') center 42% / cover no-repeat;
-    filter: blur(16px);
-    transform: scale(1.08);
-    opacity: .82;
+  .journey-hero__media {
+    position: absolute !important;
+    inset: 0 !important;
+    min-height: 100dvh !important;
+    overflow: hidden !important;
   }
 
-  /* Original phone framing used when this journey image was first introduced. */
+  /* No blurred side/background layer — the main image itself fills the page. */
+  .journey-hero__media::before {
+    content: none !important;
+  }
+
   .journey-hero__media img {
     z-index: 1 !important;
+    position: absolute !important;
+    inset: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain !important;
-    object-position: 50% 38% !important;
-    transform: translateX(-4%) scale(1.64) !important;
-    transform-origin: 50% 38% !important;
+    object-fit: cover !important;
+    object-position: 50% 34% !important;
+    transform: none !important;
+    transform-origin: center !important;
+  }
+
+  .journey-hero__content {
+    position: relative !important;
+    z-index: 3 !important;
   }
 
   /* Keep the hero paragraph natural on phone: no justified spacing. */
