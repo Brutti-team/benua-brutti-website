@@ -6,6 +6,7 @@ import '../journey-purpose-refine.css'
 import '../journey-team.css'
 import '../journey-team-reference.css'
 import '../journey-team-mobile-final.css'
+import '../journey-team-laptop-fit.css'
 import '../journey-mobile-text-spacing.css'
 import '../journey-hero-mobile-zoomout.css'
 
