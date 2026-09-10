@@ -1,17 +1,16 @@
-/* Mobile-only hero framing: show more of the team while keeping the image full and clean on phone. */
+/* Mobile-only hero framing: fill the phone viewport while keeping the team crop balanced. */
 @media (max-width: 560px) {
   .journey-hero,
   .journey-hero__media {
     background: #0b3022 !important;
   }
 
-  /* Slightly shorter than full screen so more of the landscape photo is visible. */
+  /* Fill the entire visible phone viewport so there is no empty white space below the hero. */
   .journey-hero {
-    min-height: 84svh !important;
+    min-height: 100dvh !important;
   }
 
   .journey-hero__media {
-    min-height: 84svh !important;
     overflow: hidden !important;
   }
 
@@ -19,13 +18,13 @@
     content: none !important;
   }
 
-  /* Keep image full-width and balanced, allowing crop mainly on feet / shoulders / top. */
+  /* Full-bleed photo with no artificial zoom. Crop is kept mainly at the outer edges / legs. */
   .journey-hero__media img {
     z-index: 1 !important;
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
-    object-position: 50% 30% !important;
+    object-position: 50% 32% !important;
     transform: none !important;
     transform-origin: center !important;
   }
