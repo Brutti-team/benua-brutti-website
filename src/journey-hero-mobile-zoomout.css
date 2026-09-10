@@ -1,13 +1,13 @@
-/* Mobile-only journey hero: keep the same image, but make it fill the entire phone page cleanly. */
+/* Mobile-only journey hero: make the image fill exactly one visible phone screen. */
 @media (max-width: 560px) {
   .journey-hero,
   .journey-hero__media {
     background: #0b3022 !important;
   }
 
-  /* Fill one complete visible phone page. */
   .journey-hero {
     min-height: 100dvh !important;
+    height: 100dvh !important;
     overflow: hidden !important;
   }
 
@@ -15,41 +15,43 @@
     position: absolute !important;
     inset: 0 !important;
     min-height: 100dvh !important;
+    height: 100dvh !important;
     overflow: hidden !important;
   }
 
-  /* No blurred side/background layer — the main image itself fills the page. */
   .journey-hero__media::before {
     content: none !important;
   }
 
   .journey-hero__media img {
-    z-index: 1 !important;
     position: absolute !important;
     inset: 0 !important;
+    z-index: 1 !important;
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
-    object-position: 50% 34% !important;
+    object-position: 50% 32% !important;
     transform: none !important;
     transform-origin: center !important;
+  }
+
+  .journey-hero__shade {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 2 !important;
   }
 
   .journey-hero__content {
     position: relative !important;
     z-index: 3 !important;
+    padding-bottom: 42px !important;
   }
 
-  /* Keep the hero paragraph natural on phone: no justified spacing. */
   .journey-hero__intro {
     text-align: left !important;
     text-justify: auto !important;
     hyphens: none !important;
     -webkit-hyphens: none !important;
     word-spacing: normal !important;
-  }
-
-  .journey-hero__shade {
-    z-index: 2 !important;
   }
 }
