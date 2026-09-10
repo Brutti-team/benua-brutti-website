@@ -1,4 +1,4 @@
-/* Mobile-only hero framing: fill the phone viewport and keep the team visually centred. */
+/* Mobile-only hero framing: fill the phone viewport without over-zooming the team. */
 @media (max-width: 560px) {
   .journey-hero,
   .journey-hero__media {
@@ -14,7 +14,7 @@
     overflow: hidden !important;
   }
 
-  /* Soft fill behind the main image so the portrait hero still feels full. */
+  /* Soft fill behind the main image so the full-screen hero still has no empty edges. */
   .journey-hero__media::before {
     content: '';
     position: absolute;
@@ -26,16 +26,15 @@
     opacity: .82;
   }
 
-  /* Phone framing: fill the whole hero, enlarge the team and shift the photo
-     to the left so the group sits more naturally in the centre of the screen. */
+  /* Keep more of the team visible while retaining a strong full-screen image size. */
   .journey-hero__media img {
     z-index: 1 !important;
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover !important;
-    object-position: 46% 34% !important;
-    transform: translateX(-6%) scale(1.12) !important;
-    transform-origin: 50% 34% !important;
+    object-fit: contain !important;
+    object-position: 50% 35% !important;
+    transform: translateX(-2%) scale(1.58) !important;
+    transform-origin: 50% 35% !important;
   }
 
   /* Keep the hero paragraph natural on phone: no justified spacing. */
