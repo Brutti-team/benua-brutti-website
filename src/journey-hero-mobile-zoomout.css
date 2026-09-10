@@ -21,7 +21,7 @@
     opacity: .82;
   }
 
-  /* Zoom further and shift the team slightly left so the people read centred.
+  /* Phone framing: zoom in a little more and keep the team centred.
      Crop is allowed mainly on lower legs / spare background, not faces. */
   .journey-hero__media img {
     z-index: 1 !important;
@@ -29,7 +29,7 @@
     height: 100% !important;
     object-fit: contain !important;
     object-position: 50% 38% !important;
-    transform: translateX(-4%) scale(1.64) !important;
+    transform: translateX(0) scale(1.76) !important;
     transform-origin: 50% 38% !important;
   }
 
