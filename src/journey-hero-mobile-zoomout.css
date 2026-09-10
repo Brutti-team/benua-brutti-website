@@ -1,4 +1,4 @@
-/* Mobile-only hero framing: restore the previous full-page look, then reveal a little more of the left/right teammates. */
+/* Mobile-only hero framing: reveal more of the left/right team while keeping the image edge-to-edge. */
 @media (max-width: 560px) {
   .journey-hero,
   .journey-hero__media {
@@ -14,27 +14,24 @@
     overflow: hidden !important;
   }
 
-  /* Full-bleed backup only covers the tiny edge created by the gentle uniform zoom-out. */
+  /* No separate edge layer: the main photo itself must fill the page cleanly. */
   .journey-hero__media::before {
-    content: '' !important;
-    position: absolute;
-    inset: -2%;
-    z-index: 0;
-    background: url('/assets/our-journey-web.jpg') center 32% / cover no-repeat;
-    filter: blur(3px);
-    transform: scale(1.02);
-    opacity: .95;
+    content: none !important;
   }
 
-  /* Same balanced cover framing as the previous version, with only a tiny uniform
-     zoom-out so the people at both left and right edges can appear, even partially. */
+  /* Use a slightly wider source box, then compress it gently back to viewport width.
+     This reveals more people at both sides without exposing empty side edges. */
   .journey-hero__media img {
     z-index: 1 !important;
-    width: 100% !important;
+    left: 50% !important;
+    right: auto !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 108% !important;
     height: 100% !important;
     object-fit: cover !important;
-    object-position: 50% 32% !important;
-    transform: scale(.975) !important;
+    object-position: 50% 31% !important;
+    transform: translateX(-50%) scaleX(.932) !important;
     transform-origin: center !important;
   }
 
