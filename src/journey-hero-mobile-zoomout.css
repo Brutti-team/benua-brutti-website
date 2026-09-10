@@ -1,4 +1,4 @@
-/* Mobile-only hero framing: fill the phone viewport without over-zooming the team. */
+/* Mobile-only hero framing: full-page image with a balanced crop, without over-zooming. */
 @media (max-width: 560px) {
   .journey-hero,
   .journey-hero__media {
@@ -14,27 +14,20 @@
     overflow: hidden !important;
   }
 
-  /* Soft fill behind the main image so the full-screen hero still has no empty edges. */
+  /* The main image now fills the phone hero naturally, so no blurred duplicate is needed. */
   .journey-hero__media::before {
-    content: '';
-    position: absolute;
-    z-index: 0;
-    inset: -5%;
-    background: url('/assets/our-journey-web.jpg') center 42% / cover no-repeat;
-    filter: blur(16px);
-    transform: scale(1.08);
-    opacity: .82;
+    content: none !important;
   }
 
-  /* Keep more of the team visible while retaining a strong full-screen image size. */
+  /* Balanced phone crop: full page, no artificial zoom, team kept near centre. */
   .journey-hero__media img {
     z-index: 1 !important;
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain !important;
-    object-position: 50% 35% !important;
-    transform: translateX(-2%) scale(1.58) !important;
-    transform-origin: 50% 35% !important;
+    object-fit: cover !important;
+    object-position: 48% 38% !important;
+    transform: none !important;
+    transform-origin: center !important;
   }
 
   /* Keep the hero paragraph natural on phone: no justified spacing. */
