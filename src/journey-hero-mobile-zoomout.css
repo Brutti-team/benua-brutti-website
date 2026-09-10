@@ -1,41 +1,38 @@
-/* Mobile-only hero framing: restore the previous full-page look, then reveal more of the full team horizontally. */
+/* Mobile-only hero framing: larger zoom with clearer faces, without changing laptop/desktop. */
 @media (max-width: 560px) {
   .journey-hero,
   .journey-hero__media {
     background: #0b3022 !important;
   }
 
-  /* Keep the hero filling one complete visible phone page. */
-  .journey-hero {
-    min-height: 100dvh !important;
-  }
-
   .journey-hero__media {
     overflow: hidden !important;
   }
 
-  /* No separate side layer, so there are no dark/blurred strips at the edges. */
+  /* Soft fill behind the main image so the portrait hero still feels full. */
   .journey-hero__media::before {
-    content: none !important;
+    content: '';
+    position: absolute;
+    z-index: 0;
+    inset: -5%;
+    background: url('/assets/our-journey-web.jpg') center 42% / cover no-repeat;
+    filter: blur(16px);
+    transform: scale(1.08);
+    opacity: .82;
   }
 
-  /* Return to the previous centred framing, then use a wider source box with a
-     gentle horizontal squeeze. This reveals more people on both left and right
-     while the actual rendered photo still reaches both page edges and fills 100dvh. */
+  /* Original phone framing used when this journey image was first introduced. */
   .journey-hero__media img {
     z-index: 1 !important;
-    left: 50% !important;
-    right: auto !important;
-    top: 0 !important;
-    bottom: 0 !important;
-    width: 112% !important;
+    width: 100% !important;
     height: 100% !important;
-    object-fit: cover !important;
-    object-position: 50% 32% !important;
-    transform: translateX(-50%) scaleX(.893) !important;
-    transform-origin: center !important;
+    object-fit: contain !important;
+    object-position: 50% 38% !important;
+    transform: translateX(-4%) scale(1.64) !important;
+    transform-origin: 50% 38% !important;
   }
 
+  /* Keep the hero paragraph natural on phone: no justified spacing. */
   .journey-hero__intro {
     text-align: left !important;
     text-justify: auto !important;
