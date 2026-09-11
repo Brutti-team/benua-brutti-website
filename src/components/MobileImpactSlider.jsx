@@ -10,9 +10,15 @@ function pageImage(page) {
   return `${import.meta.env.BASE_URL}assets/impact-report/page-${String(page).padStart(2, '0')}.webp`
 }
 
-const SedcoPage = forwardRef(function SedcoPage({ page }, ref) {
+const SedcoPage = forwardRef(function SedcoPage({ page, totalPages }, ref) {
+  const isCover = page === 1 || page === totalPages
+
   return (
-    <div ref={ref} className="sedco-native-page" data-density="soft">
+    <div
+      ref={ref}
+      className={`sedco-native-page${isCover ? ' sedco-native-page--cover' : ''}`}
+      data-density={isCover ? 'hard' : 'soft'}
+    >
       <img
         src={pageImage(page)}
         alt={page === 1 ? 'Brutti Impact Report 2026 cover' : `Brutti Impact Report 2026 page ${page}`}
@@ -114,7 +120,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
           startZIndex={40}
           autoSize={false}
           maxShadowOpacity={0.46}
-          showCover={false}
+          showCover
           mobileScrollSupport
           clickEventForward={false}
           useMouseEvents
@@ -143,7 +149,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
           }}
         >
           {Array.from({ length: totalPages }, (_, index) => (
-            <SedcoPage page={index + 1} key={index + 1} />
+            <SedcoPage page={index + 1} totalPages={totalPages} key={index + 1} />
           ))}
         </HTMLFlipBook>
 
