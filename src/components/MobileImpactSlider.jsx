@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from 'react'
+import '../impact-report-sedco-exact.css'
 
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value))
@@ -16,11 +17,11 @@ function pageImage(page) {
   return `${import.meta.env.BASE_URL}assets/impact-report/page-${String(page).padStart(2, '0')}.webp`
 }
 
-function PageFace({ page, className = '' }) {
+function ExactPage({ page, className = '' }) {
   if (!page) return null
 
   return (
-    <div className={`impact-sedco-page-face ${className}`}>
+    <div className={`sedco-exact-page ${className}`}>
       <img
         src={pageImage(page)}
         alt={page === 1 ? 'Brutti Impact Report 2026 cover' : `Brutti Impact Report 2026 page ${page}`}
@@ -44,8 +45,10 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   const gestureRef = useRef(null)
   const progressRef = useRef(0)
   const animationRef = useRef(null)
-  const leafRef = useRef(null)
   const bookRef = useRef(null)
+  const topPageRef = useRef(null)
+  const foldRef = useRef(null)
+  const shadowRef = useRef(null)
   const pendingAutoRef = useRef(false)
 
   const [viewportWidth, setViewportWidth] = useState(() => (
@@ -82,7 +85,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   }, [activePage, totalPages])
 
   const pageWidth = useMemo(() => (
-    Math.round(Math.max(230, Math.min(308, viewportWidth * 0.72)))
+    Math.round(Math.max(232, Math.min(310, viewportWidth * 0.72)))
   ), [viewportWidth])
 
   const pageHeight = useMemo(() => Math.round(pageWidth * (632 / 447)), [pageWidth])
@@ -101,29 +104,43 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
 
   const applyProgress = (rawProgress) => {
     const state = turnRef.current
-    const leaf = leafRef.current
+    const topPage = topPageRef.current
     const book = bookRef.current
-    if (!state || !leaf || !book) return
+    const fold = foldRef.current
+    const shadow = shadowRef.current
+    if (!state || !topPage || !book || !fold || !shadow) return
 
     const progress = clamp(rawProgress, 0, 1)
     progressRef.current = progress
 
-    // The SEDCO phone viewer keeps the book at a fixed size. The current sheet
-    // simply folds into the left spine, exposing the next full page underneath.
-    // There is no zoom-out / two-page spread during the turn.
-    const maxAngle = 88.8
-    const angle = state.direction === 1
-      ? -(maxAngle * progress)
-      : -(maxAngle * (1 - progress))
+    // Reference SEDCO behaviour: the book NEVER zooms out. A full-size page stays
+    // fixed in the frame while the visible edge travels horizontally across it.
+    // The outgoing page is clipped away from the RIGHT; going back is the exact
+    // reverse, with the previous page revealing from the LEFT.
+    const seam = state.direction === 1
+      ? pageWidth * (1 - progress)
+      : pageWidth * progress
 
-    leaf.style.transition = 'none'
-    leaf.style.transform = `rotateY(${angle}deg) translateZ(1px)`
+    if (state.direction === 1) {
+      topPage.style.clipPath = `inset(0 ${(progress * 100).toFixed(4)}% 0 0)`
+      topPage.style.webkitClipPath = `inset(0 ${(progress * 100).toFixed(4)}% 0 0)`
+    } else {
+      topPage.style.clipPath = `inset(0 ${((1 - progress) * 100).toFixed(4)}% 0 0)`
+      topPage.style.webkitClipPath = `inset(0 ${((1 - progress) * 100).toFixed(4)}% 0 0)`
+    }
 
-    const fold = Math.sin(Math.PI * Math.min(progress, 0.999))
-    const edge = Math.sin((Math.PI / 2) * progress)
-    book.style.setProperty('--sedco-fold', String(fold))
-    book.style.setProperty('--sedco-edge', String(edge))
-    book.style.setProperty('--sedco-progress', String(progress))
+    // The SEDCO edge is narrow and weighted, not a large 3D rotation. It becomes
+    // strongest in the middle of the turn and disappears again when the sheet lands.
+    const bend = Math.sin(Math.PI * progress)
+    const directionSign = state.direction === 1 ? 1 : -1
+    fold.style.transform = `translate3d(${seam - 8}px, 0, 0) skewY(${directionSign * bend * 0.7}deg) scaleX(${1 + bend * 0.26})`
+    fold.style.opacity = String(0.10 + bend * 0.88)
+
+    shadow.style.transform = `translate3d(${seam - 1}px, 0, 0)`
+    shadow.style.opacity = String(bend * 0.74)
+
+    book.style.setProperty('--sedco-exact-progress', String(progress))
+    book.style.setProperty('--sedco-exact-bend', String(bend))
   }
 
   const animateProgress = (destination, duration, onDone) => {
@@ -132,6 +149,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     const from = progressRef.current
     const start = performance.now()
     const distance = Math.abs(destination - from)
+
     if (distance < 0.002) {
       applyProgress(destination)
       onDone?.()
@@ -140,16 +158,12 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
 
     const tick = (now) => {
       const t = clamp((now - start) / duration, 0, 1)
+      // SEDCO accelerates quickly from the finger and decelerates gently into the page.
+      const eased = 1 - Math.pow(1 - t, 3.05)
+      applyProgress(from + ((destination - from) * eased))
 
-      // SEDCO's release is quick at first and soft at the end. This curve avoids
-      // the robotic constant-speed look while keeping the page attached to the finger.
-      const eased = 1 - Math.pow(1 - t, 3.35)
-      const value = from + ((destination - from) * eased)
-      applyProgress(value)
-
-      if (t < 1) {
-        animationRef.current = requestAnimationFrame(tick)
-      } else {
+      if (t < 1) animationRef.current = requestAnimationFrame(tick)
+      else {
         animationRef.current = null
         onDone?.()
       }
@@ -158,11 +172,25 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     animationRef.current = requestAnimationFrame(tick)
   }
 
-  const resetTurnVisuals = () => {
+  const resetVisuals = () => {
     progressRef.current = 0
-    bookRef.current?.style.setProperty('--sedco-fold', '0')
-    bookRef.current?.style.setProperty('--sedco-edge', '0')
-    bookRef.current?.style.setProperty('--sedco-progress', '0')
+    const topPage = topPageRef.current
+    const fold = foldRef.current
+    const shadow = shadowRef.current
+    if (topPage) {
+      topPage.style.clipPath = 'inset(0 0 0 0)'
+      topPage.style.webkitClipPath = 'inset(0 0 0 0)'
+    }
+    if (fold) {
+      fold.style.transform = 'translate3d(0,0,0)'
+      fold.style.opacity = '0'
+    }
+    if (shadow) {
+      shadow.style.transform = 'translate3d(0,0,0)'
+      shadow.style.opacity = '0'
+    }
+    bookRef.current?.style.setProperty('--sedco-exact-progress', '0')
+    bookRef.current?.style.setProperty('--sedco-exact-bend', '0')
   }
 
   const commitTurn = () => {
@@ -172,50 +200,42 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     const target = clamp(state.target, 1, totalPages)
     activePageRef.current = target
     turnRef.current = null
-    resetTurnVisuals()
     setActivePage(target)
     setTurn(null)
     setIsDragging(false)
     setIsSettling(false)
+    requestAnimationFrame(resetVisuals)
     onPageChange?.(target)
   }
 
   const cancelTurn = () => {
-    const state = turnRef.current
-    if (!state) return
-
+    if (!turnRef.current) return
     setIsDragging(false)
     setIsSettling(true)
 
     const distance = progressRef.current
-    const duration = clamp(115 + (distance * 190), 120, 285)
-
+    const duration = clamp(90 + distance * 155, 95, 235)
     animateProgress(0, duration, () => {
       turnRef.current = null
-      resetTurnVisuals()
       setTurn(null)
       setIsSettling(false)
+      requestAnimationFrame(resetVisuals)
     })
   }
 
   const completeTurn = () => {
-    const state = turnRef.current
-    if (!state) return
-
+    if (!turnRef.current) return
     setIsDragging(false)
     setIsSettling(true)
 
     const remaining = 1 - progressRef.current
-    // A complete SEDCO turn is roughly 0.35–0.40s from a standing page. If the
-    // finger already moved the sheet, only animate the remaining distance.
-    const duration = clamp(105 + (remaining * 255), 110, 360)
-
+    // The reference turn is fast: about 0.25–0.32 s once released.
+    const duration = clamp(115 + remaining * 205, 120, 320)
     animateProgress(1, duration, commitTurn)
   }
 
   const beginTurn = (direction, auto = false) => {
     if (turnRef.current || isSettling) return false
-
     const next = makeTurn(direction)
     if (!next) return false
 
@@ -229,16 +249,14 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
 
   useLayoutEffect(() => {
     if (!turn) return
-
-    applyProgress(progressRef.current)
-
-    if (pendingAutoRef.current) {
-      pendingAutoRef.current = false
-      onPageTurn?.()
-      requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      applyProgress(progressRef.current)
+      if (pendingAutoRef.current) {
+        pendingAutoRef.current = false
+        onPageTurn?.()
         requestAnimationFrame(() => completeTurn())
-      })
-    }
+      }
+    })
   }, [turn, pageWidth])
 
   useImperativeHandle(ref, () => ({
@@ -247,11 +265,11 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
       const target = clamp(Number(page) || 1, 1, totalPages)
       activePageRef.current = target
       turnRef.current = null
-      resetTurnVisuals()
       setActivePage(target)
       setTurn(null)
       setIsDragging(false)
       setIsSettling(false)
+      requestAnimationFrame(resetVisuals)
       onPageChange?.(target)
     },
     next() {
@@ -290,9 +308,8 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     const dx = sample.clientX - gesture.startX
     const dy = sample.clientY - gesture.startY
 
-    if (gesture.locked === null && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) {
-      gesture.locked = Math.abs(dx) > Math.abs(dy) * 1.04 ? 'horizontal' : 'vertical'
-
+    if (gesture.locked === null && (Math.abs(dx) > 4 || Math.abs(dy) > 4)) {
+      gesture.locked = Math.abs(dx) > Math.abs(dy) * 1.03 ? 'horizontal' : 'vertical'
       if (gesture.locked === 'horizontal') {
         gesture.direction = dx < 0 ? 1 : -1
         if (!beginTurn(gesture.direction, false)) {
@@ -315,15 +332,14 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
       ? Math.max(0, -dx)
       : Math.max(0, dx)
 
-    // Slightly longer travel than before = less twitchy, more controlled SEDCO feel.
-    const progress = clamp(distance / (pageWidth * 0.88), 0, 1)
+    // SEDCO reaches the next page with a relatively short, confident swipe.
+    const progress = clamp(distance / (pageWidth * 0.70), 0, 1)
 
-    if (!gesture.soundPlayed && progress > 0.055) {
+    if (!gesture.soundPlayed && progress > 0.06) {
       onPageTurn?.()
       gesture.soundPlayed = true
     }
 
-    // Direct DOM update: no React render on every finger movement.
     applyProgress(progress)
   }
 
@@ -343,22 +359,22 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
       ? -gesture.velocityX
       : gesture.velocityX
 
-    const shouldComplete = progressRef.current > 0.18 || directionalVelocity > 0.24
+    const shouldComplete = progressRef.current > 0.16 || directionalVelocity > 0.22
     if (shouldComplete) completeTurn()
     else cancelTurn()
   }
 
-  const basePage = turn
+  const underPage = turn
     ? (turn.direction === 1 ? turn.target : activePage)
     : activePage
 
-  const leafPage = turn
+  const topPage = turn
     ? (turn.direction === 1 ? activePage : turn.target)
-    : null
+    : activePage
 
   return (
     <div
-      className={`impact-sedco-mobile-viewer${isDragging ? ' is-dragging' : ''}${isSettling ? ' is-settling' : ''}${turn ? ` is-turn-${turn.direction === 1 ? 'forward' : 'backward'}` : ''}`}
+      className={`impact-sedco-mobile-viewer sedco-exact-viewer${isDragging ? ' is-dragging' : ''}${isSettling ? ' is-settling' : ''}`}
       style={{
         '--sedco-page-width': `${pageWidth}px`,
         '--sedco-page-height': `${pageHeight}px`,
@@ -369,24 +385,26 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
       onPointerUp={finishGesture}
       onPointerCancel={finishGesture}
     >
-      <div ref={bookRef} className="impact-sedco-book-shell">
-        <div className="impact-sedco-paper-stack impact-sedco-paper-stack--3" aria-hidden="true" />
-        <div className="impact-sedco-paper-stack impact-sedco-paper-stack--2" aria-hidden="true" />
-        <div className="impact-sedco-paper-stack impact-sedco-paper-stack--1" aria-hidden="true" />
+      <div ref={bookRef} className="sedco-exact-book">
+        <div className="sedco-exact-stack sedco-exact-stack--3" aria-hidden="true" />
+        <div className="sedco-exact-stack sedco-exact-stack--2" aria-hidden="true" />
+        <div className="sedco-exact-stack sedco-exact-stack--1" aria-hidden="true" />
 
-        <div className="impact-sedco-static-page">
-          <PageFace page={basePage} className="impact-sedco-static-page__face" />
+        <ExactPage page={underPage} className="sedco-exact-page--under" />
+
+        <div ref={topPageRef} className="sedco-exact-page sedco-exact-page--top">
+          <img
+            src={pageImage(topPage)}
+            alt={topPage === 1 ? 'Brutti Impact Report 2026 cover' : `Brutti Impact Report 2026 page ${topPage}`}
+            draggable="false"
+            decoding="async"
+            loading="eager"
+          />
         </div>
 
-        {leafPage && (
-          <div ref={leafRef} className="impact-sedco-turning-leaf">
-            <PageFace page={leafPage} className="impact-sedco-turning-leaf__face" />
-            <span className="impact-sedco-leaf-shadow" aria-hidden="true" />
-            <span className="impact-sedco-leaf-edge" aria-hidden="true" />
-          </div>
-        )}
-
-        <span className="impact-sedco-book-spine" aria-hidden="true" />
+        <span ref={shadowRef} className="sedco-exact-seam-shadow" aria-hidden="true" />
+        <span ref={foldRef} className="sedco-exact-fold" aria-hidden="true" />
+        <span className="sedco-exact-left-edge" aria-hidden="true" />
       </div>
     </div>
   )
