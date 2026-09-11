@@ -31,28 +31,23 @@ const SedcoPage = forwardRef(function SedcoPage({ page, totalPages }, ref) {
   )
 })
 
-function NextPagePeek({ page }) {
-  if (!page) return null
-
-  return (
-    <div className="sedco-native-next-peek" aria-hidden="true">
-      <img src={pageImage(page)} alt="" draggable="false" />
-      <span className="sedco-native-next-peek__shade" />
-    </div>
-  )
-}
-
 const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   totalPages,
   currentPage,
   onPageChange,
   onPageTurn,
 }, ref) {
-  const flipRef = useRef(null)
+  const coverFlipRef = useRef(null)
+  const spreadFlipRef = useRef(null)
+  const cameraRef = useRef(null)
+  const gestureRef = useRef(null)
   const soundPlayedRef = useRef(false)
   const [isTurning, setIsTurning] = useState(false)
   const [viewportWidth, setViewportWidth] = useState(() => (
     typeof window === 'undefined' ? 390 : window.innerWidth
+  ))
+  const [cameraSide, setCameraSide] = useState(() => (
+    currentPage > 1 && currentPage % 2 === 1 ? 'right' : 'left'
   ))
 
   useEffect(() => {
@@ -67,93 +62,313 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
 
   const pageHeight = useMemo(() => Math.round(pageWidth * (632 / 447)), [pageWidth])
   const peekWidth = useMemo(() => Math.round(pageWidth * 0.115), [pageWidth])
-  const pageFlip = () => flipRef.current?.pageFlip?.()
+  const cameraTravel = pageWidth - peekWidth
+  const spreadStartPage = currentPage <= 1
+    ? 2
+    : currentPage % 2 === 0
+      ? currentPage
+      : currentPage - 1
 
-  const nextPeekPage = !isTurning && currentPage > 1 && currentPage < totalPages
-    ? currentPage + 1
-    : null
+  useEffect(() => {
+    if (currentPage <= 1) return
+    setCameraSide(currentPage % 2 === 1 ? 'right' : 'left')
+  }, [currentPage])
+
+  const setCameraTransform = (x, animate = true) => {
+    if (!cameraRef.current) return
+    cameraRef.current.style.transition = animate
+      ? 'transform 420ms cubic-bezier(.22,.82,.24,1)'
+      : 'none'
+    cameraRef.current.style.transform = `translate3d(${x}px,0,0)`
+  }
+
+  const snapCamera = (side, animate = true) => {
+    const x = side === 'right' ? -cameraTravel : 0
+    setCameraSide(side)
+    setCameraTransform(x, animate)
+  }
+
+  useEffect(() => {
+    if (currentPage <= 1) return
+    requestAnimationFrame(() => {
+      snapCamera(currentPage % 2 === 1 ? 'right' : 'left', false)
+    })
+  }, [pageWidth])
+
+  const spreadFlip = () => spreadFlipRef.current?.pageFlip?.()
+  const coverFlip = () => coverFlipRef.current?.pageFlip?.()
+
+  const moveToNextStep = () => {
+    if (isTurning) return
+
+    if (currentPage === 1) {
+      coverFlip()?.flipNext('top')
+      return
+    }
+
+    if (cameraSide === 'left' && spreadStartPage + 1 <= totalPages) {
+      snapCamera('right', true)
+      onPageChange?.(Math.min(totalPages, spreadStartPage + 1))
+      return
+    }
+
+    if (cameraSide === 'right' && spreadStartPage + 2 <= totalPages) {
+      onPageTurn?.()
+      soundPlayedRef.current = true
+      setIsTurning(true)
+      spreadFlip()?.flipNext('top')
+    }
+  }
+
+  const moveToPreviousStep = () => {
+    if (isTurning || currentPage <= 1) return
+
+    if (cameraSide === 'right') {
+      snapCamera('left', true)
+      onPageChange?.(spreadStartPage)
+      return
+    }
+
+    if (spreadStartPage <= 2) {
+      onPageChange?.(1)
+      return
+    }
+
+    onPageTurn?.()
+    soundPlayedRef.current = true
+    setIsTurning(true)
+    spreadFlip()?.flipPrev('top')
+  }
 
   useImperativeHandle(ref, () => ({
     goTo(page) {
       const target = clamp(Number(page) || 1, 1, totalPages)
-      pageFlip()?.turnToPage(target - 1)
+      if (target === 1) {
+        onPageChange?.(1)
+        return
+      }
+
+      const spread = target % 2 === 0 ? target : target - 1
+      spreadFlip()?.turnToPage(spread - 1)
+      requestAnimationFrame(() => {
+        snapCamera(target % 2 === 1 ? 'right' : 'left', false)
+      })
     },
     next() {
-      pageFlip()?.flipNext('top')
+      moveToNextStep()
     },
     previous() {
-      pageFlip()?.flipPrev('top')
+      moveToPreviousStep()
     },
   }))
 
+  const handlePointerDown = (event) => {
+    if (isTurning) return
+    if (event.pointerType === 'mouse' && event.button !== 0) return
+
+    gestureRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      locked: null,
+    }
+
+    event.currentTarget.setPointerCapture?.(event.pointerId)
+  }
+
+  const handlePointerMove = (event) => {
+    const gesture = gestureRef.current
+    if (!gesture || gesture.pointerId !== event.pointerId || isTurning) return
+
+    const dx = event.clientX - gesture.startX
+    const dy = event.clientY - gesture.startY
+
+    if (gesture.locked === null && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) {
+      gesture.locked = Math.abs(dx) > Math.abs(dy) * 1.05 ? 'horizontal' : 'vertical'
+    }
+
+    if (gesture.locked !== 'horizontal') return
+
+    // SEDCO step 1: the open two-page spread itself moves LEFT with the finger.
+    // No paper turns yet; the camera simply travels from the left page to the right page.
+    if (currentPage > 1 && cameraSide === 'left' && dx < 0) {
+      setCameraTransform(clamp(dx, -cameraTravel, 0), false)
+      return
+    }
+
+    if (currentPage > 1 && cameraSide === 'right' && dx > 0) {
+      setCameraTransform(clamp(-cameraTravel + dx, -cameraTravel, 0), false)
+    }
+  }
+
+  const handlePointerEnd = (event) => {
+    const gesture = gestureRef.current
+    if (!gesture || gesture.pointerId !== event.pointerId) return
+
+    gestureRef.current = null
+    event.currentTarget.releasePointerCapture?.(event.pointerId)
+
+    if (gesture.locked !== 'horizontal') return
+
+    const dx = event.clientX - gesture.startX
+    const threshold = Math.max(34, pageWidth * 0.16)
+
+    if (dx <= -threshold) {
+      moveToNextStep()
+      return
+    }
+
+    if (dx >= threshold) {
+      moveToPreviousStep()
+      return
+    }
+
+    if (currentPage > 1) snapCamera(cameraSide, true)
+  }
+
+  if (currentPage === 1) {
+    return (
+      <div
+        className="sedco-native-viewer is-cover"
+        style={{
+          '--sedco-native-page-w': `${pageWidth}px`,
+          '--sedco-native-page-h': `${pageHeight}px`,
+          '--sedco-native-peek-w': `${peekWidth}px`,
+        }}
+        aria-label={`Impact Report page ${currentPage} of ${totalPages}`}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerEnd}
+        onPointerCancel={handlePointerEnd}
+      >
+        <div className="sedco-native-holder sedco-native-holder--cover">
+          <div className="sedco-native-book-bed" aria-hidden="true" />
+          <div className="sedco-native-paper-edge sedco-native-paper-edge--1" aria-hidden="true" />
+          <div className="sedco-native-paper-edge sedco-native-paper-edge--2" aria-hidden="true" />
+
+          <HTMLFlipBook
+            ref={coverFlipRef}
+            width={pageWidth}
+            height={pageHeight}
+            size="fixed"
+            minWidth={pageWidth}
+            maxWidth={pageWidth}
+            minHeight={pageHeight}
+            maxHeight={pageHeight}
+            startPage={0}
+            drawShadow
+            flippingTime={500}
+            usePortrait
+            startZIndex={40}
+            autoSize={false}
+            maxShadowOpacity={0.46}
+            showCover
+            mobileScrollSupport
+            clickEventForward={false}
+            useMouseEvents
+            swipeDistance={6}
+            showPageCorners
+            disableFlipByClick
+            className="sedco-native-flipbook"
+            onFlip={(event) => {
+              if (Number(event.data) >= 1) onPageChange?.(2)
+            }}
+            onChangeState={(event) => {
+              const state = event.data
+              const turning = state === 'user_fold' || state === 'flipping'
+              setIsTurning(turning)
+
+              if (turning && !soundPlayedRef.current) {
+                onPageTurn?.()
+                soundPlayedRef.current = true
+              }
+
+              if (state === 'read') {
+                setIsTurning(false)
+                soundPlayedRef.current = false
+              }
+            }}
+          >
+            <SedcoPage page={1} totalPages={totalPages} />
+            <SedcoPage page={2} totalPages={totalPages} />
+          </HTMLFlipBook>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div
-      className={`sedco-native-viewer${currentPage === 1 ? ' is-cover' : ' is-open-book'}${isTurning ? ' is-turning' : ''}`}
+      className={`sedco-native-viewer is-open-book is-camera-${cameraSide}${isTurning ? ' is-turning' : ''}`}
       style={{
         '--sedco-native-page-w': `${pageWidth}px`,
         '--sedco-native-page-h': `${pageHeight}px`,
         '--sedco-native-peek-w': `${peekWidth}px`,
+        '--sedco-native-camera-travel': `${cameraTravel}px`,
       }}
       aria-label={`Impact Report page ${currentPage} of ${totalPages}`}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerEnd}
+      onPointerCancel={handlePointerEnd}
     >
-      <div className="sedco-native-holder">
-        <div className="sedco-native-book-bed" aria-hidden="true" />
-        <div className="sedco-native-paper-edge sedco-native-paper-edge--1" aria-hidden="true" />
-        <div className="sedco-native-paper-edge sedco-native-paper-edge--2" aria-hidden="true" />
+      <div className="sedco-native-camera-window">
+        <div ref={cameraRef} className="sedco-native-camera-track">
+          <div className="sedco-native-spread-bed" aria-hidden="true" />
 
-        <NextPagePeek page={nextPeekPage} />
+          <HTMLFlipBook
+            key={`spread-${spreadStartPage}-${pageWidth}`}
+            ref={spreadFlipRef}
+            width={pageWidth}
+            height={pageHeight}
+            size="fixed"
+            minWidth={pageWidth}
+            maxWidth={pageWidth}
+            minHeight={pageHeight}
+            maxHeight={pageHeight}
+            startPage={Math.max(1, spreadStartPage - 1)}
+            drawShadow
+            flippingTime={540}
+            usePortrait={false}
+            startZIndex={40}
+            autoSize={false}
+            maxShadowOpacity={0.46}
+            showCover
+            mobileScrollSupport={false}
+            clickEventForward={false}
+            useMouseEvents={false}
+            swipeDistance={999}
+            showPageCorners
+            disableFlipByClick
+            className="sedco-native-flipbook sedco-native-spread-flipbook"
+            onFlip={(event) => {
+              const page = clamp(Number(event.data) + 1, 2, totalPages)
+              const leftPage = page % 2 === 0 ? page : Math.max(2, page - 1)
+              requestAnimationFrame(() => snapCamera('left', false))
+              onPageChange?.(leftPage)
+            }}
+            onChangeState={(event) => {
+              const state = event.data
+              const turning = state === 'user_fold' || state === 'flipping'
+              setIsTurning(turning)
 
-        <HTMLFlipBook
-          key={`${pageWidth}x${pageHeight}`}
-          ref={flipRef}
-          width={pageWidth}
-          height={pageHeight}
-          size="fixed"
-          minWidth={pageWidth}
-          maxWidth={pageWidth}
-          minHeight={pageHeight}
-          maxHeight={pageHeight}
-          startPage={clamp(currentPage - 1, 0, totalPages - 1)}
-          drawShadow
-          flippingTime={500}
-          usePortrait
-          startZIndex={40}
-          autoSize={false}
-          maxShadowOpacity={0.46}
-          showCover
-          mobileScrollSupport
-          clickEventForward={false}
-          useMouseEvents
-          swipeDistance={6}
-          showPageCorners
-          disableFlipByClick
-          className="sedco-native-flipbook"
-          onFlip={(event) => {
-            const page = clamp(Number(event.data) + 1, 1, totalPages)
-            onPageChange?.(page)
-          }}
-          onChangeState={(event) => {
-            const state = event.data
-            const turning = state === 'user_fold' || state === 'flipping'
-            setIsTurning(turning)
+              if (turning && !soundPlayedRef.current) {
+                onPageTurn?.()
+                soundPlayedRef.current = true
+              }
 
-            if (turning && !soundPlayedRef.current) {
-              onPageTurn?.()
-              soundPlayedRef.current = true
-            }
-
-            if (state === 'read') {
-              setIsTurning(false)
-              soundPlayedRef.current = false
-            }
-          }}
-        >
-          {Array.from({ length: totalPages }, (_, index) => (
-            <SedcoPage page={index + 1} totalPages={totalPages} key={index + 1} />
-          ))}
-        </HTMLFlipBook>
-
-        <span className="sedco-native-spine" aria-hidden="true" />
+              if (state === 'read') {
+                setIsTurning(false)
+                soundPlayedRef.current = false
+                requestAnimationFrame(() => snapCamera('left', false))
+              }
+            }}
+          >
+            {Array.from({ length: totalPages }, (_, index) => (
+              <SedcoPage page={index + 1} totalPages={totalPages} key={index + 1} />
+            ))}
+          </HTMLFlipBook>
+        </div>
       </div>
     </div>
   )
