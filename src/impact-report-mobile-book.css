@@ -1,7 +1,7 @@
 /* Phone-only Impact Report layout.
-   Desktop/tablet stay untouched. Mobile motion is matched to the supplied SEDCO
-   Directory video: the LEFT edge stays fixed while the visible sheet rotates
-   toward edge-on and reveals the next page underneath. */
+   Desktop/tablet stay untouched. Mobile now follows the supplied SEDCO video:
+   the report behaves like a physical single-page book. Page 1 opens LEFT,
+   page 2 opens RIGHT, page 3 LEFT, and so on. */
 
 @media (max-width: 700px) {
   .impact-report-page {
@@ -197,7 +197,7 @@
   .impact-sedco-mobile-viewer {
     position: relative !important;
     width: 100% !important;
-    height: calc(var(--sedco-page-height) + 12px) !important;
+    height: calc(var(--sedco-page-height) + 14px) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -218,23 +218,74 @@
     width: var(--sedco-page-width) !important;
     height: var(--sedco-page-height) !important;
     flex: 0 0 auto !important;
-    perspective: 1150px !important;
-    perspective-origin: 46% 50% !important;
+    perspective: 1180px !important;
+    perspective-origin: center center !important;
     transform-style: preserve-3d !important;
   }
 
-  /* Thin paper stack seen in the SEDCO viewer. */
+  /* Paper thickness on BOTH sides makes the object read as a book rather than
+     a loose card. The visible stack subtly alternates with page parity. */
   .impact-sedco-mobile-stack {
     position: absolute !important;
+    top: 3px !important;
+    bottom: -4px !important;
     z-index: 0 !important;
-    inset: 3px -4px -4px 4px !important;
+    width: calc(100% - 1px) !important;
     background: #f1f0ec !important;
     border-radius: 1px !important;
-    box-shadow:
-      2px 2px 0 rgba(220,219,215,.94),
-      4px 4px 0 rgba(236,235,231,.84),
-      0 16px 26px rgba(0,0,0,.13) !important;
     pointer-events: none !important;
+    transition: opacity 180ms ease !important;
+  }
+
+  .impact-sedco-mobile-stack--left {
+    left: -5px !important;
+    box-shadow:
+      -2px 2px 0 rgba(218,217,212,.95),
+      -4px 4px 0 rgba(235,234,230,.82),
+      0 16px 26px rgba(0,0,0,.11) !important;
+  }
+
+  .impact-sedco-mobile-stack--right {
+    right: -5px !important;
+    box-shadow:
+      2px 2px 0 rgba(218,217,212,.95),
+      4px 4px 0 rgba(235,234,230,.82),
+      0 16px 26px rgba(0,0,0,.11) !important;
+  }
+
+  .impact-sedco-mobile-book.is-page-odd .impact-sedco-mobile-stack--left {
+    opacity: .32 !important;
+  }
+
+  .impact-sedco-mobile-book.is-page-odd .impact-sedco-mobile-stack--right {
+    opacity: .94 !important;
+  }
+
+  .impact-sedco-mobile-book.is-page-even .impact-sedco-mobile-stack--left {
+    opacity: .94 !important;
+  }
+
+  .impact-sedco-mobile-book.is-page-even .impact-sedco-mobile-stack--right {
+    opacity: .32 !important;
+  }
+
+  .impact-sedco-mobile-spine {
+    position: absolute !important;
+    z-index: 9 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 1px !important;
+    pointer-events: none !important;
+    opacity: .18 !important;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,.55) 12%, rgba(0,0,0,.35) 88%, transparent) !important;
+  }
+
+  .impact-sedco-mobile-book.is-turning-left .impact-sedco-mobile-spine {
+    left: 0 !important;
+  }
+
+  .impact-sedco-mobile-book.is-turning-right .impact-sedco-mobile-spine {
+    right: 0 !important;
   }
 
   .impact-sedco-mobile-page {
@@ -268,15 +319,43 @@
     z-index: 2 !important;
     box-shadow:
       0 12px 22px rgba(0,0,0,.14),
-      inset 7px 0 12px rgba(0,0,0,.018) !important;
+      inset 7px 0 12px rgba(0,0,0,.012),
+      inset -7px 0 12px rgba(0,0,0,.012) !important;
   }
 
-  /* This is the key reference-video behaviour: the page is HINGED on its left
-     edge. The left edge never travels sideways; only the right edge folds in. */
+  /* Alternating physical hinge: page 1 folds LEFT, page 2 folds RIGHT. */
   .impact-sedco-mobile-page--turning {
     z-index: 6 !important;
-    transform-origin: left center !important;
     overflow: hidden !important;
+  }
+
+  .impact-sedco-mobile-page--turning.is-turning-left {
+    transform-origin: left center !important;
+  }
+
+  .impact-sedco-mobile-page--turning.is-turning-right {
+    transform-origin: right center !important;
+  }
+
+  .impact-sedco-mobile-page--turning::after {
+    content: '' !important;
+    position: absolute !important;
+    z-index: 4 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 6px !important;
+    opacity: calc(var(--page-fold, 0) * .76) !important;
+    pointer-events: none !important;
+  }
+
+  .impact-sedco-mobile-page--turning.is-turning-left::after {
+    right: 0 !important;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,.24)) !important;
+  }
+
+  .impact-sedco-mobile-page--turning.is-turning-right::after {
+    left: 0 !important;
+    background: linear-gradient(90deg, rgba(0,0,0,.24), transparent) !important;
   }
 
   .impact-sedco-mobile-fold-shade {
@@ -284,47 +363,37 @@
     inset: 0 !important;
     z-index: 3 !important;
     pointer-events: none !important;
-    opacity: calc(var(--page-fold, 0) * .82) !important;
-    background:
-      linear-gradient(90deg,
-        rgba(255,255,255,.04) 0%,
-        rgba(255,255,255,.01) 48%,
-        rgba(0,0,0,.10) 76%,
-        rgba(0,0,0,.28) 100%) !important;
+    opacity: calc(var(--page-fold, 0) * .80) !important;
   }
 
-  .impact-sedco-mobile-page--turning.is-previous .impact-sedco-mobile-fold-shade {
+  .impact-sedco-mobile-page--turning.is-turning-left .impact-sedco-mobile-fold-shade {
     background:
       linear-gradient(90deg,
-        rgba(0,0,0,.08) 0%,
-        rgba(255,255,255,.02) 25%,
-        rgba(255,255,255,.01) 72%,
-        rgba(0,0,0,.18) 100%) !important;
+        rgba(255,255,255,.02) 0%,
+        rgba(255,255,255,.00) 48%,
+        rgba(0,0,0,.08) 74%,
+        rgba(0,0,0,.26) 100%) !important;
   }
 
-  /* Finger movement must be immediate. The easing only starts after release. */
+  .impact-sedco-mobile-page--turning.is-turning-right .impact-sedco-mobile-fold-shade {
+    background:
+      linear-gradient(90deg,
+        rgba(0,0,0,.26) 0%,
+        rgba(0,0,0,.08) 26%,
+        rgba(255,255,255,.00) 52%,
+        rgba(255,255,255,.02) 100%) !important;
+  }
+
+  /* While the finger moves there is no easing. After release the page completes
+     the turn with the same quick, weighted settle visible in the SEDCO clip. */
   .impact-sedco-mobile-viewer.is-dragging .impact-sedco-mobile-page--turning {
     transition: none !important;
   }
 
   .impact-sedco-mobile-viewer.is-settling .impact-sedco-mobile-page--turning {
     transition:
-      transform 370ms cubic-bezier(.22,.72,.23,1),
-      box-shadow 330ms ease !important;
-  }
-
-  /* A tiny dark spine is visible as the sheet approaches edge-on, just like the
-     SEDCO directory where the old page collapses into a narrow strip on the left. */
-  .impact-sedco-mobile-book::after {
-    content: '' !important;
-    position: absolute !important;
-    z-index: 8 !important;
-    top: 0 !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    width: 1px !important;
-    background: rgba(0,0,0,.10) !important;
-    pointer-events: none !important;
+      transform 430ms cubic-bezier(.22,.74,.24,1),
+      box-shadow 360ms ease !important;
   }
 
   .impact-report-reader__edge {
