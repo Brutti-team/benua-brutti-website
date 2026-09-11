@@ -1,35 +1,166 @@
-/* Phone-only Impact Report viewer matched to the SEDCO Directory mobile view.
-   Keep ONE portrait page visible at a time, centred inside a grey reader stage.
-   The page itself performs the diagonal paper fold/curl when swiped. */
+/* Mobile-only Impact Report layout.
+   Desktop styles stay untouched; this file only fixes the phone reader. */
+
+@keyframes impactMobilePageNext {
+  from { opacity: .72; transform: translate3d(18px, 0, 0) rotateY(-3deg) scale(.985); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) rotateY(0) scale(1); }
+}
+
+@keyframes impactMobilePagePrevious {
+  from { opacity: .72; transform: translate3d(-18px, 0, 0) rotateY(3deg) scale(.985); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) rotateY(0) scale(1); }
+}
 
 @media (max-width: 700px) {
+  .impact-report-page {
+    width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Compact navigation on phone. */
+  .impact-report-nav {
+    top: 7px !important;
+    width: calc(100% - 14px) !important;
+    min-height: 54px !important;
+    padding: 6px 10px !important;
+    border-radius: 16px !important;
+  }
+
+  .impact-report-nav__brand {
+    min-width: 58px !important;
+    margin-left: 2px !important;
+  }
+
+  .impact-report-nav__brand img {
+    width: 57px !important;
+    height: 26px !important;
+  }
+
+  .impact-report-nav__back {
+    min-height: 32px !important;
+    gap: 6px !important;
+    padding: 0 8px !important;
+    font-size: 8px !important;
+    letter-spacing: .08em !important;
+  }
+
+  .impact-report-nav__back svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  /* Less empty space and a headline that actually fits a phone. */
+  .impact-report-viewer-section {
+    padding-top: 78px !important;
+    padding-bottom: 34px !important;
+  }
+
+  .impact-report-shell {
+    width: calc(100% - 18px) !important;
+    max-width: none !important;
+  }
+
+  .impact-report-heading {
+    margin-bottom: 20px !important;
+    padding: 0 3px !important;
+  }
+
+  .impact-report-kicker {
+    margin-bottom: 10px !important;
+    padding: 7px 9px !important;
+    font-size: 7px !important;
+    letter-spacing: .13em !important;
+  }
+
+  .impact-report-heading h1 {
+    gap: 0 !important;
+    max-width: 100% !important;
+    font-size: clamp(36px, 10.5vw, 46px) !important;
+    line-height: .98 !important;
+    letter-spacing: -.055em !important;
+  }
+
+  .impact-report-heading h1 em {
+    font-size: .91em !important;
+    line-height: 1.02 !important;
+    padding-bottom: .08em !important;
+    margin-bottom: -.08em !important;
+  }
+
+  /* Reader frame. */
+  .impact-report-reader {
+    overflow: hidden !important;
+    border-radius: 16px !important;
+  }
+
+  .impact-report-reader__toolbar {
+    min-height: 50px !important;
+    padding: 7px 8px 7px 12px !important;
+  }
+
+  .impact-report-reader__title {
+    gap: 9px !important;
+    min-width: 0 !important;
+  }
+
+  .impact-report-reader__toolbar strong {
+    font-size: 11px !important;
+  }
+
+  .impact-report-reader__dot {
+    width: 7px !important;
+    height: 7px !important;
+  }
+
+  .impact-report-reader__actions {
+    gap: 5px !important;
+  }
+
+  .impact-report-reader__actions button {
+    width: 34px !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    padding: 0 !important;
+  }
+
+  .impact-report-reader__actions button span {
+    display: none !important;
+  }
+
+  /* Stage height now follows the actual portrait page instead of leaving
+     a huge blank grey block. */
   .impact-report-reader__stage {
     position: relative !important;
     min-height: 0 !important;
     height: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     overflow: hidden !important;
     padding: 0 !important;
-    background: #747674 !important;
+    background:
+      radial-gradient(ellipse at 50% 40%, rgba(255,255,255,.08), transparent 54%),
+      linear-gradient(145deg, #777a78 0%, #6e716f 100%) !important;
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,.045),
-      inset 0 -16px 34px rgba(0,0,0,.035) !important;
+      inset 0 -18px 36px rgba(0,0,0,.045) !important;
   }
 
   .impact-report-reader__stage::before {
-    opacity: .14 !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.025), transparent 30%, rgba(0,0,0,.02)) !important;
+    opacity: .16 !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.03), transparent 30%, rgba(0,0,0,.025)) !important;
   }
 
   .impact-report-reader__stage::after {
     content: '' !important;
-    left: 25% !important;
-    right: 25% !important;
-    bottom: 18px !important;
-    height: 14px !important;
+    left: 27% !important;
+    right: 27% !important;
+    bottom: 14px !important;
+    height: 12px !important;
     border-radius: 50% !important;
     background: rgba(0,0,0,.18) !important;
-    filter: blur(14px) !important;
-    opacity: .4 !important;
+    filter: blur(13px) !important;
+    opacity: .42 !important;
   }
 
   .impact-report-reader__viewport {
@@ -38,7 +169,7 @@
     width: 100% !important;
     min-height: 0 !important;
     height: auto !important;
-    padding: 20px 0 24px !important;
+    padding: 14px 0 18px !important;
     overflow: hidden !important;
     display: flex !important;
     align-items: center !important;
@@ -62,7 +193,7 @@
   }
 
   .impact-report-reader__book-wrap {
-    perspective: 2400px !important;
+    perspective: 1800px !important;
   }
 
   .impact-report-reader__book-wrap::before,
@@ -70,86 +201,74 @@
     content: none !important;
   }
 
+  /* Native single-page mobile viewer. */
   .impact-sedco-mobile-viewer {
     position: relative !important;
     width: 100% !important;
-    height: calc(var(--sedco-page-height) + 10px) !important;
+    height: calc(var(--sedco-page-height) + 6px) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     overflow: visible !important;
+    touch-action: pan-y !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
 
-  .impact-sedco-mobile-flipbook {
+  .impact-sedco-mobile-sheet {
     position: relative !important;
     z-index: 5 !important;
     width: var(--sedco-page-width) !important;
     height: var(--sedco-page-height) !important;
-    margin: 0 auto !important;
-    overflow: visible !important;
-    transform-style: preserve-3d !important;
-    filter:
-      drop-shadow(0 15px 20px rgba(0,0,0,.20))
-      drop-shadow(0 3px 6px rgba(0,0,0,.10)) !important;
-    touch-action: pan-y !important;
-  }
-
-  .impact-sedco-mobile-flipbook .stf__parent,
-  .impact-sedco-mobile-flipbook .stf__wrapper,
-  .impact-sedco-mobile-flipbook .stf__block,
-  .impact-sedco-mobile-flipbook .stf__item,
-  .impact-sedco-mobile-flipbook .stf__outerShadow,
-  .impact-sedco-mobile-flipbook .stf__innerShadow,
-  .impact-sedco-mobile-flipbook .stf__hardShadow {
-    backface-visibility: hidden !important;
-    -webkit-backface-visibility: hidden !important;
-    transform-style: preserve-3d !important;
-  }
-
-  .impact-sedco-mobile-flipbook .stf__parent,
-  .impact-sedco-mobile-flipbook .stf__wrapper {
-    overflow: visible !important;
-  }
-
-  .impact-sedco-mobile-flipbook .stf__block {
-    background: transparent !important;
-  }
-
-  .impact-sedco-mobile-page {
-    position: relative !important;
-    width: 100% !important;
-    height: 100% !important;
+    flex: 0 0 auto !important;
     overflow: hidden !important;
     background: #fff !important;
     border: 0 !important;
+    border-radius: 2px !important;
     box-shadow:
-      inset 0 0 0 1px rgba(20,30,24,.04),
-      inset 8px 0 13px rgba(20,30,24,.018),
-      inset -8px 0 13px rgba(20,30,24,.018) !important;
+      0 16px 25px rgba(0,0,0,.20),
+      0 3px 7px rgba(0,0,0,.11),
+      inset 0 0 0 1px rgba(20,30,24,.04) !important;
+    transform-origin: center center !important;
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
+    will-change: transform, opacity !important;
   }
 
-  .impact-sedco-mobile-page img {
+  .impact-sedco-mobile-sheet img {
     display: block !important;
     width: 100% !important;
     height: 100% !important;
+    max-width: none !important;
     object-fit: contain !important;
     object-position: center !important;
     background: #fff !important;
     -webkit-user-drag: none !important;
     user-select: none !important;
     pointer-events: none !important;
-    backface-visibility: hidden !important;
-    -webkit-backface-visibility: hidden !important;
   }
 
-  /* SEDCO-style circular controls beside the page. */
+  .impact-sedco-mobile-sheet::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    background: linear-gradient(90deg, rgba(0,0,0,.018), transparent 8%, transparent 92%, rgba(0,0,0,.022)) !important;
+  }
+
+  .impact-sedco-mobile-sheet.is-turning-next {
+    animation: impactMobilePageNext 340ms cubic-bezier(.22,1,.36,1) both !important;
+  }
+
+  .impact-sedco-mobile-sheet.is-turning-previous {
+    animation: impactMobilePagePrevious 340ms cubic-bezier(.22,1,.36,1) both !important;
+  }
+
+  /* Edge arrows sit outside the page artwork, not over its content. */
   .impact-report-reader__edge {
     top: 50% !important;
-    width: 38px !important;
-    height: 38px !important;
-    background: rgba(92,94,93,.70) !important;
+    width: 36px !important;
+    height: 36px !important;
+    background: rgba(83,86,84,.72) !important;
     border: 1px solid rgba(255,255,255,.30) !important;
     color: #fff !important;
     box-shadow: 0 6px 15px rgba(0,0,0,.15) !important;
@@ -160,37 +279,75 @@
   .impact-report-reader__edge--left { left: 7px !important; }
   .impact-report-reader__edge--right { right: 7px !important; }
 
-  /* Compact phone reader chrome so the whole page is visible like SEDCO. */
-  .impact-report-reader__toolbar {
-    min-height: 54px !important;
+  /* Bottom controls stay usable without eating half the screen. */
+  .impact-report-reader__controls {
+    min-height: 48px !important;
+    grid-template-columns: 30px auto minmax(54px, 1fr) 30px !important;
+    gap: 6px !important;
+    padding: 6px 7px !important;
   }
 
-  .impact-report-reader__controls {
-    min-height: 50px !important;
+  .impact-report-reader__controls > button {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .impact-report-reader__controls > strong {
+    min-width: 58px !important;
+    padding: 5px 7px !important;
+    font-size: 8px !important;
+  }
+
+  .impact-report-reader__controls input[type='range'] {
+    min-width: 0 !important;
+  }
+
+  .impact-report-reader__zoom-controls {
+    display: none !important;
+  }
+
+  .impact-report-reader__hint {
+    margin-top: 12px !important;
+    padding: 0 10px !important;
+    font-size: 9px !important;
+    line-height: 1.45 !important;
   }
 }
 
 @media (max-width: 430px) {
+  .impact-report-heading h1 {
+    font-size: clamp(35px, 10.8vw, 43px) !important;
+  }
+
   .impact-report-reader__viewport {
-    padding-top: 17px !important;
-    padding-bottom: 21px !important;
+    padding-top: 12px !important;
+    padding-bottom: 16px !important;
   }
 
   .impact-report-reader__edge {
-    width: 36px !important;
-    height: 36px !important;
+    width: 34px !important;
+    height: 34px !important;
   }
 }
 
 @media (max-width: 360px) {
+  .impact-report-shell {
+    width: calc(100% - 14px) !important;
+  }
+
+  .impact-report-heading h1 {
+    font-size: 34px !important;
+  }
+
   .impact-report-reader__edge {
-    width: 33px !important;
-    height: 33px !important;
+    width: 31px !important;
+    height: 31px !important;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .impact-sedco-mobile-flipbook {
+  .impact-sedco-mobile-sheet {
+    animation: none !important;
     transition: none !important;
   }
 }
