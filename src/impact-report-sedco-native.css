@@ -103,6 +103,65 @@
     pointer-events: none !important;
   }
 
+  /* At rest render the two pages as a clean, fixed spread. This removes the
+     visual stacking/overlap from react-pageflip without changing the approved
+     camera movement or the page-turn animation itself. */
+  .sedco-native-static-spread {
+    position: absolute !important;
+    z-index: 15 !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: calc(var(--sedco-native-page-w) * 2) !important;
+    height: var(--sedco-native-page-h) !important;
+    display: grid !important;
+    grid-template-columns: var(--sedco-native-page-w) var(--sedco-native-page-w) !important;
+    pointer-events: none !important;
+    opacity: 1 !important;
+  }
+
+  .sedco-native-static-page {
+    position: relative !important;
+    width: var(--sedco-native-page-w) !important;
+    height: var(--sedco-native-page-h) !important;
+    overflow: hidden !important;
+    background: #fff !important;
+    box-sizing: border-box !important;
+  }
+
+  .sedco-native-static-page--left {
+    border-right: 1px solid rgba(0,0,0,.055) !important;
+    box-shadow: inset -8px 0 13px rgba(0,0,0,.025) !important;
+  }
+
+  .sedco-native-static-page--right {
+    border-left: 1px solid rgba(255,255,255,.65) !important;
+    box-shadow: inset 8px 0 13px rgba(0,0,0,.02) !important;
+  }
+
+  .sedco-native-static-page img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    background: #fff !important;
+    user-select: none !important;
+    -webkit-user-drag: none !important;
+  }
+
+  .sedco-native-viewer.is-open-book:not(.is-turning) .sedco-native-spread-flipbook {
+    opacity: 0 !important;
+  }
+
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-static-spread {
+    opacity: 0 !important;
+  }
+
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook {
+    opacity: 1 !important;
+  }
+
   /* Centre binding between the two visible pages. */
   .sedco-native-camera-track::after {
     content: '' !important;
