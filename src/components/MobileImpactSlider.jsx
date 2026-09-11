@@ -31,6 +31,21 @@ const SedcoPage = forwardRef(function SedcoPage({ page, totalPages, forceSoft = 
   )
 })
 
+function StaticSpread({ leftPage, rightPage, totalPages }) {
+  return (
+    <div className="sedco-native-static-spread" aria-hidden="true">
+      <div className="sedco-native-static-page sedco-native-static-page--left">
+        <img src={pageImage(leftPage)} alt="" draggable="false" />
+      </div>
+      <div className="sedco-native-static-page sedco-native-static-page--right">
+        {rightPage <= totalPages && (
+          <img src={pageImage(rightPage)} alt="" draggable="false" />
+        )}
+      </div>
+    </div>
+  )
+}
+
 const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   totalPages,
   currentPage,
@@ -326,6 +341,12 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
       <div className="sedco-native-camera-window">
         <div ref={cameraRef} className="sedco-native-camera-track">
           <div className="sedco-native-spread-bed" aria-hidden="true" />
+
+          <StaticSpread
+            leftPage={spreadStartPage}
+            rightPage={spreadStartPage + 1}
+            totalPages={totalPages}
+          />
 
           <HTMLFlipBook
             key={`spread-${spreadStartPage}-${pageWidth}`}
