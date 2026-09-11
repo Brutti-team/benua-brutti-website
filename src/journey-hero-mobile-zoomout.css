@@ -1,4 +1,4 @@
-/* Mobile-only journey hero: make the image fill exactly one visible phone screen. */
+/* Mobile-only journey hero: keep the photo full-screen while showing a little more of the team. */
 @media (max-width: 560px) {
   .journey-hero,
   .journey-hero__media {
@@ -19,16 +19,27 @@
     overflow: hidden !important;
   }
 
+  /* Full-bleed copy behind the main photo keeps every edge filled while
+     the foreground photo is framed slightly shorter to create a subtle zoom-out. */
   .journey-hero__media::before {
-    content: none !important;
+    content: '' !important;
+    position: absolute !important;
+    inset: -2% !important;
+    z-index: 0 !important;
+    background: url('/assets/our-journey-web.jpg') 50% 32% / cover no-repeat !important;
+    transform: scale(1.03) !important;
+    filter: brightness(.82) saturate(.96) !important;
   }
 
   .journey-hero__media img {
     position: absolute !important;
-    inset: 0 !important;
+    left: 0 !important;
+    top: 3% !important;
+    right: 0 !important;
+    bottom: auto !important;
     z-index: 1 !important;
     width: 100% !important;
-    height: 100% !important;
+    height: 94% !important;
     object-fit: cover !important;
     object-position: 50% 32% !important;
     transform: none !important;
