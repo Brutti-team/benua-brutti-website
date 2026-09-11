@@ -4,15 +4,19 @@ function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value))
 }
 
+function lerp(a, b, t) {
+  return a + (b - a) * t
+}
+
 function pageImage(page) {
   return `${import.meta.env.BASE_URL}assets/impact-report/page-${String(page).padStart(2, '0')}.webp`
 }
 
-function MobilePage({ page, className = '', style, turning = false }) {
+function PageSheet({ page, side, pageWidth, pageHeight }) {
   if (!page) return null
 
   return (
-    <div className={`impact-sedco-mobile-page ${className}`} style={style}>
+    <div className={`impact-sedco-sheet-image is-${side}`} style={{ width: pageWidth, height: pageHeight }}>
       <img
         src={pageImage(page)}
         alt={page === 1 ? 'Brutti Impact Report 2026 cover' : `Brutti Impact Report 2026 page ${page}`}
@@ -21,7 +25,6 @@ function MobilePage({ page, className = '', style, turning = false }) {
         loading="eager"
         fetchPriority={page <= 2 ? 'high' : 'auto'}
       />
-      {turning && <span className="impact-sedco-mobile-fold-shade" aria-hidden="true" />}
     </div>
   )
 }
@@ -32,17 +35,16 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   onPageChange,
   onPageTurn,
 }, ref) {
+  const activePageRef = useRef(clamp(Number(currentPage) || 1, 1, totalPages))
   const gestureRef = useRef(null)
   const settleTimerRef = useRef(null)
   const settleFrameRef = useRef(null)
-  const activePageRef = useRef(clamp(Number(currentPage) || 1, 1, totalPages))
 
   const [viewportWidth, setViewportWidth] = useState(() => (
     typeof window === 'undefined' ? 390 : window.innerWidth
   ))
   const [activePage, setActivePage] = useState(activePageRef.current)
-  const [targetPage, setTargetPage] = useState(null)
-  const [turnProgress, setTurnProgress] = useState(0)
+  const [turn, setTurn] = useState(null)
   const [isDragging, setIsDragging] = useState(false)
   const [isSettling, setIsSettling] = useState(false)
 
@@ -58,11 +60,11 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   }, [])
 
   useEffect(() => {
-    if (isDragging || isSettling || targetPage !== null) return
+    if (turn || isDragging || isSettling) return
     const next = clamp(Number(currentPage) || 1, 1, totalPages)
     activePageRef.current = next
     setActivePage(next)
-  }, [currentPage, totalPages, isDragging, isSettling, targetPage])
+  }, [currentPage, totalPages, turn, isDragging, isSettling])
 
   useEffect(() => {
     ;[activePage - 2, activePage - 1, activePage, activePage + 1, activePage + 2].forEach((page) => {
@@ -73,87 +75,170 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   }, [activePage, totalPages])
 
   const pageWidth = useMemo(() => {
-    return Math.round(Math.max(230, Math.min(314, viewportWidth * 0.735)))
+    return Math.round(Math.max(226, Math.min(300, viewportWidth * 0.70)))
   }, [viewportWidth])
 
   const pageHeight = useMemo(() => Math.round(pageWidth * (632 / 447)), [pageWidth])
+  const peekWidth = useMemo(() => Math.round(clamp(pageWidth * 0.10, 22, 31)), [pageWidth])
+  const bookWidth = pageWidth + peekWidth
 
-  // This parity is the important SEDCO behaviour from the supplied video:
-  // page 1 opens to the LEFT, page 2 opens to the RIGHT, page 3 to the LEFT, etc.
-  const turnSide = activePage % 2 === 1 ? 'left' : 'right'
-  const canGoNext = activePage < totalPages
-  const canGoPrevious = activePage > 1
+  const restSpread = useMemo(() => {
+    if (activePage === 1) return null
 
-  const resetTurn = () => {
-    setTargetPage(null)
-    setTurnProgress(0)
+    if (activePage % 2 === 0) {
+      return {
+        leftPage: activePage,
+        rightPage: activePage < totalPages ? activePage + 1 : null,
+        leftWidth: pageWidth,
+      }
+    }
+
+    return {
+      leftPage: activePage > 1 ? activePage - 1 : null,
+      rightPage: activePage,
+      leftWidth: peekWidth,
+    }
+  }, [activePage, totalPages, pageWidth, peekWidth])
+
+  const makeTurn = (direction) => {
+    const from = activePageRef.current
+    const target = from + direction
+    if (target < 1 || target > totalPages) return null
+
+    // Cover -> page 2: the cover collapses to the left while page 2 opens on the right.
+    if (from === 1 && direction === 1) {
+      return {
+        mode: 'cover-forward',
+        target,
+        progress: 0,
+        leftPage: 1,
+        rightPage: 2,
+        startLeft: pageWidth,
+        endLeft: 0,
+      }
+    }
+
+    // Page 2 -> cover: exact reverse of the opening movement.
+    if (from === 2 && direction === -1) {
+      return {
+        mode: 'cover-back',
+        target,
+        progress: 0,
+        leftPage: 1,
+        rightPage: 2,
+        startLeft: 0,
+        endLeft: pageWidth,
+      }
+    }
+
+    // Forward from an even page: current large page is LEFT, next page is a thin
+    // strip on the RIGHT. The centre seam travels left until the next page is large.
+    if (direction === 1 && from % 2 === 0) {
+      return {
+        mode: 'spread',
+        target,
+        progress: 0,
+        leftPage: from,
+        rightPage: from + 1,
+        startLeft: pageWidth,
+        endLeft: peekWidth,
+      }
+    }
+
+    // Forward from an odd page: current large page is RIGHT. The next page grows
+    // from the LEFT, exactly matching the alternating SEDCO book flow.
+    if (direction === 1 && from % 2 === 1) {
+      return {
+        mode: 'spread',
+        target,
+        progress: 0,
+        leftPage: from + 1,
+        rightPage: from,
+        startLeft: peekWidth,
+        endLeft: pageWidth,
+      }
+    }
+
+    // Backward from an odd page: current page is RIGHT and previous even page
+    // grows back on the LEFT.
+    if (direction === -1 && from % 2 === 1) {
+      return {
+        mode: 'spread',
+        target,
+        progress: 0,
+        leftPage: from - 1,
+        rightPage: from,
+        startLeft: peekWidth,
+        endLeft: pageWidth,
+      }
+    }
+
+    // Backward from an even page: previous odd page grows on the RIGHT.
+    return {
+      mode: 'spread',
+      target,
+      progress: 0,
+      leftPage: from,
+      rightPage: from - 1,
+      startLeft: pageWidth,
+      endLeft: peekWidth,
+    }
+  }
+
+  const clearTurn = () => {
+    setTurn(null)
     setIsDragging(false)
     setIsSettling(false)
   }
 
-  const commitTarget = () => {
-    if (targetPage === null) {
-      resetTurn()
-      return
-    }
-
-    const target = clamp(targetPage, 1, totalPages)
+  const commitTurn = (turnState) => {
+    const target = clamp(turnState.target, 1, totalPages)
     activePageRef.current = target
     setActivePage(target)
-    setTargetPage(null)
-    setTurnProgress(0)
-    setIsDragging(false)
-    setIsSettling(false)
+    clearTurn()
     onPageChange?.(target)
   }
 
-  const settleTo = (destination, { playSound = false } = {}) => {
-    if (targetPage === null) return
+  const settle = (destination, playSound = false) => {
+    const currentTurn = turn
+    if (!currentTurn) return
 
     if (settleTimerRef.current) window.clearTimeout(settleTimerRef.current)
     if (settleFrameRef.current) cancelAnimationFrame(settleFrameRef.current)
 
     if (playSound) onPageTurn?.()
-
     setIsDragging(false)
     setIsSettling(true)
 
     settleFrameRef.current = requestAnimationFrame(() => {
       settleFrameRef.current = requestAnimationFrame(() => {
-        setTurnProgress(destination)
+        setTurn((value) => (value ? { ...value, progress: destination } : value))
       })
     })
 
     const duration = destination === 1 ? 430 : 300
     settleTimerRef.current = window.setTimeout(() => {
-      if (destination === 1) commitTarget()
-      else resetTurn()
+      if (destination === 1) commitTurn(currentTurn)
+      else clearTurn()
     }, duration + 35)
   }
 
-  const beginProgrammaticTurn = (direction) => {
-    if (isDragging || isSettling || targetPage !== null) return
-    const target = activePageRef.current + direction
-    if (target < 1 || target > totalPages) return
-
-    setTargetPage(target)
-    setTurnProgress(0)
+  const startProgrammaticTurn = (direction) => {
+    if (turn || isDragging || isSettling) return
+    const nextTurn = makeTurn(direction)
+    if (!nextTurn) return
+    setTurn(nextTurn)
     setIsSettling(true)
     onPageTurn?.()
 
     settleFrameRef.current = requestAnimationFrame(() => {
       settleFrameRef.current = requestAnimationFrame(() => {
-        setTurnProgress(1)
+        setTurn((value) => (value ? { ...value, progress: 1 } : value))
       })
     })
 
     settleTimerRef.current = window.setTimeout(() => {
-      activePageRef.current = target
-      setActivePage(target)
-      setTargetPage(null)
-      setTurnProgress(0)
-      setIsSettling(false)
-      onPageChange?.(target)
+      commitTurn(nextTurn)
     }, 465)
   }
 
@@ -164,14 +249,14 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
       if (settleFrameRef.current) cancelAnimationFrame(settleFrameRef.current)
       activePageRef.current = target
       setActivePage(target)
-      resetTurn()
+      clearTurn()
       onPageChange?.(target)
     },
     next() {
-      beginProgrammaticTurn(1)
+      startProgrammaticTurn(1)
     },
     previous() {
-      beginProgrammaticTurn(-1)
+      startProgrammaticTurn(-1)
     },
   }))
 
@@ -208,8 +293,6 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     if (gesture.locked !== 'horizontal') return
 
     const direction = dx < 0 ? 1 : -1
-    const target = activePageRef.current + direction
-    const allowed = target >= 1 && target <= totalPages
     gesture.direction = direction
 
     const now = performance.now()
@@ -218,26 +301,21 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     gesture.lastX = event.clientX
     gesture.lastTime = now
 
-    if (!allowed) {
-      setIsDragging(true)
-      setTargetPage(null)
-      setTurnProgress(0)
-      return
+    let currentTurn = turn
+    if (!currentTurn || currentTurn.target !== activePageRef.current + direction) {
+      currentTurn = makeTurn(direction)
+      if (!currentTurn) return
+      setTurn(currentTurn)
     }
 
-    if (targetPage !== target) setTargetPage(target)
-
-    // Finger distance controls only HOW FAR the page has opened. The physical
-    // direction of the sheet follows page parity, exactly like the SEDCO flow:
-    // 1 -> left, 2 -> right, 3 -> left ...
-    const progress = clamp(Math.abs(dx) / (pageWidth * 0.72), 0, 1)
+    const progress = clamp(Math.abs(dx) / (pageWidth * 0.66), 0, 1)
 
     if (!gesture.soundPlayed && progress > 0.045) {
       onPageTurn?.()
       gesture.soundPlayed = true
     }
 
-    setTurnProgress(progress)
+    setTurn({ ...currentTurn, progress })
     setIsDragging(true)
   }
 
@@ -248,30 +326,36 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     gestureRef.current = null
     event.currentTarget.releasePointerCapture?.(event.pointerId)
 
-    if (gesture.locked !== 'horizontal' || gesture.direction === 0 || targetPage === null) {
-      resetTurn()
+    if (gesture.locked !== 'horizontal' || gesture.direction === 0 || !turn) {
+      clearTurn()
       return
     }
 
     const directionalVelocity = gesture.direction === 1 ? -gesture.velocityX : gesture.velocityX
-    const shouldComplete = turnProgress > 0.17 || directionalVelocity > 0.30
-    settleTo(shouldComplete ? 1 : 0)
+    const shouldComplete = turn.progress > 0.18 || directionalVelocity > 0.30
+    settle(shouldComplete ? 1 : 0)
   }
 
-  const foldStrength = Math.sin(Math.PI * Math.min(turnProgress, 0.999))
-  const angle = turnProgress * 91
-  const signedAngle = turnSide === 'left' ? -angle : angle
-  const edgeLift = 1 + foldStrength * 7
-  const slightTilt = turnSide === 'left' ? -0.22 * foldStrength : 0.22 * foldStrength
-  const turningShadow = 0.10 + foldStrength * 0.24
-  const pageBehind = targetPage ?? activePage
+  const renderedTurn = turn
+  const progress = renderedTurn?.progress ?? 0
+  const leftWidth = renderedTurn
+    ? lerp(renderedTurn.startLeft, renderedTurn.endLeft, progress)
+    : restSpread?.leftWidth ?? pageWidth
+  const rightWidth = renderedTurn ? Math.max(0, bookWidth - leftWidth) : restSpread ? bookWidth - leftWidth : 0
+
+  const leftPage = renderedTurn?.leftPage ?? restSpread?.leftPage ?? null
+  const rightPage = renderedTurn?.rightPage ?? restSpread?.rightPage ?? null
+  const isCover = activePage === 1 && !renderedTurn
+  const seamOpacity = renderedTurn || restSpread ? 1 : 0
 
   return (
     <div
-      className={`impact-sedco-mobile-viewer${isDragging ? ' is-dragging' : ''}${isSettling ? ' is-settling' : ''}`}
+      className={`impact-sedco-mobile-viewer${isDragging ? ' is-dragging' : ''}${isSettling ? ' is-settling' : ''}${isCover ? ' is-closed' : ' is-open'}`}
       style={{
         '--sedco-page-width': `${pageWidth}px`,
         '--sedco-page-height': `${pageHeight}px`,
+        '--sedco-book-width': `${bookWidth}px`,
+        '--sedco-peek-width': `${peekWidth}px`,
       }}
       aria-label={`Impact Report page ${activePage} of ${totalPages}`}
       onPointerDown={handlePointerDown}
@@ -279,30 +363,39 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
       onPointerUp={finishGesture}
       onPointerCancel={finishGesture}
     >
-      <div className={`impact-sedco-mobile-book is-page-${activePage % 2 === 1 ? 'odd' : 'even'} is-turning-${turnSide}`}>
-        <div className="impact-sedco-mobile-stack impact-sedco-mobile-stack--left" aria-hidden="true" />
-        <div className="impact-sedco-mobile-stack impact-sedco-mobile-stack--right" aria-hidden="true" />
-        <div className="impact-sedco-mobile-spine" aria-hidden="true" />
+      {isCover ? (
+        <div className="impact-sedco-closed-book">
+          <div className="impact-sedco-closed-book__pages" aria-hidden="true" />
+          <PageSheet page={1} side="cover" pageWidth={pageWidth} pageHeight={pageHeight} />
+        </div>
+      ) : (
+        <div className="impact-sedco-mobile-book" style={{ width: bookWidth, height: pageHeight }}>
+          <div className="impact-sedco-book-edge impact-sedco-book-edge--left" aria-hidden="true" />
+          <div className="impact-sedco-book-edge impact-sedco-book-edge--right" aria-hidden="true" />
 
-        <MobilePage
-          page={pageBehind}
-          className="impact-sedco-mobile-page--base"
-        />
+          <div
+            className="impact-sedco-book-panel impact-sedco-book-panel--left"
+            style={{ width: leftWidth, height: pageHeight }}
+          >
+            <PageSheet page={leftPage} side="left" pageWidth={pageWidth} pageHeight={pageHeight} />
+            <span className="impact-sedco-inner-shadow impact-sedco-inner-shadow--left" aria-hidden="true" />
+          </div>
 
-        {targetPage !== null && (
-          <MobilePage
-            page={activePage}
-            className={`impact-sedco-mobile-page--turning is-turning-${turnSide}`}
-            turning
-            style={{
-              '--page-fold': foldStrength,
-              '--page-progress': turnProgress,
-              transform: `rotateY(${signedAngle}deg) rotateZ(${slightTilt}deg) translateZ(${edgeLift}px)`,
-              boxShadow: `${turnSide === 'left' ? 9 : -9}px 5px 25px rgba(0,0,0,${turningShadow})`,
-            }}
+          <div
+            className="impact-sedco-book-panel impact-sedco-book-panel--right"
+            style={{ width: rightWidth, height: pageHeight }}
+          >
+            <PageSheet page={rightPage} side="right" pageWidth={pageWidth} pageHeight={pageHeight} />
+            <span className="impact-sedco-inner-shadow impact-sedco-inner-shadow--right" aria-hidden="true" />
+          </div>
+
+          <span
+            className="impact-sedco-book-seam"
+            style={{ left: leftWidth, opacity: seamOpacity }}
+            aria-hidden="true"
           />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 })
