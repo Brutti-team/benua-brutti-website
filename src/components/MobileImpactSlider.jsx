@@ -71,24 +71,26 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     return () => window.removeEventListener('resize', sync)
   }, [])
 
-  // Keep the approved cover size. Open-book pages are only sized down enough
-  // for TWO complete pages to sit cleanly side by side inside the phone reader.
+  // Keep the approved cover and real two-page book structure, but make each
+  // open page large again. The phone camera focuses one page at a time like
+  // the supplied SEDCO reference: left page first, then right page, then flip.
   const coverPageWidth = useMemo(() => (
     Math.round(Math.max(248, Math.min(326, viewportWidth * 0.80)))
   ), [viewportWidth])
 
   const spreadPageWidth = useMemo(() => (
-    Math.round(Math.max(138, Math.min(174, viewportWidth * 0.405)))
+    Math.round(Math.max(248, Math.min(326, viewportWidth * 0.80)))
   ), [viewportWidth])
 
   const pageWidth = currentPage === 1 ? coverPageWidth : spreadPageWidth
   const pageHeight = useMemo(() => Math.round(pageWidth * (632 / 447)), [pageWidth])
   const peekWidth = useMemo(() => Math.round(pageWidth * 0.115), [pageWidth])
 
-  // Keep the same SEDCO camera-pan behaviour; only the open-book geometry is fixed.
-  const cameraTravel = currentPage === 1 ? 0 : Math.round(spreadPageWidth * 0.18)
-  const cameraLeftX = cameraTravel / 2
-  const cameraRightX = -(cameraTravel / 2)
+  // The book itself stays as two clean side-by-side pages. Only the camera
+  // pans across the spread, so one page is zoomed/focused at a time.
+  const cameraTravel = currentPage === 1 ? 0 : Math.max(0, spreadPageWidth - peekWidth)
+  const cameraLeftX = 0
+  const cameraRightX = -cameraTravel
 
   const spreadStartPage = currentPage <= 1
     ? 2
@@ -133,12 +135,16 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
       return
     }
 
+    // First swipe: stay on the same physical spread and move the camera from
+    // the left page to the right page. No sheet turns yet.
     if (cameraSide === 'left' && spreadStartPage + 1 <= totalPages) {
       snapCamera('right', true)
       onPageChange?.(Math.min(totalPages, spreadStartPage + 1))
       return
     }
 
+    // Second swipe: after the right page has been read, turn that sheet to the
+    // next physical spread, then focus the new left page.
     if (cameraSide === 'right' && spreadStartPage + 2 <= totalPages) {
       onPageTurn?.()
       soundPlayedRef.current = true
@@ -176,7 +182,6 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
       }
 
       const spread = target % 2 === 0 ? target : target - 1
-      // Open-book flipbook starts at report page 2, so its index is page - 2.
       spreadFlip()?.turnToPage(Math.max(0, spread - 2))
       requestAnimationFrame(() => {
         snapCamera(target % 2 === 1 ? 'right' : 'left', false)
@@ -237,7 +242,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     if (gesture.locked !== 'horizontal') return
 
     const dx = event.clientX - gesture.startX
-    const threshold = Math.max(26, spreadPageWidth * 0.14)
+    const threshold = Math.max(34, spreadPageWidth * 0.14)
 
     if (dx <= -threshold) {
       moveToNextStep()
@@ -374,7 +379,6 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
             disableFlipByClick
             className="sedco-native-flipbook sedco-native-spread-flipbook"
             onFlip={(event) => {
-              // Inner spread contains report pages 2..40, so map index back to real page number.
               const page = clamp(Number(event.data) + 2, 2, totalPages)
               const leftPage = page % 2 === 0 ? page : Math.max(2, page - 1)
               requestAnimationFrame(() => snapCamera('left', false))
