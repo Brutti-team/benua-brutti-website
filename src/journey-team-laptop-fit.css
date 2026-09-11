@@ -89,7 +89,7 @@
     width: min(215%, 1660px) !important;
     max-width: 1660px !important;
     margin: 0 auto !important;
-    transform: translate(0, 6px) !important;
+    transform: translate(6%, 6px) !important;
     transform-origin: center center !important;
   }
 
@@ -150,7 +150,7 @@
   .journey-team__composite {
     width: min(205%, 1540px) !important;
     max-width: 1540px !important;
-    transform: translate(0, 4px) !important;
+    transform: translate(5%, 4px) !important;
   }
 
   .journey-team__composite img {
