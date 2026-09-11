@@ -1,90 +1,197 @@
-/* Mobile-only book mechanics matched to the supplied SEDCO recording.
-   Important: do not override react-pageflip's internal geometry/transforms.
-   The curl, fold and moving shadow come from the page-flip engine itself. */
+/* Mobile-only Impact Report reader matched to the supplied SEDCO phone video.
+   Key visual detail: after the cover, SEDCO does NOT show an isolated single page.
+   The current page stays full-size while a narrow strip of the next page remains
+   visible on the RIGHT, so the resting state still reads as a physical booklet.
+   The actual curl/fold is handled by react-pageflip; this CSS only builds the
+   paper stack, next-page peek and surrounding book silhouette. */
 
 @media (max-width: 700px) {
   .sedco-native-viewer {
-    position: relative;
-    width: 100%;
-    height: calc(var(--sedco-native-page-h) + 18px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: visible;
-    perspective: 1800px;
-    touch-action: pan-y;
-    user-select: none;
-    -webkit-user-select: none;
-    -webkit-tap-highlight-color: transparent;
+    position: relative !important;
+    width: 100% !important;
+    height: calc(var(--sedco-native-page-h) + 18px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: visible !important;
+    perspective: 1800px !important;
+    touch-action: pan-y !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
 
-  /* Very subtle paper thickness like the SEDCO viewer. */
+  .sedco-native-holder {
+    position: relative !important;
+    width: var(--sedco-native-page-w) !important;
+    height: var(--sedco-native-page-h) !important;
+    flex: 0 0 auto !important;
+    overflow: visible !important;
+    transform-style: preserve-3d !important;
+    filter:
+      drop-shadow(0 14px 20px rgba(0,0,0,.16))
+      drop-shadow(0 3px 5px rgba(0,0,0,.08)) !important;
+  }
+
+  /* Paper body directly beneath the visible page. */
   .sedco-native-book-bed {
-    position: absolute;
-    z-index: 0;
-    width: var(--sedco-native-page-w);
-    height: var(--sedco-native-page-h);
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 2px;
-    background: #f8f7f3;
+    position: absolute !important;
+    z-index: 0 !important;
+    inset: 1px -2px -2px 1px !important;
+    border-radius: 2px !important;
+    background: #f7f6f2 !important;
+    border: 1px solid rgba(0,0,0,.035) !important;
+    box-shadow: 1px 2px 0 rgba(219,218,213,.90) !important;
+    pointer-events: none !important;
+  }
+
+  /* Two very thin offset sheets: enough to read as a book, not a card deck. */
+  .sedco-native-paper-edge {
+    position: absolute !important;
+    z-index: 0 !important;
+    inset: 0 !important;
+    border-radius: 2px !important;
+    pointer-events: none !important;
+  }
+
+  .sedco-native-paper-edge--1 {
+    transform: translate3d(3px, 3px, -2px) !important;
+    background: #ecebe6 !important;
+  }
+
+  .sedco-native-paper-edge--2 {
+    transform: translate3d(5px, 5px, -4px) !important;
+    background: #dfded9 !important;
+  }
+
+  /* This is the important SEDCO detail. At rest after page 1, the LEFT edge of
+     the next page peeks out from the right side of the current page. */
+  .sedco-native-next-peek {
+    position: absolute !important;
+    z-index: 3 !important;
+    top: 0 !important;
+    left: calc(100% - 1px) !important;
+    width: var(--sedco-native-peek-w) !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    border-radius: 0 2px 2px 0 !important;
+    background: #fff !important;
     box-shadow:
-      2px 2px 0 #e7e5df,
-      4px 4px 0 #d9d7d1,
-      0 15px 24px rgba(0,0,0,.17);
-    pointer-events: none;
+      3px 2px 0 rgba(221,220,214,.82),
+      6px 4px 0 rgba(232,231,226,.60),
+      inset 8px 0 12px rgba(0,0,0,.035) !important;
+    opacity: 1 !important;
+    transition: opacity 120ms ease !important;
+    pointer-events: none !important;
+  }
+
+  .sedco-native-viewer.is-turning .sedco-native-next-peek {
+    opacity: 0 !important;
+    transition-duration: 75ms !important;
+  }
+
+  .sedco-native-next-peek img {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    display: block !important;
+    width: var(--sedco-native-page-w) !important;
+    height: var(--sedco-native-page-h) !important;
+    max-width: none !important;
+    object-fit: contain !important;
+    object-position: left center !important;
+    background: #fff !important;
+    user-select: none !important;
+    -webkit-user-drag: none !important;
+  }
+
+  .sedco-native-next-peek__shade {
+    position: absolute !important;
+    z-index: 2 !important;
+    inset: 0 !important;
+    background: linear-gradient(90deg,
+      rgba(0,0,0,.105) 0%,
+      rgba(0,0,0,.028) 24%,
+      rgba(255,255,255,0) 64%) !important;
+    pointer-events: none !important;
+  }
+
+  /* Tiny left-edge binding shadow only after the cover is opened. */
+  .sedco-native-spine {
+    position: absolute !important;
+    z-index: 25 !important;
+    top: 1px !important;
+    bottom: 1px !important;
+    left: 0 !important;
+    width: 4px !important;
+    background: linear-gradient(90deg,
+      rgba(0,0,0,.15),
+      rgba(0,0,0,.045) 58%,
+      transparent) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .sedco-native-viewer.is-open-book .sedco-native-spine {
+    opacity: .48 !important;
   }
 
   .sedco-native-flipbook {
     position: relative !important;
-    z-index: 2 !important;
+    z-index: 10 !important;
     width: var(--sedco-native-page-w) !important;
     height: var(--sedco-native-page-h) !important;
-    margin: 0 auto !important;
+    margin: 0 !important;
     overflow: visible !important;
-    filter: drop-shadow(0 4px 7px rgba(0,0,0,.08));
     touch-action: pan-y !important;
   }
 
+  /* Do not replace react-pageflip transforms. They are what create SEDCO's
+     curved page shape and moving shadow while the finger is dragging. */
+  .sedco-native-flipbook .stf__parent,
+  .sedco-native-flipbook .stf__wrapper {
+    overflow: visible !important;
+  }
+
   .sedco-native-page {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: #fff;
-    border-radius: 1px;
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    background: #fff !important;
+    border-radius: 1px !important;
     box-shadow:
       inset 0 0 0 1px rgba(0,0,0,.025),
       inset 5px 0 9px rgba(0,0,0,.012),
-      inset -5px 0 9px rgba(0,0,0,.012);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+      inset -5px 0 9px rgba(0,0,0,.012) !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
   }
 
   .sedco-native-page img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    max-width: none;
-    object-fit: contain;
-    object-position: center;
-    background: #fff;
-    pointer-events: none;
-    user-select: none;
-    -webkit-user-select: none;
-    -webkit-user-drag: none;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    background: #fff !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-user-drag: none !important;
   }
 
-  /* Keep the surrounding reader visually close to SEDCO: a plain grey desk,
-     generous space around the book, and arrows floating outside the paper. */
+  /* SEDCO uses a flat medium-grey reading desk. Keep the book large, centred and
+     let the next-page strip naturally clip against the reader's right boundary. */
   .impact-report-reader__stage {
+    overflow: hidden !important;
     background: #7b7e7c !important;
   }
 
   .impact-report-reader__viewport {
-    padding-top: 18px !important;
-    padding-bottom: 24px !important;
+    padding-top: 16px !important;
+    padding-bottom: 22px !important;
     overflow: visible !important;
   }
 
@@ -94,6 +201,12 @@
   }
 
   .impact-report-reader__edge {
-    z-index: 60 !important;
+    z-index: 80 !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .sedco-native-next-peek {
+    width: calc(var(--sedco-native-peek-w) * .92) !important;
   }
 }
