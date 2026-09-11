@@ -1,0 +1,99 @@
+/* Mobile-only book mechanics matched to the supplied SEDCO recording.
+   Important: do not override react-pageflip's internal geometry/transforms.
+   The curl, fold and moving shadow come from the page-flip engine itself. */
+
+@media (max-width: 700px) {
+  .sedco-native-viewer {
+    position: relative;
+    width: 100%;
+    height: calc(var(--sedco-native-page-h) + 18px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    perspective: 1800px;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Very subtle paper thickness like the SEDCO viewer. */
+  .sedco-native-book-bed {
+    position: absolute;
+    z-index: 0;
+    width: var(--sedco-native-page-w);
+    height: var(--sedco-native-page-h);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 2px;
+    background: #f8f7f3;
+    box-shadow:
+      2px 2px 0 #e7e5df,
+      4px 4px 0 #d9d7d1,
+      0 15px 24px rgba(0,0,0,.17);
+    pointer-events: none;
+  }
+
+  .sedco-native-flipbook {
+    position: relative !important;
+    z-index: 2 !important;
+    width: var(--sedco-native-page-w) !important;
+    height: var(--sedco-native-page-h) !important;
+    margin: 0 auto !important;
+    overflow: visible !important;
+    filter: drop-shadow(0 4px 7px rgba(0,0,0,.08));
+    touch-action: pan-y !important;
+  }
+
+  .sedco-native-page {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 1px;
+    box-shadow:
+      inset 0 0 0 1px rgba(0,0,0,.025),
+      inset 5px 0 9px rgba(0,0,0,.012),
+      inset -5px 0 9px rgba(0,0,0,.012);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .sedco-native-page img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: contain;
+    object-position: center;
+    background: #fff;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  /* Keep the surrounding reader visually close to SEDCO: a plain grey desk,
+     generous space around the book, and arrows floating outside the paper. */
+  .impact-report-reader__stage {
+    background: #7b7e7c !important;
+  }
+
+  .impact-report-reader__viewport {
+    padding-top: 18px !important;
+    padding-bottom: 24px !important;
+    overflow: visible !important;
+  }
+
+  .impact-report-reader__book-wrap,
+  .impact-report-reader__zoom {
+    overflow: visible !important;
+  }
+
+  .impact-report-reader__edge {
+    z-index: 60 !important;
+  }
+}
