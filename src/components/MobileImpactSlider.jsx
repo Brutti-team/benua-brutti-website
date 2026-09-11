@@ -1,12 +1,22 @@
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import HTMLFlipBook from 'react-pageflip'
 
-function mobilePageImage(page) {
-  return `${import.meta.env.BASE_URL}assets/impact-report/page-${String(page).padStart(2, '0')}.webp`
-}
+const MobileReportPage = forwardRef(function MobileReportPage({ page }, ref) {
+  const src = `${import.meta.env.BASE_URL}assets/impact-report/page-${String(page).padStart(2, '0')}.webp`
 
-function clamp(value, min, max) {
-  return Math.min(max, Math.max(min, value))
-}
+  return (
+    <div ref={ref} className="impact-sedco-mobile-page" data-density="soft">
+      <img
+        src={src}
+        alt={page === 1 ? 'Brutti Impact Report 2026 cover' : `Brutti Impact Report 2026 page ${page}`}
+        draggable="false"
+        decoding="async"
+        loading={page <= 5 ? 'eager' : 'lazy'}
+        fetchPriority={page <= 2 ? 'high' : 'auto'}
+      />
+    </div>
+  )
+})
 
 const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   totalPages,
@@ -14,271 +24,100 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   onPageChange,
   onPageTurn,
 }, ref) {
-  const pointerRef = useRef(null)
-  const timerRef = useRef(null)
-  const rafRef = useRef(null)
+  const bookRef = useRef(null)
+  const soundPlayedRef = useRef(false)
   const [viewportWidth, setViewportWidth] = useState(() => (
     typeof window === 'undefined' ? 390 : window.innerWidth
   ))
-  const [visiblePage, setVisiblePage] = useState(currentPage)
-  const [underPage, setUnderPage] = useState(null)
-  const [direction, setDirection] = useState(null)
-  const [dragX, setDragX] = useState(0)
-  const [dragging, setDragging] = useState(false)
-  const [settling, setSettling] = useState(false)
 
   useEffect(() => {
-    const onResize = () => setViewportWidth(window.innerWidth)
-    window.addEventListener('resize', onResize, { passive: true })
-    return () => window.removeEventListener('resize', onResize)
+    const syncWidth = () => setViewportWidth(window.innerWidth)
+    window.addEventListener('resize', syncWidth, { passive: true })
+    return () => window.removeEventListener('resize', syncWidth)
   }, [])
-
-  useEffect(() => {
-    if (!dragging && !settling && currentPage !== visiblePage) {
-      setVisiblePage(currentPage)
-    }
-  }, [currentPage, dragging, settling, visiblePage])
-
-  useEffect(() => () => {
-    if (timerRef.current) window.clearTimeout(timerRef.current)
-    if (rafRef.current) window.cancelAnimationFrame(rafRef.current)
-  }, [])
-
-  useEffect(() => {
-    ;[visiblePage - 1, visiblePage, visiblePage + 1].forEach((page) => {
-      if (page < 1 || page > totalPages) return
-      const image = new Image()
-      image.src = mobilePageImage(page)
-    })
-  }, [visiblePage, totalPages])
 
   const pageWidth = useMemo(() => {
-    return Math.round(Math.max(232, Math.min(316, viewportWidth * 0.72)))
+    // Match the SEDCO Directory phone reader: one complete portrait page,
+    // centred with enough grey margin for the page curl to be visible.
+    return Math.round(Math.max(220, Math.min(300, viewportWidth * 0.69)))
   }, [viewportWidth])
 
   const pageHeight = useMemo(() => Math.round(pageWidth * (632 / 447)), [pageWidth])
-  const progress = Math.min(1, Math.abs(dragX) / pageWidth)
-
-  const clearTurn = () => {
-    setUnderPage(null)
-    setDirection(null)
-    setDragX(0)
-    setDragging(false)
-    setSettling(false)
-  }
-
-  const finishTurn = (target) => {
-    setVisiblePage(target)
-    onPageChange?.(target)
-    clearTurn()
-  }
-
-  const getTarget = (turnDirection, explicitTarget) => {
-    if (Number.isFinite(Number(explicitTarget))) {
-      return clamp(Number(explicitTarget), 1, totalPages)
-    }
-
-    return clamp(
-      visiblePage + (turnDirection === 'next' ? 1 : -1),
-      1,
-      totalPages,
-    )
-  }
-
-  const animateTurn = (turnDirection, explicitTarget) => {
-    if (settling || dragging) return
-
-    const target = getTarget(turnDirection, explicitTarget)
-    if (target === visiblePage) return
-
-    if (timerRef.current) window.clearTimeout(timerRef.current)
-    if (rafRef.current) window.cancelAnimationFrame(rafRef.current)
-
-    setDirection(turnDirection)
-    setUnderPage(target)
-    setDragX(0)
-    setSettling(true)
-    onPageTurn?.()
-
-    rafRef.current = window.requestAnimationFrame(() => {
-      rafRef.current = window.requestAnimationFrame(() => {
-        setDragX(turnDirection === 'next' ? -pageWidth * 1.04 : pageWidth * 1.04)
-      })
-    })
-
-    timerRef.current = window.setTimeout(() => {
-      finishTurn(target)
-    }, 460)
-  }
+  const pageFlip = () => bookRef.current?.pageFlip?.()
 
   useImperativeHandle(ref, () => ({
     goTo(page) {
-      const target = clamp(Number(page), 1, totalPages)
-      if (!Number.isFinite(target) || target === visiblePage) return
-      animateTurn(target > visiblePage ? 'next' : 'previous', target)
+      const target = Math.max(1, Math.min(totalPages, Number(page)))
+      pageFlip()?.turnToPage(target - 1)
     },
     next() {
-      animateTurn('next')
+      pageFlip()?.flipNext('top')
     },
     previous() {
-      animateTurn('previous')
+      pageFlip()?.flipPrev('top')
     },
   }))
 
-  const handlePointerDown = (event) => {
-    if (settling) return
-    if (event.pointerType === 'mouse' && event.button !== 0) return
-
-    pointerRef.current = {
-      id: event.pointerId,
-      x: event.clientX,
-      y: event.clientY,
-      lastX: event.clientX,
-      active: false,
-      cancelled: false,
-    }
+  const handleFlip = (event) => {
+    const page = Math.max(1, Math.min(totalPages, Number(event.data) + 1))
+    onPageChange?.(page)
   }
 
-  const handlePointerMove = (event) => {
-    const pointer = pointerRef.current
-    if (!pointer || pointer.id !== event.pointerId || pointer.cancelled || settling) return
+  const handleStateChange = (event) => {
+    const state = event.data
+    const turning = state === 'user_fold' || state === 'flipping'
 
-    const deltaX = event.clientX - pointer.x
-    const deltaY = event.clientY - pointer.y
-    pointer.lastX = event.clientX
-
-    if (!pointer.active) {
-      if (Math.abs(deltaX) < 8 && Math.abs(deltaY) < 8) return
-
-      if (Math.abs(deltaY) > Math.abs(deltaX) * 1.1) {
-        pointer.cancelled = true
-        return
-      }
-
-      pointer.active = true
-      setDragging(true)
-      event.currentTarget.setPointerCapture?.(event.pointerId)
-    }
-
-    const nextDirection = deltaX < 0 ? 'next' : 'previous'
-    const target = getTarget(nextDirection)
-    const atBoundary = target === visiblePage
-    const resistance = atBoundary ? 0.16 : 1
-    const boundedDrag = clamp(deltaX * resistance, -pageWidth * 0.96, pageWidth * 0.96)
-
-    setDirection(nextDirection)
-    setUnderPage(atBoundary ? null : target)
-    setDragX(boundedDrag)
-  }
-
-  const handlePointerUp = (event) => {
-    const pointer = pointerRef.current
-    pointerRef.current = null
-    if (!pointer || pointer.id !== event.pointerId) return
-
-    if (!pointer.active || pointer.cancelled) {
-      setDragging(false)
-      return
-    }
-
-    const deltaX = pointer.lastX - pointer.x
-    const turnDirection = deltaX < 0 ? 'next' : 'previous'
-    const target = getTarget(turnDirection)
-    const canTurn = target !== visiblePage
-    const shouldTurn = canTurn && Math.abs(deltaX) >= Math.max(42, pageWidth * 0.18)
-
-    setDragging(false)
-    setSettling(true)
-
-    if (timerRef.current) window.clearTimeout(timerRef.current)
-
-    if (shouldTurn) {
-      setUnderPage(target)
-      setDirection(turnDirection)
+    if (turning && !soundPlayedRef.current) {
       onPageTurn?.()
-      setDragX(turnDirection === 'next' ? -pageWidth * 1.04 : pageWidth * 1.04)
-
-      timerRef.current = window.setTimeout(() => {
-        finishTurn(target)
-      }, 430)
-      return
+      soundPlayedRef.current = true
     }
 
-    setDragX(0)
-    timerRef.current = window.setTimeout(() => {
-      clearTurn()
-    }, 280)
+    if (state === 'read') {
+      soundPlayedRef.current = false
+    }
   }
-
-  const handlePointerCancel = () => {
-    pointerRef.current = null
-    if (!dragging) return
-
-    setDragging(false)
-    setSettling(true)
-    setDragX(0)
-
-    if (timerRef.current) window.clearTimeout(timerRef.current)
-    timerRef.current = window.setTimeout(() => {
-      clearTurn()
-    }, 280)
-  }
-
-  const turnAngle = progress * 156
-  const turnOffset = dragX * 0.09
-  const topSheetTransform = direction === 'previous'
-    ? `perspective(1500px) translate3d(${turnOffset}px, 0, 0) rotateY(${turnAngle}deg)`
-    : direction === 'next'
-      ? `perspective(1500px) translate3d(${turnOffset}px, 0, 0) rotateY(${-turnAngle}deg)`
-      : 'perspective(1500px) translate3d(0, 0, 0) rotateY(0deg)'
-
-  const underScale = 0.982 + progress * 0.018
-  const underShift = direction === 'next' ? 5 - progress * 5 : -5 + progress * 5
 
   return (
     <div
-      className={`impact-sedco-mobile-viewer${dragging ? ' is-dragging' : ''}${settling ? ' is-settling' : ''}`}
+      className="impact-sedco-mobile-viewer"
       style={{
         '--sedco-page-width': `${pageWidth}px`,
         '--sedco-page-height': `${pageHeight}px`,
-        '--page-turn-progress': progress,
       }}
-      aria-label={`Impact Report page ${visiblePage} of ${totalPages}`}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerCancel}
+      aria-label={`Impact Report page ${currentPage} of ${totalPages}`}
     >
-      <div className="impact-sedco-mobile-book">
-        <div className="impact-sedco-mobile-page-stack" aria-hidden="true" />
-
-        {underPage && (
-          <div
-            className="impact-sedco-mobile-sheet impact-sedco-mobile-sheet--under"
-            style={{ transform: `translate3d(${underShift}px, 0, 0) scale(${underScale})` }}
-            aria-hidden="true"
-          >
-            <img src={mobilePageImage(underPage)} alt="" draggable="false" decoding="async" />
-          </div>
-        )}
-
-        <div
-          className={`impact-sedco-mobile-sheet impact-sedco-mobile-sheet--top${settling ? ' is-settling' : ''}`}
-          style={{
-            transform: topSheetTransform,
-            transformOrigin: direction === 'previous' ? 'right center' : 'left center',
-          }}
-        >
-          <img
-            src={mobilePageImage(visiblePage)}
-            alt={visiblePage === 1 ? 'Brutti Impact Report 2026 cover' : `Brutti Impact Report 2026 page ${visiblePage}`}
-            draggable="false"
-            decoding="async"
-            loading="eager"
-            fetchPriority="high"
-          />
-        </div>
-      </div>
+      <HTMLFlipBook
+        key={`${pageWidth}x${pageHeight}`}
+        ref={bookRef}
+        width={pageWidth}
+        height={pageHeight}
+        size="fixed"
+        minWidth={pageWidth}
+        maxWidth={pageWidth}
+        minHeight={pageHeight}
+        maxHeight={pageHeight}
+        startPage={Math.max(0, Math.min(totalPages - 1, currentPage - 1))}
+        drawShadow
+        flippingTime={720}
+        usePortrait
+        startZIndex={10}
+        autoSize={false}
+        maxShadowOpacity={0.55}
+        showCover={false}
+        mobileScrollSupport
+        clickEventForward={false}
+        useMouseEvents
+        swipeDistance={10}
+        showPageCorners
+        disableFlipByClick
+        className="impact-sedco-mobile-flipbook"
+        onFlip={handleFlip}
+        onChangeState={handleStateChange}
+      >
+        {Array.from({ length: totalPages }, (_, index) => (
+          <MobileReportPage page={index + 1} key={index + 1} />
+        ))}
+      </HTMLFlipBook>
     </div>
   )
 })
