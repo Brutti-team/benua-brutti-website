@@ -56,13 +56,28 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     return () => window.removeEventListener('resize', sync)
   }, [])
 
-  const pageWidth = useMemo(() => (
+  /* Keep the approved large closed cover, but once it opens use a true
+     two-page book spread that fits fully inside the phone instead of clipping
+     the second page. The page-turn/camera flow below is unchanged. */
+  const coverPageWidth = useMemo(() => (
     Math.round(Math.max(248, Math.min(326, viewportWidth * 0.80)))
   ), [viewportWidth])
 
+  const spreadPageWidth = useMemo(() => (
+    Math.round(Math.max(138, Math.min(174, viewportWidth * 0.41)))
+  ), [viewportWidth])
+
+  const pageWidth = currentPage === 1 ? coverPageWidth : spreadPageWidth
   const pageHeight = useMemo(() => Math.round(pageWidth * (632 / 447)), [pageWidth])
   const peekWidth = useMemo(() => Math.round(pageWidth * 0.115), [pageWidth])
-  const cameraTravel = pageWidth - peekWidth
+
+  /* SEDCO still pans the camera left/right across the open book, but the travel
+     is intentionally smaller than one page so BOTH pages remain visible at
+     either resting position. */
+  const cameraTravel = currentPage === 1 ? 0 : Math.round(spreadPageWidth * 0.18)
+  const cameraLeftX = cameraTravel / 2
+  const cameraRightX = -(cameraTravel / 2)
+
   const spreadStartPage = currentPage <= 1
     ? 2
     : currentPage % 2 === 0
@@ -83,7 +98,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   }
 
   const snapCamera = (side, animate = true) => {
-    const x = side === 'right' ? -cameraTravel : 0
+    const x = side === 'right' ? cameraRightX : cameraLeftX
     setCameraSide(side)
     setCameraTransform(x, animate)
   }
@@ -192,12 +207,12 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     // SEDCO step 1: the open two-page spread itself moves LEFT with the finger.
     // No paper turns yet; the camera simply travels from the left page to the right page.
     if (currentPage > 1 && cameraSide === 'left' && dx < 0) {
-      setCameraTransform(clamp(dx, -cameraTravel, 0), false)
+      setCameraTransform(clamp(cameraLeftX + dx, cameraRightX, cameraLeftX), false)
       return
     }
 
     if (currentPage > 1 && cameraSide === 'right' && dx > 0) {
-      setCameraTransform(clamp(-cameraTravel + dx, -cameraTravel, 0), false)
+      setCameraTransform(clamp(cameraRightX + dx, cameraRightX, cameraLeftX), false)
     }
   }
 
@@ -211,7 +226,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     if (gesture.locked !== 'horizontal') return
 
     const dx = event.clientX - gesture.startX
-    const threshold = Math.max(34, pageWidth * 0.16)
+    const threshold = Math.max(26, spreadPageWidth * 0.14)
 
     if (dx <= -threshold) {
       moveToNextStep()
