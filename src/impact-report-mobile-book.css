@@ -1,6 +1,6 @@
-/* Phone-only Impact Report treatment.
-   Desktop/tablet stay untouched. The phone reader uses react-pageflip so the
-   page follows the finger and curls/folds diagonally like the SEDCO Directory. */
+/* Phone-only Impact Report layout.
+   Desktop/tablet stay untouched. Mobile uses a direct finger-following page slide
+   so the visible page physically moves with the swipe instead of using the old flip animation. */
 
 @media (max-width: 700px) {
   .impact-report-page {
@@ -116,7 +116,6 @@
     display: none !important;
   }
 
-  /* Grey SEDCO-style reading stage. */
   .impact-report-reader__stage {
     position: relative !important;
     min-height: 0 !important;
@@ -140,7 +139,6 @@
     inset: 0 !important;
     z-index: 0 !important;
     pointer-events: none !important;
-    opacity: 1 !important;
     background:
       linear-gradient(90deg, rgba(255,255,255,.025), transparent 18%, transparent 82%, rgba(0,0,0,.025)),
       linear-gradient(180deg, rgba(255,255,255,.03), transparent 25%, transparent 72%, rgba(0,0,0,.04)) !important;
@@ -190,79 +188,65 @@
     transition: none !important;
   }
 
-  .impact-report-reader__book-wrap {
-    perspective: 2400px !important;
-  }
-
   .impact-report-reader__book-wrap::before,
   .impact-report-reader__book-wrap::after {
     content: none !important;
   }
 
-  /* One portrait page at rest. During a swipe react-pageflip bends the actual
-     page corner and exposes the next page underneath, matching SEDCO's motion. */
   .impact-sedco-mobile-viewer {
     position: relative !important;
     width: 100% !important;
-    height: calc(var(--sedco-page-height) + 10px) !important;
+    height: calc(var(--sedco-page-height) + 12px) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    overflow: visible !important;
-    perspective: 2400px !important;
+    overflow: hidden !important;
     touch-action: pan-y !important;
     -webkit-tap-highlight-color: transparent !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    cursor: grab !important;
   }
 
-  .impact-sedco-mobile-flipbook {
+  .impact-sedco-mobile-viewer.is-dragging {
+    cursor: grabbing !important;
+  }
+
+  .impact-sedco-mobile-book {
     position: relative !important;
-    z-index: 5 !important;
     width: var(--sedco-page-width) !important;
     height: var(--sedco-page-height) !important;
-    margin: 0 auto !important;
-    overflow: visible !important;
-    transform-style: preserve-3d !important;
-    filter:
-      drop-shadow(0 17px 23px rgba(0,0,0,.20))
-      drop-shadow(0 4px 7px rgba(0,0,0,.10)) !important;
-    touch-action: pan-y !important;
-  }
-
-  .impact-sedco-mobile-flipbook .stf__parent,
-  .impact-sedco-mobile-flipbook .stf__wrapper,
-  .impact-sedco-mobile-flipbook .stf__block,
-  .impact-sedco-mobile-flipbook .stf__item,
-  .impact-sedco-mobile-flipbook .stf__outerShadow,
-  .impact-sedco-mobile-flipbook .stf__innerShadow,
-  .impact-sedco-mobile-flipbook .stf__hardShadow {
-    backface-visibility: hidden !important;
-    -webkit-backface-visibility: hidden !important;
+    flex: 0 0 auto !important;
+    perspective: 1800px !important;
     transform-style: preserve-3d !important;
   }
 
-  .impact-sedco-mobile-flipbook .stf__parent,
-  .impact-sedco-mobile-flipbook .stf__wrapper {
-    overflow: visible !important;
-  }
-
-  .impact-sedco-mobile-flipbook .stf__block {
-    background: transparent !important;
+  .impact-sedco-mobile-stack {
+    position: absolute !important;
+    z-index: 0 !important;
+    inset: 5px -5px -5px 5px !important;
+    background: linear-gradient(90deg, #e7e6e1, #f6f5f1 18%, #fff) !important;
+    border-radius: 2px !important;
+    box-shadow:
+      3px 3px 0 #d7d6d1,
+      6px 6px 0 rgba(235,234,230,.82),
+      0 18px 28px rgba(0,0,0,.14) !important;
+    pointer-events: none !important;
   }
 
   .impact-sedco-mobile-page {
-    position: relative !important;
+    position: absolute !important;
+    inset: 0 !important;
     width: 100% !important;
     height: 100% !important;
     overflow: hidden !important;
     background: #fff !important;
-    border: 0 !important;
-    border-radius: 1px !important;
-    box-shadow:
-      inset 0 0 0 1px rgba(20,30,24,.04),
-      inset 8px 0 13px rgba(20,30,24,.018),
-      inset -8px 0 13px rgba(20,30,24,.018) !important;
+    border-radius: 2px !important;
+    transform-origin: center center !important;
+    transform-style: preserve-3d !important;
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
+    will-change: transform, opacity, box-shadow !important;
   }
 
   .impact-sedco-mobile-page img {
@@ -276,11 +260,31 @@
     -webkit-user-drag: none !important;
     user-select: none !important;
     pointer-events: none !important;
-    backface-visibility: hidden !important;
-    -webkit-backface-visibility: hidden !important;
   }
 
-  /* Keep page-turn arrows in the grey margin, like SEDCO. */
+  .impact-sedco-mobile-page--active {
+    z-index: 5 !important;
+    opacity: 1;
+  }
+
+  .impact-sedco-mobile-page--side {
+    z-index: 3 !important;
+    box-shadow: 0 10px 22px rgba(0,0,0,.12) !important;
+  }
+
+  /* During finger movement there is NO easing: the page follows the finger 1:1.
+     Easing only happens after release, which is the key SEDCO-style feel. */
+  .impact-sedco-mobile-viewer.is-dragging .impact-sedco-mobile-page {
+    transition: none !important;
+  }
+
+  .impact-sedco-mobile-viewer.is-settling .impact-sedco-mobile-page {
+    transition:
+      transform 390ms cubic-bezier(.22,.84,.26,1),
+      opacity 320ms ease,
+      box-shadow 320ms ease !important;
+  }
+
   .impact-report-reader__edge {
     top: 50% !important;
     z-index: 20 !important;
@@ -369,7 +373,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .impact-sedco-mobile-flipbook {
-    transition: none !important;
+  .impact-sedco-mobile-viewer.is-settling .impact-sedco-mobile-page {
+    transition-duration: 1ms !important;
   }
 }
