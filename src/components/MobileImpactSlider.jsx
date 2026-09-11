@@ -1,22 +1,8 @@
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
-import HTMLFlipBook from 'react-pageflip'
 
-const MobileReportPage = forwardRef(function MobileReportPage({ page, totalPages }, ref) {
-  const src = `${import.meta.env.BASE_URL}assets/impact-report/page-${String(page).padStart(2, '0')}.webp`
-
-  return (
-    <div ref={ref} className="impact-sedco-mobile-page" data-density="soft">
-      <img
-        src={src}
-        alt={page === 1 ? 'Brutti Impact Report 2026 cover' : `Brutti Impact Report 2026 page ${page}`}
-        draggable="false"
-        decoding="async"
-        loading={page <= 5 ? 'eager' : 'lazy'}
-        fetchPriority={page <= 2 ? 'high' : 'auto'}
-      />
-    </div>
-  )
-})
+function mobilePageImage(page) {
+  return `${import.meta.env.BASE_URL}assets/impact-report/page-${String(page).padStart(2, '0')}.webp`
+}
 
 const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   totalPages,
@@ -24,11 +10,13 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   onPageChange,
   onPageTurn,
 }, ref) {
-  const bookRef = useRef(null)
-  const soundPlayedRef = useRef(false)
+  const pointerRef = useRef(null)
+  const animationTimerRef = useRef(null)
   const [viewportWidth, setViewportWidth] = useState(() => (
     typeof window === 'undefined' ? 390 : window.innerWidth
   ))
+  const [visiblePage, setVisiblePage] = useState(currentPage)
+  const [turnDirection, setTurnDirection] = useState(null)
 
   useEffect(() => {
     const onResize = () => setViewportWidth(window.innerWidth)
@@ -36,44 +24,87 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
+  useEffect(() => {
+    setVisiblePage(currentPage)
+  }, [currentPage])
+
+  useEffect(() => () => {
+    if (animationTimerRef.current) window.clearTimeout(animationTimerRef.current)
+  }, [])
+
+  useEffect(() => {
+    ;[visiblePage - 1, visiblePage + 1].forEach((page) => {
+      if (page < 1 || page > totalPages) return
+      const image = new Image()
+      image.src = mobilePageImage(page)
+    })
+  }, [visiblePage, totalPages])
+
   const pageWidth = useMemo(() => {
-    // SEDCO mobile viewer keeps one full portrait page visible with generous
-    // grey space around it. Keep Brutti's page in the same visual proportion.
-    return Math.round(Math.max(228, Math.min(305, viewportWidth * 0.69)))
+    // Keep one complete portrait page visible between the two edge controls.
+    return Math.round(Math.max(220, Math.min(296, viewportWidth * 0.70)))
   }, [viewportWidth])
 
   const pageHeight = useMemo(() => Math.round(pageWidth * (632 / 447)), [pageWidth])
-  const pageFlip = () => bookRef.current?.pageFlip?.()
+
+  const changePage = (page, direction) => {
+    const target = Math.max(1, Math.min(totalPages, Number(page)))
+    if (!Number.isFinite(target) || target === visiblePage) return
+
+    if (animationTimerRef.current) window.clearTimeout(animationTimerRef.current)
+
+    const resolvedDirection = direction || (target > visiblePage ? 'next' : 'previous')
+    setTurnDirection(resolvedDirection)
+    setVisiblePage(target)
+    onPageChange?.(target)
+    onPageTurn?.()
+
+    animationTimerRef.current = window.setTimeout(() => {
+      setTurnDirection(null)
+    }, 360)
+  }
 
   useImperativeHandle(ref, () => ({
     goTo(page) {
       const target = Math.max(1, Math.min(totalPages, Number(page)))
-      pageFlip()?.turnToPage(target - 1)
+      changePage(target, target >= visiblePage ? 'next' : 'previous')
     },
     next() {
-      pageFlip()?.flipNext('top')
+      changePage(visiblePage + 1, 'next')
     },
     previous() {
-      pageFlip()?.flipPrev('top')
+      changePage(visiblePage - 1, 'previous')
     },
   }))
 
-  const handleFlip = (event) => {
-    onPageChange?.(Math.max(1, Math.min(totalPages, Number(event.data) + 1)))
+  const handlePointerDown = (event) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return
+
+    pointerRef.current = {
+      id: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+    }
+
+    event.currentTarget.setPointerCapture?.(event.pointerId)
   }
 
-  const handleStateChange = (event) => {
-    const state = event.data
-    const turning = state === 'user_fold' || state === 'flipping'
+  const handlePointerUp = (event) => {
+    const start = pointerRef.current
+    pointerRef.current = null
+    if (!start || start.id !== event.pointerId) return
 
-    if (turning && !soundPlayedRef.current) {
-      onPageTurn?.()
-      soundPlayedRef.current = true
-    }
+    const deltaX = event.clientX - start.x
+    const deltaY = event.clientY - start.y
+    const horizontalSwipe = Math.abs(deltaX) >= 34 && Math.abs(deltaX) > Math.abs(deltaY) * 1.15
 
-    if (state === 'read') {
-      soundPlayedRef.current = false
-    }
+    if (!horizontalSwipe) return
+    if (deltaX < 0) changePage(visiblePage + 1, 'next')
+    else changePage(visiblePage - 1, 'previous')
+  }
+
+  const handlePointerCancel = () => {
+    pointerRef.current = null
   }
 
   return (
@@ -83,40 +114,24 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
         '--sedco-page-width': `${pageWidth}px`,
         '--sedco-page-height': `${pageHeight}px`,
       }}
-      aria-label="Impact Report mobile flipbook"
+      aria-label={`Impact Report page ${visiblePage} of ${totalPages}`}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerCancel}
     >
-      <HTMLFlipBook
-        key={`${pageWidth}x${pageHeight}`}
-        ref={bookRef}
-        width={pageWidth}
-        height={pageHeight}
-        size="fixed"
-        minWidth={pageWidth}
-        maxWidth={pageWidth}
-        minHeight={pageHeight}
-        maxHeight={pageHeight}
-        startPage={Math.max(0, Math.min(totalPages - 1, currentPage - 1))}
-        drawShadow
-        flippingTime={760}
-        usePortrait
-        startZIndex={10}
-        autoSize={false}
-        maxShadowOpacity={0.48}
-        showCover={false}
-        mobileScrollSupport
-        clickEventForward={false}
-        useMouseEvents
-        swipeDistance={14}
-        showPageCorners
-        disableFlipByClick={false}
-        className="impact-sedco-mobile-flipbook"
-        onFlip={handleFlip}
-        onChangeState={handleStateChange}
+      <div
+        key={visiblePage}
+        className={`impact-sedco-mobile-sheet${turnDirection ? ` is-turning-${turnDirection}` : ''}`}
       >
-        {Array.from({ length: totalPages }, (_, index) => (
-          <MobileReportPage page={index + 1} totalPages={totalPages} key={index + 1} />
-        ))}
-      </HTMLFlipBook>
+        <img
+          src={mobilePageImage(visiblePage)}
+          alt={visiblePage === 1 ? 'Brutti Impact Report 2026 cover' : `Brutti Impact Report 2026 page ${visiblePage}`}
+          draggable="false"
+          decoding="async"
+          loading="eager"
+          fetchPriority="high"
+        />
+      </div>
     </div>
   )
 })
