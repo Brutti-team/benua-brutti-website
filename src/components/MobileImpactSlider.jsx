@@ -10,8 +10,8 @@ function pageImage(page) {
   return `${import.meta.env.BASE_URL}assets/impact-report/page-${String(page).padStart(2, '0')}.webp`
 }
 
-const SedcoPage = forwardRef(function SedcoPage({ page, totalPages }, ref) {
-  const isCover = page === 1 || page === totalPages
+const SedcoPage = forwardRef(function SedcoPage({ page, totalPages, forceSoft = false }, ref) {
+  const isCover = !forceSoft && (page === 1 || page === totalPages)
 
   return (
     <div
@@ -56,24 +56,21 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     return () => window.removeEventListener('resize', sync)
   }, [])
 
-  /* Keep the approved large closed cover, but once it opens use a true
-     two-page book spread that fits fully inside the phone instead of clipping
-     the second page. The page-turn/camera flow below is unchanged. */
+  // Keep the approved cover size. Open-book pages are only sized down enough
+  // for TWO complete pages to sit cleanly side by side inside the phone reader.
   const coverPageWidth = useMemo(() => (
     Math.round(Math.max(248, Math.min(326, viewportWidth * 0.80)))
   ), [viewportWidth])
 
   const spreadPageWidth = useMemo(() => (
-    Math.round(Math.max(138, Math.min(174, viewportWidth * 0.41)))
+    Math.round(Math.max(138, Math.min(174, viewportWidth * 0.405)))
   ), [viewportWidth])
 
   const pageWidth = currentPage === 1 ? coverPageWidth : spreadPageWidth
   const pageHeight = useMemo(() => Math.round(pageWidth * (632 / 447)), [pageWidth])
   const peekWidth = useMemo(() => Math.round(pageWidth * 0.115), [pageWidth])
 
-  /* SEDCO still pans the camera left/right across the open book, but the travel
-     is intentionally smaller than one page so BOTH pages remain visible at
-     either resting position. */
+  // Keep the same SEDCO camera-pan behaviour; only the open-book geometry is fixed.
   const cameraTravel = currentPage === 1 ? 0 : Math.round(spreadPageWidth * 0.18)
   const cameraLeftX = cameraTravel / 2
   const cameraRightX = -(cameraTravel / 2)
@@ -164,7 +161,8 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
       }
 
       const spread = target % 2 === 0 ? target : target - 1
-      spreadFlip()?.turnToPage(spread - 1)
+      // Open-book flipbook starts at report page 2, so its index is page - 2.
+      spreadFlip()?.turnToPage(Math.max(0, spread - 2))
       requestAnimationFrame(() => {
         snapCamera(target % 2 === 1 ? 'right' : 'left', false)
       })
@@ -204,8 +202,6 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
 
     if (gesture.locked !== 'horizontal') return
 
-    // SEDCO step 1: the open two-page spread itself moves LEFT with the finger.
-    // No paper turns yet; the camera simply travels from the left page to the right page.
     if (currentPage > 1 && cameraSide === 'left' && dx < 0) {
       setCameraTransform(clamp(cameraLeftX + dx, cameraRightX, cameraLeftX), false)
       return
@@ -341,14 +337,14 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
             maxWidth={pageWidth}
             minHeight={pageHeight}
             maxHeight={pageHeight}
-            startPage={Math.max(1, spreadStartPage - 1)}
+            startPage={Math.max(0, spreadStartPage - 2)}
             drawShadow
             flippingTime={540}
             usePortrait={false}
             startZIndex={40}
             autoSize={false}
             maxShadowOpacity={0.46}
-            showCover
+            showCover={false}
             mobileScrollSupport={false}
             clickEventForward={false}
             useMouseEvents={false}
@@ -357,7 +353,8 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
             disableFlipByClick
             className="sedco-native-flipbook sedco-native-spread-flipbook"
             onFlip={(event) => {
-              const page = clamp(Number(event.data) + 1, 2, totalPages)
+              // Inner spread contains report pages 2..40, so map index back to real page number.
+              const page = clamp(Number(event.data) + 2, 2, totalPages)
               const leftPage = page % 2 === 0 ? page : Math.max(2, page - 1)
               requestAnimationFrame(() => snapCamera('left', false))
               onPageChange?.(leftPage)
@@ -379,8 +376,13 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
               }
             }}
           >
-            {Array.from({ length: totalPages }, (_, index) => (
-              <SedcoPage page={index + 1} totalPages={totalPages} key={index + 1} />
+            {Array.from({ length: totalPages - 1 }, (_, index) => (
+              <SedcoPage
+                page={index + 2}
+                totalPages={totalPages}
+                forceSoft
+                key={index + 2}
+              />
             ))}
           </HTMLFlipBook>
         </div>
