@@ -1,8 +1,7 @@
 /* Mobile-only Impact Report reader matched to the supplied SEDCO phone video.
-   Keep the approved cover, camera-pan sequence and paper flip. The open state is
-   a complete two-page spread: both pages stay fully visible like a real book,
-   instead of showing one full page plus a cropped second page.
-   Desktop/tablet are untouched. */
+   Keep the approved cover, two-page book structure, camera-pan sequence and paper
+   flip. The phone camera now focuses one page at a time: left page first, then
+   right page, then the next sheet flips. Desktop/tablet are untouched. */
 
 @media (max-width: 700px) {
   .sedco-native-viewer {
@@ -62,13 +61,13 @@
     background: #dfded9 !important;
   }
 
-  /* ----- Open book: show the ENTIRE two-page spread ----- */
+  /* ----- Open book: real two-page spread behind a one-page camera ----- */
   .sedco-native-camera-window {
     position: relative !important;
-    width: calc(var(--sedco-native-page-w) * 2) !important;
+    width: calc(var(--sedco-native-page-w) + var(--sedco-native-peek-w)) !important;
     height: var(--sedco-native-page-h) !important;
     flex: 0 0 auto !important;
-    overflow: visible !important;
+    overflow: hidden !important;
     border-radius: 2px !important;
     filter:
       drop-shadow(0 14px 20px rgba(0,0,0,.16))
@@ -87,7 +86,6 @@
     touch-action: pan-y !important;
   }
 
-  /* Same subtle paper body, now clearly underneath both complete pages. */
   .sedco-native-spread-bed {
     position: absolute !important;
     z-index: 0 !important;
@@ -103,9 +101,9 @@
     pointer-events: none !important;
   }
 
-  /* At rest render the two pages as a clean, fixed spread. This removes the
-     visual stacking/overlap from react-pageflip without changing the approved
-     camera movement or the page-turn animation itself. */
+  /* At rest render the two pages as one clean physical spread. The camera crops
+     that spread so the reader sees page 1, then pans to page 2, while the book
+     itself stays correctly side by side with no overlap. */
   .sedco-native-static-spread {
     position: absolute !important;
     z-index: 15 !important;
@@ -162,7 +160,7 @@
     opacity: 1 !important;
   }
 
-  /* Centre binding between the two visible pages. */
+  /* Centre binding between the two physical pages. */
   .sedco-native-camera-track::after {
     content: '' !important;
     position: absolute !important;
@@ -191,8 +189,8 @@
     touch-action: pan-y !important;
   }
 
-  /* Landscape mode is the real two-page book. Do not override react-pageflip's
-     internal transforms, so the approved curl/flip motion stays exactly intact. */
+  /* Landscape mode is still the real two-page book. Do not override the
+     page-flip engine transforms, so the approved curl motion stays intact. */
   .sedco-native-spread-flipbook {
     width: calc(var(--sedco-native-page-w) * 2) !important;
     height: var(--sedco-native-page-h) !important;
