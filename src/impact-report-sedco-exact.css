@@ -1,0 +1,169 @@
+/* Exact SEDCO phone reader motion.
+   This file intentionally overrides only the mobile book mechanics. The reference
+   does not zoom the book out or rotate a whole sheet in 3D. Instead, the page edge
+   travels horizontally across a fixed-size book while the next page is revealed
+   underneath, with a very narrow fold/shadow at the moving seam. */
+
+@media (max-width: 700px) {
+  html body .impact-sedco-mobile-viewer.sedco-exact-viewer {
+    position: relative !important;
+    width: 100% !important;
+    height: calc(var(--sedco-page-height) + 16px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    perspective: none !important;
+    touch-action: pan-y !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  html body .sedco-exact-book {
+    position: relative !important;
+    width: var(--sedco-page-width) !important;
+    height: var(--sedco-page-height) !important;
+    flex: 0 0 auto !important;
+    overflow: visible !important;
+    transform: none !important;
+    perspective: none !important;
+    transform-style: flat !important;
+    filter: drop-shadow(0 13px 19px rgba(0,0,0,.16)) !important;
+  }
+
+  /* Thin stacked sheets behind the active page. SEDCO has only a subtle paper
+     thickness; exaggerated offsets make it look like a card deck, so keep this tight. */
+  html body .sedco-exact-stack {
+    position: absolute !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    border-radius: 2px !important;
+    background: #f7f6f2 !important;
+    border: 1px solid rgba(0,0,0,.035) !important;
+  }
+
+  html body .sedco-exact-stack--1 {
+    z-index: 1 !important;
+    transform: translate3d(2px, 2px, 0) !important;
+    background: #f2f1ed !important;
+  }
+
+  html body .sedco-exact-stack--2 {
+    z-index: 0 !important;
+    transform: translate3d(4px, 4px, 0) !important;
+    background: #eae9e4 !important;
+  }
+
+  html body .sedco-exact-stack--3 {
+    z-index: 0 !important;
+    transform: translate3d(6px, 6px, 0) !important;
+    background: #deddd8 !important;
+  }
+
+  html body .sedco-exact-page {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    background: #fff !important;
+    border-radius: 2px !important;
+    backface-visibility: visible !important;
+    -webkit-backface-visibility: visible !important;
+    transform: none !important;
+    transform-style: flat !important;
+  }
+
+  html body .sedco-exact-page img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    background: #fff !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    -webkit-user-drag: none !important;
+  }
+
+  html body .sedco-exact-page--under {
+    z-index: 3 !important;
+    box-shadow:
+      0 1px 3px rgba(0,0,0,.08),
+      inset 5px 0 9px rgba(0,0,0,.018),
+      inset -5px 0 9px rgba(0,0,0,.018) !important;
+  }
+
+  html body .sedco-exact-page--top {
+    z-index: 7 !important;
+    clip-path: inset(0 0 0 0) !important;
+    -webkit-clip-path: inset(0 0 0 0) !important;
+    will-change: clip-path, -webkit-clip-path !important;
+    box-shadow:
+      0 1px 4px rgba(0,0,0,.07),
+      inset -4px 0 7px rgba(0,0,0,.018) !important;
+  }
+
+  /* Narrow travelling fold. In the reference this is a slim weighted line, not
+     a wide 3D wedge. */
+  html body .sedco-exact-fold {
+    position: absolute !important;
+    z-index: 12 !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 16px !important;
+    height: 100% !important;
+    transform-origin: center center !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+    will-change: transform, opacity !important;
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,.22) 0%,
+      rgba(255,255,255,.04) 24%,
+      rgba(0,0,0,.035) 58%,
+      rgba(0,0,0,.17) 86%,
+      rgba(0,0,0,.03) 100%
+    ) !important;
+  }
+
+  /* Shadow cast by the moving page onto the page underneath. */
+  html body .sedco-exact-seam-shadow {
+    position: absolute !important;
+    z-index: 8 !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 13px !important;
+    height: 100% !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+    will-change: transform, opacity !important;
+    background: linear-gradient(90deg, rgba(0,0,0,.16), rgba(0,0,0,.055) 45%, transparent 100%) !important;
+    filter: blur(.3px) !important;
+  }
+
+  html body .sedco-exact-left-edge {
+    position: absolute !important;
+    z-index: 14 !important;
+    left: 0 !important;
+    top: 1px !important;
+    bottom: 1px !important;
+    width: 2px !important;
+    pointer-events: none !important;
+    background: linear-gradient(90deg, rgba(0,0,0,.12), rgba(255,255,255,.10)) !important;
+    opacity: .58 !important;
+  }
+
+  /* Keep motion controlled by JS requestAnimationFrame. No CSS transform/clip
+     transition is allowed while the finger is moving, otherwise iOS feels sticky. */
+  html body .sedco-exact-viewer.is-dragging .sedco-exact-page--top,
+  html body .sedco-exact-viewer.is-dragging .sedco-exact-fold,
+  html body .sedco-exact-viewer.is-dragging .sedco-exact-seam-shadow,
+  html body .sedco-exact-viewer.is-settling .sedco-exact-page--top,
+  html body .sedco-exact-viewer.is-settling .sedco-exact-fold,
+  html body .sedco-exact-viewer.is-settling .sedco-exact-seam-shadow {
+    transition: none !important;
+  }
+}
