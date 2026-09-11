@@ -1,8 +1,7 @@
 /* Mobile-only Impact Report reader matched to the supplied SEDCO phone video.
-   Keep the approved book design. The important interaction is now two-step:
-   1) on an open spread, the CAMERA/book track moves left from the left page to
-      the right page — no paper turns yet;
-   2) the next swipe turns the right sheet and lands on the next spread.
+   Keep the approved cover, camera-pan sequence and paper flip. The open state is
+   a complete two-page spread: both pages stay fully visible like a real book,
+   instead of showing one full page plus a cropped second page.
    Desktop/tablet are untouched. */
 
 @media (max-width: 700px) {
@@ -21,7 +20,7 @@
     -webkit-tap-highlight-color: transparent !important;
   }
 
-  /* ----- Cover: keep the already-approved closed-book appearance ----- */
+  /* ----- Cover: unchanged closed-book appearance ----- */
   .sedco-native-holder {
     position: relative !important;
     width: var(--sedco-native-page-w) !important;
@@ -63,13 +62,13 @@
     background: #dfded9 !important;
   }
 
-  /* ----- Open book: one real two-page spread wider than the phone camera ----- */
+  /* ----- Open book: show the ENTIRE two-page spread ----- */
   .sedco-native-camera-window {
     position: relative !important;
-    width: calc(var(--sedco-native-page-w) + var(--sedco-native-peek-w)) !important;
+    width: calc(var(--sedco-native-page-w) * 2) !important;
     height: var(--sedco-native-page-h) !important;
     flex: 0 0 auto !important;
-    overflow: hidden !important;
+    overflow: visible !important;
     border-radius: 2px !important;
     filter:
       drop-shadow(0 14px 20px rgba(0,0,0,.16))
@@ -83,17 +82,17 @@
     top: 0 !important;
     width: calc(var(--sedco-native-page-w) * 2) !important;
     height: var(--sedco-native-page-h) !important;
-    transform: translate3d(0,0,0);
     transform-style: preserve-3d !important;
     will-change: transform !important;
     touch-action: pan-y !important;
   }
 
-  /* Same grey-paper silhouette as before, but now it sits under BOTH pages. */
+  /* Same subtle paper body, now clearly underneath both complete pages. */
   .sedco-native-spread-bed {
     position: absolute !important;
     z-index: 0 !important;
-    inset: 1px -4px -4px 1px !important;
+    left: 1px !important;
+    top: 1px !important;
     width: calc(var(--sedco-native-page-w) * 2 + 4px) !important;
     height: calc(var(--sedco-native-page-h) + 4px) !important;
     border-radius: 2px !important;
@@ -104,8 +103,7 @@
     pointer-events: none !important;
   }
 
-  /* Real centre binding. It only becomes visible while the camera crosses the
-     spread, which is the exact visual cue seen in the SEDCO recording. */
+  /* Centre binding between the two visible pages. */
   .sedco-native-camera-track::after {
     content: '' !important;
     position: absolute !important;
@@ -134,8 +132,8 @@
     touch-action: pan-y !important;
   }
 
-  /* Landscape mode = an actual 2-page spread. Do not override the page-flip
-     transforms themselves; only set the overall spread footprint. */
+  /* Landscape mode is the real two-page book. Do not override react-pageflip's
+     internal transforms, so the approved curl/flip motion stays exactly intact. */
   .sedco-native-spread-flipbook {
     width: calc(var(--sedco-native-page-w) * 2) !important;
     height: var(--sedco-native-page-h) !important;
