@@ -152,20 +152,24 @@
     opacity: 0 !important;
   }
 
+  /* Keep the existing spread visible UNDER the moving sheet. Previously this
+     whole layer was hidden during is-turning, which made the flip look hollow /
+     transparent. Only stacking changes here; the flip animation itself is untouched. */
   .sedco-native-viewer.is-open-book.is-turning .sedco-native-static-spread {
-    opacity: 0 !important;
+    opacity: 1 !important;
+    z-index: 5 !important;
   }
 
   .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook {
     opacity: 1 !important;
+    z-index: 20 !important;
   }
 
-  /* Only refine the physical sheet while it is turning. Keep the page-flip
-     engine's own curl, clipping, timing and shadow animation untouched. */
-  .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__item,
-  .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__block {
+  /* Keep the real PageFlip DOM fully opaque while the sheet is moving. */
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__parent,
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__wrapper,
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__item {
     opacity: 1 !important;
-    background-color: #fff !important;
   }
 
   .sedco-native-viewer.is-open-book.is-turning .sedco-native-page {
