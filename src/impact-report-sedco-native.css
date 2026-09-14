@@ -212,11 +212,37 @@
       inset 0 0 0 1px rgba(0,0,0,.025),
       inset 5px 0 9px rgba(0,0,0,.012),
       inset -5px 0 9px rgba(0,0,0,.012) !important;
+    opacity: 1 !important;
+    transform-style: preserve-3d !important;
+    backface-visibility: visible !important;
+    -webkit-backface-visibility: visible !important;
+  }
+
+  /* Keep the turning sheet physically opaque. The front image disappears only
+     when it faces away, while this paper-coloured backside remains visible.
+     No page-flip transform, timing or motion is changed here. */
+  .sedco-native-page::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 2 !important;
+    border-radius: 1px !important;
+    background: #fdfcf9 !important;
+    box-shadow:
+      inset 0 0 0 1px rgba(0,0,0,.035),
+      inset 10px 0 18px rgba(0,0,0,.025),
+      inset -10px 0 18px rgba(0,0,0,.018) !important;
+    transform: rotateY(180deg) translateZ(.2px) !important;
+    transform-style: preserve-3d !important;
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
+    opacity: 1 !important;
+    pointer-events: none !important;
   }
 
   .sedco-native-page img {
+    position: relative !important;
+    z-index: 1 !important;
     display: block !important;
     width: 100% !important;
     height: 100% !important;
@@ -224,6 +250,9 @@
     object-fit: contain !important;
     object-position: center !important;
     background: #fff !important;
+    opacity: 1 !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
     pointer-events: none !important;
     user-select: none !important;
     -webkit-user-select: none !important;
