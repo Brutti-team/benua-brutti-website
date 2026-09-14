@@ -11,9 +11,41 @@
     visibility: visible !important;
   }
 
+  /* Do not let the front/right leaf disappear completely after the back pan.
+     Once the 420ms camera slide settles, keep a small part of the real sheet
+     overlapping the left page, like an open physical book. */
   .sedco-native-viewer.is-open-book.is-camera-left:not(.is-turning) .sedco-native-static-page--right {
-    z-index: 18 !important;
-    transform: translateZ(1px) !important;
+    z-index: 22 !important;
+    transform-origin: left center !important;
+    animation: brutti-mobile-front-leaf-rest 1ms linear 420ms both !important;
+    box-shadow:
+      -8px 0 15px rgba(0,0,0,.10),
+      inset 8px 0 13px rgba(0,0,0,.035) !important;
+  }
+
+  /* The Brutti page has a wide white inner margin. Nudge only the image inside
+     the tiny visible leaf after the slide has finished so the remaining leaf
+     still reads as the actual next page instead of a blank white strip. */
+  .sedco-native-viewer.is-open-book.is-camera-left:not(.is-turning) .sedco-native-static-page--right img {
+    animation: brutti-mobile-front-leaf-image-rest 1ms linear 420ms both !important;
+  }
+
+  @keyframes brutti-mobile-front-leaf-rest {
+    from {
+      transform: translate3d(0,0,1px) rotateY(0deg);
+    }
+    to {
+      transform: translate3d(-14px,0,3px) perspective(1400px) rotateY(-1.8deg);
+    }
+  }
+
+  @keyframes brutti-mobile-front-leaf-image-rest {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-9%);
+    }
   }
 
   .sedco-native-viewer.is-open-book.is-camera-left:not(.is-turning) .sedco-native-camera-window::after {
@@ -26,14 +58,14 @@
     height: var(--sedco-native-page-h) !important;
     pointer-events: none !important;
     background: linear-gradient(90deg,
-      rgba(0,0,0,.085) 0,
-      rgba(0,0,0,.028) 8%,
-      rgba(255,255,255,0) 22%,
+      rgba(0,0,0,.075) 0,
+      rgba(0,0,0,.022) 10%,
+      rgba(255,255,255,0) 28%,
       rgba(255,255,255,0) 88%,
-      rgba(0,0,0,.028) 100%) !important;
+      rgba(0,0,0,.024) 100%) !important;
     box-shadow:
       inset 1px 0 0 rgba(0,0,0,.10),
-      inset 5px 0 12px rgba(0,0,0,.045),
-      inset -1px 0 0 rgba(255,255,255,.55) !important;
+      inset 4px 0 10px rgba(0,0,0,.035),
+      inset -1px 0 0 rgba(255,255,255,.5) !important;
   }
 }
