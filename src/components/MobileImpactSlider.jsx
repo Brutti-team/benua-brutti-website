@@ -345,6 +345,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   const turnRafRef = useRef(null)
   const turnProgressRef = useRef(0)
   const pendingAutoTurnRef = useRef(null)
+  const cameraSlideTimerRef = useRef(null)
 
   const [isTurning, setIsTurning] = useState(false)
   const [turnSheet, setTurnSheet] = useState(null)
@@ -365,6 +366,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   useEffect(() => () => {
     if (turnTimerRef.current) window.clearTimeout(turnTimerRef.current)
     if (turnRafRef.current) window.cancelAnimationFrame(turnRafRef.current)
+    if (cameraSlideTimerRef.current) window.clearTimeout(cameraSlideTimerRef.current)
   }, [])
 
   const coverPageWidth = useMemo(() => (
@@ -394,10 +396,10 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     setCameraSide(currentPage % 2 === 1 ? 'right' : 'left')
   }, [currentPage, turnSheet, coverClosing])
 
-  const setCameraTransform = (x, animate = true) => {
+  const setCameraTransform = (x, animate = true, transition = null) => {
     if (!cameraRef.current) return
     cameraRef.current.style.transition = animate
-      ? 'transform 420ms cubic-bezier(.22,.82,.24,1)'
+      ? (transition || 'transform 420ms cubic-bezier(.22,.82,.24,1)')
       : 'none'
     cameraRef.current.style.transform = `translate3d(${x}px,0,0)`
   }
@@ -406,6 +408,22 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     const x = side === 'right' ? cameraRightX : cameraLeftX
     setCameraSide(side)
     setCameraTransform(x, animate)
+  }
+
+  const slideCameraBack = () => {
+    if (cameraSlideTimerRef.current) window.clearTimeout(cameraSlideTimerRef.current)
+
+    setCameraSide('left')
+    setCameraTransform(
+      cameraLeftX,
+      true,
+      'transform 520ms cubic-bezier(.16,1,.3,1)',
+    )
+
+    cameraSlideTimerRef.current = window.setTimeout(() => {
+      onPageChange?.(spreadStartPage)
+      cameraSlideTimerRef.current = null
+    }, 520)
   }
 
   const applyTurnProgress = (direction, rawProgress) => {
@@ -599,7 +617,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   }
 
   const moveToNextStep = () => {
-    if (isTurning) return
+    if (isTurning || cameraSlideTimerRef.current) return
 
     if (currentPage === 1) {
       beginCoverTurn()
@@ -618,11 +636,10 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   }
 
   const moveToPreviousStep = () => {
-    if (isTurning || currentPage <= 1) return
+    if (isTurning || cameraSlideTimerRef.current || currentPage <= 1) return
 
     if (cameraSide === 'right') {
-      snapCamera('left', true)
-      onPageChange?.(spreadStartPage)
+      slideCameraBack()
       return
     }
 
@@ -657,7 +674,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   }))
 
   const handlePointerDown = (event) => {
-    if (isTurning) return
+    if (isTurning || cameraSlideTimerRef.current) return
     if (event.pointerType === 'mouse' && event.button !== 0) return
 
     const now = performance.now()
