@@ -302,3 +302,91 @@
     z-index: 80 !important;
   }
 }
+
+/* Motion-only refinement for the custom mobile sheet. Keep the approved sheet
+   styling, page size, swipe flow, camera movement and total 560ms duration. */
+@media (max-width: 700px) {
+  .sedco-native-viewer .sedco-native-turn-sheet--next {
+    animation: sedco-mobile-turn-next-soft 560ms cubic-bezier(.45,0,.18,1) both !important;
+  }
+
+  .sedco-native-viewer .sedco-native-turn-sheet--prev {
+    animation: sedco-mobile-turn-prev-soft 560ms cubic-bezier(.45,0,.18,1) both !important;
+  }
+
+  @keyframes sedco-mobile-turn-next-soft {
+    0% {
+      transform: perspective(1500px) rotateY(0deg) rotateZ(0deg) translateZ(1px);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.10));
+    }
+    12% {
+      transform: perspective(1500px) rotateY(-5deg) rotateZ(-.05deg) translateZ(1.8px);
+      clip-path: polygon(0 0, 100% .2%, 99.6% 99.8%, 0 100%);
+      filter: drop-shadow(2px 7px 11px rgba(0,0,0,.12));
+    }
+    28% {
+      transform: perspective(1500px) rotateY(-28deg) rotateZ(-.22deg) translateZ(4px);
+      clip-path: polygon(0 0, 99.5% .8%, 98% 99.2%, 0 100%);
+      filter: drop-shadow(5px 8px 14px rgba(0,0,0,.16));
+    }
+    50% {
+      transform: perspective(1500px) rotateY(-82deg) rotateZ(-.55deg) translateZ(8px);
+      clip-path: polygon(0 0, 98% 3.5%, 92% 97.5%, 0 100%);
+      filter: drop-shadow(10px 8px 19px rgba(0,0,0,.22));
+    }
+    72% {
+      transform: perspective(1500px) rotateY(-132deg) rotateZ(-.38deg) translateZ(6px);
+      clip-path: polygon(0 0, 99% 1.6%, 96% 98.5%, 0 100%);
+      filter: drop-shadow(8px 8px 16px rgba(0,0,0,.18));
+    }
+    88% {
+      transform: perspective(1500px) rotateY(-166deg) rotateZ(-.10deg) translateZ(2.5px);
+      clip-path: polygon(0 0, 100% .3%, 99.4% 99.7%, 0 100%);
+      filter: drop-shadow(3px 5px 10px rgba(0,0,0,.11));
+    }
+    100% {
+      transform: perspective(1500px) rotateY(-180deg) rotateZ(0deg) translateZ(1px);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      filter: drop-shadow(0 3px 7px rgba(0,0,0,.08));
+    }
+  }
+
+  @keyframes sedco-mobile-turn-prev-soft {
+    0% {
+      transform: perspective(1500px) rotateY(0deg) rotateZ(0deg) translateZ(1px);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.10));
+    }
+    12% {
+      transform: perspective(1500px) rotateY(5deg) rotateZ(.05deg) translateZ(1.8px);
+      clip-path: polygon(.4% .2%, 100% 0, 100% 100%, 0 99.8%);
+      filter: drop-shadow(-2px 7px 11px rgba(0,0,0,.12));
+    }
+    28% {
+      transform: perspective(1500px) rotateY(28deg) rotateZ(.22deg) translateZ(4px);
+      clip-path: polygon(2% .8%, 100% 0, 100% 100%, .5% 99.2%);
+      filter: drop-shadow(-5px 8px 14px rgba(0,0,0,.16));
+    }
+    50% {
+      transform: perspective(1500px) rotateY(82deg) rotateZ(.55deg) translateZ(8px);
+      clip-path: polygon(8% 3.5%, 100% 0, 100% 100%, 2% 97.5%);
+      filter: drop-shadow(-10px 8px 19px rgba(0,0,0,.22));
+    }
+    72% {
+      transform: perspective(1500px) rotateY(132deg) rotateZ(.38deg) translateZ(6px);
+      clip-path: polygon(4% 1.6%, 100% 0, 100% 100%, 1% 98.5%);
+      filter: drop-shadow(-8px 8px 16px rgba(0,0,0,.18));
+    }
+    88% {
+      transform: perspective(1500px) rotateY(166deg) rotateZ(.10deg) translateZ(2.5px);
+      clip-path: polygon(.6% .3%, 100% 0, 100% 100%, 0 99.7%);
+      filter: drop-shadow(-3px 5px 10px rgba(0,0,0,.11));
+    }
+    100% {
+      transform: perspective(1500px) rotateY(180deg) rotateZ(0deg) translateZ(1px);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      filter: drop-shadow(0 3px 7px rgba(0,0,0,.08));
+    }
+  }
+}
