@@ -1,1 +1,118 @@
 @import './impact-report-sedco-native-base.css';
+
+/* Mobile SEDCO-reference visual pass.
+   Gesture/camera logic stays in MobileImpactSlider.jsx; these rules only make
+   the page itself read like a physical sheet instead of a flat rotating card. */
+@media (max-width: 700px) {
+  .sedco-native-camera-window {
+    background: #777a78 !important;
+    box-shadow:
+      inset 5px 0 0 #6f7270,
+      inset 0 5px 0 #6f7270,
+      inset 0 -1px 0 rgba(0,0,0,.14),
+      0 14px 20px rgba(0,0,0,.16),
+      0 3px 5px rgba(0,0,0,.08) !important;
+  }
+
+  .sedco-native-static-page {
+    box-shadow:
+      inset 0 0 0 1px rgba(0,0,0,.035),
+      0 1px 2px rgba(0,0,0,.08) !important;
+  }
+
+  .sedco-native-static-page--left {
+    box-shadow:
+      inset -9px 0 15px rgba(0,0,0,.035),
+      inset 0 0 0 1px rgba(0,0,0,.025),
+      0 1px 2px rgba(0,0,0,.08) !important;
+  }
+
+  .sedco-native-static-page--right {
+    box-shadow:
+      inset 11px 0 16px rgba(0,0,0,.04),
+      inset 0 0 0 1px rgba(0,0,0,.025),
+      0 1px 2px rgba(0,0,0,.08) !important;
+  }
+
+  .sedco-native-turn-sheet {
+    overflow: visible !important;
+    perspective: 1500px !important;
+  }
+
+  .sedco-native-turn-sheet--next,
+  .sedco-native-turn-sheet--next .sedco-native-turn-sheet__face {
+    border-radius: 1px 15px 15px 1px !important;
+  }
+
+  .sedco-native-turn-sheet--prev,
+  .sedco-native-turn-sheet--prev .sedco-native-turn-sheet__face {
+    border-radius: 15px 1px 1px 15px !important;
+  }
+
+  .sedco-native-turn-sheet__face {
+    border-color: rgba(0,0,0,.07) !important;
+  }
+
+  .sedco-native-turn-sheet__face--front {
+    box-shadow:
+      inset -18px 0 26px rgba(0,0,0,.035),
+      0 10px 24px rgba(0,0,0,.20) !important;
+  }
+
+  .sedco-native-turn-sheet__face--back {
+    box-shadow:
+      inset 18px 0 28px rgba(0,0,0,.055),
+      0 10px 24px rgba(0,0,0,.18) !important;
+  }
+
+  .sedco-native-turn-sheet__shade {
+    opacity: .46 !important;
+    background: linear-gradient(90deg,
+      rgba(0,0,0,.045) 0%,
+      rgba(0,0,0,.012) 15%,
+      transparent 39%,
+      transparent 66%,
+      rgba(0,0,0,.12) 100%) !important;
+  }
+
+  .sedco-native-turn-sheet__curl {
+    width: 34px !important;
+    opacity: .96 !important;
+    border-radius: 999px !important;
+    filter: blur(.15px) !important;
+  }
+
+  .sedco-native-turn-sheet--next .sedco-native-turn-sheet__curl {
+    right: -8px !important;
+    background: linear-gradient(90deg,
+      rgba(0,0,0,0),
+      rgba(0,0,0,.11) 34%,
+      rgba(255,255,255,.90) 61%,
+      rgba(0,0,0,.07) 88%,
+      rgba(0,0,0,0)) !important;
+    box-shadow: 8px 0 18px rgba(0,0,0,.13) !important;
+  }
+
+  .sedco-native-turn-sheet--prev .sedco-native-turn-sheet__curl {
+    left: -8px !important;
+    background: linear-gradient(90deg,
+      rgba(0,0,0,0),
+      rgba(0,0,0,.07) 12%,
+      rgba(255,255,255,.90) 39%,
+      rgba(0,0,0,.11) 66%,
+      rgba(0,0,0,0)) !important;
+    box-shadow: -8px 0 18px rgba(0,0,0,.13) !important;
+  }
+
+  .sedco-native-cover-sheet__face--front {
+    box-shadow:
+      inset -14px 0 22px rgba(0,0,0,.03),
+      0 10px 24px rgba(0,0,0,.20) !important;
+  }
+
+  .sedco-native-cover-sheet__face--back {
+    box-shadow:
+      inset 20px 0 30px rgba(0,0,0,.07),
+      0 10px 24px rgba(0,0,0,.17) !important;
+  }
+}
