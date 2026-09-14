@@ -205,6 +205,130 @@ const MOBILE_TURN_SHEET_CSS = `
 }
 `
 
+const MOBILE_COVER_FLIP_CSS = `
+@media (max-width: 700px) {
+  .sedco-native-cover-stage {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    width: var(--sedco-native-page-w);
+    height: var(--sedco-native-page-h);
+    perspective: 1900px;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    pointer-events: none;
+  }
+
+  .sedco-native-cover-under {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 1px;
+    box-shadow: inset 7px 0 13px rgba(0,0,0,.035);
+  }
+
+  .sedco-native-cover-under img,
+  .sedco-native-cover-sheet__face img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: contain;
+    object-position: center;
+    background: #fff;
+    opacity: 1;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  .sedco-native-cover-sheet {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    will-change: transform, filter;
+  }
+
+  .sedco-native-cover-sheet.is-opening {
+    animation: sedco-mobile-cover-open 860ms cubic-bezier(.22,.82,.24,1) both;
+  }
+
+  .sedco-native-cover-sheet__face {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 1px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+  }
+
+  .sedco-native-cover-sheet__face--front {
+    z-index: 2;
+    background: #fff;
+    transform: translateZ(.8px);
+    box-shadow: 0 8px 22px rgba(0,0,0,.18);
+  }
+
+  .sedco-native-cover-sheet__face--back {
+    z-index: 1;
+    background: #f8f7f3;
+    transform: rotateY(180deg) translateZ(.8px);
+    box-shadow:
+      inset 15px 0 24px rgba(0,0,0,.065),
+      inset -2px 0 4px rgba(0,0,0,.025);
+  }
+
+  .sedco-native-cover-sheet__face--back::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+      rgba(0,0,0,.055),
+      rgba(0,0,0,.012) 16%,
+      transparent 42%,
+      rgba(255,255,255,.18));
+  }
+
+  @keyframes sedco-mobile-cover-open {
+    0% {
+      transform: rotateY(0deg) translateZ(1px);
+      filter: drop-shadow(0 7px 10px rgba(0,0,0,.12));
+    }
+    16% {
+      transform: rotateY(-12deg) translateZ(2px);
+      filter: drop-shadow(3px 8px 12px rgba(0,0,0,.14));
+    }
+    34% {
+      transform: rotateY(-38deg) translateZ(4px);
+      filter: drop-shadow(7px 9px 15px rgba(0,0,0,.17));
+    }
+    52% {
+      transform: rotateY(-88deg) translateZ(7px);
+      filter: drop-shadow(11px 8px 19px rgba(0,0,0,.21));
+    }
+    70% {
+      transform: rotateY(-133deg) translateZ(5px);
+      filter: drop-shadow(8px 8px 16px rgba(0,0,0,.17));
+    }
+    86% {
+      transform: rotateY(-166deg) translateZ(2px);
+      filter: drop-shadow(3px 6px 11px rgba(0,0,0,.12));
+    }
+    100% {
+      transform: rotateY(-180deg) translateZ(1px);
+      filter: drop-shadow(0 3px 7px rgba(0,0,0,.08));
+    }
+  }
+}
+`
+
 const SedcoPage = forwardRef(function SedcoPage({ page, totalPages, forceSoft = false }, ref) {
   const isCover = !forceSoft && (page === 1 || page === totalPages)
 
@@ -265,12 +389,10 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   onPageChange,
   onPageTurn,
 }, ref) {
-  const coverFlipRef = useRef(null)
   const spreadFlipRef = useRef(null)
   const cameraRef = useRef(null)
   const gestureRef = useRef(null)
   const soundPlayedRef = useRef(false)
-  const pendingCoverOpenRef = useRef(false)
   const turnTimerRef = useRef(null)
   const [isTurning, setIsTurning] = useState(false)
   const [turnSheet, setTurnSheet] = useState(null)
@@ -340,7 +462,25 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   }, [pageWidth])
 
   const spreadFlip = () => spreadFlipRef.current?.pageFlip?.()
-  const coverFlip = () => coverFlipRef.current?.pageFlip?.()
+
+  const beginCoverTurn = () => {
+    if (isTurning || currentPage !== 1) return
+
+    setIsTurning(true)
+
+    if (!soundPlayedRef.current) {
+      onPageTurn?.()
+      soundPlayedRef.current = true
+    }
+
+    if (turnTimerRef.current) window.clearTimeout(turnTimerRef.current)
+    turnTimerRef.current = window.setTimeout(() => {
+      setIsTurning(false)
+      soundPlayedRef.current = false
+      turnTimerRef.current = null
+      onPageChange?.(2)
+    }, 860)
+  }
 
   const beginOpenBookTurn = (direction) => {
     if (isTurning) return
@@ -388,7 +528,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     if (isTurning) return
 
     if (currentPage === 1) {
-      coverFlip()?.flipNext('top')
+      beginCoverTurn()
       return
     }
 
@@ -506,77 +646,41 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
 
   if (currentPage === 1) {
     return (
-      <div
-        className="sedco-native-viewer is-cover"
-        style={{
-          '--sedco-native-page-w': `${pageWidth}px`,
-          '--sedco-native-page-h': `${pageHeight}px`,
-          '--sedco-native-peek-w': `${peekWidth}px`,
-        }}
-        aria-label={`Impact Report page ${currentPage} of ${totalPages}`}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerEnd}
-        onPointerCancel={handlePointerEnd}
-      >
-        <div className="sedco-native-holder sedco-native-holder--cover">
-          <div className="sedco-native-book-bed" aria-hidden="true" />
-          <div className="sedco-native-paper-edge sedco-native-paper-edge--1" aria-hidden="true" />
-          <div className="sedco-native-paper-edge sedco-native-paper-edge--2" aria-hidden="true" />
+      <>
+        <style>{MOBILE_COVER_FLIP_CSS}</style>
+        <div
+          className={`sedco-native-viewer is-cover${isTurning ? ' is-turning' : ''}`}
+          style={{
+            '--sedco-native-page-w': `${pageWidth}px`,
+            '--sedco-native-page-h': `${pageHeight}px`,
+            '--sedco-native-peek-w': `${peekWidth}px`,
+          }}
+          aria-label={`Impact Report page ${currentPage} of ${totalPages}`}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerEnd}
+          onPointerCancel={handlePointerEnd}
+        >
+          <div className="sedco-native-holder sedco-native-holder--cover">
+            <div className="sedco-native-book-bed" aria-hidden="true" />
+            <div className="sedco-native-paper-edge sedco-native-paper-edge--1" aria-hidden="true" />
+            <div className="sedco-native-paper-edge sedco-native-paper-edge--2" aria-hidden="true" />
 
-          <HTMLFlipBook
-            ref={coverFlipRef}
-            width={pageWidth}
-            height={pageHeight}
-            size="fixed"
-            minWidth={pageWidth}
-            maxWidth={pageWidth}
-            minHeight={pageHeight}
-            maxHeight={pageHeight}
-            startPage={0}
-            drawShadow
-            flippingTime={860}
-            usePortrait
-            startZIndex={40}
-            autoSize={false}
-            maxShadowOpacity={0.34}
-            showCover
-            mobileScrollSupport
-            clickEventForward={false}
-            useMouseEvents
-            swipeDistance={6}
-            showPageCorners
-            disableFlipByClick
-            className="sedco-native-flipbook"
-            onFlip={(event) => {
-              if (Number(event.data) >= 1) pendingCoverOpenRef.current = true
-            }}
-            onChangeState={(event) => {
-              const state = event.data
-              const turning = state === 'user_fold' || state === 'flipping'
-              setIsTurning(turning)
+            <div className="sedco-native-cover-stage" aria-hidden="true">
+              <div className="sedco-native-cover-under">
+                <img src={pageImage(2)} alt="" draggable="false" />
+              </div>
 
-              if (turning && !soundPlayedRef.current) {
-                onPageTurn?.()
-                soundPlayedRef.current = true
-              }
-
-              if (state === 'read') {
-                setIsTurning(false)
-                soundPlayedRef.current = false
-
-                if (pendingCoverOpenRef.current) {
-                  pendingCoverOpenRef.current = false
-                  onPageChange?.(2)
-                }
-              }
-            }}
-          >
-            <SedcoPage page={1} totalPages={totalPages} />
-            <SedcoPage page={2} totalPages={totalPages} />
-          </HTMLFlipBook>
+              <div className={`sedco-native-cover-sheet${isTurning ? ' is-opening' : ''}`}>
+                <div className="sedco-native-cover-sheet__face sedco-native-cover-sheet__face--front">
+                  <img src={pageImage(1)} alt="" draggable="false" />
+                </div>
+                <div className="sedco-native-cover-sheet__face sedco-native-cover-sheet__face--back" />
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </>
     )
   }
 
