@@ -10,6 +10,166 @@ function pageImage(page) {
   return `${import.meta.env.BASE_URL}assets/impact-report/page-${String(page).padStart(2, '0')}.webp`
 }
 
+const MOBILE_TURN_SHEET_CSS = `
+@media (max-width: 700px) {
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .sedco-native-turn-sheet {
+    position: absolute;
+    top: 0;
+    width: var(--sedco-native-page-w);
+    height: var(--sedco-native-page-h);
+    z-index: 95;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    pointer-events: none;
+    will-change: transform, clip-path, filter;
+  }
+
+  .sedco-native-turn-sheet--next {
+    left: var(--sedco-native-page-w);
+    transform-origin: left center;
+    animation: sedco-mobile-turn-next 560ms cubic-bezier(.24,.72,.28,1) both;
+  }
+
+  .sedco-native-turn-sheet--prev {
+    left: 0;
+    transform-origin: right center;
+    animation: sedco-mobile-turn-prev 560ms cubic-bezier(.24,.72,.28,1) both;
+  }
+
+  .sedco-native-turn-sheet__face {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,.06);
+    border-radius: 1px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+  }
+
+  .sedco-native-turn-sheet__face--front {
+    transform: translateZ(.35px);
+    box-shadow:
+      inset -8px 0 16px rgba(0,0,0,.025),
+      0 8px 26px rgba(0,0,0,.18);
+  }
+
+  .sedco-native-turn-sheet__face--back {
+    transform: rotateY(180deg) translateZ(.35px);
+    box-shadow:
+      inset 10px 0 20px rgba(0,0,0,.035),
+      0 8px 26px rgba(0,0,0,.16);
+  }
+
+  .sedco-native-turn-sheet__face img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: contain;
+    object-position: center;
+    background: #fff;
+    opacity: 1;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  .sedco-native-turn-sheet__curl {
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    bottom: 0;
+    width: 18px;
+    opacity: .78;
+    pointer-events: none;
+    filter: blur(.1px);
+  }
+
+  .sedco-native-turn-sheet--next .sedco-native-turn-sheet__curl {
+    right: -1px;
+    border-radius: 55% 0 0 55%;
+    background: linear-gradient(90deg,
+      rgba(0,0,0,0),
+      rgba(0,0,0,.08) 52%,
+      rgba(255,255,255,.72) 78%,
+      rgba(0,0,0,.05));
+  }
+
+  .sedco-native-turn-sheet--prev .sedco-native-turn-sheet__curl {
+    left: -1px;
+    border-radius: 0 55% 55% 0;
+    background: linear-gradient(90deg,
+      rgba(0,0,0,.05),
+      rgba(255,255,255,.72) 22%,
+      rgba(0,0,0,.08) 48%,
+      rgba(0,0,0,0));
+  }
+
+  @keyframes sedco-mobile-turn-next {
+    0% {
+      transform: perspective(1500px) rotateY(0deg) rotateZ(0deg) translateZ(1px);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      filter: drop-shadow(0 7px 11px rgba(0,0,0,.11));
+    }
+    24% {
+      transform: perspective(1500px) rotateY(-34deg) rotateZ(-.35deg) translateZ(5px);
+      clip-path: polygon(0 0, 100% 1%, 97% 99%, 0 100%);
+      filter: drop-shadow(7px 9px 15px rgba(0,0,0,.18));
+    }
+    52% {
+      transform: perspective(1500px) rotateY(-92deg) rotateZ(-.8deg) translateZ(9px);
+      clip-path: polygon(0 0, 97% 5%, 88% 97%, 0 100%);
+      filter: drop-shadow(11px 8px 20px rgba(0,0,0,.23));
+    }
+    76% {
+      transform: perspective(1500px) rotateY(-146deg) rotateZ(-.3deg) translateZ(5px);
+      clip-path: polygon(0 0, 100% 1%, 97% 99%, 0 100%);
+      filter: drop-shadow(6px 7px 14px rgba(0,0,0,.16));
+    }
+    100% {
+      transform: perspective(1500px) rotateY(-180deg) rotateZ(0deg) translateZ(1px);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      filter: drop-shadow(0 3px 7px rgba(0,0,0,.08));
+    }
+  }
+
+  @keyframes sedco-mobile-turn-prev {
+    0% {
+      transform: perspective(1500px) rotateY(0deg) rotateZ(0deg) translateZ(1px);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      filter: drop-shadow(0 7px 11px rgba(0,0,0,.11));
+    }
+    24% {
+      transform: perspective(1500px) rotateY(34deg) rotateZ(.35deg) translateZ(5px);
+      clip-path: polygon(3% 1%, 100% 0, 100% 100%, 0 99%);
+      filter: drop-shadow(-7px 9px 15px rgba(0,0,0,.18));
+    }
+    52% {
+      transform: perspective(1500px) rotateY(92deg) rotateZ(.8deg) translateZ(9px);
+      clip-path: polygon(12% 5%, 100% 0, 100% 100%, 3% 97%);
+      filter: drop-shadow(-11px 8px 20px rgba(0,0,0,.23));
+    }
+    76% {
+      transform: perspective(1500px) rotateY(146deg) rotateZ(.3deg) translateZ(5px);
+      clip-path: polygon(3% 1%, 100% 0, 100% 100%, 0 99%);
+      filter: drop-shadow(-6px 7px 14px rgba(0,0,0,.16));
+    }
+    100% {
+      transform: perspective(1500px) rotateY(180deg) rotateZ(0deg) translateZ(1px);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      filter: drop-shadow(0 3px 7px rgba(0,0,0,.08));
+    }
+  }
+}
+`
+
 const SedcoPage = forwardRef(function SedcoPage({ page, totalPages, forceSoft = false }, ref) {
   const isCover = !forceSoft && (page === 1 || page === totalPages)
 
@@ -46,6 +206,22 @@ function StaticSpread({ leftPage, rightPage, totalPages }) {
   )
 }
 
+function TurningSheet({ sheet }) {
+  if (!sheet) return null
+
+  return (
+    <div className={`sedco-native-turn-sheet sedco-native-turn-sheet--${sheet.direction}`} aria-hidden="true">
+      <div className="sedco-native-turn-sheet__face sedco-native-turn-sheet__face--front">
+        <img src={pageImage(sheet.frontPage)} alt="" draggable="false" />
+      </div>
+      <div className="sedco-native-turn-sheet__face sedco-native-turn-sheet__face--back">
+        <img src={pageImage(sheet.backPage)} alt="" draggable="false" />
+      </div>
+      <span className="sedco-native-turn-sheet__curl" />
+    </div>
+  )
+}
+
 const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   totalPages,
   currentPage,
@@ -57,7 +233,9 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   const cameraRef = useRef(null)
   const gestureRef = useRef(null)
   const soundPlayedRef = useRef(false)
+  const turnTimerRef = useRef(null)
   const [isTurning, setIsTurning] = useState(false)
+  const [turnSheet, setTurnSheet] = useState(null)
   const [viewportWidth, setViewportWidth] = useState(() => (
     typeof window === 'undefined' ? 390 : window.innerWidth
   ))
@@ -69,6 +247,10 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     const sync = () => setViewportWidth(window.innerWidth)
     window.addEventListener('resize', sync, { passive: true })
     return () => window.removeEventListener('resize', sync)
+  }, [])
+
+  useEffect(() => () => {
+    if (turnTimerRef.current) window.clearTimeout(turnTimerRef.current)
   }, [])
 
   // Keep the approved cover and real two-page book structure, but make each
@@ -127,6 +309,49 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   const spreadFlip = () => spreadFlipRef.current?.pageFlip?.()
   const coverFlip = () => coverFlipRef.current?.pageFlip?.()
 
+  const beginOpenBookTurn = (direction) => {
+    if (isTurning) return
+
+    const isNext = direction === 'next'
+    const destinationStart = isNext ? spreadStartPage + 2 : spreadStartPage - 2
+    const targetLeftPage = destinationStart
+
+    const sheet = isNext
+      ? {
+          direction: 'next',
+          frontPage: Math.min(totalPages, spreadStartPage + 1),
+          backPage: Math.min(totalPages, spreadStartPage + 2),
+          destinationStart,
+        }
+      : {
+          direction: 'prev',
+          frontPage: spreadStartPage,
+          backPage: Math.max(1, spreadStartPage - 1),
+          destinationStart,
+        }
+
+    setTurnSheet(sheet)
+    setIsTurning(true)
+
+    if (!soundPlayedRef.current) {
+      onPageTurn?.()
+      soundPlayedRef.current = true
+    }
+
+    if (isNext) spreadFlip()?.flipNext('top')
+    else spreadFlip()?.flipPrev('top')
+
+    if (turnTimerRef.current) window.clearTimeout(turnTimerRef.current)
+    turnTimerRef.current = window.setTimeout(() => {
+      requestAnimationFrame(() => snapCamera('left', false))
+      onPageChange?.(targetLeftPage)
+      setTurnSheet(null)
+      setIsTurning(false)
+      soundPlayedRef.current = false
+      turnTimerRef.current = null
+    }, 560)
+  }
+
   const moveToNextStep = () => {
     if (isTurning) return
 
@@ -146,10 +371,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     // Second swipe: after the right page has been read, turn that sheet to the
     // next physical spread, then focus the new left page.
     if (cameraSide === 'right' && spreadStartPage + 2 <= totalPages) {
-      onPageTurn?.()
-      soundPlayedRef.current = true
-      setIsTurning(true)
-      spreadFlip()?.flipNext('top')
+      beginOpenBookTurn('next')
     }
   }
 
@@ -167,10 +389,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
       return
     }
 
-    onPageTurn?.()
-    soundPlayedRef.current = true
-    setIsTurning(true)
-    spreadFlip()?.flipPrev('top')
+    beginOpenBookTurn('prev')
   }
 
   useImperativeHandle(ref, () => ({
@@ -328,91 +547,76 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     )
   }
 
+  const visibleSpreadStart = turnSheet?.destinationStart ?? spreadStartPage
+
   return (
-    <div
-      className={`sedco-native-viewer is-open-book is-camera-${cameraSide}${isTurning ? ' is-turning' : ''}`}
-      style={{
-        '--sedco-native-page-w': `${pageWidth}px`,
-        '--sedco-native-page-h': `${pageHeight}px`,
-        '--sedco-native-peek-w': `${peekWidth}px`,
-        '--sedco-native-camera-travel': `${cameraTravel}px`,
-      }}
-      aria-label={`Impact Report page ${currentPage} of ${totalPages}`}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerEnd}
-      onPointerCancel={handlePointerEnd}
-    >
-      <div className="sedco-native-camera-window">
-        <div ref={cameraRef} className="sedco-native-camera-track">
-          <div className="sedco-native-spread-bed" aria-hidden="true" />
+    <>
+      <style>{MOBILE_TURN_SHEET_CSS}</style>
+      <div
+        className={`sedco-native-viewer is-open-book is-camera-${cameraSide}${isTurning ? ' is-turning' : ''}`}
+        style={{
+          '--sedco-native-page-w': `${pageWidth}px`,
+          '--sedco-native-page-h': `${pageHeight}px`,
+          '--sedco-native-peek-w': `${peekWidth}px`,
+          '--sedco-native-camera-travel': `${cameraTravel}px`,
+        }}
+        aria-label={`Impact Report page ${currentPage} of ${totalPages}`}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerEnd}
+        onPointerCancel={handlePointerEnd}
+      >
+        <div className="sedco-native-camera-window">
+          <div ref={cameraRef} className="sedco-native-camera-track">
+            <div className="sedco-native-spread-bed" aria-hidden="true" />
 
-          <StaticSpread
-            leftPage={spreadStartPage}
-            rightPage={spreadStartPage + 1}
-            totalPages={totalPages}
-          />
+            <StaticSpread
+              leftPage={visibleSpreadStart}
+              rightPage={visibleSpreadStart + 1}
+              totalPages={totalPages}
+            />
 
-          <HTMLFlipBook
-            key={`spread-${spreadStartPage}-${pageWidth}`}
-            ref={spreadFlipRef}
-            width={pageWidth}
-            height={pageHeight}
-            size="fixed"
-            minWidth={pageWidth}
-            maxWidth={pageWidth}
-            minHeight={pageHeight}
-            maxHeight={pageHeight}
-            startPage={Math.max(0, spreadStartPage - 2)}
-            drawShadow
-            flippingTime={540}
-            usePortrait={false}
-            startZIndex={40}
-            autoSize={false}
-            maxShadowOpacity={0.46}
-            showCover={false}
-            mobileScrollSupport={false}
-            clickEventForward={false}
-            useMouseEvents={false}
-            swipeDistance={999}
-            showPageCorners
-            disableFlipByClick
-            className="sedco-native-flipbook sedco-native-spread-flipbook"
-            onFlip={(event) => {
-              const page = clamp(Number(event.data) + 2, 2, totalPages)
-              const leftPage = page % 2 === 0 ? page : Math.max(2, page - 1)
-              requestAnimationFrame(() => snapCamera('left', false))
-              onPageChange?.(leftPage)
-            }}
-            onChangeState={(event) => {
-              const state = event.data
-              const turning = state === 'user_fold' || state === 'flipping'
-              setIsTurning(turning)
+            <TurningSheet sheet={turnSheet} />
 
-              if (turning && !soundPlayedRef.current) {
-                onPageTurn?.()
-                soundPlayedRef.current = true
-              }
-
-              if (state === 'read') {
-                setIsTurning(false)
-                soundPlayedRef.current = false
-                requestAnimationFrame(() => snapCamera('left', false))
-              }
-            }}
-          >
-            {Array.from({ length: totalPages - 1 }, (_, index) => (
-              <SedcoPage
-                page={index + 2}
-                totalPages={totalPages}
-                forceSoft
-                key={index + 2}
-              />
-            ))}
-          </HTMLFlipBook>
+            <HTMLFlipBook
+              key={`spread-${spreadStartPage}-${pageWidth}`}
+              ref={spreadFlipRef}
+              width={pageWidth}
+              height={pageHeight}
+              size="fixed"
+              minWidth={pageWidth}
+              maxWidth={pageWidth}
+              minHeight={pageHeight}
+              maxHeight={pageHeight}
+              startPage={Math.max(0, spreadStartPage - 2)}
+              drawShadow
+              flippingTime={540}
+              usePortrait={false}
+              startZIndex={40}
+              autoSize={false}
+              maxShadowOpacity={0.46}
+              showCover={false}
+              mobileScrollSupport={false}
+              clickEventForward={false}
+              useMouseEvents={false}
+              swipeDistance={999}
+              showPageCorners
+              disableFlipByClick
+              className="sedco-native-flipbook sedco-native-spread-flipbook"
+            >
+              {Array.from({ length: totalPages - 1 }, (_, index) => (
+                <SedcoPage
+                  page={index + 2}
+                  totalPages={totalPages}
+                  forceSoft
+                  key={index + 2}
+                />
+              ))}
+            </HTMLFlipBook>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 })
 
