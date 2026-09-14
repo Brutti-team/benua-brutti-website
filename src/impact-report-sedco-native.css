@@ -286,18 +286,24 @@
   }
 }
 
-/* During the actual mobile turn, let react-pageflip render the sheet exactly
-   like the desktop Impact Report. This overrides only the moving page, not the
-   approved mobile layout/camera/swipe behavior or the resting spread. */
+/* Preserve react-pageflip's native desktop-like curl on mobile, but keep the
+   physical sheet opaque while it rotates so the page never disappears. Only
+   the moving page surface/backside is changed here; mobile layout, swipe flow,
+   camera movement and flip timing stay untouched. */
 @media (max-width: 700px) {
   .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__parent,
   .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__wrapper,
-  .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__item,
   .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__outerShadow,
   .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__innerShadow,
   .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__hardShadow {
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
+    transform-style: preserve-3d !important;
+  }
+
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__item {
+    backface-visibility: visible !important;
+    -webkit-backface-visibility: visible !important;
     transform-style: preserve-3d !important;
   }
 
@@ -309,9 +315,12 @@
     background: #fff !important;
     border: 0 !important;
     border-radius: 0 !important;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,.025) !important;
-    backface-visibility: hidden !important;
-    -webkit-backface-visibility: hidden !important;
+    box-shadow:
+      inset 0 0 0 1px rgba(0,0,0,.025),
+      0 4px 14px rgba(0,0,0,.12) !important;
+    transform-style: preserve-3d !important;
+    backface-visibility: visible !important;
+    -webkit-backface-visibility: visible !important;
     contain: paint !important;
   }
 
@@ -322,15 +331,17 @@
     z-index: 2 !important;
     border: 0 !important;
     border-radius: 0 !important;
-    box-shadow: none !important;
-    transform: none !important;
-    background: linear-gradient(90deg,
-      rgba(0,0,0,.02),
-      transparent 7%,
-      transparent 93%,
-      rgba(0,0,0,.025)) !important;
-    opacity: .65 !important;
-    mix-blend-mode: multiply !important;
+    background: #fff !important;
+    box-shadow:
+      inset 13px 0 22px rgba(0,0,0,.045),
+      inset -7px 0 14px rgba(0,0,0,.018),
+      0 0 1px rgba(0,0,0,.12) !important;
+    transform: rotateY(180deg) translateZ(.35px) !important;
+    transform-style: preserve-3d !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+    opacity: 1 !important;
+    mix-blend-mode: normal !important;
     pointer-events: none !important;
   }
 
@@ -338,6 +349,6 @@
     object-fit: cover !important;
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
-    transform: translateZ(0) !important;
+    transform: translateZ(.35px) !important;
   }
 }
