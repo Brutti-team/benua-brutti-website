@@ -152,9 +152,7 @@
     opacity: 0 !important;
   }
 
-  /* Keep the existing spread visible UNDER the moving sheet. Previously this
-     whole layer was hidden during is-turning, which made the flip look hollow /
-     transparent. Only stacking changes here; the flip animation itself is untouched. */
+  /* Keep the existing spread visible under the moving native page. */
   .sedco-native-viewer.is-open-book.is-turning .sedco-native-static-spread {
     opacity: 1 !important;
     z-index: 5 !important;
@@ -165,20 +163,10 @@
     z-index: 20 !important;
   }
 
-  /* Keep the real PageFlip DOM fully opaque while the sheet is moving. */
   .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__parent,
   .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__wrapper,
   .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__item {
     opacity: 1 !important;
-  }
-
-  .sedco-native-viewer.is-open-book.is-turning .sedco-native-page {
-    background: #fff !important;
-    border: 1px solid rgba(35,35,35,.055) !important;
-    box-shadow:
-      0 1px 1px rgba(0,0,0,.08),
-      0 7px 17px rgba(0,0,0,.13),
-      inset 0 0 0 1px rgba(255,255,255,.55) !important;
   }
 
   /* Centre binding between the two physical pages. */
@@ -210,8 +198,6 @@
     touch-action: pan-y !important;
   }
 
-  /* Landscape mode is still the real two-page book. Do not override the
-     page-flip engine transforms, so the approved curl motion stays intact. */
   .sedco-native-spread-flipbook {
     width: calc(var(--sedco-native-page-w) * 2) !important;
     height: var(--sedco-native-page-h) !important;
@@ -239,9 +225,6 @@
     -webkit-backface-visibility: visible !important;
   }
 
-  /* Keep the turning sheet physically opaque. The front image disappears only
-     when it faces away, while this paper-coloured backside remains visible.
-     No page-flip transform, timing or motion is changed here. */
   .sedco-native-page::after {
     content: '' !important;
     position: absolute !important;
@@ -303,90 +286,58 @@
   }
 }
 
-/* Motion-only refinement for the custom mobile sheet. Keep the approved sheet
-   styling, page size, swipe flow, camera movement and total 560ms duration. */
+/* During the actual mobile turn, let react-pageflip render the sheet exactly
+   like the desktop Impact Report. This overrides only the moving page, not the
+   approved mobile layout/camera/swipe behavior or the resting spread. */
 @media (max-width: 700px) {
-  .sedco-native-viewer .sedco-native-turn-sheet--next {
-    animation: sedco-mobile-turn-next-soft 560ms cubic-bezier(.45,0,.18,1) both !important;
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__parent,
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__wrapper,
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__item,
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__outerShadow,
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__innerShadow,
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__hardShadow {
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+    transform-style: preserve-3d !important;
   }
 
-  .sedco-native-viewer .sedco-native-turn-sheet--prev {
-    animation: sedco-mobile-turn-prev-soft 560ms cubic-bezier(.45,0,.18,1) both !important;
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook .stf__block {
+    background: transparent !important;
   }
 
-  @keyframes sedco-mobile-turn-next-soft {
-    0% {
-      transform: perspective(1500px) rotateY(0deg) rotateZ(0deg) translateZ(1px);
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-      filter: drop-shadow(0 6px 10px rgba(0,0,0,.10));
-    }
-    12% {
-      transform: perspective(1500px) rotateY(-5deg) rotateZ(-.05deg) translateZ(1.8px);
-      clip-path: polygon(0 0, 100% .2%, 99.6% 99.8%, 0 100%);
-      filter: drop-shadow(2px 7px 11px rgba(0,0,0,.12));
-    }
-    28% {
-      transform: perspective(1500px) rotateY(-28deg) rotateZ(-.22deg) translateZ(4px);
-      clip-path: polygon(0 0, 99.5% .8%, 98% 99.2%, 0 100%);
-      filter: drop-shadow(5px 8px 14px rgba(0,0,0,.16));
-    }
-    50% {
-      transform: perspective(1500px) rotateY(-82deg) rotateZ(-.55deg) translateZ(8px);
-      clip-path: polygon(0 0, 98% 3.5%, 92% 97.5%, 0 100%);
-      filter: drop-shadow(10px 8px 19px rgba(0,0,0,.22));
-    }
-    72% {
-      transform: perspective(1500px) rotateY(-132deg) rotateZ(-.38deg) translateZ(6px);
-      clip-path: polygon(0 0, 99% 1.6%, 96% 98.5%, 0 100%);
-      filter: drop-shadow(8px 8px 16px rgba(0,0,0,.18));
-    }
-    88% {
-      transform: perspective(1500px) rotateY(-166deg) rotateZ(-.10deg) translateZ(2.5px);
-      clip-path: polygon(0 0, 100% .3%, 99.4% 99.7%, 0 100%);
-      filter: drop-shadow(3px 5px 10px rgba(0,0,0,.11));
-    }
-    100% {
-      transform: perspective(1500px) rotateY(-180deg) rotateZ(0deg) translateZ(1px);
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-      filter: drop-shadow(0 3px 7px rgba(0,0,0,.08));
-    }
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-page {
+    background: #fff !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.025) !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+    contain: paint !important;
   }
 
-  @keyframes sedco-mobile-turn-prev-soft {
-    0% {
-      transform: perspective(1500px) rotateY(0deg) rotateZ(0deg) translateZ(1px);
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-      filter: drop-shadow(0 6px 10px rgba(0,0,0,.10));
-    }
-    12% {
-      transform: perspective(1500px) rotateY(5deg) rotateZ(.05deg) translateZ(1.8px);
-      clip-path: polygon(.4% .2%, 100% 0, 100% 100%, 0 99.8%);
-      filter: drop-shadow(-2px 7px 11px rgba(0,0,0,.12));
-    }
-    28% {
-      transform: perspective(1500px) rotateY(28deg) rotateZ(.22deg) translateZ(4px);
-      clip-path: polygon(2% .8%, 100% 0, 100% 100%, .5% 99.2%);
-      filter: drop-shadow(-5px 8px 14px rgba(0,0,0,.16));
-    }
-    50% {
-      transform: perspective(1500px) rotateY(82deg) rotateZ(.55deg) translateZ(8px);
-      clip-path: polygon(8% 3.5%, 100% 0, 100% 100%, 2% 97.5%);
-      filter: drop-shadow(-10px 8px 19px rgba(0,0,0,.22));
-    }
-    72% {
-      transform: perspective(1500px) rotateY(132deg) rotateZ(.38deg) translateZ(6px);
-      clip-path: polygon(4% 1.6%, 100% 0, 100% 100%, 1% 98.5%);
-      filter: drop-shadow(-8px 8px 16px rgba(0,0,0,.18));
-    }
-    88% {
-      transform: perspective(1500px) rotateY(166deg) rotateZ(.10deg) translateZ(2.5px);
-      clip-path: polygon(.6% .3%, 100% 0, 100% 100%, 0 99.7%);
-      filter: drop-shadow(-3px 5px 10px rgba(0,0,0,.11));
-    }
-    100% {
-      transform: perspective(1500px) rotateY(180deg) rotateZ(0deg) translateZ(1px);
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-      filter: drop-shadow(0 3px 7px rgba(0,0,0,.08));
-    }
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-page::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 2 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    background: linear-gradient(90deg,
+      rgba(0,0,0,.02),
+      transparent 7%,
+      transparent 93%,
+      rgba(0,0,0,.025)) !important;
+    opacity: .65 !important;
+    mix-blend-mode: multiply !important;
+    pointer-events: none !important;
+  }
+
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-page img {
+    object-fit: cover !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+    transform: translateZ(0) !important;
   }
 }
