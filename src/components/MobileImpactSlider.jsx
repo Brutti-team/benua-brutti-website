@@ -32,13 +32,13 @@ const MOBILE_TURN_SHEET_CSS = `
   .sedco-native-turn-sheet--next {
     left: var(--sedco-native-page-w);
     transform-origin: left center;
-    animation: sedco-mobile-turn-next-visible 860ms cubic-bezier(.20,.72,.18,1) both;
+    animation: sedco-mobile-turn-next-visible 860ms linear both;
   }
 
   .sedco-native-turn-sheet--prev {
     left: 0;
     transform-origin: right center;
-    animation: sedco-mobile-turn-prev-visible 860ms cubic-bezier(.20,.72,.18,1) both;
+    animation: sedco-mobile-turn-prev-visible 860ms linear both;
   }
 
   .sedco-native-turn-sheet__face {
@@ -130,33 +130,41 @@ const MOBILE_TURN_SHEET_CSS = `
       transform: perspective(1900px) rotateY(0deg) rotateZ(0deg) translateZ(1px);
       filter: drop-shadow(0 5px 8px rgba(0,0,0,.10));
     }
-    10% {
-      transform: perspective(1900px) rotateY(-5deg) rotateZ(-.03deg) translateZ(2px);
-      filter: drop-shadow(2px 6px 9px rgba(0,0,0,.11));
+    8% {
+      transform: perspective(1900px) rotateY(-2deg) rotateZ(-.01deg) translateZ(1.5px);
+      filter: drop-shadow(1px 5.5px 8.5px rgba(0,0,0,.105));
     }
-    22% {
-      transform: perspective(1900px) rotateY(-18deg) rotateZ(-.10deg) translateZ(3px);
-      filter: drop-shadow(4px 7px 11px rgba(0,0,0,.13));
+    18% {
+      transform: perspective(1900px) rotateY(-10deg) rotateZ(-.05deg) translateZ(2.5px);
+      filter: drop-shadow(3px 6.5px 10px rgba(0,0,0,.12));
     }
-    36% {
-      transform: perspective(1900px) rotateY(-44deg) rotateZ(-.22deg) translateZ(5px);
-      filter: drop-shadow(7px 8px 14px rgba(0,0,0,.16));
+    30% {
+      transform: perspective(1900px) rotateY(-28deg) rotateZ(-.14deg) translateZ(4px);
+      filter: drop-shadow(5px 7.5px 12.5px rgba(0,0,0,.145));
+    }
+    42% {
+      transform: perspective(1900px) rotateY(-55deg) rotateZ(-.24deg) translateZ(6px);
+      filter: drop-shadow(8px 8px 15.5px rgba(0,0,0,.18));
     }
     50% {
-      transform: perspective(1900px) rotateY(-86deg) rotateZ(-.32deg) translateZ(8px);
+      transform: perspective(1900px) rotateY(-90deg) rotateZ(-.30deg) translateZ(8px);
       filter: drop-shadow(11px 8px 18px rgba(0,0,0,.21));
     }
-    64% {
-      transform: perspective(1900px) rotateY(-124deg) rotateZ(-.24deg) translateZ(6px);
-      filter: drop-shadow(8px 8px 15px rgba(0,0,0,.18));
+    58% {
+      transform: perspective(1900px) rotateY(-125deg) rotateZ(-.24deg) translateZ(6px);
+      filter: drop-shadow(8px 8px 15.5px rgba(0,0,0,.18));
     }
-    78% {
-      transform: perspective(1900px) rotateY(-153deg) rotateZ(-.12deg) translateZ(4px);
-      filter: drop-shadow(5px 7px 12px rgba(0,0,0,.14));
+    70% {
+      transform: perspective(1900px) rotateY(-152deg) rotateZ(-.14deg) translateZ(4px);
+      filter: drop-shadow(5px 7.5px 12.5px rgba(0,0,0,.145));
     }
-    90% {
-      transform: perspective(1900px) rotateY(-174deg) rotateZ(-.03deg) translateZ(2px);
-      filter: drop-shadow(2px 5px 9px rgba(0,0,0,.10));
+    82% {
+      transform: perspective(1900px) rotateY(-170deg) rotateZ(-.05deg) translateZ(2.5px);
+      filter: drop-shadow(3px 6.5px 10px rgba(0,0,0,.12));
+    }
+    92% {
+      transform: perspective(1900px) rotateY(-178deg) rotateZ(-.01deg) translateZ(1.5px);
+      filter: drop-shadow(1px 5px 8px rgba(0,0,0,.09));
     }
     100% {
       transform: perspective(1900px) rotateY(-180deg) rotateZ(0deg) translateZ(1px);
@@ -169,33 +177,41 @@ const MOBILE_TURN_SHEET_CSS = `
       transform: perspective(1900px) rotateY(0deg) rotateZ(0deg) translateZ(1px);
       filter: drop-shadow(0 5px 8px rgba(0,0,0,.10));
     }
-    10% {
-      transform: perspective(1900px) rotateY(5deg) rotateZ(.03deg) translateZ(2px);
-      filter: drop-shadow(-2px 6px 9px rgba(0,0,0,.11));
+    8% {
+      transform: perspective(1900px) rotateY(2deg) rotateZ(.01deg) translateZ(1.5px);
+      filter: drop-shadow(-1px 5.5px 8.5px rgba(0,0,0,.105));
     }
-    22% {
-      transform: perspective(1900px) rotateY(18deg) rotateZ(.10deg) translateZ(3px);
-      filter: drop-shadow(-4px 7px 11px rgba(0,0,0,.13));
+    18% {
+      transform: perspective(1900px) rotateY(10deg) rotateZ(.05deg) translateZ(2.5px);
+      filter: drop-shadow(-3px 6.5px 10px rgba(0,0,0,.12));
     }
-    36% {
-      transform: perspective(1900px) rotateY(44deg) rotateZ(.22deg) translateZ(5px);
-      filter: drop-shadow(-7px 8px 14px rgba(0,0,0,.16));
+    30% {
+      transform: perspective(1900px) rotateY(28deg) rotateZ(.14deg) translateZ(4px);
+      filter: drop-shadow(-5px 7.5px 12.5px rgba(0,0,0,.145));
+    }
+    42% {
+      transform: perspective(1900px) rotateY(55deg) rotateZ(.24deg) translateZ(6px);
+      filter: drop-shadow(-8px 8px 15.5px rgba(0,0,0,.18));
     }
     50% {
-      transform: perspective(1900px) rotateY(86deg) rotateZ(.32deg) translateZ(8px);
+      transform: perspective(1900px) rotateY(90deg) rotateZ(.30deg) translateZ(8px);
       filter: drop-shadow(-11px 8px 18px rgba(0,0,0,.21));
     }
-    64% {
-      transform: perspective(1900px) rotateY(124deg) rotateZ(.24deg) translateZ(6px);
-      filter: drop-shadow(-8px 8px 15px rgba(0,0,0,.18));
+    58% {
+      transform: perspective(1900px) rotateY(125deg) rotateZ(.24deg) translateZ(6px);
+      filter: drop-shadow(-8px 8px 15.5px rgba(0,0,0,.18));
     }
-    78% {
-      transform: perspective(1900px) rotateY(153deg) rotateZ(.12deg) translateZ(4px);
-      filter: drop-shadow(-5px 7px 12px rgba(0,0,0,.14));
+    70% {
+      transform: perspective(1900px) rotateY(152deg) rotateZ(.14deg) translateZ(4px);
+      filter: drop-shadow(-5px 7.5px 12.5px rgba(0,0,0,.145));
     }
-    90% {
-      transform: perspective(1900px) rotateY(174deg) rotateZ(.03deg) translateZ(2px);
-      filter: drop-shadow(-2px 5px 9px rgba(0,0,0,.10));
+    82% {
+      transform: perspective(1900px) rotateY(170deg) rotateZ(.05deg) translateZ(2.5px);
+      filter: drop-shadow(-3px 6.5px 10px rgba(0,0,0,.12));
+    }
+    92% {
+      transform: perspective(1900px) rotateY(178deg) rotateZ(.01deg) translateZ(1.5px);
+      filter: drop-shadow(-1px 5px 8px rgba(0,0,0,.09));
     }
     100% {
       transform: perspective(1900px) rotateY(180deg) rotateZ(0deg) translateZ(1px);
@@ -255,7 +271,7 @@ const MOBILE_COVER_FLIP_CSS = `
   }
 
   .sedco-native-cover-sheet.is-opening {
-    animation: sedco-mobile-cover-open 860ms cubic-bezier(.22,.82,.24,1) both;
+    animation: sedco-mobile-cover-open 860ms linear both;
   }
 
   .sedco-native-cover-sheet__face {
@@ -301,25 +317,41 @@ const MOBILE_COVER_FLIP_CSS = `
       transform: rotateY(0deg) translateZ(1px);
       filter: drop-shadow(0 7px 10px rgba(0,0,0,.12));
     }
-    16% {
-      transform: rotateY(-12deg) translateZ(2px);
+    8% {
+      transform: rotateY(-2deg) translateZ(1.5px);
+      filter: drop-shadow(1px 7px 10.5px rgba(0,0,0,.125));
+    }
+    18% {
+      transform: rotateY(-10deg) translateZ(2.5px);
       filter: drop-shadow(3px 8px 12px rgba(0,0,0,.14));
     }
-    34% {
-      transform: rotateY(-38deg) translateZ(4px);
-      filter: drop-shadow(7px 9px 15px rgba(0,0,0,.17));
+    30% {
+      transform: rotateY(-28deg) translateZ(4px);
+      filter: drop-shadow(5px 8.5px 14px rgba(0,0,0,.16));
     }
-    52% {
-      transform: rotateY(-88deg) translateZ(7px);
+    42% {
+      transform: rotateY(-55deg) translateZ(6px);
+      filter: drop-shadow(8px 8.5px 17px rgba(0,0,0,.19));
+    }
+    50% {
+      transform: rotateY(-90deg) translateZ(7px);
       filter: drop-shadow(11px 8px 19px rgba(0,0,0,.21));
     }
-    70% {
-      transform: rotateY(-133deg) translateZ(5px);
-      filter: drop-shadow(8px 8px 16px rgba(0,0,0,.17));
+    58% {
+      transform: rotateY(-125deg) translateZ(6px);
+      filter: drop-shadow(8px 8.5px 17px rgba(0,0,0,.19));
     }
-    86% {
-      transform: rotateY(-166deg) translateZ(2px);
-      filter: drop-shadow(3px 6px 11px rgba(0,0,0,.12));
+    70% {
+      transform: rotateY(-152deg) translateZ(4px);
+      filter: drop-shadow(5px 8px 14px rgba(0,0,0,.16));
+    }
+    82% {
+      transform: rotateY(-170deg) translateZ(2.5px);
+      filter: drop-shadow(3px 7px 11px rgba(0,0,0,.12));
+    }
+    92% {
+      transform: rotateY(-178deg) translateZ(1.5px);
+      filter: drop-shadow(1px 5px 8px rgba(0,0,0,.09));
     }
     100% {
       transform: rotateY(-180deg) translateZ(1px);
