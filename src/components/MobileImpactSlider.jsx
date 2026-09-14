@@ -392,7 +392,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
       : currentPage - 1
 
   useEffect(() => {
-    if (currentPage <= 1 || turnSheet || coverClosing) return
+    if (currentPage <= 1 || turnSheet || coverClosing || cameraSlideTimerRef.current) return
     setCameraSide(currentPage % 2 === 1 ? 'right' : 'left')
   }, [currentPage, turnSheet, coverClosing])
 
@@ -417,13 +417,14 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     setCameraTransform(
       cameraLeftX,
       true,
-      'transform 520ms cubic-bezier(.16,1,.3,1)',
+      'transform 420ms cubic-bezier(.22,.82,.24,1)',
     )
 
     cameraSlideTimerRef.current = window.setTimeout(() => {
-      onPageChange?.(spreadStartPage)
       cameraSlideTimerRef.current = null
-    }, 520)
+    }, 430)
+
+    onPageChange?.(spreadStartPage)
   }
 
   const applyTurnProgress = (direction, rawProgress) => {
