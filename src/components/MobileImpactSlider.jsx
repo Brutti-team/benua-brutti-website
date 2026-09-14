@@ -57,6 +57,8 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   const cameraRef = useRef(null)
   const gestureRef = useRef(null)
   const soundPlayedRef = useRef(false)
+  const pendingCoverOpenRef = useRef(false)
+  const pendingSpreadPageRef = useRef(null)
   const [isTurning, setIsTurning] = useState(false)
   const [viewportWidth, setViewportWidth] = useState(() => (
     typeof window === 'undefined' ? 390 : window.innerWidth
@@ -302,7 +304,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
             disableFlipByClick
             className="sedco-native-flipbook"
             onFlip={(event) => {
-              if (Number(event.data) >= 1) onPageChange?.(2)
+              if (Number(event.data) >= 1) pendingCoverOpenRef.current = true
             }}
             onChangeState={(event) => {
               const state = event.data
@@ -317,6 +319,11 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
               if (state === 'read') {
                 setIsTurning(false)
                 soundPlayedRef.current = false
+
+                if (pendingCoverOpenRef.current) {
+                  pendingCoverOpenRef.current = false
+                  onPageChange?.(2)
+                }
               }
             }}
           >
@@ -354,7 +361,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
           />
 
           <HTMLFlipBook
-            key={`spread-${spreadStartPage}-${pageWidth}`}
+            key={`spread-${pageWidth}`}
             ref={spreadFlipRef}
             width={pageWidth}
             height={pageHeight}
@@ -380,9 +387,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
             className="sedco-native-flipbook sedco-native-spread-flipbook"
             onFlip={(event) => {
               const page = clamp(Number(event.data) + 2, 2, totalPages)
-              const leftPage = page % 2 === 0 ? page : Math.max(2, page - 1)
-              requestAnimationFrame(() => snapCamera('left', false))
-              onPageChange?.(leftPage)
+              pendingSpreadPageRef.current = page % 2 === 0 ? page : Math.max(2, page - 1)
             }}
             onChangeState={(event) => {
               const state = event.data
@@ -397,7 +402,12 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
               if (state === 'read') {
                 setIsTurning(false)
                 soundPlayedRef.current = false
+
+                const completedPage = pendingSpreadPageRef.current
+                pendingSpreadPageRef.current = null
+
                 requestAnimationFrame(() => snapCamera('left', false))
+                if (completedPage != null) onPageChange?.(completedPage)
               }
             }}
           >
