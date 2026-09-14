@@ -223,16 +223,23 @@ const MOBILE_TURN_SHEET_CSS = `
 
 const MOBILE_COVER_FLIP_CSS = `
 @media (max-width: 700px) {
-  .sedco-native-cover-stage {
+  .sedco-native-cover-stage,
+  .sedco-native-cover-closing-stage {
     position: absolute;
-    inset: 0;
-    z-index: 8;
+    top: 0;
+    left: 0;
+    z-index: 96;
     width: var(--sedco-native-page-w);
     height: var(--sedco-native-page-h);
     perspective: 1900px;
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
     pointer-events: none;
+  }
+
+  .sedco-native-cover-stage {
+    inset: 0;
+    z-index: 8;
   }
 
   .sedco-native-cover-under {
@@ -274,6 +281,10 @@ const MOBILE_COVER_FLIP_CSS = `
     animation: sedco-mobile-cover-open 860ms linear both;
   }
 
+  .sedco-native-cover-sheet.is-closing {
+    animation: sedco-mobile-cover-close 860ms linear both;
+  }
+
   .sedco-native-cover-sheet__face {
     position: absolute;
     inset: 0;
@@ -313,50 +324,31 @@ const MOBILE_COVER_FLIP_CSS = `
   }
 
   @keyframes sedco-mobile-cover-open {
-    0% {
-      transform: rotateY(0deg) translateZ(1px);
-      filter: drop-shadow(0 7px 10px rgba(0,0,0,.12));
-    }
-    8% {
-      transform: rotateY(-2deg) translateZ(1.5px);
-      filter: drop-shadow(1px 7px 10.5px rgba(0,0,0,.125));
-    }
-    18% {
-      transform: rotateY(-10deg) translateZ(2.5px);
-      filter: drop-shadow(3px 8px 12px rgba(0,0,0,.14));
-    }
-    30% {
-      transform: rotateY(-28deg) translateZ(4px);
-      filter: drop-shadow(5px 8.5px 14px rgba(0,0,0,.16));
-    }
-    42% {
-      transform: rotateY(-55deg) translateZ(6px);
-      filter: drop-shadow(8px 8.5px 17px rgba(0,0,0,.19));
-    }
-    50% {
-      transform: rotateY(-90deg) translateZ(7px);
-      filter: drop-shadow(11px 8px 19px rgba(0,0,0,.21));
-    }
-    58% {
-      transform: rotateY(-125deg) translateZ(6px);
-      filter: drop-shadow(8px 8.5px 17px rgba(0,0,0,.19));
-    }
-    70% {
-      transform: rotateY(-152deg) translateZ(4px);
-      filter: drop-shadow(5px 8px 14px rgba(0,0,0,.16));
-    }
-    82% {
-      transform: rotateY(-170deg) translateZ(2.5px);
-      filter: drop-shadow(3px 7px 11px rgba(0,0,0,.12));
-    }
-    92% {
-      transform: rotateY(-178deg) translateZ(1.5px);
-      filter: drop-shadow(1px 5px 8px rgba(0,0,0,.09));
-    }
-    100% {
-      transform: rotateY(-180deg) translateZ(1px);
-      filter: drop-shadow(0 3px 7px rgba(0,0,0,.08));
-    }
+    0% { transform: rotateY(0deg) translateZ(1px); filter: drop-shadow(0 7px 10px rgba(0,0,0,.12)); }
+    8% { transform: rotateY(-2deg) translateZ(1.5px); filter: drop-shadow(1px 7px 10.5px rgba(0,0,0,.125)); }
+    18% { transform: rotateY(-10deg) translateZ(2.5px); filter: drop-shadow(3px 8px 12px rgba(0,0,0,.14)); }
+    30% { transform: rotateY(-28deg) translateZ(4px); filter: drop-shadow(5px 8.5px 14px rgba(0,0,0,.16)); }
+    42% { transform: rotateY(-55deg) translateZ(6px); filter: drop-shadow(8px 8.5px 17px rgba(0,0,0,.19)); }
+    50% { transform: rotateY(-90deg) translateZ(7px); filter: drop-shadow(11px 8px 19px rgba(0,0,0,.21)); }
+    58% { transform: rotateY(-125deg) translateZ(6px); filter: drop-shadow(8px 8.5px 17px rgba(0,0,0,.19)); }
+    70% { transform: rotateY(-152deg) translateZ(4px); filter: drop-shadow(5px 8px 14px rgba(0,0,0,.16)); }
+    82% { transform: rotateY(-170deg) translateZ(2.5px); filter: drop-shadow(3px 7px 11px rgba(0,0,0,.12)); }
+    92% { transform: rotateY(-178deg) translateZ(1.5px); filter: drop-shadow(1px 5px 8px rgba(0,0,0,.09)); }
+    100% { transform: rotateY(-180deg) translateZ(1px); filter: drop-shadow(0 3px 7px rgba(0,0,0,.08)); }
+  }
+
+  @keyframes sedco-mobile-cover-close {
+    0% { transform: rotateY(-180deg) translateZ(1px); filter: drop-shadow(0 3px 7px rgba(0,0,0,.08)); }
+    8% { transform: rotateY(-178deg) translateZ(1.5px); filter: drop-shadow(1px 5px 8px rgba(0,0,0,.09)); }
+    18% { transform: rotateY(-170deg) translateZ(2.5px); filter: drop-shadow(3px 7px 11px rgba(0,0,0,.12)); }
+    30% { transform: rotateY(-152deg) translateZ(4px); filter: drop-shadow(5px 8px 14px rgba(0,0,0,.16)); }
+    42% { transform: rotateY(-125deg) translateZ(6px); filter: drop-shadow(8px 8.5px 17px rgba(0,0,0,.19)); }
+    50% { transform: rotateY(-90deg) translateZ(7px); filter: drop-shadow(11px 8px 19px rgba(0,0,0,.21)); }
+    58% { transform: rotateY(-55deg) translateZ(6px); filter: drop-shadow(8px 8.5px 17px rgba(0,0,0,.19)); }
+    70% { transform: rotateY(-28deg) translateZ(4px); filter: drop-shadow(5px 8.5px 14px rgba(0,0,0,.16)); }
+    82% { transform: rotateY(-10deg) translateZ(2.5px); filter: drop-shadow(3px 8px 12px rgba(0,0,0,.14)); }
+    92% { transform: rotateY(-2deg) translateZ(1.5px); filter: drop-shadow(1px 7px 10.5px rgba(0,0,0,.125)); }
+    100% { transform: rotateY(0deg) translateZ(1px); filter: drop-shadow(0 7px 10px rgba(0,0,0,.12)); }
   }
 }
 `
@@ -415,6 +407,21 @@ function TurningSheet({ sheet }) {
   )
 }
 
+function ClosingCoverSheet({ active }) {
+  if (!active) return null
+
+  return (
+    <div className="sedco-native-cover-closing-stage" aria-hidden="true">
+      <div className="sedco-native-cover-sheet is-closing">
+        <div className="sedco-native-cover-sheet__face sedco-native-cover-sheet__face--front">
+          <img src={pageImage(1)} alt="" draggable="false" />
+        </div>
+        <div className="sedco-native-cover-sheet__face sedco-native-cover-sheet__face--back" />
+      </div>
+    </div>
+  )
+}
+
 const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   totalPages,
   currentPage,
@@ -428,6 +435,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   const turnTimerRef = useRef(null)
   const [isTurning, setIsTurning] = useState(false)
   const [turnSheet, setTurnSheet] = useState(null)
+  const [coverClosing, setCoverClosing] = useState(false)
   const [viewportWidth, setViewportWidth] = useState(() => (
     typeof window === 'undefined' ? 390 : window.innerWidth
   ))
@@ -468,14 +476,14 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
       : currentPage - 1
 
   useEffect(() => {
-    if (currentPage <= 1 || turnSheet) return
+    if (currentPage <= 1 || turnSheet || coverClosing) return
     setCameraSide(currentPage % 2 === 1 ? 'right' : 'left')
-  }, [currentPage, turnSheet])
+  }, [currentPage, turnSheet, coverClosing])
 
-  const setCameraTransform = (x, animate = true) => {
+  const setCameraTransform = (x, animate = true, transition = null) => {
     if (!cameraRef.current) return
     cameraRef.current.style.transition = animate
-      ? 'transform 420ms cubic-bezier(.22,.82,.24,1)'
+      ? (transition || 'transform 420ms cubic-bezier(.22,.82,.24,1)')
       : 'none'
     cameraRef.current.style.transform = `translate3d(${x}px,0,0)`
   }
@@ -486,8 +494,19 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     setCameraTransform(x, animate)
   }
 
+  const followTurningSheet = (direction) => {
+    const targetX = direction === 'next' ? cameraLeftX : cameraRightX
+    requestAnimationFrame(() => {
+      setCameraTransform(
+        targetX,
+        true,
+        'transform 860ms cubic-bezier(.22,.76,.20,1)',
+      )
+    })
+  }
+
   useEffect(() => {
-    if (currentPage <= 1 || turnSheet) return
+    if (currentPage <= 1 || turnSheet || coverClosing) return
     requestAnimationFrame(() => {
       snapCamera(currentPage % 2 === 1 ? 'right' : 'left', false)
     })
@@ -514,11 +533,37 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     }, 860)
   }
 
+  const beginCoverClose = () => {
+    if (isTurning || currentPage <= 1 || spreadStartPage > 2 || cameraSide !== 'left') return
+
+    setCoverClosing(true)
+    setIsTurning(true)
+
+    if (!soundPlayedRef.current) {
+      onPageTurn?.()
+      soundPlayedRef.current = true
+    }
+
+    if (turnTimerRef.current) window.clearTimeout(turnTimerRef.current)
+    turnTimerRef.current = window.setTimeout(() => {
+      setCoverClosing(false)
+      setIsTurning(false)
+      soundPlayedRef.current = false
+      turnTimerRef.current = null
+      onPageChange?.(1)
+    }, 860)
+  }
+
   const beginOpenBookTurn = (direction) => {
     if (isTurning) return
 
     const isNext = direction === 'next'
     const destinationStart = isNext ? spreadStartPage + 2 : spreadStartPage - 2
+    const destinationSide = isNext ? 'left' : 'right'
+    const destinationPage = isNext
+      ? destinationStart
+      : Math.min(totalPages, destinationStart + 1)
+
     const sheet = isNext
       ? {
           direction: 'next',
@@ -535,6 +580,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
 
     setTurnSheet(sheet)
     setIsTurning(true)
+    followTurningSheet(direction)
 
     if (!soundPlayedRef.current) {
       onPageTurn?.()
@@ -547,8 +593,8 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     if (turnTimerRef.current) window.clearTimeout(turnTimerRef.current)
     turnTimerRef.current = window.setTimeout(() => {
       spreadFlip()?.turnToPage(Math.max(0, destinationStart - 2))
-      requestAnimationFrame(() => snapCamera('left', false))
-      onPageChange?.(destinationStart)
+      snapCamera(destinationSide, false)
+      onPageChange?.(destinationPage)
       setTurnSheet(null)
       setIsTurning(false)
       soundPlayedRef.current = false
@@ -585,7 +631,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
     }
 
     if (spreadStartPage <= 2) {
-      onPageChange?.(1)
+      beginCoverClose()
       return
     }
 
@@ -721,6 +767,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
   return (
     <>
       <style>{MOBILE_TURN_SHEET_CSS}</style>
+      <style>{MOBILE_COVER_FLIP_CSS}</style>
       <div
         className={`sedco-native-viewer is-open-book is-camera-${cameraSide}${isTurning ? ' is-turning' : ''}`}
         style={{
@@ -746,6 +793,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({
             />
 
             <TurningSheet sheet={turnSheet} />
+            <ClosingCoverSheet active={coverClosing} />
 
             <HTMLFlipBook
               key={`spread-${pageWidth}`}
