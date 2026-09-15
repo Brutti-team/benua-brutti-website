@@ -14,7 +14,6 @@ const CAMERA_FULL_MS = 420
 const TURN_FULL_MS = 800
 const COVER_FULL_MS = 780
 const GESTURE_PAGE_DISTANCE = 0.68
-const TURN_STRIP_COUNT = 18
 
 const MOBILE_TURN_SHEET_CSS = `
 @media (max-width: 700px) {
@@ -31,7 +30,7 @@ const MOBILE_TURN_SHEET_CSS = `
     pointer-events: none;
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
-    will-change: transform;
+    will-change: transform, filter;
   }
   .sedco-native-turn-sheet--next {
     left: var(--sedco-native-page-w);
@@ -41,57 +40,64 @@ const MOBILE_TURN_SHEET_CSS = `
     left: 0;
     transform-origin: right center;
   }
-  .sedco-native-turn-sheet__strip {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
-    will-change: transform;
-  }
-  .sedco-native-turn-sheet__strip-face {
+  .sedco-native-turn-sheet__face {
     position: absolute;
     inset: 0;
     overflow: hidden;
     background: #fff;
+    border: 1px solid rgba(0,0,0,.055);
+    border-radius: 1px;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
-    box-shadow: inset 0 0 0 .35px rgba(0,0,0,.025);
   }
-  .sedco-native-turn-sheet__strip-face--front {
-    transform: translateZ(.65px);
+  .sedco-native-turn-sheet__face--front {
+    transform: translateZ(.7px);
+    box-shadow: inset -10px 0 18px rgba(0,0,0,.025), 0 8px 24px rgba(0,0,0,.18);
   }
-  .sedco-native-turn-sheet__strip-face--back {
-    transform: rotateY(180deg) translateZ(.65px);
+  .sedco-native-turn-sheet__face--back {
+    transform: rotateY(180deg) translateZ(.7px);
+    box-shadow: inset 12px 0 22px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.16);
   }
-  .sedco-native-turn-sheet__strip-face img {
-    position: absolute;
-    top: 0;
+  .sedco-native-turn-sheet__face img {
     display: block;
+    width: 100%;
     height: 100%;
     max-width: none;
+    object-fit: contain;
+    object-position: center;
     background: #fff;
+    opacity: 1;
     user-select: none;
     -webkit-user-select: none;
     -webkit-user-drag: none;
   }
-  .sedco-native-turn-sheet__strip-face::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: var(--sedco-strip-shade, 0);
-    background: linear-gradient(90deg, rgba(0,0,0,.22), rgba(255,255,255,.14) 48%, rgba(0,0,0,.08));
-    mix-blend-mode: multiply;
-  }
+  .sedco-native-turn-sheet__shade,
   .sedco-native-turn-sheet__curl {
     position: absolute;
     top: 0;
     bottom: 0;
-    z-index: 120;
     pointer-events: none;
+  }
+  .sedco-native-turn-sheet__shade {
+    z-index: 4;
+    inset: 0;
+    opacity: .34;
+    background: linear-gradient(90deg, rgba(0,0,0,.025), transparent 18%, transparent 72%, rgba(0,0,0,.11));
+  }
+  .sedco-native-turn-sheet__curl {
+    z-index: 6;
+    width: 21px;
+    opacity: .84;
+  }
+  .sedco-native-turn-sheet--next .sedco-native-turn-sheet__curl {
+    right: -1px;
+    background: linear-gradient(90deg, rgba(0,0,0,0), rgba(0,0,0,.095) 48%, rgba(255,255,255,.84) 75%, rgba(0,0,0,.06));
+  }
+  .sedco-native-turn-sheet--prev .sedco-native-turn-sheet__curl {
+    left: -1px;
+    background: linear-gradient(90deg, rgba(0,0,0,.06), rgba(255,255,255,.84) 25%, rgba(0,0,0,.095) 52%, rgba(0,0,0,0));
   }
 }
 `
@@ -200,32 +206,18 @@ function StaticSpread({ leftPage, rightPage, totalPages }) {
   )
 }
 
-const TurningSheet = forwardRef(function TurningSheet({ sheet, pageWidth }, ref) {
+const TurningSheet = forwardRef(function TurningSheet({ sheet }, ref) {
   if (!sheet) return null
-  const stripWidth = pageWidth / TURN_STRIP_COUNT
-
   return (
     <div ref={ref} className={`sedco-native-turn-sheet sedco-native-turn-sheet--${sheet.direction}`} aria-hidden="true">
-      {Array.from({ length: TURN_STRIP_COUNT }, (_, index) => {
-        const left = index * stripWidth
-        const width = stripWidth + 1.6
-        const imageLeft = -left
-        return (
-          <div
-            className="sedco-native-turn-sheet__strip"
-            data-strip-index={index}
-            key={index}
-            style={{ left: `${left}px`, width: `${width}px` }}
-          >
-            <div className="sedco-native-turn-sheet__strip-face sedco-native-turn-sheet__strip-face--front">
-              <img src={pageImage(sheet.frontPage)} alt="" draggable="false" style={{ width: `${pageWidth}px`, left: `${imageLeft}px` }} />
-            </div>
-            <div className="sedco-native-turn-sheet__strip-face sedco-native-turn-sheet__strip-face--back">
-              <img src={pageImage(sheet.backPage)} alt="" draggable="false" style={{ width: `${pageWidth}px`, left: `${imageLeft}px` }} />
-            </div>
-          </div>
-        )
-      })}
+      <div className="sedco-native-turn-sheet__face sedco-native-turn-sheet__face--front">
+        <img src={pageImage(sheet.frontPage)} alt="" draggable="false" />
+        <span className="sedco-native-turn-sheet__shade" />
+      </div>
+      <div className="sedco-native-turn-sheet__face sedco-native-turn-sheet__face--back">
+        <img src={pageImage(sheet.backPage)} alt="" draggable="false" />
+        <span className="sedco-native-turn-sheet__shade" />
+      </div>
       <span className="sedco-native-turn-sheet__curl" />
     </div>
   )
@@ -329,14 +321,19 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
     const progress = clamp(rawProgress, 0, 1)
     turnProgressRef.current = progress
 
+    // Match the reference-book feel: the page does not behave like one rigid
+    // card. Its free edge peels first, the fold travels toward the spine, and
+    // the sheet briefly compresses while it is most curved.
     const eased = 0.5 - (Math.cos(Math.PI * progress) / 2)
     const bend = Math.sin(Math.PI * progress)
     const paperBend = Math.pow(Math.max(0, bend), 0.82)
     const degrees = 180 * eased
     const rotation = direction === 'next' ? -degrees : degrees
-    const lift = 1 + (6 * paperBend)
-    const foldWidth = 16 + (34 * paperBend)
-    const foldOpacity = 0.05 + (0.70 * paperBend)
+    const scaleX = 1 - (0.085 * paperBend)
+    const lift = 1 + (11 * paperBend)
+    const radius = 2 + (22 * paperBend)
+    const foldWidth = 18 + (44 * paperBend)
+    const foldOpacity = 0.08 + (0.78 * paperBend)
     const foldX = direction === 'next' ? 100 - (eased * 100) : eased * 100
 
     const sheet = turnSheetRef.current
@@ -345,27 +342,9 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
       sheet.style.setProperty('--sedco-turn-fold-x', `${foldX.toFixed(2)}%`)
       sheet.style.setProperty('--sedco-turn-fold-width', `${foldWidth.toFixed(2)}px`)
       sheet.style.setProperty('--sedco-turn-fold-opacity', foldOpacity.toFixed(3))
-      sheet.style.transform = `perspective(1650px) rotateY(${rotation}deg) translateZ(${lift}px)`
+      sheet.style.setProperty('--sedco-turn-radius', `${radius.toFixed(2)}px`)
+      sheet.style.transform = `perspective(1550px) rotateY(${rotation}deg) scaleX(${scaleX}) translateZ(${lift}px)`
       sheet.style.filter = 'none'
-
-      const strips = sheet.querySelectorAll('.sedco-native-turn-sheet__strip')
-      const count = strips.length || 1
-      strips.forEach((strip, index) => {
-        const fromSpine = direction === 'next'
-          ? (index + 0.5) / count
-          : 1 - ((index + 0.5) / count)
-        const edgeLead = Math.pow(clamp(fromSpine, 0, 1), 1.55)
-        const middleArch = Math.sin(Math.PI * clamp(fromSpine, 0, 1))
-        const localDirection = direction === 'next' ? -1 : 1
-        const localCurl = localDirection * 28 * paperBend * edgeLead
-        const zBow = (12 * paperBend * middleArch) + (5 * paperBend * edgeLead)
-        const tinyLift = 1.3 * paperBend * edgeLead
-        const shade = 0.04 + (0.34 * paperBend * edgeLead)
-
-        strip.style.transformOrigin = direction === 'next' ? 'left center' : 'right center'
-        strip.style.transform = `translate3d(0,${-tinyLift}px,${zBow}px) rotateY(${localCurl}deg)`
-        strip.style.setProperty('--sedco-strip-shade', shade.toFixed(3))
-      })
     }
 
     const angle = Math.PI * eased
@@ -823,7 +802,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
           <div ref={cameraRef} className="sedco-native-camera-track">
             <div className="sedco-native-spread-bed" aria-hidden="true" />
             <StaticSpread leftPage={staticLeftPage} rightPage={staticRightPage} totalPages={totalPages} />
-            <TurningSheet ref={turnSheetRef} sheet={turnSheet} pageWidth={pageWidth} />
+            <TurningSheet ref={turnSheetRef} sheet={turnSheet} />
             <ClosingCoverSheet ref={coverSheetRef} active={coverClosing} />
             <HTMLFlipBook key={`spread-${pageWidth}`} ref={spreadFlipRef} width={pageWidth} height={pageHeight} size="fixed" minWidth={pageWidth} maxWidth={pageWidth} minHeight={pageHeight} maxHeight={pageHeight} startPage={Math.max(0, spreadStartPage - 2)} drawShadow flippingTime={860} usePortrait={false} startZIndex={40} autoSize={false} maxShadowOpacity={0.34} showCover={false} mobileScrollSupport={false} clickEventForward={false} useMouseEvents={false} swipeDistance={999} showPageCorners disableFlipByClick className="sedco-native-flipbook sedco-native-spread-flipbook">
               {Array.from({ length: totalPages - 1 }, (_, index) => <SedcoPage page={index + 2} totalPages={totalPages} forceSoft key={index + 2} />)}
