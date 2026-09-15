@@ -57,6 +57,7 @@ export default function ImpactReportPage() {
   const lastPaperSoundAt = useRef(0)
   const paperGestureSoundPlayedRef = useRef(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [isMobileFullscreen, setIsMobileFullscreen] = useState(false)
   const [isFlipping, setIsFlipping] = useState(false)
   const [soundEnabled, setSoundEnabled] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
@@ -64,7 +65,11 @@ export default function ImpactReportPage() {
   const [isMobileReader, setIsMobileReader] = useState(false)
 
   useEffect(() => {
-    const onFullscreenChange = () => setIsFullscreen(Boolean(document.fullscreenElement))
+    const onFullscreenChange = () => {
+      const active = Boolean(document.fullscreenElement)
+      setIsFullscreen(active)
+      if (active) setIsMobileFullscreen(false)
+    }
     document.addEventListener('fullscreenchange', onFullscreenChange)
     return () => document.removeEventListener('fullscreenchange', onFullscreenChange)
   }, [])
@@ -76,6 +81,20 @@ export default function ImpactReportPage() {
     media.addEventListener?.('change', sync)
     return () => media.removeEventListener?.('change', sync)
   }, [])
+
+  useEffect(() => {
+    if (!isMobileFullscreen) return undefined
+
+    const previousBodyOverflow = document.body.style.overflow
+    const previousHtmlOverflow = document.documentElement.style.overflow
+    document.body.style.overflow = 'hidden'
+    document.documentElement.style.overflow = 'hidden'
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow
+      document.documentElement.style.overflow = previousHtmlOverflow
+    }
+  }, [isMobileFullscreen])
 
   useEffect(() => {
     const audio = new Audio(PAPER_SOUND_URL)
@@ -150,7 +169,10 @@ export default function ImpactReportPage() {
       if (isMobileReader) {
         if (event.key === 'ArrowRight') mobileBookRef.current?.next()
         if (event.key === 'ArrowLeft') mobileBookRef.current?.previous()
-        if (event.key === 'Escape' && document.fullscreenElement) document.exitFullscreen?.()
+        if (event.key === 'Escape') {
+          if (isMobileFullscreen) setIsMobileFullscreen(false)
+          else if (document.fullscreenElement) document.exitFullscreen?.()
+        }
         return
       }
 
@@ -164,7 +186,7 @@ export default function ImpactReportPage() {
 
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [isFlipping, isMobileReader])
+  }, [isFlipping, isMobileReader, isMobileFullscreen])
 
   useEffect(() => {
     const preload = (page) => {
@@ -178,6 +200,35 @@ export default function ImpactReportPage() {
   }, [currentPage])
 
   const toggleFullscreen = async () => {
+    if (isMobileReader) {
+      if (document.fullscreenElement) {
+        try {
+          await document.exitFullscreen?.()
+        } catch {
+          // Native fullscreen exit can fail on some mobile browsers.
+        }
+        return
+      }
+
+      if (isMobileFullscreen) {
+        setIsMobileFullscreen(false)
+        return
+      }
+
+      const requestFullscreen = readerRef.current?.requestFullscreen
+      if (typeof requestFullscreen === 'function') {
+        try {
+          await requestFullscreen.call(readerRef.current)
+          return
+        } catch {
+          // iPhone/Safari commonly does not support element fullscreen.
+        }
+      }
+
+      setIsMobileFullscreen(true)
+      return
+    }
+
     try {
       if (!document.fullscreenElement) {
         await readerRef.current?.requestFullscreen?.()
@@ -238,6 +289,8 @@ export default function ImpactReportPage() {
       ? ' is-back-cover'
       : ''
 
+  const fullscreenActive = isFullscreen || isMobileFullscreen
+
   return (
     <main className="impact-report-page">
       <header className="impact-report-nav">
@@ -266,7 +319,7 @@ export default function ImpactReportPage() {
             </div>
           </div>
 
-          <div className={`impact-report-reader${isFlipping ? ' is-flipping' : ''}`} ref={readerRef}>
+          <div className={`impact-report-reader${isFlipping ? ' is-flipping' : ''}${isMobileFullscreen ? ' is-mobile-fullscreen' : ''}`} ref={readerRef}>
             <div className="impact-report-reader__toolbar">
               <div className="impact-report-reader__title">
                 <span className="impact-report-reader__dot" />
@@ -289,9 +342,9 @@ export default function ImpactReportPage() {
                   {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
                   <span>{soundEnabled ? 'Sound' : 'Muted'}</span>
                 </button>
-                <button onClick={toggleFullscreen} aria-label={isFullscreen ? 'Exit fullscreen' : 'Open fullscreen'}>
-                  {isFullscreen ? <Minimize2 size={17} /> : <Expand size={17} />}
-                  <span>{isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}</span>
+                <button onClick={toggleFullscreen} aria-label={fullscreenActive ? 'Exit fullscreen' : 'Open fullscreen'}>
+                  {fullscreenActive ? <Minimize2 size={17} /> : <Expand size={17} />}
+                  <span>{fullscreenActive ? 'Exit fullscreen' : 'Fullscreen'}</span>
                 </button>
               </div>
             </div>
