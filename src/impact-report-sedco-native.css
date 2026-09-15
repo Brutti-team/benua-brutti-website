@@ -120,7 +120,7 @@
     top: 0 !important;
     bottom: 0 !important;
     left: var(--sedco-turn-fold-x) !important;
-    width: calc(var(--sedco-turn-fold-width) * .58) !important;
+    width: var(--sedco-turn-fold-width) !important;
     transform: translateX(-50%) !important;
     border-radius: 50% !important;
     pointer-events: none !important;
