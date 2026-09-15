@@ -147,7 +147,7 @@ function App() {
         <div className="hero__image-wrap">
           <motion.img
             style={{ y: heroY, scale: heroScale, opacity: heroOpacity }}
-            src={asset('brutti team.jpg')}
+            src={asset('brutti team.webp')}
             alt="Benua Brutti team"
             className="hero__image"
             loading="eager"

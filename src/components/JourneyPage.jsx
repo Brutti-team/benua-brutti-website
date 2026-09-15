@@ -84,7 +84,7 @@ export default function JourneyPage() {
           </motion.div>
 
           <motion.figure className="journey-origin__image" {...reveal} transition={{ ...reveal.transition, delay: 0.08 }}>
-            <img src={asset('belakang rumah.png')} alt="The early Benua Brutti journey" />
+            <img src={asset('belakang rumah.webp')} alt="The early Benua Brutti journey" />
             <figcaption>Where the idea began</figcaption>
           </motion.figure>
         </div>
@@ -102,9 +102,9 @@ export default function JourneyPage() {
 
           <div className="journey-workshops">
             {[
-              ['kilang jalan ramayah.png', 'Jalan Ramayah'],
-              ['kilang kinarut.png', 'Kinarut'],
-              ['kilang kkip.png', 'KKIP'],
+              ['kilang jalan ramayah.webp', 'Jalan Ramayah'],
+              ['kilang kinarut.webp', 'Kinarut'],
+              ['kilang kkip.webp', 'KKIP'],
             ].map(([image, label], index) => (
               <motion.figure
                 className="journey-workshop-card"
@@ -125,7 +125,7 @@ export default function JourneyPage() {
       <section className="journey-section journey-section--light journey-section--purpose">
         <div className="journey-shell journey-purpose">
           <motion.figure className="journey-purpose__image" {...reveal}>
-            <img src={asset('karya anak bangsa.png')} alt="Benua Brutti custom work" />
+            <img src={asset('karya anak bangsa.webp')} alt="Benua Brutti custom work" />
           </motion.figure>
 
           <motion.div className="journey-purpose__copy" {...reveal} transition={{ ...reveal.transition, delay: 0.08 }}>

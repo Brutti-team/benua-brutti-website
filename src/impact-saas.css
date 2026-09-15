@@ -107,7 +107,7 @@
   border-radius: 26px !important;
   background:
     linear-gradient(180deg, rgba(4,24,17,.06) 0%, rgba(4,24,17,.15) 34%, rgba(4,24,17,.78) 100%),
-    url('/assets/racks.png') center 54% / cover no-repeat !important;
+    url('/assets/racks.webp') center 54% / cover no-repeat !important;
   box-shadow: 0 26px 70px rgba(18,45,34,.16) !important;
 }
 

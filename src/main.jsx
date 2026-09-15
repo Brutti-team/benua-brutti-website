@@ -148,7 +148,7 @@ function BruttiSite() {
     const applyRealAssets = () => {
       const heroPhoto = document.querySelector('.hero__image')
       if (heroPhoto) {
-        heroPhoto.src = asset('brutti team.jpg')
+        heroPhoto.src = asset('brutti team.webp')
         heroPhoto.alt = 'Benua Brutti team'
         heroPhoto.loading = 'eager'
         heroPhoto.decoding = 'async'
@@ -226,7 +226,7 @@ function BruttiSite() {
       const treeCard = impactStats[1]
       if (treeCard && !treeCard.querySelector('.impact-stat__visual--tree')) {
         const treeImage = document.createElement('img')
-        treeImage.src = asset('tree.jpg')
+        treeImage.src = asset('tree.webp')
         treeImage.alt = 'Tree representing trees saved through pallet upcycling'
         treeImage.className = 'impact-stat__visual impact-stat__visual--tree'
         treeImage.loading = 'lazy'
