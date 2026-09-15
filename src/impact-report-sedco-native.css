@@ -123,31 +123,76 @@
     transition: none !important;
   }
 
-  /* Front cover: same simple one-piece hinge turn seen in the SEDCO directory. */
+  /* Front cover: keep the hinge visually locked to the book while it turns. */
+  .sedco-native-cover-stage,
+  .sedco-native-cover-closing-stage {
+    perspective: 3200px !important;
+    perspective-origin: left center !important;
+  }
+
+  .sedco-native-cover-under {
+    overflow: visible !important;
+  }
+
+  .sedco-native-cover-under::before {
+    content: '' !important;
+    position: absolute !important;
+    z-index: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: -14px !important;
+    width: 16px !important;
+    background: #fff !important;
+    box-shadow: inset -4px 0 7px rgba(0,0,0,.035) !important;
+    pointer-events: none !important;
+  }
+
+  .sedco-native-cover-stage::after,
+  .sedco-native-cover-closing-stage::after {
+    content: '' !important;
+    position: absolute !important;
+    z-index: 12 !important;
+    left: -1px !important;
+    top: 1px !important;
+    bottom: 1px !important;
+    width: 2px !important;
+    background: linear-gradient(90deg, rgba(0,0,0,.08), rgba(255,255,255,.26)) !important;
+    opacity: .55 !important;
+    pointer-events: none !important;
+  }
+
   .sedco-native-cover-sheet {
     filter: none !important;
+    transform-origin: 0 50% !important;
+    transform-box: border-box !important;
+    will-change: transform !important;
+  }
+
+  .sedco-native-viewer.is-cover.is-turning .sedco-native-cover-sheet__face,
+  .sedco-native-cover-closing-stage .sedco-native-cover-sheet__face {
+    box-shadow: none !important;
   }
 
   .sedco-native-cover-sheet__face--front {
     background: #fff !important;
     box-shadow:
-      inset -8px 0 14px rgba(0,0,0,.025),
-      0 6px 14px rgba(0,0,0,.14) !important;
+      inset -5px 0 9px rgba(0,0,0,.02),
+      0 2px 5px rgba(0,0,0,.07) !important;
   }
 
   .sedco-native-cover-sheet__face--back {
     background: #f7f6f2 !important;
     box-shadow:
-      inset 10px 0 16px rgba(0,0,0,.045),
-      0 5px 12px rgba(0,0,0,.10) !important;
+      inset 6px 0 10px rgba(0,0,0,.03),
+      0 2px 5px rgba(0,0,0,.06) !important;
   }
 
   .sedco-native-cover-sheet__face--back::after {
     background: linear-gradient(90deg,
-      rgba(0,0,0,.045),
-      rgba(0,0,0,.012) 18%,
+      rgba(0,0,0,.035),
+      rgba(0,0,0,.008) 18%,
       transparent 44%,
-      rgba(255,255,255,.14)) !important;
+      rgba(255,255,255,.10)) !important;
   }
 }
 
