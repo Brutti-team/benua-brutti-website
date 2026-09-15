@@ -10,8 +10,8 @@ function pageImage(page) {
 }
 
 const CAMERA_FULL_MS = 420
-const TURN_FULL_MS = 720
-const COVER_FULL_MS = 720
+const TURN_FULL_MS = 820
+const COVER_FULL_MS = 820
 const GESTURE_PAGE_DISTANCE = 0.68
 
 const MOBILE_TURN_SHEET_CSS = `
@@ -398,12 +398,14 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
       return
     }
 
-    const duration = Math.max(100, TURN_FULL_MS * distance)
+    const duration = Math.max(360, TURN_FULL_MS * distance)
     const startedAt = performance.now()
 
     const tick = (now) => {
       const time = clamp((now - startedAt) / duration, 0, 1)
-      const easedTime = 0.5 - (Math.cos(Math.PI * time) / 2)
+      const easedTime = start > 0.001
+        ? 1 - Math.pow(1 - time, 3)
+        : time * time * (3 - (2 * time))
       const progress = start + ((target - start) * easedTime)
 
       applyTurnProgress(sheet.direction, progress)
@@ -431,12 +433,14 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
       return
     }
 
-    const duration = Math.max(100, COVER_FULL_MS * distance)
+    const duration = Math.max(340, COVER_FULL_MS * distance)
     const startedAt = performance.now()
 
     const tick = (now) => {
       const time = clamp((now - startedAt) / duration, 0, 1)
-      const easedTime = 0.5 - (Math.cos(Math.PI * time) / 2)
+      const easedTime = start > 0.001
+        ? 1 - Math.pow(1 - time, 3)
+        : time * time * (3 - (2 * time))
       const progress = start + ((target - start) * easedTime)
 
       applyCoverProgress(direction, progress)
