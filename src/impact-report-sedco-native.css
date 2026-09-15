@@ -1,8 +1,7 @@
 @import './impact-report-sedco-native-base.css';
 
-/* Mobile SEDCO-reference visual pass.
-   Gesture/camera logic stays in MobileImpactSlider.jsx; these rules only make
-   the page itself read like a physical sheet instead of a flat rotating card. */
+/* Keep the approved mobile reader layout/camera exactly as-is.
+   These overrides only control the physical sheet and front-cover appearance. */
 @media (max-width: 700px) {
   .sedco-native-camera-window {
     background: #777a78 !important;
@@ -34,44 +33,33 @@
       0 1px 2px rgba(0,0,0,.08) !important;
   }
 
+  /* SEDCO reference: one opaque sheet turns from the spine in one clean arc.
+     No travelling fold, wave, strip deformation or extra curl animation. */
   .sedco-native-turn-sheet {
     overflow: visible !important;
     perspective: 1600px !important;
-    --sedco-turn-fold-x: 100%;
-    --sedco-turn-fold-width: 18px;
-    --sedco-turn-fold-opacity: .08;
-    --sedco-turn-radius: 2px;
-    --sedco-turn-shadow-opacity: .05;
-  }
-
-  .sedco-native-turn-sheet--next,
-  .sedco-native-turn-sheet--next .sedco-native-turn-sheet__face {
-    border-radius: 1px var(--sedco-turn-radius) var(--sedco-turn-radius) 1px !important;
-  }
-
-  .sedco-native-turn-sheet--prev,
-  .sedco-native-turn-sheet--prev .sedco-native-turn-sheet__face {
-    border-radius: var(--sedco-turn-radius) 1px 1px var(--sedco-turn-radius) !important;
+    filter: none !important;
   }
 
   .sedco-native-turn-sheet__face {
     overflow: hidden !important;
-    border-color: rgba(0,0,0,.055) !important;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,.022) !important;
+    background: #fff !important;
+    border: 1px solid rgba(0,0,0,.045) !important;
+    border-radius: 1px !important;
   }
 
   .sedco-native-turn-sheet__face--front {
     box-shadow:
-      inset -9px 0 16px rgba(0,0,0,.025),
-      0 7px 18px rgba(0,0,0,.14) !important;
+      inset -7px 0 12px rgba(0,0,0,.025),
+      0 5px 12px rgba(0,0,0,.12) !important;
   }
 
   .sedco-native-turn-sheet__face--back {
     background: #fff !important;
     isolation: isolate !important;
     box-shadow:
-      inset 10px 0 18px rgba(0,0,0,.035),
-      0 7px 18px rgba(0,0,0,.12) !important;
+      inset 8px 0 14px rgba(0,0,0,.035),
+      0 5px 12px rgba(0,0,0,.10) !important;
   }
 
   .sedco-native-turn-sheet__face--back img {
@@ -90,97 +78,34 @@
     -webkit-backface-visibility: hidden !important;
   }
 
-  /* The fold itself travels across the sheet while it turns. This moving band
-     is what makes the page read as a flexible piece of paper rather than a
-     rigid card rotating around one hinge. */
-  .sedco-native-viewer.is-open-book.is-turning .sedco-native-turn-sheet__face::before {
-    content: '' !important;
-    position: absolute !important;
-    z-index: 6 !important;
-    top: -4% !important;
-    bottom: -4% !important;
-    left: var(--sedco-turn-fold-x) !important;
-    width: var(--sedco-turn-fold-width) !important;
-    transform: translateX(-50%) !important;
-    border-radius: 50% !important;
-    pointer-events: none !important;
-    opacity: var(--sedco-turn-fold-opacity) !important;
-    filter: blur(1.1px) !important;
-    background: radial-gradient(ellipse at center,
-      rgba(0,0,0,.16) 0%,
-      rgba(0,0,0,.09) 24%,
-      rgba(0,0,0,.025) 48%,
-      rgba(0,0,0,0) 76%) !important;
-  }
-
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-turn-sheet__face::before,
   .sedco-native-viewer.is-open-book.is-turning .sedco-native-turn-sheet__face::after {
-    content: '' !important;
-    position: absolute !important;
-    z-index: 7 !important;
-    top: 0 !important;
-    bottom: 0 !important;
-    left: var(--sedco-turn-fold-x) !important;
-    width: var(--sedco-turn-fold-width) !important;
-    transform: translateX(-50%) !important;
-    border-radius: 50% !important;
-    pointer-events: none !important;
-    opacity: var(--sedco-turn-fold-opacity) !important;
-    filter: blur(.28px) !important;
-  }
-
-  .sedco-native-viewer.is-open-book.is-turning .sedco-native-turn-sheet--next .sedco-native-turn-sheet__face::after {
-    background: linear-gradient(90deg,
-      rgba(255,255,255,0) 0%,
-      rgba(255,255,255,.42) 24%,
-      rgba(255,255,255,.92) 47%,
-      rgba(0,0,0,.08) 70%,
-      rgba(0,0,0,0) 100%) !important;
-  }
-
-  .sedco-native-viewer.is-open-book.is-turning .sedco-native-turn-sheet--prev .sedco-native-turn-sheet__face::after {
-    background: linear-gradient(90deg,
-      rgba(0,0,0,0) 0%,
-      rgba(0,0,0,.08) 30%,
-      rgba(255,255,255,.92) 53%,
-      rgba(255,255,255,.42) 76%,
-      rgba(255,255,255,0) 100%) !important;
+    content: none !important;
+    display: none !important;
   }
 
   .sedco-native-turn-sheet__shade {
     z-index: 4 !important;
-    opacity: .22 !important;
+    opacity: .16 !important;
     background: linear-gradient(90deg,
       rgba(0,0,0,.035) 0%,
-      transparent 19%,
-      transparent 75%,
-      rgba(0,0,0,.075) 100%) !important;
+      transparent 22%,
+      transparent 76%,
+      rgba(0,0,0,.065) 100%) !important;
   }
 
   .sedco-native-turn-sheet__face--back .sedco-native-turn-sheet__shade {
     z-index: 3 !important;
-    opacity: .18 !important;
+    opacity: .12 !important;
   }
 
-  /* The existing curl element follows the same moving fold. Keep it narrow and
-     soft so the effect is a bent sheet, not a permanently rounded page edge. */
-  .sedco-native-viewer.is-open-book.is-turning .sedco-native-turn-sheet__curl {
-    left: var(--sedco-turn-fold-x) !important;
-    right: auto !important;
-    width: var(--sedco-turn-fold-width) !important;
-    transform: translateX(-50%) !important;
-    opacity: var(--sedco-turn-fold-opacity) !important;
-    border-radius: 50% !important;
-    filter: blur(.5px) !important;
-    box-shadow: none !important;
-    background: radial-gradient(ellipse at center,
-      rgba(255,255,255,.86) 0%,
-      rgba(255,255,255,.32) 27%,
-      rgba(0,0,0,.08) 50%,
-      rgba(0,0,0,0) 76%) !important;
+  .sedco-native-turn-sheet__curl {
+    display: none !important;
+    opacity: 0 !important;
   }
 
-  /* Keep the approved one-page camera exactly where it already is while a
-     sheet is being turned. The camera still works before/after the turn. */
+  /* Keep the existing one-page camera fixed during the actual sheet turn.
+     Camera navigation before/after the turn remains unchanged. */
   .sedco-native-viewer.is-open-book.is-turning.is-camera-left .sedco-native-camera-track {
     transform: translate3d(0, 0, 0) !important;
     transition: none !important;
@@ -191,26 +116,36 @@
     transition: none !important;
   }
 
-  .sedco-native-viewer.is-open-book.is-turning .sedco-native-turn-sheet {
+  /* Front cover: same simple one-piece hinge turn seen in the SEDCO directory. */
+  .sedco-native-cover-sheet {
     filter: none !important;
   }
 
   .sedco-native-cover-sheet__face--front {
+    background: #fff !important;
     box-shadow:
-      inset -14px 0 22px rgba(0,0,0,.03),
-      0 10px 24px rgba(0,0,0,.20) !important;
+      inset -8px 0 14px rgba(0,0,0,.025),
+      0 6px 14px rgba(0,0,0,.14) !important;
   }
 
   .sedco-native-cover-sheet__face--back {
+    background: #f7f6f2 !important;
     box-shadow:
-      inset 20px 0 30px rgba(0,0,0,.07),
-      0 10px 24px rgba(0,0,0,.17) !important;
+      inset 10px 0 16px rgba(0,0,0,.045),
+      0 5px 12px rgba(0,0,0,.10) !important;
+  }
+
+  .sedco-native-cover-sheet__face--back::after {
+    background: linear-gradient(90deg,
+      rgba(0,0,0,.045),
+      rgba(0,0,0,.012) 18%,
+      transparent 44%,
+      rgba(255,255,255,.14)) !important;
   }
 }
 
-/* Warm the browser cache for every Impact Report sheet. The actual visible
-   pages still come from the existing reader; this invisible 1px layer only
-   prevents a white flash when the reverse side of a turning sheet is revealed. */
+/* Keep reverse-side report images ready before a turn so the sheet never
+   flashes transparent/blank. */
 .impact-report-page::before {
   content: '';
   position: fixed;
