@@ -320,23 +320,34 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
   const applyTurnProgress = (direction, rawProgress) => {
     const progress = clamp(rawProgress, 0, 1)
     turnProgressRef.current = progress
-    const curved = progress * progress * (3 - 2 * progress)
-    const angle = Math.PI * curved
-    const degrees = 180 * curved
-    const bend = Math.sin(angle)
+
+    // Match the reference-book feel: the page does not behave like one rigid
+    // card. Its free edge peels first, the fold travels toward the spine, and
+    // the sheet briefly compresses while it is most curved.
+    const eased = 0.5 - (Math.cos(Math.PI * progress) / 2)
+    const bend = Math.sin(Math.PI * progress)
+    const paperBend = Math.pow(Math.max(0, bend), 0.82)
+    const degrees = 180 * eased
     const rotation = direction === 'next' ? -degrees : degrees
-    const lift = 1 + 7 * bend
-    const tilt = (direction === 'next' ? -1 : 1) * 0.24 * bend
-    const scaleX = 1 - 0.022 * bend
-    const shadowX = (direction === 'next' ? 1 : -1) * 11 * bend
-    const shadowBlur = 8 + 10 * bend
-    const shadowAlpha = 0.08 + 0.13 * bend
+    const scaleX = 1 - (0.085 * paperBend)
+    const lift = 1 + (11 * paperBend)
+    const radius = 2 + (22 * paperBend)
+    const foldWidth = 18 + (44 * paperBend)
+    const foldOpacity = 0.08 + (0.78 * paperBend)
+    const foldX = direction === 'next' ? 100 - (eased * 100) : eased * 100
+
     const sheet = turnSheetRef.current
     if (sheet) {
       sheet.style.setProperty('animation', 'none', 'important')
-      sheet.style.transform = `perspective(1900px) rotateY(${rotation}deg) rotateZ(${tilt}deg) scaleX(${scaleX}) translateZ(${lift}px)`
-      sheet.style.filter = `drop-shadow(${shadowX}px 8px ${shadowBlur}px rgba(0,0,0,${shadowAlpha}))`
+      sheet.style.setProperty('--sedco-turn-fold-x', `${foldX.toFixed(2)}%`)
+      sheet.style.setProperty('--sedco-turn-fold-width', `${foldWidth.toFixed(2)}px`)
+      sheet.style.setProperty('--sedco-turn-fold-opacity', foldOpacity.toFixed(3))
+      sheet.style.setProperty('--sedco-turn-radius', `${radius.toFixed(2)}px`)
+      sheet.style.transform = `perspective(1550px) rotateY(${rotation}deg) scaleX(${scaleX}) translateZ(${lift}px)`
+      sheet.style.filter = 'none'
     }
+
+    const angle = Math.PI * eased
     const cameraFactor = direction === 'next' ? (1 + Math.cos(angle)) / 2 : (1 - Math.cos(angle)) / 2
     setCameraTransform(-cameraTravel * cameraFactor, false)
   }
