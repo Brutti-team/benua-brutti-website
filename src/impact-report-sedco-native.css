@@ -3,6 +3,13 @@
 /* Keep the approved mobile reader layout/camera exactly as-is.
    These overrides only control the physical sheet and front-cover appearance. */
 @media (max-width: 700px) {
+  /* Keep the front cover as one clean sheet. The stacked book-bed/paper-edge
+     decorations made the cover look detached while it was opening. */
+  .sedco-native-holder--cover .sedco-native-book-bed,
+  .sedco-native-holder--cover .sedco-native-paper-edge {
+    display: none !important;
+  }
+
   .sedco-native-camera-window {
     background: #777a78 !important;
     box-shadow:
