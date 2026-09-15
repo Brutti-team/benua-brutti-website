@@ -213,6 +213,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
   const soundPlayedRef = useRef(false)
   const turnRafRef = useRef(null)
   const coverRafRef = useRef(null)
+  const coverHandoffRafRef = useRef(null)
   const turnProgressRef = useRef(0)
   const coverProgressRef = useRef(0)
   const coverDirectionRef = useRef(null)
@@ -235,6 +236,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
   useEffect(() => () => {
     if (turnRafRef.current) window.cancelAnimationFrame(turnRafRef.current)
     if (coverRafRef.current) window.cancelAnimationFrame(coverRafRef.current)
+    if (coverHandoffRafRef.current) window.cancelAnimationFrame(coverHandoffRafRef.current)
     if (cameraSlideTimerRef.current) window.clearTimeout(cameraSlideTimerRef.current)
   }, [])
 
@@ -309,7 +311,6 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
   const applyTurnProgress = (direction, rawProgress) => {
     const progress = clamp(rawProgress, 0, 1)
     turnProgressRef.current = progress
-
     const rotation = (direction === 'next' ? -180 : 180) * progress
     const sheet = turnSheetRef.current
     if (!sheet) return
@@ -322,11 +323,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
   const applyCoverProgress = (direction, rawProgress) => {
     const progress = clamp(rawProgress, 0, 1)
     coverProgressRef.current = progress
-
-    const rotation = direction === 'open'
-      ? -180 * progress
-      : -180 + (180 * progress)
-
+    const rotation = direction === 'open' ? -180 * progress : -180 + (180 * progress)
     const sheet = coverSheetRef.current
     if (!sheet) return
 
@@ -338,7 +335,6 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
   const makeTurnSheet = (direction) => {
     const isNext = direction === 'next'
     const destinationStart = isNext ? spreadStartPage + 2 : spreadStartPage - 2
-
     return isNext
       ? {
           direction: 'next',
@@ -367,9 +363,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
   const finalizeOpenBookTurn = (sheet) => {
     const isNext = sheet.direction === 'next'
     const destinationSide = isNext ? 'left' : 'right'
-    const destinationPage = isNext
-      ? sheet.destinationStart
-      : Math.min(totalPages, sheet.destinationStart + 1)
+    const destinationPage = isNext ? sheet.destinationStart : Math.min(totalPages, sheet.destinationStart + 1)
 
     snapCamera(destinationSide, false, 0)
     onPageChange?.(destinationPage)
@@ -389,9 +383,9 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
 
   const animateTurnProgress = (sheet, target, onDone) => {
     if (turnRafRef.current) window.cancelAnimationFrame(turnRafRef.current)
-
     const start = turnProgressRef.current
     const distance = Math.abs(target - start)
+
     if (distance < 0.001) {
       applyTurnProgress(sheet.direction, target)
       onDone?.()
@@ -407,7 +401,6 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
         ? 1 - Math.pow(1 - time, 2.2)
         : time * time * time * (time * ((time * 6) - 15) + 10)
       const progress = start + ((target - start) * easedTime)
-
       applyTurnProgress(sheet.direction, progress)
 
       if (time < 1) {
@@ -424,9 +417,9 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
 
   const animateCoverProgress = (direction, target, onDone) => {
     if (coverRafRef.current) window.cancelAnimationFrame(coverRafRef.current)
-
     const start = coverProgressRef.current
     const distance = Math.abs(target - start)
+
     if (distance < 0.001) {
       applyCoverProgress(direction, target)
       onDone?.()
@@ -442,7 +435,6 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
         ? 1 - Math.pow(1 - time, 2.2)
         : time * time * time * (time * ((time * 6) - 15) + 10)
       const progress = start + ((target - start) * easedTime)
-
       applyCoverProgress(direction, progress)
 
       if (time < 1) {
@@ -459,7 +451,6 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
 
   const mountOpenBookTurn = (direction, autoComplete = false) => {
     if (isTurning) return null
-
     const sheet = makeTurnSheet(direction)
     turnProgressRef.current = 0
     pendingAutoTurnRef.current = autoComplete ? sheet : null
@@ -471,7 +462,6 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
 
   useLayoutEffect(() => {
     if (!turnSheet) return
-
     applyTurnProgress(turnSheet.direction, turnProgressRef.current)
 
     if (
@@ -489,7 +479,6 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
 
   useEffect(() => {
     if (currentPage <= 1 || turnSheet || coverClosing || cameraSlideTimerRef.current) return
-
     requestAnimationFrame(() => {
       const side = currentPage % 2 === 1 ? 'right' : 'left'
       const x = side === 'right' ? cameraRightX : cameraLeftX
@@ -515,12 +504,23 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
   }
 
   const finishCoverClose = () => {
+    // Keep the fully closed moving cover mounted long enough for the browser to
+    // paint it before switching from the open-book DOM to the closed-cover DOM.
+    // This removes the one-frame flash/jump at the end of the close motion.
+    applyCoverProgress('close', 1)
     coverDirectionRef.current = null
-    coverProgressRef.current = 0
-    setCoverClosing(false)
-    setIsTurning(false)
-    resetTurnSound()
-    onPageChange?.(1)
+
+    if (coverHandoffRafRef.current) window.cancelAnimationFrame(coverHandoffRafRef.current)
+    coverHandoffRafRef.current = window.requestAnimationFrame(() => {
+      coverHandoffRafRef.current = window.requestAnimationFrame(() => {
+        coverHandoffRafRef.current = null
+        coverProgressRef.current = 0
+        setCoverClosing(false)
+        setIsTurning(false)
+        resetTurnSound()
+        onPageChange?.(1)
+      })
+    })
   }
 
   const cancelCoverClose = () => {
@@ -533,7 +533,6 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
 
   const beginCoverTurn = () => {
     if (isTurning || currentPage !== 1) return
-
     coverDirectionRef.current = 'open'
     coverProgressRef.current = 0
     setIsTurning(true)
@@ -543,7 +542,6 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
 
   const beginCoverClose = () => {
     if (isTurning || currentPage <= 1 || spreadStartPage > 2 || cameraSide !== 'left') return
-
     coverDirectionRef.current = 'close'
     coverProgressRef.current = 0
     setCoverClosing(true)
@@ -560,35 +558,27 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
 
   const moveToNextStep = () => {
     if (isTurning || cameraSlideTimerRef.current) return
-
     if (currentPage === 1) {
       beginCoverTurn()
       return
     }
-
     if (cameraSide === 'left' && spreadStartPage + 1 <= totalPages) {
       settleCamera('right', { fromGesture: false })
       return
     }
-
-    if (cameraSide === 'right' && spreadStartPage + 2 <= totalPages) {
-      beginOpenBookTurn('next')
-    }
+    if (cameraSide === 'right' && spreadStartPage + 2 <= totalPages) beginOpenBookTurn('next')
   }
 
   const moveToPreviousStep = () => {
     if (isTurning || cameraSlideTimerRef.current || currentPage <= 1) return
-
     if (cameraSide === 'right') {
       settleCamera('left', { fromGesture: false })
       return
     }
-
     if (spreadStartPage <= 2) {
       beginCoverClose()
       return
     }
-
     beginOpenBookTurn('prev')
   }
 
@@ -596,9 +586,9 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
     goTo(page) {
       const target = clamp(Number(page) || 1, 1, totalPages)
       clearCameraTimer()
-
       if (turnRafRef.current) window.cancelAnimationFrame(turnRafRef.current)
       if (coverRafRef.current) window.cancelAnimationFrame(coverRafRef.current)
+      if (coverHandoffRafRef.current) window.cancelAnimationFrame(coverHandoffRafRef.current)
 
       setTurnSheet(null)
       setCoverClosing(false)
@@ -646,7 +636,6 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
       turnSheet: null,
       coverDirection: null,
     }
-
     event.currentTarget.setPointerCapture?.(event.pointerId)
   }
 
@@ -765,7 +754,6 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
 
     gestureRef.current = null
     event.currentTarget.releasePointerCapture?.(event.pointerId)
-
     if (gesture.locked !== 'horizontal') return
 
     const dx = event.clientX - gesture.startX
