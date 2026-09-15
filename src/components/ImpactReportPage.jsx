@@ -1,5 +1,6 @@
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import HTMLFlipBook from 'react-pageflip'
+import MobileImpactSlider from './MobileImpactSlider.jsx'
 import '../impact-report-tweaks.css'
 import '../impact-report-nav-home.css'
 import {
@@ -19,112 +20,6 @@ const TOTAL_PAGES = 40
 
 // Public-domain recording: "Turning a page.ogg" by planish, hosted on Wikimedia Commons.
 const PAPER_SOUND_URL = 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Turning_a_page.ogg'
-
-const MOBILE_READER_CONSISTENCY_CSS = `
-@media (max-width: 700px) {
-  .impact-report-page .impact-report-reader__actions,
-  .impact-report-page .impact-report-reader__actions button {
-    position: relative !important;
-    z-index: 80 !important;
-    pointer-events: auto !important;
-  }
-
-  .impact-report-page .impact-report-reader__actions button {
-    touch-action: manipulation !important;
-    -webkit-tap-highlight-color: transparent !important;
-  }
-
-  .impact-report-page .impact-report-reader__zoom,
-  .impact-report-page .impact-report-reader__book-wrap,
-  .impact-report-page .impact-report-reader__book-wrap.is-front-cover,
-  .impact-report-page .impact-report-reader__book-wrap.is-back-cover {
-    width: 100% !important;
-    height: clamp(351px, 120vw, 475px) !important;
-    min-height: 351px !important;
-    max-height: 475px !important;
-    transform: none !important;
-    transition: none !important;
-  }
-
-  .impact-report-page .impact-html-flipbook {
-    margin: 0 auto !important;
-    touch-action: pan-y !important;
-    filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.23)) !important;
-  }
-
-  .impact-report-page .impact-flip-page img {
-    object-fit: contain !important;
-    background: #fff !important;
-  }
-
-  .impact-report-reader.is-mobile-expanded {
-    position: fixed !important;
-    inset: 0 !important;
-    z-index: 10000 !important;
-    width: 100vw !important;
-    height: 100dvh !important;
-    display: grid !important;
-    grid-template-rows: 50px minmax(0, 1fr) 48px !important;
-    overflow: hidden !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-    filter: none !important;
-    background: #0b3329 !important;
-  }
-
-  .impact-report-reader.is-mobile-expanded .impact-report-reader__toolbar {
-    position: relative !important;
-    z-index: 100 !important;
-    min-height: 50px !important;
-  }
-
-  .impact-report-reader.is-mobile-expanded .impact-report-reader__stage {
-    min-height: 0 !important;
-    height: 100% !important;
-    overflow: hidden !important;
-  }
-
-  .impact-report-reader.is-mobile-expanded .impact-report-reader__viewport {
-    min-height: 0 !important;
-    height: 100% !important;
-    padding: 8px 0 10px !important;
-    overflow: hidden !important;
-  }
-
-  .impact-report-reader.is-mobile-expanded .impact-report-reader__zoom,
-  .impact-report-reader.is-mobile-expanded .impact-report-reader__book-wrap,
-  .impact-report-reader.is-mobile-expanded .impact-report-reader__book-wrap.is-front-cover,
-  .impact-report-reader.is-mobile-expanded .impact-report-reader__book-wrap.is-back-cover {
-    height: min(calc(100dvh - 118px), 537px) !important;
-    min-height: min(351px, calc(100dvh - 118px)) !important;
-    max-height: 537px !important;
-  }
-
-  .impact-report-reader.is-mobile-expanded .impact-report-reader__controls {
-    min-height: 48px !important;
-    position: relative !important;
-    z-index: 100 !important;
-  }
-}
-
-@supports not (height: 100dvh) {
-  @media (max-width: 700px) {
-    .impact-report-reader.is-mobile-expanded {
-      height: 100vh !important;
-    }
-
-    .impact-report-reader.is-mobile-expanded .impact-report-reader__zoom,
-    .impact-report-reader.is-mobile-expanded .impact-report-reader__book-wrap,
-    .impact-report-reader.is-mobile-expanded .impact-report-reader__book-wrap.is-front-cover,
-    .impact-report-reader.is-mobile-expanded .impact-report-reader__book-wrap.is-back-cover {
-      height: min(calc(100vh - 118px), 537px) !important;
-    }
-  }
-}
-`
 
 function backHome() {
   window.location.href = '/'
@@ -156,19 +51,17 @@ const ReportPage = forwardRef(function ReportPage({ page }, ref) {
 export default function ImpactReportPage() {
   const readerRef = useRef(null)
   const bookRef = useRef(null)
+  const mobileBookRef = useRef(null)
   const paperAudioRef = useRef(null)
   const paperAudioStopTimerRef = useRef(null)
   const lastPaperSoundAt = useRef(0)
   const paperGestureSoundPlayedRef = useRef(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
-  const [isMobileExpanded, setIsMobileExpanded] = useState(false)
   const [isFlipping, setIsFlipping] = useState(false)
   const [soundEnabled, setSoundEnabled] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [zoom, setZoom] = useState(1)
   const [isMobileReader, setIsMobileReader] = useState(false)
-
-  const readerExpanded = isFullscreen || isMobileExpanded
 
   useEffect(() => {
     const onFullscreenChange = () => setIsFullscreen(Boolean(document.fullscreenElement))
@@ -183,26 +76,6 @@ export default function ImpactReportPage() {
     media.addEventListener?.('change', sync)
     return () => media.removeEventListener?.('change', sync)
   }, [])
-
-  useEffect(() => {
-    if (!isMobileReader && isMobileExpanded) {
-      setIsMobileExpanded(false)
-    }
-  }, [isMobileReader, isMobileExpanded])
-
-  useEffect(() => {
-    if (!isMobileExpanded) return undefined
-
-    const bodyOverflow = document.body.style.overflow
-    const htmlOverflow = document.documentElement.style.overflow
-    document.body.style.overflow = 'hidden'
-    document.documentElement.style.overflow = 'hidden'
-
-    return () => {
-      document.body.style.overflow = bodyOverflow
-      document.documentElement.style.overflow = htmlOverflow
-    }
-  }, [isMobileExpanded])
 
   useEffect(() => {
     const audio = new Audio(PAPER_SOUND_URL)
@@ -274,16 +147,11 @@ export default function ImpactReportPage() {
 
   useEffect(() => {
     const onKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        if (isMobileExpanded) {
-          setIsMobileExpanded(false)
-          return
-        }
-
-        if (document.fullscreenElement) {
-          document.exitFullscreen?.()
-          return
-        }
+      if (isMobileReader) {
+        if (event.key === 'ArrowRight') mobileBookRef.current?.next()
+        if (event.key === 'ArrowLeft') mobileBookRef.current?.previous()
+        if (event.key === 'Escape' && document.fullscreenElement) document.exitFullscreen?.()
+        return
       }
 
       const pageFlip = bookRef.current?.pageFlip?.()
@@ -291,11 +159,12 @@ export default function ImpactReportPage() {
 
       if (event.key === 'ArrowRight') pageFlip.flipNext('top')
       if (event.key === 'ArrowLeft') pageFlip.flipPrev('top')
+      if (event.key === 'Escape' && document.fullscreenElement) document.exitFullscreen?.()
     }
 
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [isFlipping, isMobileExpanded])
+  }, [isFlipping, isMobileReader])
 
   useEffect(() => {
     const preload = (page) => {
@@ -309,11 +178,6 @@ export default function ImpactReportPage() {
   }, [currentPage])
 
   const toggleFullscreen = async () => {
-    if (isMobileReader) {
-      setIsMobileExpanded((expanded) => !expanded)
-      return
-    }
-
     try {
       if (!document.fullscreenElement) {
         await readerRef.current?.requestFullscreen?.()
@@ -326,17 +190,34 @@ export default function ImpactReportPage() {
   }
 
   const previousPage = () => {
+    if (isMobileReader) {
+      mobileBookRef.current?.previous()
+      return
+    }
+
     if (isFlipping) return
     bookRef.current?.pageFlip?.()?.flipPrev('top')
   }
 
   const nextPage = () => {
+    if (isMobileReader) {
+      mobileBookRef.current?.next()
+      return
+    }
+
     if (isFlipping) return
     bookRef.current?.pageFlip?.()?.flipNext('top')
   }
 
   const jumpToPage = (page) => {
     const target = Math.max(1, Math.min(TOTAL_PAGES, Number(page)))
+
+    if (isMobileReader) {
+      mobileBookRef.current?.goTo(target)
+      setCurrentPage(target)
+      return
+    }
+
     if (isFlipping) return
     bookRef.current?.pageFlip?.()?.turnToPage(target - 1)
     setCurrentPage(target)
@@ -357,13 +238,8 @@ export default function ImpactReportPage() {
       ? ' is-back-cover'
       : ''
 
-  const mobileBookMaxWidth = isMobileExpanded ? 380 : 336
-  const mobileBookMaxHeight = isMobileExpanded ? 537 : 475
-
   return (
     <main className="impact-report-page">
-      <style>{MOBILE_READER_CONSISTENCY_CSS}</style>
-
       <header className="impact-report-nav">
         <button className="impact-report-nav__brand" onClick={backHome} aria-label="Back to Benua Brutti home">
           <img src={`${import.meta.env.BASE_URL}assets/logo-brutti-white.png`} alt="Benua Brutti" />
@@ -390,10 +266,7 @@ export default function ImpactReportPage() {
             </div>
           </div>
 
-          <div
-            className={`impact-report-reader${isFlipping ? ' is-flipping' : ''}${isMobileExpanded ? ' is-mobile-expanded' : ''}`}
-            ref={readerRef}
-          >
+          <div className={`impact-report-reader${isFlipping ? ' is-flipping' : ''}`} ref={readerRef}>
             <div className="impact-report-reader__toolbar">
               <div className="impact-report-reader__title">
                 <span className="impact-report-reader__dot" />
@@ -416,15 +289,9 @@ export default function ImpactReportPage() {
                   {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
                   <span>{soundEnabled ? 'Sound' : 'Muted'}</span>
                 </button>
-                <button
-                  type="button"
-                  onClick={toggleFullscreen}
-                  aria-label={readerExpanded ? 'Exit fullscreen' : 'Open fullscreen'}
-                  title={readerExpanded ? 'Exit fullscreen' : 'Open fullscreen'}
-                  aria-pressed={readerExpanded}
-                >
-                  {readerExpanded ? <Minimize2 size={17} /> : <Expand size={17} />}
-                  <span>{readerExpanded ? 'Exit fullscreen' : 'Fullscreen'}</span>
+                <button onClick={toggleFullscreen} aria-label={isFullscreen ? 'Exit fullscreen' : 'Open fullscreen'}>
+                  {isFullscreen ? <Minimize2 size={17} /> : <Expand size={17} />}
+                  <span>{isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}</span>
                 </button>
               </div>
             </div>
@@ -433,7 +300,7 @@ export default function ImpactReportPage() {
               <button
                 className="impact-report-reader__edge impact-report-reader__edge--left"
                 onClick={previousPage}
-                disabled={currentPage <= 1 || isFlipping}
+                disabled={currentPage <= 1 || (!isMobileReader && isFlipping)}
                 aria-label="Previous page"
               >
                 <ChevronLeft size={28} />
@@ -442,52 +309,61 @@ export default function ImpactReportPage() {
               <div className={`impact-report-reader__viewport${zoom > 1 ? ' is-zoomed' : ''}`}>
                 <div className="impact-report-reader__zoom" style={{ '--impact-zoom': zoom }}>
                   <div className={`impact-report-reader__book-wrap${bookPositionClass}`}>
-                    <HTMLFlipBook
-                      key={`impact-book-${isMobileReader ? 'mobile' : 'desktop'}-${isMobileExpanded ? 'expanded' : 'normal'}`}
-                      ref={bookRef}
-                      width={isMobileReader ? mobileBookMaxWidth : 447}
-                      height={isMobileReader ? mobileBookMaxHeight : 632}
-                      size="stretch"
-                      minWidth={isMobileReader ? 248 : 300}
-                      maxWidth={isMobileReader ? mobileBookMaxWidth : 540}
-                      minHeight={isMobileReader ? 351 : 424}
-                      maxHeight={isMobileReader ? mobileBookMaxHeight : 764}
-                      startPage={Math.max(0, currentPage - 1)}
-                      drawShadow
-                      flippingTime={860}
-                      usePortrait
-                      startZIndex={10}
-                      autoSize
-                      maxShadowOpacity={0.34}
-                      showCover
-                      mobileScrollSupport
-                      clickEventForward={false}
-                      useMouseEvents
-                      swipeDistance={28}
-                      showPageCorners
-                      disableFlipByClick={false}
-                      className="impact-html-flipbook"
-                      onFlip={(event) => setCurrentPage(event.data + 1)}
-                      onChangeState={(event) => {
-                        const state = event.data
-                        const userTurningPage = state === 'user_fold' || state === 'flipping'
+                    {isMobileReader ? (
+                      <MobileImpactSlider
+                        ref={mobileBookRef}
+                        totalPages={TOTAL_PAGES}
+                        currentPage={currentPage}
+                        onPageChange={setCurrentPage}
+                        onPageTurn={playPaperSound}
+                      />
+                    ) : (
+                      <HTMLFlipBook
+                        ref={bookRef}
+                        width={447}
+                        height={632}
+                        size="stretch"
+                        minWidth={300}
+                        maxWidth={540}
+                        minHeight={424}
+                        maxHeight={764}
+                        startPage={0}
+                        drawShadow
+                        flippingTime={860}
+                        usePortrait
+                        startZIndex={10}
+                        autoSize
+                        maxShadowOpacity={0.34}
+                        showCover
+                        mobileScrollSupport
+                        clickEventForward={false}
+                        useMouseEvents
+                        swipeDistance={28}
+                        showPageCorners
+                        disableFlipByClick={false}
+                        className="impact-html-flipbook"
+                        onFlip={(event) => setCurrentPage(event.data + 1)}
+                        onChangeState={(event) => {
+                          const state = event.data
+                          const userTurningPage = state === 'user_fold' || state === 'flipping'
 
-                        if (userTurningPage && !paperGestureSoundPlayedRef.current) {
-                          playPaperSound()
-                          paperGestureSoundPlayedRef.current = true
-                        }
+                          if (userTurningPage && !paperGestureSoundPlayedRef.current) {
+                            playPaperSound()
+                            paperGestureSoundPlayedRef.current = true
+                          }
 
-                        if (state === 'read') {
-                          paperGestureSoundPlayedRef.current = false
-                        }
+                          if (state === 'read') {
+                            paperGestureSoundPlayedRef.current = false
+                          }
 
-                        setIsFlipping(state === 'flipping')
-                      }}
-                    >
-                      {Array.from({ length: TOTAL_PAGES }, (_, index) => (
-                        <ReportPage page={index + 1} key={index + 1} />
-                      ))}
-                    </HTMLFlipBook>
+                          setIsFlipping(state === 'flipping')
+                        }}
+                      >
+                        {Array.from({ length: TOTAL_PAGES }, (_, index) => (
+                          <ReportPage page={index + 1} key={index + 1} />
+                        ))}
+                      </HTMLFlipBook>
+                    )}
                   </div>
                 </div>
               </div>
@@ -495,7 +371,7 @@ export default function ImpactReportPage() {
               <button
                 className="impact-report-reader__edge impact-report-reader__edge--right"
                 onClick={nextPage}
-                disabled={currentPage >= TOTAL_PAGES || isFlipping}
+                disabled={currentPage >= TOTAL_PAGES || (!isMobileReader && isFlipping)}
                 aria-label="Next page"
               >
                 <ChevronRight size={28} />
@@ -503,7 +379,7 @@ export default function ImpactReportPage() {
             </div>
 
             <div className="impact-report-reader__controls">
-              <button onClick={previousPage} disabled={currentPage <= 1 || isFlipping} aria-label="Previous page">
+              <button onClick={previousPage} disabled={currentPage <= 1 || (!isMobileReader && isFlipping)} aria-label="Previous page">
                 <ChevronLeft size={18} />
               </button>
 
@@ -536,7 +412,7 @@ export default function ImpactReportPage() {
                 </button>
               </div>
 
-              <button onClick={nextPage} disabled={currentPage >= TOTAL_PAGES || isFlipping} aria-label="Next page">
+              <button onClick={nextPage} disabled={currentPage >= TOTAL_PAGES || (!isMobileReader && isFlipping)} aria-label="Next page">
                 <ChevronRight size={18} />
               </button>
             </div>
