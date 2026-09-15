@@ -1,0 +1,79 @@
+name: Optimize heavy landing images
+
+on:
+  push:
+    paths:
+      - 'scripts/optimize-heavy-images.py'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: optimize-heavy-images
+  cancel-in-progress: false
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install image tooling
+        run: python -m pip install --upgrade pillow
+
+      - name: Convert heavy images to high-quality WebP
+        run: python scripts/optimize-heavy-images.py
+
+      - name: Commit optimized assets and updated references
+        id: commit
+        shell: bash
+        run: |
+          if git diff --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "bruttiintegrator"
+          git config user.email "integrator.brutti@gmail.com"
+          git add public/assets src index.html
+          git commit -m "Optimize heavy landing images as WebP"
+          git push origin HEAD:main
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Node
+        if: steps.commit.outputs.changed == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        if: steps.commit.outputs.changed == 'true'
+        run: npm ci
+
+      - name: Build optimized site
+        if: steps.commit.outputs.changed == 'true'
+        run: npm run build
+
+      - name: Configure Pages
+        if: steps.commit.outputs.changed == 'true'
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        if: steps.commit.outputs.changed == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: Deploy optimized site
+        if: steps.commit.outputs.changed == 'true'
+        uses: actions/deploy-pages@v4
