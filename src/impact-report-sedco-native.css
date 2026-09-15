@@ -115,4 +115,75 @@
       inset 20px 0 30px rgba(0,0,0,.07),
       0 10px 24px rgba(0,0,0,.17) !important;
   }
+
+  /* Keep the approved one-page camera exactly where it already is while a
+     sheet is being turned. The camera still works before/after the turn, but
+     it no longer creates a second moving animation during the page flip. */
+  .sedco-native-viewer.is-open-book.is-turning.is-camera-left .sedco-native-camera-track {
+    transform: translate3d(0, 0, 0) !important;
+    transition: none !important;
+  }
+
+  .sedco-native-viewer.is-open-book.is-turning.is-camera-right .sedco-native-camera-track {
+    transform: translate3d(calc(var(--sedco-native-camera-travel) * -1), 0, 0) !important;
+    transition: none !important;
+  }
+
+  /* During the flip, only the paper itself should read as moving. Remove the
+     floating/drop-shadow motion and use the page edge + fold highlight to sell
+     a real paper curl instead of a rotating-card effect. */
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-turn-sheet {
+    filter: none !important;
+    perspective: 2100px !important;
+  }
+
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-turn-sheet__face {
+    overflow: hidden !important;
+    border-color: rgba(0,0,0,.055) !important;
+  }
+
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-turn-sheet__face::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 28px !important;
+    z-index: 7 !important;
+    pointer-events: none !important;
+    opacity: .82 !important;
+  }
+
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-turn-sheet--next .sedco-native-turn-sheet__face::after {
+    right: 0 !important;
+    background: linear-gradient(90deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,.18) 34%,
+      rgba(0,0,0,.065) 72%,
+      rgba(255,255,255,.58) 100%) !important;
+  }
+
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-turn-sheet--prev .sedco-native-turn-sheet__face::after {
+    left: 0 !important;
+    background: linear-gradient(90deg,
+      rgba(255,255,255,.58) 0%,
+      rgba(0,0,0,.065) 28%,
+      rgba(255,255,255,.18) 66%,
+      rgba(255,255,255,0) 100%) !important;
+  }
+
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-turn-sheet__curl {
+    width: 42px !important;
+    opacity: .90 !important;
+    filter: blur(.45px) !important;
+  }
+
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-turn-sheet--next,
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-turn-sheet--next .sedco-native-turn-sheet__face {
+    border-radius: 1px 20px 20px 1px !important;
+  }
+
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-turn-sheet--prev,
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-turn-sheet--prev .sedco-native-turn-sheet__face {
+    border-radius: 20px 1px 1px 20px !important;
+  }
 }
