@@ -205,6 +205,27 @@
   html body .footer .footer__social-links > a:nth-child(4) {
     background-size: 84% 84% !important;
   }
+
+  /* WhatsApp only: keep the same 48px slot, enlarge the mark optically
+     so it reads at the same size as TikTok / Instagram / Facebook / Threads. */
+  html body .footer .footer__social-links > a:nth-child(5),
+  html body .footer .footer__social-links > a[href*="wa.me"],
+  html body .footer .footer__social-links > a[href*="whatsapp"] {
+    overflow: visible !important;
+  }
+
+  html body .footer .footer__social-links > a:nth-child(5) img,
+  html body .footer .footer__social-links > a:nth-child(5) .footer__social-logo,
+  html body .footer .footer__social-links > a[href*="wa.me"] img,
+  html body .footer .footer__social-links > a[href*="whatsapp"] img {
+    display: block !important;
+    width: 54px !important;
+    height: 54px !important;
+    max-width: 54px !important;
+    max-height: 54px !important;
+    object-fit: contain !important;
+    object-position: center !important;
+  }
 }
 
 /* Phone-only footer contact typography: enlarge the Get in touch heading,
