@@ -274,6 +274,18 @@ export default function ImpactReportPage() {
     setCurrentPage(target)
   }
 
+  const resetToFirstPage = () => {
+    if (isMobileReader) {
+      mobileBookRef.current?.goTo(1)
+      setCurrentPage(1)
+      return
+    }
+
+    if (isFlipping) return
+    bookRef.current?.pageFlip?.()?.turnToPage(0)
+    setCurrentPage(1)
+  }
+
   const pageLabel = useMemo(() => {
     if (isMobileReader) return `${currentPage} / ${TOTAL_PAGES}`
     if (currentPage <= 1 || currentPage >= TOTAL_PAGES) return `${currentPage} / ${TOTAL_PAGES}`
@@ -327,10 +339,19 @@ export default function ImpactReportPage() {
               </div>
 
               <div className="impact-report-reader__actions">
+                <button
+                  onClick={resetToFirstPage}
+                  disabled={currentPage === 1 || (!isMobileReader && isFlipping)}
+                  aria-label="Reset to first page"
+                  title="Back to first page"
+                >
+                  <RotateCcw size={15} />
+                  <span>Reset</span>
+                </button>
                 {zoom !== 1 && (
                   <button onClick={() => setZoom(1)} aria-label="Reset zoom" title="Reset zoom">
                     <RotateCcw size={15} />
-                    <span>Reset</span>
+                    <span>100%</span>
                   </button>
                 )}
                 <button
