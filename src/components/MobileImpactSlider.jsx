@@ -11,7 +11,7 @@ function pageImage(page) {
 
 const CAMERA_FULL_MS = 420
 const TURN_FULL_MS = 920
-const COVER_FULL_MS = 900
+const COVER_FULL_MS = 760
 const GESTURE_PAGE_DISTANCE = 0.78
 
 const MOBILE_TURN_SHEET_CSS = `
@@ -88,7 +88,8 @@ const MOBILE_COVER_FLIP_CSS = `
     z-index: 96;
     width: var(--sedco-native-page-w);
     height: var(--sedco-native-page-h);
-    perspective: 1900px;
+    perspective: 1900px !important;
+    perspective-origin: 0 50% !important;
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
     pointer-events: none;
@@ -129,7 +130,7 @@ const MOBILE_COVER_FLIP_CSS = `
     position: absolute;
     inset: 0;
     z-index: 5;
-    transform-origin: left center;
+    transform-origin: 0 50% 0;
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
     will-change: transform;
@@ -195,7 +196,7 @@ const ClosingCoverSheet = forwardRef(function ClosingCoverSheet({ active }, ref)
 
   return (
     <div className="sedco-native-cover-closing-stage" aria-hidden="true">
-      <div ref={ref} className="sedco-native-cover-sheet">
+      <div ref={ref} className="sedco-native-cover-sheet" style={{ transform: 'rotateY(-180deg)' }}>
         <div className="sedco-native-cover-sheet__face sedco-native-cover-sheet__face--front">
           <img src={pageImage(1)} alt="" draggable="false" />
         </div>
@@ -328,7 +329,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
     if (!sheet) return
 
     sheet.style.setProperty('animation', 'none', 'important')
-    sheet.style.transform = `perspective(1900px) rotateY(${rotation}deg)`
+    sheet.style.transform = `rotateY(${rotation}deg)`
     sheet.style.filter = 'none'
   }
 
@@ -426,7 +427,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
       return
     }
 
-    const duration = Math.max(400, COVER_FULL_MS * distance)
+    const duration = Math.max(360, COVER_FULL_MS * distance)
     const startedAt = performance.now()
 
     const tick = (now) => {
@@ -488,11 +489,17 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
   }, [pageWidth])
 
   const finishCoverOpen = () => {
+    applyCoverProgress('open', 1)
     coverDirectionRef.current = null
-    coverProgressRef.current = 0
-    setIsTurning(false)
-    resetTurnSound()
-    onPageChange?.(2)
+
+    if (coverHandoffRafRef.current) window.cancelAnimationFrame(coverHandoffRafRef.current)
+    coverHandoffRafRef.current = window.requestAnimationFrame(() => {
+      coverHandoffRafRef.current = null
+      coverProgressRef.current = 0
+      setIsTurning(false)
+      resetTurnSound()
+      onPageChange?.(2)
+    })
   }
 
   const cancelCoverOpen = () => {
@@ -504,9 +511,6 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
   }
 
   const finishCoverClose = () => {
-    // Keep the fully closed moving cover mounted long enough for the browser to
-    // paint it before switching from the open-book DOM to the closed-cover DOM.
-    // This removes the one-frame flash/jump at the end of the close motion.
     applyCoverProgress('close', 1)
     coverDirectionRef.current = null
 
