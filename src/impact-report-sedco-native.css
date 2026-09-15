@@ -3,8 +3,7 @@
 /* Keep the approved mobile reader layout/camera exactly as-is.
    These overrides only control the physical sheet and front-cover appearance. */
 @media (max-width: 700px) {
-  /* Keep the front cover as one clean sheet. The stacked book-bed/paper-edge
-     decorations made the cover look detached while it was opening. */
+  /* Keep the front cover as one clean sheet. */
   .sedco-native-holder--cover .sedco-native-book-bed,
   .sedco-native-holder--cover .sedco-native-paper-edge {
     display: none !important;
@@ -40,8 +39,7 @@
       0 1px 2px rgba(0,0,0,.08) !important;
   }
 
-  /* SEDCO reference: one opaque sheet turns from the spine in one clean arc.
-     No travelling fold, wave, strip deformation or extra curl animation. */
+  /* One opaque sheet turns from the spine in one clean arc. */
   .sedco-native-turn-sheet {
     overflow: visible !important;
     perspective: 1600px !important;
@@ -111,8 +109,7 @@
     opacity: 0 !important;
   }
 
-  /* Keep the existing one-page camera fixed during the actual sheet turn.
-     Camera navigation before/after the turn remains unchanged. */
+  /* Keep the approved camera fixed during the actual sheet turn. */
   .sedco-native-viewer.is-open-book.is-turning.is-camera-left .sedco-native-camera-track {
     transform: translate3d(0, 0, 0) !important;
     transition: none !important;
@@ -123,49 +120,46 @@
     transition: none !important;
   }
 
-  /* Front cover: keep the hinge visually locked to the book while it turns. */
+  /* Front cover: one clean hinged sheet only. No added spine/paper layers. */
   .sedco-native-cover-stage,
   .sedco-native-cover-closing-stage {
-    perspective: 3200px !important;
-    perspective-origin: left center !important;
+    perspective: none !important;
+    perspective-origin: initial !important;
   }
 
   .sedco-native-cover-under {
-    overflow: visible !important;
+    overflow: hidden !important;
   }
 
-  .sedco-native-cover-under::before {
-    content: '' !important;
-    position: absolute !important;
-    z-index: 0 !important;
-    top: 0 !important;
-    bottom: 0 !important;
-    left: -14px !important;
-    width: 16px !important;
-    background: #fff !important;
-    box-shadow: inset -4px 0 7px rgba(0,0,0,.035) !important;
-    pointer-events: none !important;
-  }
-
+  .sedco-native-cover-under::before,
   .sedco-native-cover-stage::after,
   .sedco-native-cover-closing-stage::after {
-    content: '' !important;
-    position: absolute !important;
-    z-index: 12 !important;
-    left: -1px !important;
-    top: 1px !important;
-    bottom: 1px !important;
-    width: 2px !important;
-    background: linear-gradient(90deg, rgba(0,0,0,.08), rgba(255,255,255,.26)) !important;
-    opacity: .55 !important;
-    pointer-events: none !important;
+    content: none !important;
+    display: none !important;
   }
 
   .sedco-native-cover-sheet {
     filter: none !important;
-    transform-origin: 0 50% !important;
+    transform-origin: 0 50% 0 !important;
     transform-box: border-box !important;
     will-change: transform !important;
+  }
+
+  .sedco-native-cover-sheet__face {
+    transform-style: preserve-3d !important;
+    -webkit-transform-style: preserve-3d !important;
+  }
+
+  .sedco-native-cover-sheet__face--front {
+    background: #fff !important;
+    transform: translateZ(0) !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,.06) !important;
+  }
+
+  .sedco-native-cover-sheet__face--back {
+    background: #f7f6f2 !important;
+    transform: rotateY(180deg) translateZ(0) !important;
+    box-shadow: none !important;
   }
 
   .sedco-native-viewer.is-cover.is-turning .sedco-native-cover-sheet__face,
@@ -173,26 +167,9 @@
     box-shadow: none !important;
   }
 
-  .sedco-native-cover-sheet__face--front {
-    background: #fff !important;
-    box-shadow:
-      inset -5px 0 9px rgba(0,0,0,.02),
-      0 2px 5px rgba(0,0,0,.07) !important;
-  }
-
-  .sedco-native-cover-sheet__face--back {
-    background: #f7f6f2 !important;
-    box-shadow:
-      inset 6px 0 10px rgba(0,0,0,.03),
-      0 2px 5px rgba(0,0,0,.06) !important;
-  }
-
   .sedco-native-cover-sheet__face--back::after {
-    background: linear-gradient(90deg,
-      rgba(0,0,0,.035),
-      rgba(0,0,0,.008) 18%,
-      transparent 44%,
-      rgba(255,255,255,.10)) !important;
+    content: none !important;
+    display: none !important;
   }
 }
 
