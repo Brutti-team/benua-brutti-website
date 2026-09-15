@@ -432,8 +432,8 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
     const tick = (now) => {
       const time = clamp((now - startedAt) / duration, 0, 1)
       const easedTime = start > 0.001
-        ? 1 - Math.pow(1 - time, 2.2)
-        : time * time * time * (time * ((time * 6) - 15) + 10)
+        ? 1 - Math.pow(1 - time, 2)
+        : time * time * (3 - (2 * time))
       const progress = start + ((target - start) * easedTime)
       applyCoverProgress(direction, progress)
 
@@ -547,9 +547,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
     setCoverClosing(true)
     setIsTurning(true)
     startTurnSound()
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => animateCoverProgress('close', 1, finishCoverClose))
-    })
+    requestAnimationFrame(() => animateCoverProgress('close', 1, finishCoverClose))
   }
 
   const beginOpenBookTurn = (direction) => {
@@ -700,9 +698,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
       setCoverClosing(true)
       setIsTurning(true)
       startTurnSound()
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => applyCoverProgress('close', coverProgressRef.current))
-      })
+      requestAnimationFrame(() => applyCoverProgress('close', coverProgressRef.current))
       updateGestureVelocity(gesture, event, now)
       return
     }
