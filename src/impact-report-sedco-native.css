@@ -145,6 +145,13 @@
     will-change: transform !important;
   }
 
+  /* A closing cover is dynamically mounted while the book is still open.
+     Start it in the already-open position immediately so there is no single
+     frame where the cover flashes closed before the close animation begins. */
+  .sedco-native-cover-closing-stage .sedco-native-cover-sheet {
+    transform: perspective(1900px) rotateY(-180deg);
+  }
+
   .sedco-native-cover-sheet__face {
     transform-style: preserve-3d !important;
     -webkit-transform-style: preserve-3d !important;
