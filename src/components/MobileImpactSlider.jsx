@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import HTMLFlipBook from 'react-pageflip'
 import '../impact-report-sedco-native.css'
 
@@ -11,9 +11,90 @@ function pageImage(page) {
 }
 
 const CAMERA_FULL_MS = 420
-const PAGE_FLIP_MS = 860
+const TURN_FULL_MS = 800
 const COVER_FULL_MS = 780
 const GESTURE_PAGE_DISTANCE = 0.68
+const TURN_STRIP_COUNT = 18
+
+const MOBILE_TURN_SHEET_CSS = `
+@media (max-width: 700px) {
+  .sedco-native-viewer.is-open-book.is-turning .sedco-native-spread-flipbook.sedco-native-spread-flipbook {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  .sedco-native-turn-sheet {
+    position: absolute;
+    top: 0;
+    width: var(--sedco-native-page-w);
+    height: var(--sedco-native-page-h);
+    z-index: 95;
+    pointer-events: none;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .sedco-native-turn-sheet--next {
+    left: var(--sedco-native-page-w);
+    transform-origin: left center;
+  }
+  .sedco-native-turn-sheet--prev {
+    left: 0;
+    transform-origin: right center;
+  }
+  .sedco-native-turn-sheet__strip {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .sedco-native-turn-sheet__strip-face {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #fff;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    box-shadow: inset 0 0 0 .35px rgba(0,0,0,.025);
+  }
+  .sedco-native-turn-sheet__strip-face--front {
+    transform: translateZ(.65px);
+  }
+  .sedco-native-turn-sheet__strip-face--back {
+    transform: rotateY(180deg) translateZ(.65px);
+  }
+  .sedco-native-turn-sheet__strip-face img {
+    position: absolute;
+    top: 0;
+    display: block;
+    height: 100%;
+    max-width: none;
+    background: #fff;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+  }
+  .sedco-native-turn-sheet__strip-face::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: var(--sedco-strip-shade, 0);
+    background: linear-gradient(90deg, rgba(0,0,0,.22), rgba(255,255,255,.14) 48%, rgba(0,0,0,.08));
+    mix-blend-mode: multiply;
+  }
+  .sedco-native-turn-sheet__curl {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 120;
+    pointer-events: none;
+  }
+}
+`
 
 const MOBILE_COVER_FLIP_CSS = `
 @media (max-width: 700px) {
@@ -119,6 +200,37 @@ function StaticSpread({ leftPage, rightPage, totalPages }) {
   )
 }
 
+const TurningSheet = forwardRef(function TurningSheet({ sheet, pageWidth }, ref) {
+  if (!sheet) return null
+  const stripWidth = pageWidth / TURN_STRIP_COUNT
+
+  return (
+    <div ref={ref} className={`sedco-native-turn-sheet sedco-native-turn-sheet--${sheet.direction}`} aria-hidden="true">
+      {Array.from({ length: TURN_STRIP_COUNT }, (_, index) => {
+        const left = index * stripWidth
+        const width = stripWidth + 1.6
+        const imageLeft = -left
+        return (
+          <div
+            className="sedco-native-turn-sheet__strip"
+            data-strip-index={index}
+            key={index}
+            style={{ left: `${left}px`, width: `${width}px` }}
+          >
+            <div className="sedco-native-turn-sheet__strip-face sedco-native-turn-sheet__strip-face--front">
+              <img src={pageImage(sheet.frontPage)} alt="" draggable="false" style={{ width: `${pageWidth}px`, left: `${imageLeft}px` }} />
+            </div>
+            <div className="sedco-native-turn-sheet__strip-face sedco-native-turn-sheet__strip-face--back">
+              <img src={pageImage(sheet.backPage)} alt="" draggable="false" style={{ width: `${pageWidth}px`, left: `${imageLeft}px` }} />
+            </div>
+          </div>
+        )
+      })}
+      <span className="sedco-native-turn-sheet__curl" />
+    </div>
+  )
+})
+
 const ClosingCoverSheet = forwardRef(function ClosingCoverSheet({ active }, ref) {
   if (!active) return null
   return (
@@ -134,19 +246,21 @@ const ClosingCoverSheet = forwardRef(function ClosingCoverSheet({ active }, ref)
 const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, currentPage, onPageChange, onPageTurn }, ref) {
   const spreadFlipRef = useRef(null)
   const cameraRef = useRef(null)
+  const turnSheetRef = useRef(null)
   const coverSheetRef = useRef(null)
   const gestureRef = useRef(null)
   const soundPlayedRef = useRef(false)
+  const turnRafRef = useRef(null)
   const coverRafRef = useRef(null)
+  const turnProgressRef = useRef(0)
   const coverProgressRef = useRef(0)
   const coverDirectionRef = useRef(null)
+  const pendingAutoTurnRef = useRef(null)
   const cameraSlideTimerRef = useRef(null)
   const cameraXRef = useRef(0)
-  const nativeTurnRef = useRef(null)
-  const nativeFlipStartedRef = useRef(false)
-  const nativeFallbackTimerRef = useRef(null)
 
   const [isTurning, setIsTurning] = useState(false)
+  const [turnSheet, setTurnSheet] = useState(null)
   const [coverClosing, setCoverClosing] = useState(false)
   const [viewportWidth, setViewportWidth] = useState(() => (typeof window === 'undefined' ? 390 : window.innerWidth))
   const [cameraSide, setCameraSide] = useState(() => (currentPage > 1 && currentPage % 2 === 1 ? 'right' : 'left'))
@@ -158,9 +272,9 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
   }, [])
 
   useEffect(() => () => {
+    if (turnRafRef.current) window.cancelAnimationFrame(turnRafRef.current)
     if (coverRafRef.current) window.cancelAnimationFrame(coverRafRef.current)
     if (cameraSlideTimerRef.current) window.clearTimeout(cameraSlideTimerRef.current)
-    if (nativeFallbackTimerRef.current) window.clearTimeout(nativeFallbackTimerRef.current)
   }, [])
 
   const coverPageWidth = useMemo(() => Math.round(Math.max(248, Math.min(326, viewportWidth * 0.80))), [viewportWidth])
@@ -174,25 +288,9 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
   const spreadStartPage = currentPage <= 1 ? 2 : currentPage % 2 === 0 ? currentPage : currentPage - 1
 
   useEffect(() => {
-    if (currentPage <= 1 || isTurning || coverClosing || cameraSlideTimerRef.current) return
+    if (currentPage <= 1 || turnSheet || coverClosing || cameraSlideTimerRef.current) return
     setCameraSide(currentPage % 2 === 1 ? 'right' : 'left')
-  }, [currentPage, isTurning, coverClosing])
-
-  useEffect(() => {
-    const warm = (page) => {
-      if (page < 1 || page > totalPages) return
-      const image = new Image()
-      image.src = pageImage(page)
-    }
-    ;[
-      spreadStartPage - 2,
-      spreadStartPage - 1,
-      spreadStartPage,
-      spreadStartPage + 1,
-      spreadStartPage + 2,
-      spreadStartPage + 3,
-    ].forEach(warm)
-  }, [spreadStartPage, totalPages])
+  }, [currentPage, turnSheet, coverClosing])
 
   const setCameraTransform = (x, animate = true, duration = CAMERA_FULL_MS) => {
     cameraXRef.current = x
@@ -205,12 +303,6 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
     if (!cameraSlideTimerRef.current) return
     window.clearTimeout(cameraSlideTimerRef.current)
     cameraSlideTimerRef.current = null
-  }
-
-  const clearNativeFallback = () => {
-    if (!nativeFallbackTimerRef.current) return
-    window.clearTimeout(nativeFallbackTimerRef.current)
-    nativeFallbackTimerRef.current = null
   }
 
   const snapCamera = (side, animate = true, duration = CAMERA_FULL_MS) => {
@@ -233,6 +325,54 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
     }, duration + 12)
   }
 
+  const applyTurnProgress = (direction, rawProgress) => {
+    const progress = clamp(rawProgress, 0, 1)
+    turnProgressRef.current = progress
+
+    const eased = 0.5 - (Math.cos(Math.PI * progress) / 2)
+    const bend = Math.sin(Math.PI * progress)
+    const paperBend = Math.pow(Math.max(0, bend), 0.82)
+    const degrees = 180 * eased
+    const rotation = direction === 'next' ? -degrees : degrees
+    const lift = 1 + (6 * paperBend)
+    const foldWidth = 16 + (34 * paperBend)
+    const foldOpacity = 0.05 + (0.70 * paperBend)
+    const foldX = direction === 'next' ? 100 - (eased * 100) : eased * 100
+
+    const sheet = turnSheetRef.current
+    if (sheet) {
+      sheet.style.setProperty('animation', 'none', 'important')
+      sheet.style.setProperty('--sedco-turn-fold-x', `${foldX.toFixed(2)}%`)
+      sheet.style.setProperty('--sedco-turn-fold-width', `${foldWidth.toFixed(2)}px`)
+      sheet.style.setProperty('--sedco-turn-fold-opacity', foldOpacity.toFixed(3))
+      sheet.style.transform = `perspective(1650px) rotateY(${rotation}deg) translateZ(${lift}px)`
+      sheet.style.filter = 'none'
+
+      const strips = sheet.querySelectorAll('.sedco-native-turn-sheet__strip')
+      const count = strips.length || 1
+      strips.forEach((strip, index) => {
+        const fromSpine = direction === 'next'
+          ? (index + 0.5) / count
+          : 1 - ((index + 0.5) / count)
+        const edgeLead = Math.pow(clamp(fromSpine, 0, 1), 1.55)
+        const middleArch = Math.sin(Math.PI * clamp(fromSpine, 0, 1))
+        const localDirection = direction === 'next' ? -1 : 1
+        const localCurl = localDirection * 28 * paperBend * edgeLead
+        const zBow = (12 * paperBend * middleArch) + (5 * paperBend * edgeLead)
+        const tinyLift = 1.3 * paperBend * edgeLead
+        const shade = 0.04 + (0.34 * paperBend * edgeLead)
+
+        strip.style.transformOrigin = direction === 'next' ? 'left center' : 'right center'
+        strip.style.transform = `translate3d(0,${-tinyLift}px,${zBow}px) rotateY(${localCurl}deg)`
+        strip.style.setProperty('--sedco-strip-shade', shade.toFixed(3))
+      })
+    }
+
+    const angle = Math.PI * eased
+    const cameraFactor = direction === 'next' ? (1 + Math.cos(angle)) / 2 : (1 - Math.cos(angle)) / 2
+    setCameraTransform(-cameraTravel * cameraFactor, false)
+  }
+
   const applyCoverProgress = (direction, rawProgress) => {
     const progress = clamp(rawProgress, 0, 1)
     coverProgressRef.current = progress
@@ -252,6 +392,14 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
 
   const spreadFlip = () => spreadFlipRef.current?.pageFlip?.()
 
+  const makeTurnSheet = (direction) => {
+    const isNext = direction === 'next'
+    const destinationStart = isNext ? spreadStartPage + 2 : spreadStartPage - 2
+    return isNext
+      ? { direction: 'next', frontPage: Math.min(totalPages, spreadStartPage + 1), backPage: Math.min(totalPages, destinationStart), destinationStart }
+      : { direction: 'prev', frontPage: spreadStartPage, backPage: Math.max(1, spreadStartPage - 1), destinationStart }
+  }
+
   const resetTurnSound = () => { soundPlayedRef.current = false }
   const startTurnSound = () => {
     if (soundPlayedRef.current) return
@@ -259,53 +407,50 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
     soundPlayedRef.current = true
   }
 
-  const finishNativeTurn = () => {
-    const turn = nativeTurnRef.current
-    if (!turn) return
-
-    clearNativeFallback()
-    nativeTurnRef.current = null
-    nativeFlipStartedRef.current = false
-
-    const destinationSide = turn.direction === 'next' ? 'left' : 'right'
-    const destinationPage = turn.direction === 'next'
-      ? turn.destinationStart
-      : Math.min(totalPages, turn.destinationStart + 1)
-
+  const finalizeOpenBookTurn = (sheet) => {
+    const isNext = sheet.direction === 'next'
+    const destinationSide = isNext ? 'left' : 'right'
+    const destinationPage = isNext ? sheet.destinationStart : Math.min(totalPages, sheet.destinationStart + 1)
+    spreadFlip()?.turnToPage(Math.max(0, sheet.destinationStart - 2))
     snapCamera(destinationSide, false, 0)
     onPageChange?.(destinationPage)
+    setTurnSheet(null)
     setIsTurning(false)
+    turnProgressRef.current = 0
     resetTurnSound()
   }
 
-  const beginNativeTurn = (direction) => {
-    if (isTurning || coverClosing || cameraSlideTimerRef.current) return
+  const cancelOpenBookTurn = (sheet) => {
+    snapCamera(sheet.direction === 'next' ? 'right' : 'left', false, 0)
+    setTurnSheet(null)
+    setIsTurning(false)
+    turnProgressRef.current = 0
+    resetTurnSound()
+  }
 
-    const isNext = direction === 'next'
-    const destinationStart = isNext ? spreadStartPage + 2 : spreadStartPage - 2
-    if (destinationStart < 2 || destinationStart > totalPages) return
-
-    const pageFlip = spreadFlip()
-    if (!pageFlip) return
-
-    nativeTurnRef.current = { direction, destinationStart }
-    nativeFlipStartedRef.current = false
-    setIsTurning(true)
-    startTurnSound()
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const flip = spreadFlip()
-        if (!flip || !nativeTurnRef.current) return
-
-        nativeFlipStartedRef.current = true
-        if (direction === 'next') flip.flipNext('top')
-        else flip.flipPrev('top')
-
-        clearNativeFallback()
-        nativeFallbackTimerRef.current = window.setTimeout(finishNativeTurn, PAGE_FLIP_MS + 220)
-      })
-    })
+  const animateTurnProgress = (sheet, target, onDone) => {
+    if (turnRafRef.current) window.cancelAnimationFrame(turnRafRef.current)
+    const start = turnProgressRef.current
+    const distance = Math.abs(target - start)
+    if (distance < 0.001) {
+      applyTurnProgress(sheet.direction, target)
+      onDone?.()
+      return
+    }
+    const duration = Math.max(125, TURN_FULL_MS * distance)
+    const startedAt = performance.now()
+    const tick = (now) => {
+      const elapsed = clamp((now - startedAt) / duration, 0, 1)
+      const progress = start + (target - start) * elapsed
+      applyTurnProgress(sheet.direction, progress)
+      if (elapsed < 1) turnRafRef.current = window.requestAnimationFrame(tick)
+      else {
+        turnRafRef.current = null
+        applyTurnProgress(sheet.direction, target)
+        onDone?.()
+      }
+    }
+    turnRafRef.current = window.requestAnimationFrame(tick)
   }
 
   const animateCoverProgress = (direction, target, onDone) => {
@@ -333,8 +478,29 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
     coverRafRef.current = window.requestAnimationFrame(tick)
   }
 
+  const mountOpenBookTurn = (direction, autoComplete = false) => {
+    if (isTurning) return null
+    const sheet = makeTurnSheet(direction)
+    turnProgressRef.current = 0
+    pendingAutoTurnRef.current = autoComplete ? sheet : null
+    setTurnSheet(sheet)
+    setIsTurning(true)
+    startTurnSound()
+    return sheet
+  }
+
+  useLayoutEffect(() => {
+    if (!turnSheet) return
+    applyTurnProgress(turnSheet.direction, turnProgressRef.current)
+    if (pendingAutoTurnRef.current && pendingAutoTurnRef.current.direction === turnSheet.direction && pendingAutoTurnRef.current.destinationStart === turnSheet.destinationStart) {
+      pendingAutoTurnRef.current = null
+      const frame = window.requestAnimationFrame(() => animateTurnProgress(turnSheet, 1, () => finalizeOpenBookTurn(turnSheet)))
+      return () => window.cancelAnimationFrame(frame)
+    }
+  }, [turnSheet])
+
   useEffect(() => {
-    if (currentPage <= 1 || isTurning || coverClosing || cameraSlideTimerRef.current) return
+    if (currentPage <= 1 || turnSheet || coverClosing || cameraSlideTimerRef.current) return
     requestAnimationFrame(() => {
       const side = currentPage % 2 === 1 ? 'right' : 'left'
       const x = side === 'right' ? cameraRightX : cameraLeftX
@@ -395,6 +561,8 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
     requestAnimationFrame(() => requestAnimationFrame(() => animateCoverProgress('close', 1, finishCoverClose)))
   }
 
+  const beginOpenBookTurn = (direction) => { mountOpenBookTurn(direction, true) }
+
   const moveToNextStep = () => {
     if (isTurning || cameraSlideTimerRef.current) return
     if (currentPage === 1) {
@@ -405,7 +573,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
       settleCamera('right', { fromGesture: false })
       return
     }
-    if (cameraSide === 'right' && spreadStartPage + 2 <= totalPages) beginNativeTurn('next')
+    if (cameraSide === 'right' && spreadStartPage + 2 <= totalPages) beginOpenBookTurn('next')
   }
 
   const moveToPreviousStep = () => {
@@ -418,23 +586,17 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
       beginCoverClose()
       return
     }
-    beginNativeTurn('prev')
+    beginOpenBookTurn('prev')
   }
 
   useImperativeHandle(ref, () => ({
     goTo(page) {
       const target = clamp(Number(page) || 1, 1, totalPages)
       clearCameraTimer()
-      clearNativeFallback()
-      nativeTurnRef.current = null
-      nativeFlipStartedRef.current = false
-      setIsTurning(false)
-
       if (target === 1) {
         onPageChange?.(1)
         return
       }
-
       const spread = target % 2 === 0 ? target : target - 1
       const side = target % 2 === 1 ? 'right' : 'left'
       spreadFlip()?.turnToPage(Math.max(0, spread - 2))
@@ -462,6 +624,8 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
       lastTime: now,
       velocityX: 0,
       locked: null,
+      turnDirection: null,
+      turnSheet: null,
       coverDirection: null,
     }
     event.currentTarget.setPointerCapture?.(event.pointerId)
@@ -477,8 +641,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
   const handlePointerMove = (event) => {
     const gesture = gestureRef.current
     if (!gesture || gesture.pointerId !== event.pointerId) return
-    if (isTurning && !gesture.coverDirection) return
-
+    if (isTurning && !gesture.turnDirection && !gesture.coverDirection) return
     const dx = event.clientX - gesture.startX
     const dy = event.clientY - gesture.startY
     const now = performance.now()
@@ -495,6 +658,13 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
     if (gesture.coverDirection) {
       const distance = gesture.coverDirection === 'open' ? -dx : dx
       applyCoverProgress(gesture.coverDirection, distance / (pageWidth * GESTURE_PAGE_DISTANCE))
+      updateGestureVelocity(gesture, event, now)
+      return
+    }
+
+    if (gesture.turnDirection && gesture.turnSheet) {
+      const distance = gesture.turnDirection === 'next' ? -dx : dx
+      applyTurnProgress(gesture.turnDirection, distance / (spreadPageWidth * GESTURE_PAGE_DISTANCE))
       updateGestureVelocity(gesture, event, now)
       return
     }
@@ -534,6 +704,32 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
       return
     }
 
+    if (currentPage > 1 && gesture.startSide === 'right' && dx < -4 && spreadStartPage + 2 <= totalPages) {
+      const sheet = mountOpenBookTurn('next', false)
+      if (sheet) {
+        gesture.turnDirection = 'next'
+        gesture.turnSheet = sheet
+        const progress = clamp((-dx) / (spreadPageWidth * GESTURE_PAGE_DISTANCE), 0, 1)
+        turnProgressRef.current = progress
+        requestAnimationFrame(() => applyTurnProgress('next', progress))
+      }
+      updateGestureVelocity(gesture, event, now)
+      return
+    }
+
+    if (currentPage > 1 && gesture.startSide === 'left' && dx > 4 && spreadStartPage > 2) {
+      const sheet = mountOpenBookTurn('prev', false)
+      if (sheet) {
+        gesture.turnDirection = 'prev'
+        gesture.turnSheet = sheet
+        const progress = clamp(dx / (spreadPageWidth * GESTURE_PAGE_DISTANCE), 0, 1)
+        turnProgressRef.current = progress
+        requestAnimationFrame(() => applyTurnProgress('prev', progress))
+      }
+      updateGestureVelocity(gesture, event, now)
+      return
+    }
+
     updateGestureVelocity(gesture, event, now)
   }
 
@@ -565,46 +761,32 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
       return
     }
 
+    if (gesture.turnDirection && gesture.turnSheet) {
+      const progress = turnProgressRef.current
+      const directionSign = gesture.turnDirection === 'next' ? -1 : 1
+      const recentForwardVelocity = recentVelocity * directionSign
+      const averageForwardVelocity = averageVelocity * directionSign
+      const shouldComplete = progress >= 0.18 || recentForwardVelocity >= 0.26 || averageForwardVelocity >= 0.30
+      if (shouldComplete) animateTurnProgress(gesture.turnSheet, 1, () => finalizeOpenBookTurn(gesture.turnSheet))
+      else animateTurnProgress(gesture.turnSheet, 0, () => cancelOpenBookTurn(gesture.turnSheet))
+      return
+    }
+
     if (currentPage === 1) {
       if (dx <= -threshold || averageVelocity <= -0.28) beginCoverTurn()
       return
     }
 
     if (gesture.startSide === 'left') {
-      if (dx <= -threshold || recentVelocity <= -0.24 || averageVelocity <= -0.28) {
-        settleCamera('right', { fromGesture: true })
-        return
-      }
-
-      if (dx >= threshold || recentVelocity >= 0.24 || averageVelocity >= 0.28) {
-        if (spreadStartPage <= 2) beginCoverClose()
-        else beginNativeTurn('prev')
-        return
-      }
-
-      settleCamera('left', { fromGesture: true, updatePage: false })
+      if (dx <= -threshold || recentVelocity <= -0.24 || averageVelocity <= -0.28) settleCamera('right', { fromGesture: true })
+      else settleCamera('left', { fromGesture: true, updatePage: false })
       return
     }
 
     if (gesture.startSide === 'right') {
-      if (dx >= threshold || recentVelocity >= 0.24 || averageVelocity >= 0.28) {
-        settleCamera('left', { fromGesture: true })
-        return
-      }
-
-      if ((dx <= -threshold || recentVelocity <= -0.24 || averageVelocity <= -0.28) && spreadStartPage + 2 <= totalPages) {
-        beginNativeTurn('next')
-        return
-      }
-
-      settleCamera('right', { fromGesture: true, updatePage: false })
+      if (dx >= threshold || recentVelocity >= 0.24 || averageVelocity >= 0.28) settleCamera('left', { fromGesture: true })
+      else settleCamera('right', { fromGesture: true, updatePage: false })
     }
-  }
-
-  const handleFlipState = (event) => {
-    const state = event.data
-    if (state === 'flipping') nativeFlipStartedRef.current = true
-    if (state === 'read' && nativeTurnRef.current && nativeFlipStartedRef.current) finishNativeTurn()
   }
 
   if (currentPage === 1) {
@@ -629,16 +811,21 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
     )
   }
 
+  const staticLeftPage = !turnSheet ? spreadStartPage : turnSheet.direction === 'next' ? spreadStartPage : turnSheet.destinationStart
+  const staticRightPage = !turnSheet ? spreadStartPage + 1 : turnSheet.direction === 'next' ? turnSheet.destinationStart + 1 : spreadStartPage + 1
+
   return (
     <>
+      <style>{MOBILE_TURN_SHEET_CSS}</style>
       <style>{MOBILE_COVER_FLIP_CSS}</style>
       <div className={`sedco-native-viewer is-open-book is-camera-${cameraSide}${isTurning ? ' is-turning' : ''}`} style={{ '--sedco-native-page-w': `${pageWidth}px`, '--sedco-native-page-h': `${pageHeight}px`, '--sedco-native-peek-w': `${peekWidth}px`, '--sedco-native-camera-travel': `${cameraTravel}px` }} aria-label={`Impact Report page ${currentPage} of ${totalPages}`} onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerEnd} onPointerCancel={handlePointerEnd}>
         <div className="sedco-native-camera-window">
           <div ref={cameraRef} className="sedco-native-camera-track">
             <div className="sedco-native-spread-bed" aria-hidden="true" />
-            <StaticSpread leftPage={spreadStartPage} rightPage={spreadStartPage + 1} totalPages={totalPages} />
+            <StaticSpread leftPage={staticLeftPage} rightPage={staticRightPage} totalPages={totalPages} />
+            <TurningSheet ref={turnSheetRef} sheet={turnSheet} pageWidth={pageWidth} />
             <ClosingCoverSheet ref={coverSheetRef} active={coverClosing} />
-            <HTMLFlipBook key={`spread-${pageWidth}`} ref={spreadFlipRef} width={pageWidth} height={pageHeight} size="fixed" minWidth={pageWidth} maxWidth={pageWidth} minHeight={pageHeight} maxHeight={pageHeight} startPage={Math.max(0, spreadStartPage - 2)} drawShadow flippingTime={PAGE_FLIP_MS} usePortrait={false} startZIndex={40} autoSize={false} maxShadowOpacity={0.34} showCover={false} mobileScrollSupport={false} clickEventForward={false} useMouseEvents={false} swipeDistance={28} showPageCorners disableFlipByClick className="sedco-native-flipbook sedco-native-spread-flipbook" onChangeState={handleFlipState}>
+            <HTMLFlipBook key={`spread-${pageWidth}`} ref={spreadFlipRef} width={pageWidth} height={pageHeight} size="fixed" minWidth={pageWidth} maxWidth={pageWidth} minHeight={pageHeight} maxHeight={pageHeight} startPage={Math.max(0, spreadStartPage - 2)} drawShadow flippingTime={860} usePortrait={false} startZIndex={40} autoSize={false} maxShadowOpacity={0.34} showCover={false} mobileScrollSupport={false} clickEventForward={false} useMouseEvents={false} swipeDistance={999} showPageCorners disableFlipByClick className="sedco-native-flipbook sedco-native-spread-flipbook">
               {Array.from({ length: totalPages - 1 }, (_, index) => <SedcoPage page={index + 2} totalPages={totalPages} forceSoft key={index + 2} />)}
             </HTMLFlipBook>
           </div>
