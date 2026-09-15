@@ -83,6 +83,21 @@ function GalleryLightbox({ index, onClose, onChange }) {
   const item = physicalWorks[index]
 
   useEffect(() => {
+    const neighborIndexes = [
+      (index - 1 + physicalWorks.length) % physicalWorks.length,
+      index,
+      (index + 1) % physicalWorks.length,
+    ]
+
+    neighborIndexes.forEach((workIndex) => {
+      const image = new Image()
+      image.decoding = 'async'
+      image.src = physicalWorks[workIndex].image
+      image.decode?.().catch(() => {})
+    })
+  }, [index])
+
+  useEffect(() => {
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
 
@@ -154,7 +169,7 @@ function GalleryLightbox({ index, onClose, onChange }) {
             <ChevronLeft size={22} />
           </button>
 
-          <AnimatePresence mode="wait" initial={false}>
+          <AnimatePresence initial={false}>
             <motion.img
               key={item.title}
               src={item.image}
@@ -168,12 +183,18 @@ function GalleryLightbox({ index, onClose, onChange }) {
               dragElastic={0.16}
               dragMomentum={false}
               onDragEnd={handleGallerySwipe}
-              style={{ touchAction: 'pan-y', cursor: 'grab', userSelect: 'none' }}
+              style={{
+                touchAction: 'pan-y',
+                cursor: 'grab',
+                userSelect: 'none',
+                gridArea: '1 / 1',
+                animationDuration: '0.18s',
+              }}
               whileTap={{ cursor: 'grabbing' }}
-              initial={{ opacity: 0, scale: 0.985 }}
+              initial={{ opacity: 0, scale: 0.992 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.99 }}
-              transition={{ duration: 0.24 }}
+              exit={{ opacity: 0, scale: 0.996 }}
+              transition={{ duration: 0.14, ease }}
             />
           </AnimatePresence>
 
