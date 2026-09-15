@@ -11,8 +11,10 @@ function pageImage(page) {
 
 const CAMERA_FULL_MS = 420
 const TURN_FULL_MS = 920
-const COVER_FULL_MS = 760
+const COVER_FULL_MS = 560
 const GESTURE_PAGE_DISTANCE = 0.78
+const COVER_VIEW_W = 1000
+const COVER_VIEW_H = 1414
 
 const MOBILE_TURN_SHEET_CSS = `
 @media (max-width: 700px) {
@@ -88,10 +90,6 @@ const MOBILE_COVER_FLIP_CSS = `
     z-index: 96;
     width: var(--sedco-native-page-w);
     height: var(--sedco-native-page-h);
-    perspective: 1900px !important;
-    perspective-origin: 0 50% !important;
-    transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
     pointer-events: none;
   }
 
@@ -110,8 +108,7 @@ const MOBILE_COVER_FLIP_CSS = `
     box-shadow: inset 7px 0 13px rgba(0,0,0,.035);
   }
 
-  .sedco-native-cover-under img,
-  .sedco-native-cover-sheet__face img {
+  .sedco-native-cover-under img {
     display: block;
     width: 100%;
     height: 100%;
@@ -126,42 +123,63 @@ const MOBILE_COVER_FLIP_CSS = `
     -webkit-user-drag: none;
   }
 
-  .sedco-native-cover-sheet {
+  .sedco-native-cover-curl {
     position: absolute;
     inset: 0;
     z-index: 5;
-    transform-origin: 0 50% 0;
-    transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
-    will-change: transform;
+    overflow: visible;
+    pointer-events: none;
+    will-change: contents;
   }
 
-  .sedco-native-cover-sheet__face {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    border-radius: 1px;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
+  .sedco-native-cover-curl svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
   }
 
-  .sedco-native-cover-sheet__face--front {
-    z-index: 2;
-    background: #fff;
-    transform: translateZ(.5px);
-    box-shadow: 0 5px 13px rgba(0,0,0,.13);
+  .sedco-native-cover-curl__front {
+    image-rendering: auto;
   }
 
-  .sedco-native-cover-sheet__face--back {
-    z-index: 1;
-    background: #f8f7f3;
-    transform: rotateY(180deg) translateZ(.5px);
-    box-shadow: 0 4px 11px rgba(0,0,0,.09);
+  .sedco-native-cover-curl__fold,
+  .sedco-native-cover-curl__shadow,
+  .sedco-native-cover-curl__highlight {
+    pointer-events: none;
   }
 }
 `
+
+function coverCurlGeometry(openAmount) {
+  const p = clamp(openAmount, 0, 1)
+  const sweep = Math.pow(p, 0.86)
+  const baseX = COVER_VIEW_W * (1 - sweep)
+  const bend = Math.sin(Math.PI * p)
+  const topX = clamp(baseX + (bend * 92), 0, COVER_VIEW_W)
+  const c1X = clamp(baseX - (bend * 170), 0, COVER_VIEW_W)
+  const c2X = clamp(baseX + (bend * 112), 0, COVER_VIEW_W)
+  const bottomX = clamp(baseX + (bend * 26), 0, COVER_VIEW_W)
+  const foldWidth = 190 * bend
+  const outerTopX = clamp(topX + foldWidth, 0, COVER_VIEW_W)
+  const outerC1X = clamp(c1X + (foldWidth * 0.72), 0, COVER_VIEW_W)
+  const outerC2X = clamp(c2X + (foldWidth * 0.62), 0, COVER_VIEW_W)
+  const outerBottomX = clamp(bottomX + (foldWidth * 0.88), 0, COVER_VIEW_W)
+
+  const curve = `M ${topX} 0 C ${c1X} ${Math.round(COVER_VIEW_H * 0.28)} ${c2X} ${Math.round(COVER_VIEW_H * 0.72)} ${bottomX} ${COVER_VIEW_H}`
+  const frontPath = `M 0 0 L ${topX} 0 C ${c1X} ${Math.round(COVER_VIEW_H * 0.28)} ${c2X} ${Math.round(COVER_VIEW_H * 0.72)} ${bottomX} ${COVER_VIEW_H} L 0 ${COVER_VIEW_H} Z`
+  const foldPath = `${curve} L ${outerBottomX} ${COVER_VIEW_H} C ${outerC2X} ${Math.round(COVER_VIEW_H * 0.72)} ${outerC1X} ${Math.round(COVER_VIEW_H * 0.28)} ${outerTopX} 0 Z`
+
+  return {
+    frontPath,
+    foldPath,
+    curve,
+    foldOpacity: clamp(bend * 0.98, 0, 1),
+    shadowOpacity: clamp(bend * 0.30, 0, 0.30),
+    highlightOpacity: clamp(bend * 0.48, 0, 0.48),
+    shadowWidth: 11 + (bend * 20),
+  }
+}
 
 function StaticSpread({ leftPage, rightPage, totalPages }) {
   return (
@@ -191,17 +209,80 @@ const TurningSheet = forwardRef(function TurningSheet({ sheet }, ref) {
   )
 })
 
+const CoverCurlSheet = forwardRef(function CoverCurlSheet({ closing = false }, ref) {
+  const initial = coverCurlGeometry(closing ? 1 : 0)
+  const clipId = closing ? 'brutti-cover-clip-close' : 'brutti-cover-clip-open'
+  const foldGradientId = closing ? 'brutti-cover-fold-close' : 'brutti-cover-fold-open'
+  const shadowFilterId = closing ? 'brutti-cover-shadow-close' : 'brutti-cover-shadow-open'
+
+  return (
+    <div ref={ref} className="sedco-native-cover-curl" aria-hidden="true">
+      <svg viewBox={`0 0 ${COVER_VIEW_W} ${COVER_VIEW_H}`} preserveAspectRatio="none">
+        <defs>
+          <clipPath id={clipId} clipPathUnits="userSpaceOnUse">
+            <path data-cover-front-path d={initial.frontPath} />
+          </clipPath>
+          <linearGradient id={foldGradientId} x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#f8f7f3" stopOpacity="0.96" />
+            <stop offset="45%" stopColor="#ffffff" stopOpacity="0.88" />
+            <stop offset="100%" stopColor="#d8d5ce" stopOpacity="0.72" />
+          </linearGradient>
+          <filter id={shadowFilterId} x="-40%" y="-20%" width="180%" height="140%">
+            <feGaussianBlur stdDeviation="8" />
+          </filter>
+        </defs>
+
+        <g clipPath={`url(#${clipId})`}>
+          <image
+            className="sedco-native-cover-curl__front"
+            href={pageImage(1)}
+            x="0"
+            y="0"
+            width={COVER_VIEW_W}
+            height={COVER_VIEW_H}
+            preserveAspectRatio="none"
+          />
+        </g>
+
+        <path
+          data-cover-fold-path
+          className="sedco-native-cover-curl__fold"
+          d={initial.foldPath}
+          fill={`url(#${foldGradientId})`}
+          opacity={initial.foldOpacity}
+        />
+        <path
+          data-cover-shadow-path
+          className="sedco-native-cover-curl__shadow"
+          d={initial.curve}
+          fill="none"
+          stroke="#000"
+          strokeWidth={initial.shadowWidth}
+          strokeLinecap="round"
+          opacity={initial.shadowOpacity}
+          filter={`url(#${shadowFilterId})`}
+        />
+        <path
+          data-cover-highlight-path
+          className="sedco-native-cover-curl__highlight"
+          d={initial.curve}
+          fill="none"
+          stroke="#fff"
+          strokeWidth="4"
+          strokeLinecap="round"
+          opacity={initial.highlightOpacity}
+        />
+      </svg>
+    </div>
+  )
+})
+
 const ClosingCoverSheet = forwardRef(function ClosingCoverSheet({ active }, ref) {
   if (!active) return null
 
   return (
     <div className="sedco-native-cover-closing-stage" aria-hidden="true">
-      <div ref={ref} className="sedco-native-cover-sheet" style={{ transform: 'rotateY(-180deg)' }}>
-        <div className="sedco-native-cover-sheet__face sedco-native-cover-sheet__face--front">
-          <img src={pageImage(1)} alt="" draggable="false" />
-        </div>
-        <div className="sedco-native-cover-sheet__face sedco-native-cover-sheet__face--back" />
-      </div>
+      <CoverCurlSheet ref={ref} closing />
     </div>
   )
 })
@@ -324,13 +405,24 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
   const applyCoverProgress = (direction, rawProgress) => {
     const progress = clamp(rawProgress, 0, 1)
     coverProgressRef.current = progress
-    const rotation = direction === 'open' ? -180 * progress : -180 + (180 * progress)
+    const openAmount = direction === 'open' ? progress : 1 - progress
     const sheet = coverSheetRef.current
     if (!sheet) return
 
-    sheet.style.setProperty('animation', 'none', 'important')
-    sheet.style.transform = `rotateY(${rotation}deg)`
-    sheet.style.filter = 'none'
+    const geometry = coverCurlGeometry(openAmount)
+    const frontPath = sheet.querySelector('[data-cover-front-path]')
+    const foldPath = sheet.querySelector('[data-cover-fold-path]')
+    const shadowPath = sheet.querySelector('[data-cover-shadow-path]')
+    const highlightPath = sheet.querySelector('[data-cover-highlight-path]')
+
+    frontPath?.setAttribute('d', geometry.frontPath)
+    foldPath?.setAttribute('d', geometry.foldPath)
+    foldPath?.setAttribute('opacity', String(geometry.foldOpacity))
+    shadowPath?.setAttribute('d', geometry.curve)
+    shadowPath?.setAttribute('stroke-width', String(geometry.shadowWidth))
+    shadowPath?.setAttribute('opacity', String(geometry.shadowOpacity))
+    highlightPath?.setAttribute('d', geometry.curve)
+    highlightPath?.setAttribute('opacity', String(geometry.highlightOpacity))
   }
 
   const makeTurnSheet = (direction) => {
@@ -427,13 +519,13 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
       return
     }
 
-    const duration = Math.max(360, COVER_FULL_MS * distance)
+    const duration = Math.max(260, COVER_FULL_MS * distance)
     const startedAt = performance.now()
 
     const tick = (now) => {
       const time = clamp((now - startedAt) / duration, 0, 1)
       const easedTime = start > 0.001
-        ? 1 - Math.pow(1 - time, 2)
+        ? 1 - Math.pow(1 - time, 2.05)
         : time * time * (3 - (2 * time))
       const progress = start + ((target - start) * easedTime)
       applyCoverProgress(direction, progress)
@@ -477,6 +569,11 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
       return () => window.cancelAnimationFrame(frame)
     }
   }, [turnSheet])
+
+  useLayoutEffect(() => {
+    if (!coverClosing) return
+    applyCoverProgress('close', coverProgressRef.current)
+  }, [coverClosing])
 
   useEffect(() => {
     if (currentPage <= 1 || turnSheet || coverClosing || cameraSlideTimerRef.current) return
@@ -841,12 +938,7 @@ const MobileImpactSlider = forwardRef(function MobileImpactSlider({ totalPages, 
               <div className="sedco-native-cover-under">
                 <img src={pageImage(2)} alt="" draggable="false" />
               </div>
-              <div ref={coverSheetRef} className="sedco-native-cover-sheet">
-                <div className="sedco-native-cover-sheet__face sedco-native-cover-sheet__face--front">
-                  <img src={pageImage(1)} alt="" draggable="false" />
-                </div>
-                <div className="sedco-native-cover-sheet__face sedco-native-cover-sheet__face--back" />
-              </div>
+              <CoverCurlSheet ref={coverSheetRef} />
             </div>
           </div>
         </div>
