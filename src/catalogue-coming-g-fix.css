@@ -1,0 +1,23 @@
+/* Prevent Italiana descenders/italic overhang (notably the “g” in “coming”) from being clipped. */
+.catalogue-coming__intro,
+.catalogue-coming__intro h2,
+.catalogue-coming__intro h2 em {
+  overflow: visible !important;
+}
+
+.catalogue-coming__intro h2 {
+  line-height: 1.06 !important;
+  padding-bottom: .10em;
+}
+
+.catalogue-coming__intro h2 em {
+  padding: 0 .08em .12em .02em;
+  margin: 0 -.08em -.12em -.02em;
+}
+
+@media (max-width: 620px) {
+  .catalogue-coming__intro h2 {
+    line-height: 1.08 !important;
+    padding-bottom: .12em;
+  }
+}
