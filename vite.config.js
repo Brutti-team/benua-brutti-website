@@ -30,7 +30,7 @@ function bruttiStructuredData() {
       return [
         {
           tag: 'link',
-          attrs: { rel: 'stylesheet', href: '/collaborators-mobile-lightbox-fix.css' },
+          attrs: { rel: 'stylesheet', href: '/collaborators-mobile-lightbox-fix.css?v=20260917-2' },
           injectTo: 'head',
         },
         {
