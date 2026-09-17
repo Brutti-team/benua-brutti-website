@@ -28,8 +28,9 @@ function bruttiStructuredData() {
       }
 
       const cleanedHtml = html
-        .replace(/\s*<link rel="icon"[^>]*favicon\.svg[^>]*>\s*/gi, '\n')
-        .replace(/\s*<link rel="shortcut icon"[^>]*favicon\.svg[^>]*>\s*/gi, '\n')
+        .replace(/\s*<link rel="icon"[^>]*>\s*/gi, '\n')
+        .replace(/\s*<link rel="shortcut icon"[^>]*>\s*/gi, '\n')
+        .replace(/\s*<link rel="apple-touch-icon"[^>]*>\s*/gi, '\n')
 
       return {
         html: cleanedHtml,
@@ -44,16 +45,8 @@ function bruttiStructuredData() {
             attrs: {
               rel: 'icon',
               type: 'image/jpeg',
-              href: '/assets/logo%20brutti.jpg?v=20260917-direct',
-            },
-            injectTo: 'head',
-          },
-          {
-            tag: 'link',
-            attrs: {
-              rel: 'shortcut icon',
-              type: 'image/jpeg',
-              href: '/assets/logo%20brutti.jpg?v=20260917-direct',
+              sizes: '331x331',
+              href: '/assets/logo%20brutti.jpg?favicon=actual-logo-20260917-7',
             },
             injectTo: 'head',
           },
@@ -61,7 +54,7 @@ function bruttiStructuredData() {
             tag: 'link',
             attrs: {
               rel: 'apple-touch-icon',
-              href: '/assets/logo%20brutti.jpg?v=20260917-direct',
+              href: '/assets/logo%20brutti.jpg?favicon=actual-logo-20260917-7',
             },
             injectTo: 'head',
           },
