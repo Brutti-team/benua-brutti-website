@@ -13,7 +13,7 @@ const sitePages = [
 function bruttiStructuredData() {
   return {
     name: 'brutti-structured-data',
-    transformIndexHtml() {
+    transformIndexHtml(html) {
       const structuredData = {
         '@context': 'https://schema.org',
         '@type': 'WebSite',
@@ -27,29 +27,52 @@ function bruttiStructuredData() {
         })),
       }
 
-      return [
-        {
-          tag: 'link',
-          attrs: { rel: 'stylesheet', href: '/collaborators-mobile-lightbox-fix.css?v=20260917-2' },
-          injectTo: 'head',
-        },
-        {
-          tag: 'link',
-          attrs: { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg?v=20260917-4' },
-          injectTo: 'head',
-        },
-        {
-          tag: 'link',
-          attrs: { rel: 'shortcut icon', href: '/favicon.svg?v=20260917-4' },
-          injectTo: 'head',
-        },
-        {
-          tag: 'script',
-          attrs: { type: 'application/ld+json' },
-          children: JSON.stringify(structuredData),
-          injectTo: 'head',
-        },
-      ]
+      const cleanedHtml = html
+        .replace(/\s*<link rel="icon"[^>]*favicon\.svg[^>]*>\s*/gi, '\n')
+        .replace(/\s*<link rel="shortcut icon"[^>]*favicon\.svg[^>]*>\s*/gi, '\n')
+
+      return {
+        html: cleanedHtml,
+        tags: [
+          {
+            tag: 'link',
+            attrs: { rel: 'stylesheet', href: '/collaborators-mobile-lightbox-fix.css?v=20260917-2' },
+            injectTo: 'head',
+          },
+          {
+            tag: 'link',
+            attrs: {
+              rel: 'icon',
+              type: 'image/jpeg',
+              href: '/assets/logo%20brutti.jpg?v=20260917-direct',
+            },
+            injectTo: 'head',
+          },
+          {
+            tag: 'link',
+            attrs: {
+              rel: 'shortcut icon',
+              type: 'image/jpeg',
+              href: '/assets/logo%20brutti.jpg?v=20260917-direct',
+            },
+            injectTo: 'head',
+          },
+          {
+            tag: 'link',
+            attrs: {
+              rel: 'apple-touch-icon',
+              href: '/assets/logo%20brutti.jpg?v=20260917-direct',
+            },
+            injectTo: 'head',
+          },
+          {
+            tag: 'script',
+            attrs: { type: 'application/ld+json' },
+            children: JSON.stringify(structuredData),
+            injectTo: 'head',
+          },
+        ],
+      }
     },
   }
 }
