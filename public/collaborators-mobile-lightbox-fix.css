@@ -1,49 +1,63 @@
 @media (max-width: 700px) {
-  .collab-lightbox {
+  html body #strategic-collaborators .collab-lightbox {
     display: grid !important;
     place-items: center !important;
     padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom)) !important;
   }
 
-  .collab-lightbox__panel {
+  html body #strategic-collaborators .collab-lightbox .collab-lightbox__panel {
     width: min(100%, 420px) !important;
     max-width: calc(100vw - 24px) !important;
     margin: 0 auto !important;
   }
 
-  .collab-lightbox__visual {
+  html body #strategic-collaborators .collab-lightbox .collab-lightbox__visual {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     min-height: 350px !important;
-    padding: 34px 52px 48px !important;
+    padding: 34px 58px 48px !important;
+    overflow: hidden !important;
   }
 
-  .collab-lightbox__logo-wrap {
+  html body #strategic-collaborators .collab-lightbox .collab-lightbox__logo-wrap {
     width: 100% !important;
-    max-width: calc(100vw - 128px) !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
     min-height: 220px !important;
     margin: 0 auto !important;
     display: grid !important;
     place-items: center !important;
   }
 
-  .collab-lightbox__visual img {
+  html body #strategic-collaborators .collab-lightbox .collab-lightbox__visual img {
     display: block !important;
     width: auto !important;
     height: auto !important;
     max-width: 100% !important;
-    max-height: 230px !important;
+    max-height: 210px !important;
     margin: 0 auto !important;
     object-fit: contain !important;
-    object-position: center center !important;
+    object-position: 50% 50% !important;
+    transform: none !important;
   }
 
-  .collab-lightbox__nav--prev {
+  html body #strategic-collaborators .collab-lightbox .collab-lightbox__nav--prev {
     left: 8px !important;
   }
 
-  .collab-lightbox__nav--next {
+  html body #strategic-collaborators .collab-lightbox .collab-lightbox__nav--next {
     right: 8px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  html body #strategic-collaborators .collab-lightbox .collab-lightbox__visual {
+    padding-left: 62px !important;
+    padding-right: 62px !important;
+  }
+
+  html body #strategic-collaborators .collab-lightbox .collab-lightbox__visual img {
+    max-height: 190px !important;
   }
 }
