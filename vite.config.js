@@ -34,6 +34,16 @@ function bruttiStructuredData() {
           injectTo: 'head',
         },
         {
+          tag: 'link',
+          attrs: { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg?v=20260917-4' },
+          injectTo: 'head',
+        },
+        {
+          tag: 'link',
+          attrs: { rel: 'shortcut icon', href: '/favicon.svg?v=20260917-4' },
+          injectTo: 'head',
+        },
+        {
           tag: 'script',
           attrs: { type: 'application/ld+json' },
           children: JSON.stringify(structuredData),
