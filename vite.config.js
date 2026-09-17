@@ -29,6 +29,11 @@ function bruttiStructuredData() {
 
       return [
         {
+          tag: 'link',
+          attrs: { rel: 'stylesheet', href: '/collaborators-mobile-lightbox-fix.css' },
+          injectTo: 'head',
+        },
+        {
           tag: 'script',
           attrs: { type: 'application/ld+json' },
           children: JSON.stringify(structuredData),
