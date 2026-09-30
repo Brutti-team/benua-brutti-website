@@ -78,19 +78,18 @@ function App() {
   }, [])
 
   const navItems = [
-    { id: 'home', label: 'home' },
-    { id: 'about', label: 'about' },
-    { id: 'our-journey', label: 'our journey' },
-    { id: 'catalogue', label: 'catalogue' },
-    { id: 'impact-report', label: 'impact report', page: '/impact/' },
-    { id: 'contact', label: 'contact' },
+    { id: 'home', label: 'home', href: '/' },
+    { id: 'about', label: 'about', href: '/about/' },
+    { id: 'our-journey', label: 'our journey', href: '/journey/' },
+    { id: 'catalogue', label: 'catalogue', href: '/catalogue/' },
+    { id: 'impact-report', label: 'impact report', href: '/impact/', page: true },
+    { id: 'contact', label: 'contact', href: '/contact/' },
   ]
 
-  const openNavItem = (item) => {
-    if (item.page) {
-      window.location.href = item.page
-      return
-    }
+  const openNavItem = (event, item) => {
+    if (item.page) return
+
+    event.preventDefault()
     setActiveSection(item.id)
     scrollToId(item.id)
   }
@@ -110,7 +109,13 @@ function App() {
 
         <nav className="nav__links" aria-label="Primary navigation">
           {navItems.map((item) => (
-            <button key={item.id} onClick={() => openNavItem(item)}>{item.label}</button>
+            <a
+              key={item.id}
+              href={item.href}
+              onClick={(event) => openNavItem(event, item)}
+            >
+              {item.label}
+            </a>
           ))}
         </nav>
 
@@ -130,14 +135,15 @@ function App() {
           {navItems.map((item, index) => {
             const isCurrent = activeSection === item.id
             return (
-              <button
+              <a
                 key={item.id}
-                onClick={() => { openNavItem(item); setMenuOpen(false) }}
+                href={item.href}
+                onClick={(event) => { openNavItem(event, item); setMenuOpen(false) }}
                 className={`mobile-menu__link ${isCurrent ? 'is-current' : ''}`}
                 aria-current={isCurrent ? 'page' : undefined}
               >
                 <span>0{index + 1}</span>{item.label}
-              </button>
+              </a>
             )
           })}
         </motion.div>

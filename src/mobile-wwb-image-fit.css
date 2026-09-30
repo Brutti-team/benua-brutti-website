@@ -263,3 +263,42 @@
     line-height: 1.35 !important;
   }
 }
+
+
+/* SEO navigation semantics: real crawlable links, same visual treatment as the existing buttons. */
+html body .nav__links > a {
+  border: 0 !important;
+  background: transparent !important;
+  color: inherit !important;
+  text-decoration: none !important;
+  text-transform: capitalize !important;
+  cursor: pointer !important;
+  opacity: .88 !important;
+  position: relative !important;
+  padding: 7px 11px !important;
+  border-radius: 999px !important;
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: -.01em !important;
+  transition: background .22s ease, color .22s ease, transform .22s ease, opacity .22s ease !important;
+}
+
+html body .nav__links > a::after {
+  display: none !important;
+}
+
+html body .nav__links > a:hover {
+  transform: translateY(-1px) !important;
+  background: rgba(255,255,255,.07) !important;
+  opacity: 1 !important;
+}
+
+html body .nav--scrolled .nav__links > a:hover {
+  background: rgba(22,60,45,.06) !important;
+}
+
+html body .mobile-menu__link {
+  color: inherit !important;
+  text-decoration: none !important;
+}

@@ -25,6 +25,16 @@ function bruttiStructuredData() {
           name,
           url: `https://brutti.my${path}`,
         })),
+        mainEntity: {
+          '@type': 'ItemList',
+          name: 'Brutti main pages',
+          itemListElement: sitePages.map(([name, path], index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name,
+            url: `https://brutti.my${path}`,
+          })),
+        },
       }
 
       const cleanedHtml = html
