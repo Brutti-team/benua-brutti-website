@@ -7,8 +7,20 @@ import './contact-map.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
+function getLandingSection(id) {
+  if (id === 'catalogue') {
+    return document.getElementById('catalogue-coming-soon') || document.getElementById('catalogue')
+  }
+
+  return document.getElementById(id)
+}
+
 function scrollToId(id) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  const section = getLandingSection(id)
+  if (!section) return false
+
+  section.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  return true
 }
 
 function App() {
@@ -31,20 +43,13 @@ function App() {
     const trackedIds = ['home', 'about', 'our-journey', 'catalogue', 'impact-report', 'contact']
     let frame = null
 
-    const resolveSection = (id) => {
-      if (id === 'catalogue') {
-        return document.getElementById('catalogue-coming-soon') || document.getElementById('catalogue')
-      }
-      return document.getElementById(id)
-    }
-
     const updateActiveSection = () => {
       frame = null
       const marker = Math.min(window.innerHeight * 0.38, 320)
       let current = 'home'
 
       trackedIds.forEach((id) => {
-        const section = resolveSection(id)
+        const section = getLandingSection(id)
         if (!section) return
         const rect = section.getBoundingClientRect()
         if (rect.top <= marker) current = id
@@ -87,11 +92,15 @@ function App() {
   ]
 
   const openNavItem = (event, item) => {
-    if (item.page) return
-
     event.preventDefault()
     setActiveSection(item.id)
-    scrollToId(item.id)
+
+    if (scrollToId(item.id)) return
+
+    window.requestAnimationFrame(() => {
+      if (scrollToId(item.id)) return
+      window.location.href = item.href
+    })
   }
 
   return (
