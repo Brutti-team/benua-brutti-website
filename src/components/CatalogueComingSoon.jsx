@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import ImpactReportTeaser from './ImpactReportTeaser.jsx'
+import CareerTeaser from './CareerTeaser.jsx'
 import '../catalogue-coming-clean.css'
 import '../catalogue-coming-g-fix.css'
 
@@ -141,6 +142,7 @@ export default function CatalogueComingSoon() {
       </div>
       </section>
       <ImpactReportTeaser />
+      <CareerTeaser />
     </>
   )
 }
