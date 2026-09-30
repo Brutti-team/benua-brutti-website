@@ -29,26 +29,24 @@ export default function ImpactReportTeaser() {
           </motion.p>
 
           <h2 id="impact-teaser-title" className="impact-teaser__animated-title">
-            <span className="impact-teaser__line">
-              <motion.span
-                initial={{ y: '115%', opacity: 0, filter: 'blur(8px)' }}
-                whileInView={{ y: '0%', opacity: 1, filter: 'blur(0px)' }}
-                viewport={{ once: false, amount: 0.75 }}
-                transition={{ duration: 0.82, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-              >
-                The story behind
-              </motion.span>
-            </span>
-            <span className="impact-teaser__line impact-teaser__line--accent">
-              <motion.em
-                initial={{ y: '115%', opacity: 0, filter: 'blur(9px)', scale: 0.985 }}
-                whileInView={{ y: '0%', opacity: 1, filter: 'blur(0px)', scale: 1 }}
-                viewport={{ once: false, amount: 0.75 }}
-                transition={{ duration: 0.95, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
-              >
-                the impact.
-              </motion.em>
-            </span>
+            <motion.span
+              className="impact-teaser__title-row"
+              initial={{ opacity: 0, y: 34, filter: 'blur(7px)' }}
+              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.78, delay: 0.04, ease: [0.22, 1, 0.36, 1] }}
+            >
+              The story behind
+            </motion.span>
+            <motion.em
+              className="impact-teaser__title-row impact-teaser__title-row--accent"
+              initial={{ opacity: 0, y: 30, filter: 'blur(7px)' }}
+              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.86, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
+            >
+              the impact.
+            </motion.em>
           </h2>
 
           <motion.p
