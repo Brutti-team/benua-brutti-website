@@ -88,6 +88,7 @@ function App() {
     { id: 'our-journey', label: 'our journey', href: '/journey/' },
     { id: 'catalogue', label: 'catalogue', href: '/catalogue/' },
     { id: 'impact-report', label: 'impact report', href: '/impact/' },
+    { id: 'career', label: 'career', href: '#career' },
     { id: 'contact', label: 'contact', href: '/contact/' },
   ]
 
