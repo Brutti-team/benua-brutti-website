@@ -18,26 +18,76 @@ export default function ImpactReportTeaser() {
           viewport={{ once: false, amount: 0.35 }}
           transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
         >
-          <p className="impact-teaser__eyebrow">Impact Report · 2026</p>
-          <h2 id="impact-teaser-title">
-            The story behind<br />
-            <em>the impact.</em>
+          <motion.p
+            className="impact-teaser__eyebrow"
+            initial={{ opacity: 0, y: 14, letterSpacing: '0.26em' }}
+            whileInView={{ opacity: 1, y: 0, letterSpacing: '0.19em' }}
+            viewport={{ once: false, amount: 0.8 }}
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          >
+            Impact Report · 2026
+          </motion.p>
+
+          <h2 id="impact-teaser-title" className="impact-teaser__animated-title">
+            <span className="impact-teaser__line">
+              <motion.span
+                initial={{ y: '115%', opacity: 0, filter: 'blur(8px)' }}
+                whileInView={{ y: '0%', opacity: 1, filter: 'blur(0px)' }}
+                viewport={{ once: false, amount: 0.75 }}
+                transition={{ duration: 0.82, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+              >
+                The story behind
+              </motion.span>
+            </span>
+            <span className="impact-teaser__line impact-teaser__line--accent">
+              <motion.em
+                initial={{ y: '115%', opacity: 0, filter: 'blur(9px)', scale: 0.985 }}
+                whileInView={{ y: '0%', opacity: 1, filter: 'blur(0px)', scale: 1 }}
+                viewport={{ once: false, amount: 0.75 }}
+                transition={{ duration: 0.95, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
+              >
+                the impact.
+              </motion.em>
+            </span>
           </h2>
-          <p className="impact-teaser__lead">
+
+          <motion.p
+            className="impact-teaser__lead"
+            initial={{ opacity: 0, y: 22, filter: 'blur(5px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            viewport={{ once: false, amount: 0.65 }}
+            transition={{ duration: 0.76, delay: 0.26, ease: [0.22, 1, 0.36, 1] }}
+          >
             Explore how Benua Brutti gives recovered pallet wood a second life,
             the work behind the numbers, and the people and ideas shaping our journey.
-          </p>
+          </motion.p>
 
-          <div className="impact-teaser__meta" aria-label="Impact report highlights">
+          <motion.div
+            className="impact-teaser__meta"
+            aria-label="Impact report highlights"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.8 }}
+            transition={{ duration: 0.62, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
+          >
             <span>40-page report</span>
             <span>Interactive book</span>
-          </div>
+          </motion.div>
 
-          <a className="impact-teaser__button" href="/impact/">
+          <motion.a
+            className="impact-teaser__button"
+            href="/impact/"
+            initial={{ opacity: 0, y: 16, scale: 0.98 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: false, amount: 0.8 }}
+            transition={{ duration: 0.62, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ y: -2, scale: 1.015 }}
+            whileTap={{ scale: 0.985 }}
+          >
             <BookOpen size={18} aria-hidden="true" />
             <span>Read the Impact Report</span>
             <ArrowUpRight size={17} aria-hidden="true" />
-          </a>
+          </motion.a>
         </motion.div>
 
         <motion.a
