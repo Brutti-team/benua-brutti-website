@@ -6,6 +6,7 @@ const sitePages = [
   ['Our Journey', '/journey/'],
   ['What We Build', '/what-we-build/'],
   ['Impact Report', '/impact/'],
+  ['Career', '/career/'],
   ['Catalogue', '/catalogue/'],
   ['Contact', '/contact/'],
 ]
