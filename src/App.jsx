@@ -40,7 +40,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const trackedIds = ['home', 'about', 'our-journey', 'catalogue', 'impact-report', 'contact']
+    const trackedIds = ['home', 'about', 'our-journey', 'catalogue', 'impact-report', 'career', 'contact']
     let frame = null
 
     const updateActiveSection = () => {
@@ -88,7 +88,7 @@ function App() {
     { id: 'our-journey', label: 'our journey', href: '/journey/' },
     { id: 'catalogue', label: 'catalogue', href: '/catalogue/' },
     { id: 'impact-report', label: 'impact report', href: '/impact/' },
-    { id: 'career', label: 'career', href: '#career' },
+    { id: 'career', label: 'career', href: '/career/' },
     { id: 'contact', label: 'contact', href: '/contact/' },
   ]
 
