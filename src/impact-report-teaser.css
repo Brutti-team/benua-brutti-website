@@ -296,3 +296,54 @@
     transition: none;
   }
 }
+
+
+/* Impact report typography reveal */
+.impact-teaser__animated-title {
+  overflow: visible;
+}
+
+.impact-teaser__line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+
+.impact-teaser__line > span,
+.impact-teaser__line > em {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+
+.impact-teaser__line--accent {
+  margin-top: -0.03em;
+}
+
+.impact-teaser__line--accent em {
+  position: relative;
+  transform-origin: left center;
+}
+
+.impact-teaser__line--accent em::after {
+  content: '';
+  position: absolute;
+  left: 0.03em;
+  right: 0.02em;
+  bottom: 0.02em;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(216, 189, 145, 0.72), transparent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: impact-title-line 1.05s 0.72s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+@keyframes impact-title-line {
+  to { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .impact-teaser__line--accent em::after {
+    animation: none;
+    transform: scaleX(1);
+  }
+}
