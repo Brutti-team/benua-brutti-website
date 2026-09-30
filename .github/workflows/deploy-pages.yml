@@ -246,12 +246,12 @@ jobs:
 
           for slug, meta in pages.items():
               html = base
-              html = html.replace('<title>Brutti™ (Benua Brutti Sdn Bhd)</title>', f"<title>{meta['title']}</title>")
-              html = html.replace('content="Brutti by Benua Brutti Sdn Bhd creates upcycled pallet wood furniture, custom pieces and functional spaces in Sabah, Malaysia."', f"content=\"{meta['description']}\"")
+              html = html.replace('<title>Benua Brutti | Upcycled Furniture & Custom Builds Sabah</title>', f"<title>{meta['title']}</title>")
+              html = html.replace('content="Benua Brutti Sdn Bhd designs and builds custom furniture in Sabah using upcycled pallet wood to create functional pieces while giving materials a longer life."', f"content=\"{meta['description']}\"")
               html = html.replace('<link rel="canonical" href="https://brutti.my/" />', f"<link rel=\"canonical\" href=\"{meta['url']}\" />")
-              html = html.replace('<meta property="og:title" content="Brutti™ (Benua Brutti Sdn Bhd)" />', f"<meta property=\"og:title\" content=\"{meta['title']}\" />")
+              html = html.replace('<meta property="og:title" content="Benua Brutti | Upcycled Furniture & Custom Builds Sabah" />', f"<meta property=\"og:title\" content=\"{meta['title']}\" />")
               html = html.replace('<meta property="og:url" content="https://brutti.my/" />', f"<meta property=\"og:url\" content=\"{meta['url']}\" />")
-              html = html.replace('<meta name="twitter:title" content="Brutti™ (Benua Brutti Sdn Bhd)" />', f"<meta name=\"twitter:title\" content=\"{meta['title']}\" />")
+              html = html.replace('<meta name="twitter:title" content="Benua Brutti | Upcycled Furniture & Custom Builds Sabah" />', f"<meta name=\"twitter:title\" content=\"{meta['title']}\" />")
 
               output = Path('dist') / slug / 'index.html'
               output.parent.mkdir(parents=True, exist_ok=True)
