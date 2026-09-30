@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import ImpactReportTeaser from './ImpactReportTeaser.jsx'
 import '../catalogue-coming-clean.css'
 import '../catalogue-coming-g-fix.css'
 
@@ -10,7 +11,8 @@ const revealViewport = { once: false, amount: 0.65, margin: '0px 0px -8% 0px' }
 
 export default function CatalogueComingSoon() {
   return (
-    <section className="catalogue-coming section-pad" aria-labelledby="catalogue-coming-title">
+    <>
+      <section className="catalogue-coming section-pad" aria-labelledby="catalogue-coming-title">
       <div className="catalogue-coming__ambient catalogue-coming__ambient--one" aria-hidden="true" />
       <div className="catalogue-coming__ambient catalogue-coming__ambient--two" aria-hidden="true" />
 
@@ -137,6 +139,8 @@ export default function CatalogueComingSoon() {
           </div>
         </motion.div>
       </div>
-    </section>
+      </section>
+      <ImpactReportTeaser />
+    </>
   )
 }
