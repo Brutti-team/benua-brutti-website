@@ -5,6 +5,7 @@ import App from './App.jsx'
 import Collaborators from './components/Collaborators.jsx'
 import JourneyPage from './components/JourneyPage.jsx'
 import ImpactReportPage from './components/ImpactReportPage.jsx'
+import CareerPage from './components/CareerPage.jsx'
 import WhatWeBuild from './components/WhatWeBuild.jsx'
 import CatalogueComingSoon from './components/CatalogueComingSoon.jsx'
 import './styles.css'
@@ -53,6 +54,7 @@ function getViewFromLocation() {
   const path = window.location.pathname.replace(/\/+$/, '') || '/'
   if (path === '/journey') return 'journey'
   if (path === '/impact') return 'impact-report'
+  if (path === '/career') return 'career'
   if (window.location.hash === '#journey') return 'journey'
   return 'home'
 }
@@ -367,6 +369,10 @@ function BruttiSite() {
 
   if (view === 'impact-report') {
     return <ImpactReportPage />
+  }
+
+  if (view === 'career') {
+    return <CareerPage />
   }
 
   return (
