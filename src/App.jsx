@@ -28,7 +28,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const trackedIds = ['home', 'about', 'our-journey', 'catalogue', 'contact']
+    const trackedIds = ['home', 'about', 'our-journey', 'catalogue', 'impact-report', 'contact']
     let frame = null
 
     const resolveSection = (id) => {
@@ -82,7 +82,7 @@ function App() {
     { id: 'about', label: 'about', href: '/about/' },
     { id: 'our-journey', label: 'our journey', href: '/journey/' },
     { id: 'catalogue', label: 'catalogue', href: '/catalogue/' },
-    { id: 'impact-report', label: 'impact report', href: '/impact/', page: true },
+    { id: 'impact-report', label: 'impact report', href: '/impact/' },
     { id: 'contact', label: 'contact', href: '/contact/' },
   ]
 
