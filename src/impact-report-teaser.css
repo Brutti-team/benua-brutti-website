@@ -120,19 +120,19 @@
 
 .impact-teaser__button {
   width: fit-content;
-  min-height: 60px;
+  min-height: 47px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-top: 38px;
-  padding: 0 23px 0 21px;
+  margin-top: 32px;
+  padding: 0 18px 0 20px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 999px;
   background: #f1eadc;
   color: #123c31;
-  font-size: 15px;
-  font-weight: 800;
+  font-size: 12px;
+  font-weight: 760;
   text-decoration: none;
   box-shadow: 0 16px 38px rgba(0, 0, 0, 0.16);
   transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
@@ -273,8 +273,10 @@
 
   .impact-teaser__button {
     width: 100%;
-    min-height: 54px;
+    min-height: 52px;
     margin-top: 26px;
+    padding: 0 20px;
+    font-size: 13px;
   }
 
   .impact-teaser__book {
