@@ -237,6 +237,11 @@ jobs:
                   'description': 'Explore Benua Brutti’s impact in Sabah, including recovered pallet wood, materials kept in use and the upcoming interactive impact report.',
                   'url': 'https://brutti.my/impact/',
               },
+              'career': {
+                  'title': 'Careers at Brutti | Benua Brutti Sdn Bhd',
+                  'description': 'Explore career opportunities at Benua Brutti in Sabah, including internships, machinist, artisan and other workshop or production roles.',
+                  'url': 'https://brutti.my/career/',
+              },
           }
 
           for slug, meta in pages.items():
