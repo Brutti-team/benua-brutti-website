@@ -6,7 +6,7 @@ const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
 
 export default function ImpactReportTeaser() {
   return (
-    <section className="impact-teaser section-pad" aria-labelledby="impact-teaser-title">
+    <section id="impact-report" className="impact-teaser section-pad" aria-labelledby="impact-teaser-title">
       <div className="impact-teaser__glow impact-teaser__glow--one" aria-hidden="true" />
       <div className="impact-teaser__glow impact-teaser__glow--two" aria-hidden="true" />
 
