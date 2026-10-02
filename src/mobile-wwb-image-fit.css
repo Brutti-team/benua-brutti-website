@@ -379,3 +379,71 @@ html body .mobile-menu__link {
     pointer-events: none !important;
   }
 }
+
+
+/* Mobile What We Build: arrow-led carousel.
+   Keep vertical page scrolling effortless; horizontal card movement is handled
+   by the explicit arrow controls instead of intercepting touch gestures. */
+#what-we-build .wwb-services-mobile-nav {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  html body #what-we-build .wwb-services-carousel {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  html body #what-we-build .wwb-services-grid {
+    touch-action: pan-y pinch-zoom !important;
+    overscroll-behavior-x: contain !important;
+  }
+
+  html body #what-we-build .wwb-service-card,
+  html body #what-we-build .wwb-service-media,
+  html body #what-we-build .wwb-service-meta {
+    touch-action: pan-y pinch-zoom !important;
+  }
+
+  html body #what-we-build .wwb-services-mobile-nav {
+    position: absolute !important;
+    top: 16px !important;
+    right: 16px !important;
+    z-index: 12 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    padding: 6px !important;
+    border: 1px solid rgba(255,255,255,.72) !important;
+    border-radius: 999px !important;
+    background: rgba(248,250,247,.88) !important;
+    box-shadow: 0 8px 24px rgba(24,63,49,.14) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+  }
+
+  html body #what-we-build .wwb-services-mobile-nav > span {
+    display: none !important;
+  }
+
+  html body #what-we-build .wwb-services-mobile-nav > button {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    display: grid !important;
+    place-items: center !important;
+    background: #174d3d !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: transparent !important;
+    touch-action: manipulation !important;
+    box-shadow: none !important;
+  }
+
+  html body #what-we-build .wwb-services-mobile-nav > button:active {
+    transform: scale(.94) !important;
+  }
+}
