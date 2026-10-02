@@ -243,7 +243,7 @@ function App() {
             <p className="eyebrow">About Brutti</p>
             <h2>Karya <em>anak bangsa.</em></h2>
             <p className="vm-lead">
-              Kami tidak sekadar mencipta. Kami membawa warisan bangsa ke pentas dunia.
+              Karya anak bangsa.
             </p>
           </Reveal>
 
