@@ -359,3 +359,31 @@ html body .mobile-menu__link {
     max-width: 84vw !important;
   }
 }
+
+/* Mobile WWB touch intent — avoid accidental horizontal swipe from images */
+@media (max-width: 700px) {
+  /* When the user starts a gesture on the artwork itself, favour normal
+     vertical page scrolling. Horizontal carousel swiping remains available
+     from the card text area and gaps between cards. */
+  html body #what-we-build .wwb-service-media,
+  html body #what-we-build .wwb-service-media img {
+    touch-action: pan-y pinch-zoom !important;
+  }
+
+  html body #what-we-build .wwb-service-media {
+    -webkit-user-select: none !important;
+    user-select: none !important;
+  }
+
+  html body #what-we-build .wwb-service-media img {
+    -webkit-user-drag: none !important;
+    user-drag: none !important;
+    pointer-events: none !important;
+  }
+
+  /* Keep intentional left/right swipe available outside the image area. */
+  html body #what-we-build .wwb-service-meta,
+  html body #what-we-build .wwb-services-grid {
+    touch-action: pan-x pan-y !important;
+  }
+}
