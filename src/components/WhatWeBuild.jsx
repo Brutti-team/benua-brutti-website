@@ -317,7 +317,7 @@ export default function WhatWeBuild() {
 
               <a
                 className="wwb-selesa-showcase__cta"
-                href="https://selesaai.lovable.app"
+                href="https://selesaai.com"
                 target="_blank"
                 rel="noreferrer"
               >
