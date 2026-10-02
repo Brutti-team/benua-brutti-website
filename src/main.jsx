@@ -259,7 +259,7 @@ function BruttiSite() {
       const height = Math.min(660, Math.max(520, window.screen.availHeight - 120))
       const left = Math.max(0, Math.round((window.screen.availWidth - width) / 2))
       const top = Math.max(0, Math.round((window.screen.availHeight - height) / 2))
-      const popupName = link.href.includes('hr.bruttibesi') ? 'brutti-hr-gmail' : 'brutti-general-gmail'
+      const popupName = (link.href.includes('hr@brutti.my') || link.href.includes('hr%40brutti.my')) ? 'brutti-hr-gmail' : 'brutti-general-gmail'
 
       const popup = window.open(
         link.href,
