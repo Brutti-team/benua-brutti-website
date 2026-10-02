@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowUpRight, BriefcaseBusiness, GraduationCap, Hammer, Mail, Wrench } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, BriefcaseBusiness, GraduationCap, Hammer, Mail, Wrench, Users, Sparkles, Leaf, Trophy } from 'lucide-react'
 import '../career.css'
 
 const roles = [
@@ -28,12 +28,36 @@ const roles = [
   },
 ]
 
+const culture = [
+  {
+    title: 'Learn by making',
+    description: 'You will learn through real work, real materials and real project challenges, not just observation.',
+    icon: Sparkles,
+  },
+  {
+    title: 'Build together',
+    description: 'Workshop, operations, creative and digital work move as one team. Good ideas can come from anyone.',
+    icon: Users,
+  },
+  {
+    title: 'Respect the craft',
+    description: 'We care about details, materials, useful design and creating work that can last.',
+    icon: Hammer,
+  },
+]
+
+const achievements = [
+  { value: '57+', label: 'tonnes of pallet wood rescued' },
+  { value: '600+', label: 'trees being saved' },
+  { value: 'Sabah', label: 'built locally, made with purpose' },
+]
+
 function backHome() {
   window.location.href = '/'
 }
 
 export default function CareerPage() {
-  const applyHref = 'mailto:hr.bruttibesi@gmail.com?subject=Career%20Application%20-%20Benua%20Brutti'
+  const applyHref = 'mailto:hr@brutti.my?subject=Career%20Application%20-%20Benua%20Brutti'
 
   return (
     <main className="career-page">
@@ -45,6 +69,15 @@ export default function CareerPage() {
           <ArrowLeft size={17} /> Back to home
         </button>
       </header>
+
+      <nav className="career-page__section-nav" aria-label="Career page sections">
+        <a href="#why-us">Why with us</a>
+        <a href="#culture">Culture</a>
+        <a href="#achievement">Achievement</a>
+        <a href="#internship">Internship</a>
+        <a href="#openings">Open positions</a>
+        <a href="#apply">Email</a>
+      </nav>
 
       <section className="career-page__hero">
         <div className="career-page__hero-inner">
@@ -65,7 +98,87 @@ export default function CareerPage() {
         </div>
       </section>
 
-      <section className="career-page__openings">
+      <section id="why-us" className="career-page__why">
+        <div className="career-page__why-heading">
+          <p className="career-kicker">Why with us</p>
+          <h2>Do work that<br /><em>becomes real.</em></h2>
+        </div>
+        <div className="career-page__why-copy">
+          <p className="career-page__why-lead">
+            Brutti is a hands-on environment where ideas move from sketches and conversations into real furniture, spaces, systems and solutions.
+          </p>
+          <div className="career-page__why-points">
+            <span>01 · Learn through real projects</span>
+            <span>02 · Work across different disciplines</span>
+            <span>03 · Build useful things with visible impact</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="culture" className="career-page__culture">
+        <div className="career-page__section-title">
+          <p className="career-kicker">Culture</p>
+          <h2>How we<br /><em>work together.</em></h2>
+        </div>
+        <div className="career-page__culture-grid">
+          {culture.map(({ title, description, icon: Icon }, index) => (
+            <article className="career-culture-card" key={title}>
+              <div className="career-culture-card__top">
+                <span>0{index + 1}</span>
+                <Icon size={20} />
+              </div>
+              <h3>{title}</h3>
+              <p>{description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="achievement" className="career-page__achievement">
+        <div className="career-page__achievement-head">
+          <div>
+            <p className="career-kicker">Achievement</p>
+            <h2>Small steps.<br /><em>Real impact.</em></h2>
+          </div>
+          <p>
+            Our work is rooted in extending the life of materials and turning what could become waste into something useful again.
+          </p>
+        </div>
+        <div className="career-page__achievement-grid">
+          {achievements.map((item, index) => (
+            <article className="career-achievement-card" key={item.label}>
+              <span>0{index + 1}</span>
+              <strong>{item.value}</strong>
+              <p>{item.label}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="internship" className="career-page__internship">
+        <div className="career-page__internship-icon">
+          <GraduationCap size={26} />
+        </div>
+        <div className="career-page__internship-copy">
+          <p className="career-kicker">Internship programme</p>
+          <h2>Start by<br /><em>building with us.</em></h2>
+          <p>
+            Our internship programme is for students who want practical exposure beyond a classroom setting. Depending on current projects, interns may support workshop operations, content and creative work, business operations or digital initiatives.
+          </p>
+          <div className="career-page__internship-tags">
+            <span>Hands-on learning</span>
+            <span>Real project exposure</span>
+            <span>Multi-disciplinary team</span>
+          </div>
+          <a className="career-primary-button" href={applyHref}>
+            <Mail size={17} />
+            <span>Apply for internship</span>
+            <ArrowUpRight size={15} />
+          </a>
+        </div>
+      </section>
+
+      <section id="openings" className="career-page__openings">
         <div className="career-page__section-head">
           <div>
             <p className="career-kicker">Current opportunities</p>
@@ -95,7 +208,7 @@ export default function CareerPage() {
         </div>
       </section>
 
-      <section className="career-page__apply">
+      <section id="apply" className="career-page__apply">
         <div>
           <p className="career-kicker">Interested?</p>
           <h2>Tell us what<br /><em>you can bring.</em></h2>
@@ -107,7 +220,7 @@ export default function CareerPage() {
           </p>
           <a className="career-primary-button career-primary-button--light" href={applyHref}>
             <Mail size={17} />
-            <span>hr.bruttibesi@gmail.com</span>
+            <span>hr@brutti.my</span>
             <ArrowUpRight size={15} />
           </a>
         </div>
