@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowUpRight, BriefcaseBusiness, GraduationCap, Hammer, Mail, Wrench, Users, Sparkles, Leaf, Trophy } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, BriefcaseBusiness, GraduationCap, Hammer, Mail, Wrench, Users, Sparkles } from 'lucide-react'
 import '../career.css'
 
 const roles = [
