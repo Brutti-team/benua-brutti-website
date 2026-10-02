@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUpRight, ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react'
 import '../selesaai-viewer-fix.css'
@@ -218,6 +218,54 @@ export default function WhatWeBuild() {
   const [isSelesaPreviewOpen, setIsSelesaPreviewOpen] = useState(false)
   const [isSelesaSliderPaused, setIsSelesaSliderPaused] = useState(false)
 
+  const servicesSliderRef = useRef(null)
+  const servicesTouchRef = useRef({
+    startX: 0,
+    startY: 0,
+    startScrollLeft: 0,
+    axis: null,
+  })
+
+  const handleServicesTouchStart = (event) => {
+    if (event.touches.length !== 1) return
+
+    const touch = event.touches[0]
+    servicesTouchRef.current = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+      startScrollLeft: servicesSliderRef.current?.scrollLeft || 0,
+      axis: null,
+    }
+  }
+
+  const handleServicesTouchMove = (event) => {
+    const slider = servicesSliderRef.current
+    if (!slider || event.touches.length !== 1) return
+
+    const touch = event.touches[0]
+    const deltaX = touch.clientX - servicesTouchRef.current.startX
+    const deltaY = touch.clientY - servicesTouchRef.current.startY
+
+    if (!servicesTouchRef.current.axis) {
+      const distanceX = Math.abs(deltaX)
+      const distanceY = Math.abs(deltaY)
+
+      if (Math.max(distanceX, distanceY) < 8) return
+
+      servicesTouchRef.current.axis =
+        distanceX > distanceY * 1.15 ? 'x' : 'y'
+    }
+
+    if (servicesTouchRef.current.axis === 'x') {
+      event.preventDefault()
+      slider.scrollLeft = servicesTouchRef.current.startScrollLeft - deltaX
+    }
+  }
+
+  const handleServicesTouchEnd = () => {
+    servicesTouchRef.current.axis = null
+  }
+
   const previousSelesaSlide = () => {
     setSelesaSlideIndex((current) => (current - 1 + selesaSlides.length) % selesaSlides.length)
   }
@@ -281,7 +329,14 @@ export default function WhatWeBuild() {
           <i />
         </div>
 
-        <div className="wwb-services-grid">
+        <div
+          ref={servicesSliderRef}
+          className="wwb-services-grid"
+          onTouchStart={handleServicesTouchStart}
+          onTouchMove={handleServicesTouchMove}
+          onTouchEnd={handleServicesTouchEnd}
+          onTouchCancel={handleServicesTouchEnd}
+        >
           {physicalWorks.map((item, index) => (
             <ServiceCard key={item.title} item={item} index={index} onOpen={setLightboxIndex} />
           ))}
