@@ -453,7 +453,7 @@ function App() {
             <div className="footer__email-list">
               <a
                 className="footer__email-link"
-                href="https://mail.google.com/mail/?view=cm&fs=1&to=benuabrutti@gmail.com"
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=hi@brutti.my"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Compose an email to Benua Brutti in Gmail"
@@ -463,14 +463,14 @@ function App() {
                 </span>
                 <span className="footer__email-copy">
                   <small>General enquiries</small>
-                  <strong>benuabrutti@gmail.com</strong>
+                  <strong>hi@brutti.my</strong>
                 </span>
                 <span className="footer__email-open" aria-hidden="true"><ArrowUpRight size={14} /></span>
               </a>
 
               <a
                 className="footer__email-link"
-                href="https://mail.google.com/mail/?view=cm&fs=1&to=hr.bruttibesi@gmail.com"
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=hr@brutti.my"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Compose an email to Benua Brutti HR in Gmail"
@@ -480,7 +480,7 @@ function App() {
                 </span>
                 <span className="footer__email-copy">
                   <small>Careers & HR</small>
-                  <strong>hr.bruttibesi@gmail.com</strong>
+                  <strong>hr@brutti.my</strong>
                 </span>
                 <span className="footer__email-open" aria-hidden="true"><ArrowUpRight size={14} /></span>
               </a>
