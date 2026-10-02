@@ -1267,3 +1267,425 @@
     font-size: 10px;
   }
 }
+
+/* Career detail page — structured premium sections */
+.career-page {
+  scroll-behavior: smooth;
+}
+
+.career-page__section-nav {
+  position: sticky;
+  top: 72px;
+  z-index: 45;
+  min-height: 48px;
+  padding: 0 max(24px, calc((100vw - 1280px) / 2));
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+  background: rgba(242,240,233,.94);
+  border-bottom: 1px solid rgba(18,60,49,.09);
+  backdrop-filter: blur(14px);
+}
+
+.career-page__section-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.career-page__section-nav a {
+  position: relative;
+  padding: 16px 0 14px;
+  color: #587168;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color .22s ease;
+}
+
+.career-page__section-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 2px;
+  background: #175747;
+  transition: right .25s ease;
+}
+
+.career-page__section-nav a:hover {
+  color: #123c31;
+}
+
+.career-page__section-nav a:hover::after {
+  right: 0;
+}
+
+.career-page__why,
+.career-page__culture,
+.career-page__achievement,
+.career-page__internship {
+  scroll-margin-top: 126px;
+}
+
+.career-page__why {
+  width: min(1280px, calc(100% - 56px));
+  margin: 0 auto;
+  padding: clamp(94px, 11vw, 150px) 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, .72fr);
+  gap: clamp(54px, 8vw, 120px);
+  align-items: end;
+}
+
+.career-page__why h2,
+.career-page__culture h2,
+.career-page__achievement h2,
+.career-page__internship h2 {
+  margin: 0;
+  color: #123c31;
+  font-size: clamp(50px, 5.7vw, 82px);
+  line-height: .94;
+  letter-spacing: -.055em;
+  font-weight: 620;
+}
+
+.career-page__why h2 em,
+.career-page__culture h2 em,
+.career-page__achievement h2 em,
+.career-page__internship h2 em {
+  color: #2f765f;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+}
+
+.career-page__why-copy {
+  padding-bottom: 5px;
+}
+
+.career-page__why-lead {
+  margin: 0;
+  color: #5f746b;
+  font-size: clamp(16px, 1.35vw, 19px);
+  line-height: 1.75;
+}
+
+.career-page__why-points {
+  margin-top: 30px;
+  display: grid;
+  gap: 0;
+  border-top: 1px solid rgba(18,60,49,.11);
+}
+
+.career-page__why-points span {
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(18,60,49,.11);
+  color: #234d40;
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: .015em;
+}
+
+.career-page__culture {
+  padding: clamp(88px, 10vw, 138px) max(28px, calc((100vw - 1280px) / 2));
+  background: #e9e8e0;
+}
+
+.career-page__section-title {
+  max-width: 760px;
+  margin-bottom: 48px;
+}
+
+.career-page__culture-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.career-culture-card {
+  min-height: 290px;
+  padding: clamp(26px, 3vw, 36px);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(18,60,49,.09);
+  border-radius: 25px;
+  background: rgba(255,255,255,.70);
+  box-shadow: 0 18px 50px rgba(25,60,49,.05);
+}
+
+.career-culture-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #6c8178;
+}
+
+.career-culture-card__top span {
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .14em;
+}
+
+.career-culture-card__top svg {
+  color: #2f765f;
+}
+
+.career-culture-card h3 {
+  margin: auto 0 10px;
+  color: #123c31;
+  font-size: clamp(25px, 2vw, 31px);
+  line-height: 1.05;
+  letter-spacing: -.035em;
+}
+
+.career-culture-card p {
+  margin: 0;
+  color: #667a71;
+  font-size: 14px;
+  line-height: 1.67;
+}
+
+.career-page__achievement {
+  padding: clamp(92px, 10vw, 142px) max(28px, calc((100vw - 1280px) / 2));
+  background: #0b3329;
+  color: #fff;
+}
+
+.career-page__achievement-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, .55fr);
+  gap: 58px;
+  align-items: end;
+  margin-bottom: 52px;
+}
+
+.career-page__achievement .career-kicker {
+  border: 1px solid rgba(255,255,255,.13);
+  background: rgba(255,255,255,.07);
+  color: rgba(255,255,255,.78);
+}
+
+.career-page__achievement h2 {
+  color: #fff;
+}
+
+.career-page__achievement h2 em {
+  color: #d8bd91;
+}
+
+.career-page__achievement-head > p {
+  margin: 0 0 6px;
+  color: rgba(255,255,255,.60);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.career-page__achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 14px;
+}
+
+.career-achievement-card {
+  min-height: 220px;
+  padding: 28px 30px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 24px;
+  background: rgba(255,255,255,.035);
+}
+
+.career-achievement-card > span {
+  color: rgba(255,255,255,.36);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .14em;
+}
+
+.career-achievement-card strong {
+  margin-top: auto;
+  color: #f7f2e8;
+  font-size: clamp(42px, 4vw, 66px);
+  line-height: .95;
+  letter-spacing: -.055em;
+  font-weight: 620;
+}
+
+.career-achievement-card p {
+  margin: 13px 0 0;
+  max-width: 220px;
+  color: rgba(255,255,255,.58);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.career-page__internship {
+  width: min(1280px, calc(100% - 56px));
+  margin: 0 auto;
+  padding: clamp(94px, 11vw, 150px) 0;
+  display: grid;
+  grid-template-columns: 140px minmax(0, 860px);
+  gap: clamp(36px, 6vw, 80px);
+  align-items: start;
+}
+
+.career-page__internship-icon {
+  width: 112px;
+  height: 112px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(18,60,49,.10);
+  border-radius: 28px;
+  background: #e6ebe6;
+  color: #175747;
+  box-shadow: 0 18px 45px rgba(25,60,49,.06);
+}
+
+.career-page__internship-copy > p:not(.career-kicker) {
+  max-width: 720px;
+  margin: 28px 0 0;
+  color: #62766d;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.career-page__internship-tags {
+  margin-top: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.career-page__internship-tags span {
+  padding: 9px 12px;
+  border: 1px solid rgba(18,60,49,.10);
+  border-radius: 999px;
+  background: rgba(255,255,255,.55);
+  color: #45685b;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .03em;
+}
+
+#openings {
+  scroll-margin-top: 126px;
+}
+
+#apply {
+  scroll-margin-top: 126px;
+}
+
+@media (max-width: 900px) {
+  .career-page__section-nav {
+    gap: 22px;
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .career-page__why,
+  .career-page__achievement-head,
+  .career-page__internship {
+    grid-template-columns: 1fr;
+  }
+
+  .career-page__why {
+    gap: 34px;
+  }
+
+  .career-page__culture-grid,
+  .career-page__achievement-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .career-culture-card {
+    min-height: 230px;
+  }
+
+  .career-page__achievement-head {
+    gap: 28px;
+  }
+
+  .career-achievement-card {
+    min-height: 180px;
+  }
+
+  .career-page__internship {
+    gap: 32px;
+  }
+
+  .career-page__internship-icon {
+    width: 88px;
+    height: 88px;
+    border-radius: 22px;
+  }
+}
+
+@media (max-width: 640px) {
+  .career-page__section-nav {
+    top: 64px;
+    min-height: 44px;
+  }
+
+  .career-page__section-nav a {
+    padding: 14px 0 12px;
+    font-size: 9px;
+  }
+
+  .career-page__why,
+  .career-page__internship {
+    width: min(100% - 32px, 1280px);
+    padding-top: 74px;
+    padding-bottom: 78px;
+  }
+
+  .career-page__culture,
+  .career-page__achievement {
+    padding-top: 74px;
+    padding-bottom: 78px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .career-page__why h2,
+  .career-page__culture h2,
+  .career-page__achievement h2,
+  .career-page__internship h2 {
+    font-size: clamp(45px, 13.6vw, 62px);
+  }
+
+  .career-page__section-title,
+  .career-page__achievement-head {
+    margin-bottom: 35px;
+  }
+
+  .career-culture-card {
+    min-height: 215px;
+    padding: 24px;
+    border-radius: 21px;
+  }
+
+  .career-achievement-card {
+    min-height: 170px;
+    padding: 24px;
+    border-radius: 21px;
+  }
+
+  .career-page__internship-icon {
+    width: 78px;
+    height: 78px;
+    border-radius: 20px;
+  }
+
+  .career-page__internship-tags {
+    gap: 7px;
+  }
+
+  .career-page__internship-tags span {
+    font-size: 9px;
+  }
+}
