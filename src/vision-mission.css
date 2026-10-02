@@ -463,3 +463,62 @@
   .vm-card--vision > p:last-child { margin-top: 16px; }
   .vm-values { margin-top: 14px; }
 }
+
+/* Karya Anak Bangsa artistic heading */
+.vm-heading-art {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  margin: 0;
+  line-height: .9;
+  letter-spacing: -.04em;
+}
+
+.vm-heading-art__script {
+  position: relative;
+  z-index: 2;
+  margin-left: .02em;
+  margin-bottom: -.18em;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(44px, 4.2vw, 72px);
+  font-style: italic;
+  font-weight: 500;
+  color: #f6f2ea;
+  letter-spacing: -.05em;
+  text-shadow: 0 6px 18px rgba(0,0,0,.16);
+}
+
+.vm-heading-art__stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: .32em;
+}
+
+.vm-heading-art__stack span {
+  display: block;
+  font-size: clamp(52px, 5.5vw, 94px);
+  line-height: .82;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -.06em;
+  color: #e5cfab;
+  text-shadow: 0 8px 24px rgba(0,0,0,.18);
+}
+
+@media (max-width: 768px) {
+  .vm-heading-art__script {
+    font-size: clamp(38px, 9vw, 54px);
+    margin-bottom: -.14em;
+  }
+
+  .vm-heading-art__stack {
+    margin-left: .18em;
+  }
+
+  .vm-heading-art__stack span {
+    font-size: clamp(44px, 11vw, 68px);
+  }
+}
