@@ -302,3 +302,60 @@ html body .mobile-menu__link {
   color: inherit !important;
   text-decoration: none !important;
 }
+
+/* Phone What We Build — horizontal swipe cards */
+@media (max-width: 700px) {
+  html body #what-we-build .wwb-services-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 4px 18px 18px 0 !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    scroll-snap-type: x mandatory !important;
+    scroll-padding-left: 0 !important;
+    overscroll-behavior-inline: contain !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    touch-action: pan-x pan-y !important;
+  }
+
+  html body #what-we-build .wwb-services-grid::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  html body #what-we-build .wwb-service-card {
+    flex: 0 0 min(82vw, 350px) !important;
+    width: min(82vw, 350px) !important;
+    max-width: min(82vw, 350px) !important;
+    scroll-snap-align: start !important;
+    scroll-snap-stop: always !important;
+  }
+
+  html body #what-we-build .wwb-service-media {
+    width: 100% !important;
+  }
+
+  html body #what-we-build .wwb-service-meta {
+    width: 100% !important;
+  }
+
+  html body #what-we-build .wwb-section-label:first-of-type {
+    margin-bottom: 18px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  html body #what-we-build .wwb-service-card {
+    flex-basis: 84vw !important;
+    width: 84vw !important;
+    max-width: 84vw !important;
+  }
+}
