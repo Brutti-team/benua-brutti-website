@@ -464,61 +464,56 @@
   .vm-values { margin-top: 14px; }
 }
 
-/* Karya Anak Bangsa artistic heading */
-.vm-heading-art {
+/* Karya Anak Bangsa lead typography */
+.vm-intro .vm-lead {
   position: relative;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0;
-  margin: 0;
-  line-height: .9;
-  letter-spacing: -.04em;
-}
-
-.vm-heading-art__script {
-  position: relative;
-  z-index: 2;
-  margin-left: .02em;
-  margin-bottom: -.18em;
+  max-width: 760px;
+  padding-left: 30px;
+  color: #ead3ad;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(44px, 4.2vw, 72px);
+  font-size: clamp(27px, 2.45vw, 38px);
   font-style: italic;
-  font-weight: 500;
-  color: #f6f2ea;
-  letter-spacing: -.05em;
-  text-shadow: 0 6px 18px rgba(0,0,0,.16);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -.035em;
+  text-wrap: balance;
 }
 
-.vm-heading-art__stack {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: .32em;
+.vm-intro .vm-lead::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .12em;
+  bottom: .12em;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(234,211,173,.72) 22%,
+    rgba(234,211,173,.72) 78%,
+    transparent
+  );
 }
 
-.vm-heading-art__stack span {
-  display: block;
-  font-size: clamp(52px, 5.5vw, 94px);
-  line-height: .82;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: -.06em;
-  color: #e5cfab;
-  text-shadow: 0 8px 24px rgba(0,0,0,.18);
+@media (max-width: 1020px) {
+  .vm-intro .vm-lead {
+    padding-left: 24px;
+    font-size: clamp(24px, 3.4vw, 33px);
+  }
 }
 
-@media (max-width: 768px) {
-  .vm-heading-art__script {
-    font-size: clamp(38px, 9vw, 54px);
-    margin-bottom: -.14em;
+@media (max-width: 720px) {
+  .vm-intro .vm-lead {
+    padding-left: 0;
+    padding-top: 14px;
+    font-size: clamp(24px, 7vw, 31px);
   }
 
-  .vm-heading-art__stack {
-    margin-left: .18em;
-  }
-
-  .vm-heading-art__stack span {
-    font-size: clamp(44px, 11vw, 68px);
+  .vm-intro .vm-lead::before {
+    top: 0;
+    bottom: auto;
+    width: 54px;
+    height: 1px;
+    background: rgba(234,211,173,.65);
   }
 }
