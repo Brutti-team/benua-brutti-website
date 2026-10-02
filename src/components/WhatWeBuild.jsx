@@ -219,51 +219,20 @@ export default function WhatWeBuild() {
   const [isSelesaSliderPaused, setIsSelesaSliderPaused] = useState(false)
 
   const servicesSliderRef = useRef(null)
-  const servicesTouchRef = useRef({
-    startX: 0,
-    startY: 0,
-    startScrollLeft: 0,
-    axis: null,
-  })
 
-  const handleServicesTouchStart = (event) => {
-    if (event.touches.length !== 1) return
-
-    const touch = event.touches[0]
-    servicesTouchRef.current = {
-      startX: touch.clientX,
-      startY: touch.clientY,
-      startScrollLeft: servicesSliderRef.current?.scrollLeft || 0,
-      axis: null,
-    }
-  }
-
-  const handleServicesTouchMove = (event) => {
+  const scrollServices = (direction) => {
     const slider = servicesSliderRef.current
-    if (!slider || event.touches.length !== 1) return
+    if (!slider) return
 
-    const touch = event.touches[0]
-    const deltaX = touch.clientX - servicesTouchRef.current.startX
-    const deltaY = touch.clientY - servicesTouchRef.current.startY
+    const firstCard = slider.querySelector('.wwb-service-card')
+    const styles = window.getComputedStyle(slider)
+    const gap = Number.parseFloat(styles.columnGap || styles.gap || '0') || 0
+    const step = (firstCard?.getBoundingClientRect().width || slider.clientWidth * 0.84) + gap
 
-    if (!servicesTouchRef.current.axis) {
-      const distanceX = Math.abs(deltaX)
-      const distanceY = Math.abs(deltaY)
-
-      if (Math.max(distanceX, distanceY) < 8) return
-
-      servicesTouchRef.current.axis =
-        distanceX > distanceY * 1.15 ? 'x' : 'y'
-    }
-
-    if (servicesTouchRef.current.axis === 'x') {
-      event.preventDefault()
-      slider.scrollLeft = servicesTouchRef.current.startScrollLeft - deltaX
-    }
-  }
-
-  const handleServicesTouchEnd = () => {
-    servicesTouchRef.current.axis = null
+    slider.scrollBy({
+      left: direction * step,
+      behavior: 'smooth',
+    })
   }
 
   const previousSelesaSlide = () => {
@@ -329,17 +298,25 @@ export default function WhatWeBuild() {
           <i />
         </div>
 
-        <div
-          ref={servicesSliderRef}
-          className="wwb-services-grid"
-          onTouchStart={handleServicesTouchStart}
-          onTouchMove={handleServicesTouchMove}
-          onTouchEnd={handleServicesTouchEnd}
-          onTouchCancel={handleServicesTouchEnd}
-        >
-          {physicalWorks.map((item, index) => (
-            <ServiceCard key={item.title} item={item} index={index} onOpen={setLightboxIndex} />
-          ))}
+        <div className="wwb-services-carousel">
+          <div
+            ref={servicesSliderRef}
+            className="wwb-services-grid"
+          >
+            {physicalWorks.map((item, index) => (
+              <ServiceCard key={item.title} item={item} index={index} onOpen={setLightboxIndex} />
+            ))}
+          </div>
+
+          <div className="wwb-services-mobile-nav" aria-label="Browse physical and creative works">
+            <button type="button" onClick={() => scrollServices(-1)} aria-label="Previous work">
+              <ChevronLeft size={20} />
+            </button>
+            <span>Browse</span>
+            <button type="button" onClick={() => scrollServices(1)} aria-label="Next work">
+              <ChevronRight size={20} />
+            </button>
+          </div>
         </div>
 
         <div className="wwb-section-label wwb-section-label--digital">
