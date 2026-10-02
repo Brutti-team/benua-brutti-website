@@ -241,13 +241,7 @@ function App() {
         <div className="page-shell vm-shell">
           <Reveal className="vm-intro">
             <p className="eyebrow">About Brutti</p>
-            <h2 className="vm-heading-art">
-              <span className="vm-heading-art__script">Karya</span>
-              <span className="vm-heading-art__stack">
-                <span>Anak</span>
-                <span>Bangsa</span>
-              </span>
-            </h2>
+            <h2>Karya <em>anak bangsa.</em></h2>
             <p className="vm-lead">
               Karya anak bangsa.
             </p>
