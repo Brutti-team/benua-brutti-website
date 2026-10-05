@@ -1,6 +1,8 @@
 import { ArrowLeft, ArrowUpRight, BriefcaseBusiness, GraduationCap, Hammer, Mail, Wrench, Users, Sparkles } from 'lucide-react'
 import '../career.css'
 
+const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
+
 const roles = [
   {
     title: 'Internship Programme',
@@ -63,7 +65,12 @@ export default function CareerPage() {
     <main className="career-page">
       <header className="career-page__nav">
         <button className="career-page__brand" onClick={backHome} aria-label="Back to Benua Brutti home">
-          <span>BRUTTI™</span>
+          <img
+            className="career-page__brand-logo brutti-logo-img"
+            src={asset('logo-brutti-white.png')}
+            alt="Benua Brutti"
+            decoding="async"
+          />
         </button>
         <button className="career-page__back" onClick={backHome}>
           <ArrowLeft size={17} /> Back to home
@@ -227,8 +234,24 @@ export default function CareerPage() {
       </section>
 
       <footer className="career-page__footer">
-        <span>© Benua Brutti Sdn Bhd · Crafted in Sabah.</span>
-        <button onClick={backHome}>Back to Brutti ↑</button>
+        <div className="career-page__footer-brand">
+          <button onClick={backHome} aria-label="Back to Benua Brutti home">
+            <img
+              className="career-page__footer-logo brutti-logo-img"
+              src={asset('logo-brutti-white.png')}
+              alt="Benua Brutti"
+              loading="lazy"
+              decoding="async"
+            />
+          </button>
+          <p>Furniture with a second life. · Crafted in Sabah.</p>
+        </div>
+        <div className="career-page__footer-meta">
+          <span>© {new Date().getFullYear()} Benua Brutti Sdn Bhd.</span>
+          <button className="career-page__footer-home" onClick={backHome}>
+            Back to home <span aria-hidden="true">↑</span>
+          </button>
+        </div>
       </footer>
     </main>
   )
