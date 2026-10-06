@@ -219,20 +219,61 @@ export default function WhatWeBuild() {
   const [isSelesaSliderPaused, setIsSelesaSliderPaused] = useState(false)
 
   const servicesSliderRef = useRef(null)
+  const servicesScrollAnimationRef = useRef(null)
 
   const scrollServices = (direction) => {
     const slider = servicesSliderRef.current
     if (!slider) return
 
-    const firstCard = slider.querySelector('.wwb-service-card')
-    const styles = window.getComputedStyle(slider)
-    const gap = Number.parseFloat(styles.columnGap || styles.gap || '0') || 0
-    const step = (firstCard?.getBoundingClientRect().width || slider.clientWidth * 0.84) + gap
+    const cards = Array.from(slider.querySelectorAll('.wwb-service-card'))
+    if (!cards.length) return
 
-    slider.scrollBy({
-      left: direction * step,
-      behavior: 'smooth',
+    if (servicesScrollAnimationRef.current) {
+      window.cancelAnimationFrame(servicesScrollAnimationRef.current)
+    }
+
+    const currentLeft = slider.scrollLeft
+    let nearestIndex = 0
+    let nearestDistance = Number.POSITIVE_INFINITY
+
+    cards.forEach((card, index) => {
+      const distance = Math.abs(card.offsetLeft - currentLeft)
+      if (distance < nearestDistance) {
+        nearestDistance = distance
+        nearestIndex = index
+      }
     })
+
+    const targetIndex = Math.min(
+      cards.length - 1,
+      Math.max(0, nearestIndex + direction),
+    )
+    const maxScrollLeft = Math.max(0, slider.scrollWidth - slider.clientWidth)
+    const targetLeft = Math.min(maxScrollLeft, Math.max(0, cards[targetIndex].offsetLeft))
+    const startLeft = slider.scrollLeft
+    const distance = targetLeft - startLeft
+
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches || Math.abs(distance) < 1) {
+      slider.scrollLeft = targetLeft
+      return
+    }
+
+    const duration = 520
+    const startedAt = performance.now()
+    const easeOutQuart = (progress) => 1 - Math.pow(1 - progress, 4)
+
+    const animate = (now) => {
+      const progress = Math.min(1, (now - startedAt) / duration)
+      slider.scrollLeft = startLeft + distance * easeOutQuart(progress)
+
+      if (progress < 1) {
+        servicesScrollAnimationRef.current = window.requestAnimationFrame(animate)
+      } else {
+        servicesScrollAnimationRef.current = null
+      }
+    }
+
+    servicesScrollAnimationRef.current = window.requestAnimationFrame(animate)
   }
 
   const previousSelesaSlide = () => {
