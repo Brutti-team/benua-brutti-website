@@ -447,3 +447,110 @@ html body .mobile-menu__link {
     transform: scale(.94) !important;
   }
 }
+
+
+/* Mobile What We Build — refined floating arrows + softer carousel motion */
+@media (max-width: 700px) {
+  html body #what-we-build .wwb-services-grid {
+    scroll-behavior: auto !important;
+    scroll-snap-stop: normal !important;
+  }
+
+  html body #what-we-build .wwb-services-mobile-nav {
+    top: 14px !important;
+    right: 14px !important;
+    gap: 8px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    pointer-events: none !important;
+  }
+
+  html body #what-we-build .wwb-services-mobile-nav > button {
+    position: relative !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    border: 1px solid rgba(255,255,255,.72) !important;
+    background: linear-gradient(145deg, rgba(22,83,64,.97), rgba(16,68,52,.98)) !important;
+    color: #fff !important;
+    box-shadow:
+      0 9px 22px rgba(14,55,43,.20),
+      inset 0 1px 0 rgba(255,255,255,.16) !important;
+    pointer-events: auto !important;
+    transition:
+      transform .24s cubic-bezier(.22,1,.36,1),
+      box-shadow .24s ease,
+      background .24s ease !important;
+    will-change: transform !important;
+  }
+
+  html body #what-we-build .wwb-services-mobile-nav > button svg {
+    width: 19px !important;
+    height: 19px !important;
+    stroke-width: 2.15 !important;
+    transition: transform .24s cubic-bezier(.22,1,.36,1) !important;
+  }
+
+  html body #what-we-build .wwb-services-mobile-nav > button:first-of-type svg {
+    transform: translateX(-1px) !important;
+  }
+
+  html body #what-we-build .wwb-services-mobile-nav > button:last-of-type svg {
+    transform: translateX(1px) !important;
+  }
+
+  html body #what-we-build .wwb-services-mobile-nav > button:active {
+    transform: scale(.91) !important;
+    box-shadow:
+      0 5px 14px rgba(14,55,43,.16),
+      inset 0 1px 0 rgba(255,255,255,.12) !important;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (max-width: 700px) {
+  html body #what-we-build .wwb-services-mobile-nav > button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow:
+      0 12px 28px rgba(14,55,43,.24),
+      inset 0 1px 0 rgba(255,255,255,.18) !important;
+  }
+
+  html body #what-we-build .wwb-services-mobile-nav > button:first-of-type:hover svg {
+    transform: translateX(-3px) !important;
+  }
+
+  html body #what-we-build .wwb-services-mobile-nav > button:last-of-type:hover svg {
+    transform: translateX(3px) !important;
+  }
+}
+
+@media (max-width: 420px) {
+  html body #what-we-build .wwb-services-mobile-nav {
+    top: 12px !important;
+    right: 12px !important;
+    gap: 7px !important;
+  }
+
+  html body #what-we-build .wwb-services-mobile-nav > button {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+  }
+
+  html body #what-we-build .wwb-services-mobile-nav > button svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body #what-we-build .wwb-services-mobile-nav > button,
+  html body #what-we-build .wwb-services-mobile-nav > button svg {
+    transition: none !important;
+  }
+}
