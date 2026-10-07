@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowUpRight, BriefcaseBusiness, GraduationCap, Hammer, Mail, Wrench, Users, Sparkles } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, BriefcaseBusiness, Cog, GraduationCap, Hammer, Mail, Wrench, Users, Sparkles } from 'lucide-react'
 import '../career.css'
 
 const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
@@ -15,6 +15,12 @@ const roles = [
     tag: 'Workshop',
     icon: Wrench,
     description: 'Support precise workshop production and machine-based fabrication as part of our hands-on build team.',
+  },
+  {
+    title: 'Operator',
+    tag: 'Production',
+    icon: Cog,
+    description: 'Operate workshop machinery and support day-to-day production with a focus on safety, consistency and quality.',
   },
   {
     title: 'Artisan',
