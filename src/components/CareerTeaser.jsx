@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ArrowUpRight, BriefcaseBusiness, Hammer, GraduationCap, MapPin } from 'lucide-react'
+import { ArrowUpRight, BriefcaseBusiness, Cog, Hammer, GraduationCap, MapPin } from 'lucide-react'
 import '../career.css'
 
 const roles = [
@@ -14,6 +14,12 @@ const roles = [
     eyebrow: 'Workshop craft',
     meta: 'Production & precision',
     icon: BriefcaseBusiness,
+  },
+  {
+    label: 'Operator',
+    eyebrow: 'Production support',
+    meta: 'Machine operation & workflow',
+    icon: Cog,
   },
   {
     label: 'Artisan',
@@ -79,7 +85,7 @@ export default function CareerTeaser() {
               <span>Open paths</span>
               <h3>Find where you fit.</h3>
             </div>
-            <span className="career-teaser__panel-count">03</span>
+            <span className="career-teaser__panel-count">04</span>
           </div>
 
           <div className="career-teaser__roles" aria-label="Career opportunities">
