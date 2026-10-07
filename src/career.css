@@ -3240,38 +3240,46 @@
 
 @media (min-width: 1100px) {
   .career-page__openings {
-    width: min(1440px, calc(100% - 72px));
-    min-height: auto;
-    margin: 34px auto 52px;
-    padding: clamp(36px, 3.5vw, 52px);
+    width: min(1460px, calc(100% - 56px));
+    min-height: calc(100svh - 112px);
+    margin: 18px auto 28px;
+    padding: clamp(22px, 2vw, 30px) clamp(26px, 2.6vw, 38px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .career-page__openings .career-page__section-head {
-    grid-template-columns: minmax(0, 1.08fr) minmax(360px, .62fr);
-    gap: clamp(44px, 6vw, 90px);
-    margin-bottom: 34px;
+    grid-template-columns: minmax(0, 1.08fr) minmax(340px, .62fr);
+    gap: clamp(32px, 4.5vw, 70px);
+    margin-bottom: 20px;
+  }
+
+  .career-page__openings .career-kicker {
+    margin-bottom: 12px;
   }
 
   .career-page__openings .career-page__section-head h2 {
-    font-size: clamp(52px, 4.6vw, 72px);
-    line-height: .94;
+    font-size: clamp(44px, 3.8vw, 58px);
+    line-height: .92;
   }
 
   .career-page__openings .career-page__section-head > p {
-    font-size: 15px;
-    line-height: 1.68;
+    max-width: 470px;
+    font-size: 13.5px;
+    line-height: 1.55;
   }
 
   .career-page__grid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 18px;
+    gap: 12px 14px;
   }
 
   .career-opening-card {
     grid-column: span 2;
-    min-height: 250px;
-    padding: 24px 26px 22px;
-    border-radius: 25px;
+    min-height: 188px;
+    padding: 18px 20px 16px;
+    border-radius: 20px;
     transform: none !important;
   }
 
@@ -3283,27 +3291,47 @@
   .career-opening-card:hover,
   .career-opening-card:nth-child(2):hover,
   .career-opening-card:nth-child(4):hover {
-    transform: translateY(-5px) !important;
+    transform: translateY(-3px) !important;
   }
 
   .career-opening-card__top {
-    margin-bottom: 20px;
+    margin-bottom: 11px;
+  }
+
+  .career-opening-card__number {
+    min-width: 38px;
+    height: 24px;
+    padding: 0 8px;
+    font-size: 7.5px;
+  }
+
+  .career-opening-card__top svg {
+    width: 17px;
+    height: 17px;
+    padding: 7px;
+    border-radius: 11px;
+  }
+
+  .career-opening-card > small {
+    padding: 4px 7px;
+    font-size: 7.5px;
   }
 
   .career-opening-card h3 {
-    margin: 11px 0 9px;
-    font-size: clamp(25px, 1.8vw, 31px);
+    margin: 8px 0 6px;
+    font-size: clamp(21px, 1.5vw, 27px);
   }
 
   .career-opening-card p {
     max-width: 100%;
-    font-size: 13px;
-    line-height: 1.58;
+    font-size: 11.5px;
+    line-height: 1.45;
   }
 
   .career-opening-card a {
-    padding-top: 18px;
-    font-size: 11.5px;
+    min-height: 24px;
+    padding-top: 10px;
+    font-size: 10.5px;
   }
 }
 
