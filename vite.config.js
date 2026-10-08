@@ -55,9 +55,9 @@ function bruttiStructuredData() {
             tag: 'link',
             attrs: {
               rel: 'icon',
-              type: 'image/jpeg',
-              sizes: '331x331',
-              href: '/assets/logo%20brutti.jpg?favicon=actual-logo-20260917-7',
+              type: 'image/svg+xml',
+              sizes: 'any',
+              href: '/favicon.svg?v=20261008',
             },
             injectTo: 'head',
           },
