@@ -258,6 +258,56 @@ jobs:
               output.write_text(html, encoding='utf-8')
           PY
 
+      # Brutti Catalog is a separate, reviewed GitHub repository. Assemble
+      # only its static /admin/, /catalog/, and /catalog-assets/ paths.
+      - name: Checkout released Brutti Catalog
+        uses: actions/checkout@v4
+        with:
+          repository: Brutti-team/brutti-catalog
+          ref: 315e0e5d3a9b506fb844a30e1191c152198bf0c0
+          path: catalog-source
+          persist-credentials: false
+
+      - name: Set up Node.js for Catalog
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: catalog-source/package-lock.json
+
+      - name: Verify Supabase and build the live Catalog routes
+        working-directory: catalog-source
+        env:
+          VITE_SUPABASE_URL: https://lgdjoxafleqnbomtfzqt.supabase.co
+          # Publishable keys are public browser keys, never service-role secrets.
+          VITE_SUPABASE_PUBLISHABLE_KEY: 'sb_publishable_E5-tPfhYUXJ4pLVIv-oKQQ_T4T2J-VR'
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build:configured
+          npm run build:site
+
+      - name: Add Catalog without overwriting Brutti website pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s dist/index.html
+          test -s catalog-source/dist-site/admin/index.html
+          test -s catalog-source/dist-site/catalog/index.html
+          test -d catalog-source/dist-site/catalog-assets
+          for route in admin catalog catalog-assets; do
+            if test -e "dist/$route"; then
+              echo "::error::Catalogue integration would overwrite existing route $route"
+              exit 1
+            fi
+          done
+          before="$(sha256sum dist/index.html | cut -d ' ' -f1)"
+          cp -a catalog-source/dist-site/. dist/
+          after="$(sha256sum dist/index.html | cut -d ' ' -f1)"
+          test "$before" = "$after"
+          test -s dist/admin/index.html
+          test -s dist/catalog/index.html
+          echo "Catalog admin and public routes assembled; Brutti homepage unchanged."
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
