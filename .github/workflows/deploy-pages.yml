@@ -264,7 +264,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: Brutti-team/brutti-catalog
-          ref: 505db1e9aa24d3ad7bcf68ead5cb7566a1a43cd3
+          ref: a1e85fbf975f17825ce8607815e62edceacd0675
           path: catalog-source
           persist-credentials: false
 
