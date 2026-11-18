@@ -5,8 +5,6 @@ import '../impact-report-tweaks.css'
 import '../impact-report-nav-home.css'
 import {
   ArrowLeft,
-  Menu,
-  X,
   ChevronLeft,
   ChevronRight,
   Expand,
@@ -65,7 +63,6 @@ export default function ImpactReportPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [zoom, setZoom] = useState(1)
   const [isMobileReader, setIsMobileReader] = useState(false)
-  const [isNavOpen, setIsNavOpen] = useState(false)
 
   useEffect(() => {
     const onFullscreenChange = () => {
@@ -309,53 +306,13 @@ export default function ImpactReportPage() {
   return (
     <main className="impact-report-page">
       <header className="impact-report-nav">
-        <a className="impact-report-nav__brand" href="/" aria-label="Benua Brutti home">
+        <button className="impact-report-nav__brand" onClick={backHome} aria-label="Back to Benua Brutti home">
           <img src={`${import.meta.env.BASE_URL}assets/logo-brutti-white.png`} alt="Benua Brutti" />
-        </a>
-
-        <nav className="impact-report-nav__links" aria-label="Main website navigation">
-          {[
-            ['Home', '/'],
-            ['About', '/about/'],
-            ['Our Journey', '/journey/'],
-            ['Catalogue', '/catalogue/'],
-            ['Impact Report', '/impact/'],
-            ['Career', '/career/'],
-            ['Contact', '/contact/'],
-          ].map(([label, href]) => (
-            <a key={href} href={href} aria-current={href === '/impact/' ? 'page' : undefined}>{label}</a>
-          ))}
-        </nav>
-
-        <button
-          className="impact-report-nav__menu"
-          type="button"
-          onClick={() => setIsNavOpen(open => !open)}
-          aria-expanded={isNavOpen}
-          aria-controls="impact-report-mobile-navigation"
-          aria-label={isNavOpen ? 'Close navigation' : 'Open navigation'}
-        >
-          {isNavOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
-        <nav
-          id="impact-report-mobile-navigation"
-          className="impact-report-nav__mobile"
-          aria-label="Mobile website navigation"
-          hidden={!isNavOpen}
-        >
-          {[
-            ['Home', '/'],
-            ['About', '/about/'],
-            ['Our Journey', '/journey/'],
-            ['Catalogue', '/catalogue/'],
-            ['Impact Report', '/impact/'],
-            ['Career', '/career/'],
-            ['Contact', '/contact/'],
-          ].map(([label, href]) => (
-            <a key={href} href={href} aria-current={href === '/impact/' ? 'page' : undefined}
-              onClick={() => setIsNavOpen(false)}>{label}</a>
-          ))}
-        </nav>
+
+        <button className="impact-report-nav__back" onClick={backHome}>
+          <ArrowLeft size={16} /> Back to home
+        </button>
       </header>
 
       <section className="impact-report-viewer-section">
